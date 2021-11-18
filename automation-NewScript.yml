@@ -1,0 +1,23 @@
+commonfields:
+  id: 28fd6071-86c0-4b9c-8f31-282277d51ead
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.8.24399
+enabled: true
+engineinfo: {}
+name: NewScript
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: '# Hello this is a new test script'
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

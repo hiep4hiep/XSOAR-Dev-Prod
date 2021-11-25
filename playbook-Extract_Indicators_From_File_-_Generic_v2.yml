@@ -1,0 +1,1640 @@
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 5.0.0
+    itemVersion: 2.1.2
+    packID: CommonPlaybooks
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+description: |-
+  Extracts indicators from a file.
+  Supported file types:
+  - CSV
+  - PDF
+  - TXT
+  - HTM, HTML
+  - DOC, DOCX
+  - PPT
+  - PPTX
+  - RTF
+  - XLS
+  - XLSX
+  - XML
+id: Extract Indicators From File - Generic v2
+inputs:
+- description: The file from which to extract indicators.
+  key: File
+  playbookInputQuery: null
+  required: false
+  value:
+    complex:
+      root: File
+name: Extract Indicators From File - Generic v2
+outputs:
+- contextPath: Domain.Name
+  description: Extracted domains.
+- contextPath: Account.Email.Address
+  description: Extracted emails addresses.
+- contextPath: File.MD5
+  description: Extracted MD5 hash.
+- contextPath: File.SHA1
+  description: Extracted SHA1 hash.
+- contextPath: File.SHA256
+  description: Extracted SHA256 hash.
+- contextPath: IP.Address
+  description: Extracted IP addresses.
+- contextPath: File.Text
+  description: The text or images extracted from the PDF file.
+- contextPath: File.Producer
+  description: The PDF file producer.
+- contextPath: File.Title
+  description: The title of the PDF file.
+- contextPath: File.xap
+  description: The xap of the PDF file.
+- contextPath: File.Author
+  description: The author of the file.
+- contextPath: File.dc
+  description: The dc of the file.
+- contextPath: File.xapmm
+  description: The xapmm of the file.
+- contextPath: File.ModDate
+  description: The ModDate of the file.
+- contextPath: File.CreationDate
+  description: The CreationDate of the file.
+- contextPath: File.Pages
+  description: Number of pages in file.
+- contextPath: URL.Data
+  description: List of URLs that were extracted from the file.
+  type: unknown
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 66ff4520-efa0-4c28-81d4-6d933e7ac182
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 66ff4520-efa0-4c28-81d4-6d933e7ac182
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": -10
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: EntryID
+                root: inputs.File
+          operator: isExists
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "yes":
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |
+        Checks if there is a file in the playbook input.
+      id: 01e70914-25f3-495d-81f4-5864bd04340a
+      iscommand: false
+      name: Is there a file?
+      type: condition
+      version: -1
+    taskid: 01e70914-25f3-495d-81f4-5864bd04340a
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 150
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      key:
+        simple: File
+      value:
+        complex:
+          root: inputs.File
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set the input file into local context.
+      id: 5ba31bc7-84ab-4d1b-8c1a-501b04cfe9c6
+      iscommand: false
+      name: Set file to local context
+      script: Set
+      type: regular
+      version: -1
+    taskid: 5ba31bc7-84ab-4d1b-8c1a-501b04cfe9c6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 510,
+          "y": 350
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: cd4f63cd-d080-4574-86f2-73b6dd9854d9
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: cd4f63cd-d080-4574-86f2-73b6dd9854d9
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 510,
+          "y": 2080
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+      - "7"
+      - "9"
+      - "15"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3745ecc5-a6c8-4c53-83ff-25d3dbef7eb1
+      iscommand: false
+      name: Extract Indicators From Files
+      type: title
+      version: -1
+    taskid: 3745ecc5-a6c8-4c53-83ff-25d3dbef7eb1
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 510,
+          "y": 535
+        }
+      }
+  "5":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: EntryID
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: containsString
+                    right:
+                      value:
+                        simple: ASCII text
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: containsString
+                    right:
+                      value:
+                        simple: Rich Text Format
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: containsString
+                    right:
+                      value:
+                        simple: UTF-8 Unicode text
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: notContainsString
+                    right:
+                      value:
+                        simple: news or mail
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: eml
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: msg
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: notContainsString
+                    right:
+                      value:
+                        simple: Composite Document File V2 Document, No summary info
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: text/rtf
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: rtf
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: notContainsGeneral
+                    right:
+                      value:
+                        simple: xml
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: notContainsGeneral
+                    right:
+                      value:
+                        simple: text/rtf
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: message/rfc822
+                root: File
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: "yes"
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "yes":
+      - "6"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks if there is a text-based file in context. Skips MSG and
+        EML files.
+      id: 816708c1-620e-495b-8102-081c06a0146f
+      iscommand: false
+      name: Is there a text-based file?
+      type: condition
+      version: -1
+    taskid: 816708c1-620e-495b-8102-081c06a0146f
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 92.5,
+          "y": 700
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    reputationcalc: 2
+    scriptarguments:
+      entryID:
+        complex:
+          accessor: EntryID
+          filters:
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: containsString
+              right:
+                value:
+                  simple: ASCII text
+            - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: containsString
+              right:
+                value:
+                  simple: Rich Text Format
+            - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: containsString
+              right:
+                value:
+                  simple: UTF-8 Unicode
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: notContainsString
+              right:
+                value:
+                  simple: news or mail
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: eml
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: msg
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: notContainsString
+              right:
+                value:
+                  simple: Composite Document File V2 Document, No summary info
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: text/rtf
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: rtf
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: notContainsGeneral
+              right:
+                value:
+                  simple: xml
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: notContainsGeneral
+              right:
+                value:
+                  simple: text/rtf
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: message/rfc822
+          root: File
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Extracts indicators from text-based files.
+      id: baa0320d-9647-44bb-8110-99b6d1c618df
+      iscommand: false
+      name: Extract indicators from text-based file
+      script: ExtractIndicatorsFromTextFile
+      type: regular
+      version: -1
+    taskid: baa0320d-9647-44bb-8110-99b6d1c618df
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 92.5,
+          "y": 1000
+        }
+      }
+  "7":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                accessor: EntryID
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: containsString
+                    right:
+                      value:
+                        simple: pdf
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: containsString
+                    right:
+                      value:
+                        simple: pdf
+                root: File
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: "yes"
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "yes":
+      - "8"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks if there is a PDF file in context.
+      id: 60ecb284-7af0-463e-80d7-8f7e36dce929
+      iscommand: false
+      name: Is there a PDF file?
+      type: condition
+      version: -1
+    taskid: 60ecb284-7af0-463e-80d7-8f7e36dce929
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": 700
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "18"
+    note: false
+    quietmode: 0
+    reputationcalc: 2
+    scriptarguments:
+      entryID:
+        complex:
+          accessor: EntryID
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: application/pdf
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: containsString
+              right:
+                value:
+                  simple: application/pdf
+          root: File
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Load a PDF file's content and metadata into context.
+      id: fa0e5d0b-c66c-4837-8b73-bacf7e890d12
+      iscommand: false
+      name: Extract indicators from PDF file
+      script: ReadPDFFileV2
+      type: regular
+      version: -1
+    taskid: fa0e5d0b-c66c-4837-8b73-bacf7e890d12
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": 1000
+        }
+      }
+  "9":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: EntryID
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: containsString
+                    right:
+                      value:
+                        simple: Composite Document File V2 Document
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: containsString
+                    right:
+                      value:
+                        simple: Microsoft Word
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: docx
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: containsString
+                    right:
+                      value:
+                        simple: CDFV2
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: msg
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: eml
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isNotExists
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: xls
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isNotExists
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: xlsx
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: isNotExists
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Type
+                    operator: notContainsString
+                    right:
+                      value:
+                        simple: Excel
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: ppt
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: pptx
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: xlsb
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: xlsb
+                root: File
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: "yes"
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "yes":
+      - "11"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks if there is a Word file (DOC, DOCX) in context.
+      id: 839e3d49-c17e-4eb3-85b5-a797e1627d32
+      iscommand: false
+      name: Is there a Word file?
+      type: condition
+      version: -1
+    taskid: 839e3d49-c17e-4eb3-85b5-a797e1627d32
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 510,
+          "y": 700
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c0b4f86a-6063-455f-8bc7-92d09cd519fa
+      iscommand: false
+      name: No File To Parse
+      type: title
+      version: -1
+    taskid: c0b4f86a-6063-455f-8bc7-92d09cd519fa
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": -320,
+          "y": 950
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    reputationcalc: 2
+    scriptarguments:
+      entryID:
+        complex:
+          accessor: EntryID
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: containsString
+              right:
+                value:
+                  simple: Composite Document File V2 Document
+            - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: containsString
+              right:
+                value:
+                  simple: Microsoft Word
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: docx
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: msg
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: eml
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Extension
+              operator: isNotExists
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Extension
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: xls
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Extension
+              operator: isNotExists
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Extension
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: xlsx
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: isNotExists
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: notContainsString
+              right:
+                value:
+                  simple: Excel
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: ppt
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: pptx
+          root: File
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Extracts indicators from word files (DOC, DOCX).
+      id: 54ad5a67-0f23-40af-8e77-451ddbc84108
+      iscommand: false
+      name: Extract indicators from Word file
+      script: ExtractIndicatorsFromWordFile
+      type: regular
+      version: -1
+    taskid: 54ad5a67-0f23-40af-8e77-451ddbc84108
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 510,
+          "y": 1000
+        }
+      }
+  "12":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: image/png
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: image/jpg
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: image/jpeg
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: image/gif
+                root: File
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: "yes"
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "14"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks whether images were extracted from PDF files.
+      id: 1572cbb3-ceff-4d00-8f8a-468ad338953b
+      iscommand: false
+      name: Were images extracted?
+      type: condition
+      version: -1
+    taskid: 1572cbb3-ceff-4d00-8f8a-468ad338953b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1240,
+          "y": 1740
+        }
+      }
+  "13":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Image OCR
+                root: modules
+          operator: isExists
+      label: "yes"
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "12"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks whether there is an active instance of the Image OCR integration
+        enabled.
+      id: 92e92794-63db-4875-88c3-89bd5a4ec179
+      iscommand: false
+      name: Is Image OCR enabled?
+      type: condition
+      version: -1
+    taskid: 92e92794-63db-4875-88c3-89bd5a4ec179
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": 1560
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    reputationcalc: 2
+    scriptarguments:
+      entryid:
+        complex:
+          accessor: EntryID
+          filters:
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: image/png
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: image/jpg
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: image/jpeg
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: image/gif
+          root: File
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Extracts text from PNG, JPEG, and GIF image files, and uses auto-extract
+        to get reputation for indicators.
+      id: c6d841e4-812f-40e0-8ef4-9203859c9781
+      iscommand: true
+      name: Extract text from images
+      script: '|||image-ocr-extract-text'
+      type: regular
+      version: -1
+    taskid: c6d841e4-812f-40e0-8ef4-9203859c9781
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1480,
+          "y": 1910
+        }
+      }
+  "15":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                accessor: EntryID
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: ppt
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: pptx
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: rtf
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: xls
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: xlsx
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: xml
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: vnd.ms-powerpoint
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: vnd.ms-excel
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: File.Info
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: text/rtf
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isNotEqualString
+                    right:
+                      value:
+                        simple: xlsb
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: File
+                    operator: notContainsGeneral
+                    right:
+                      value:
+                        simple: xlsb
+                root: File
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: "yes"
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "yes":
+      - "16"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Checks if one of the following file types exists:
+        - PPT
+        - PPTX
+        - RTF
+        - XLS
+        - XLSX
+        - XML
+      id: 32dd3613-cac8-4ac6-8b2a-59fd9c2e4233
+      iscommand: false
+      name: Is there another supported document type?
+      type: condition
+      version: -1
+    taskid: 32dd3613-cac8-4ac6-8b2a-59fd9c2e4233
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1480,
+          "y": 700
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      all_files:
+        simple: "yes"
+      entry_id:
+        complex:
+          accessor: EntryID
+          filters:
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: ppt
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: pptx
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: rtf
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: xls
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: isEqualString
+              right:
+                value:
+                  simple: xlsx
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: containsGeneral
+              right:
+                value:
+                  simple: xml
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: containsGeneral
+              right:
+                value:
+                  simple: vnd.ms-powerpoint
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: containsGeneral
+              right:
+                value:
+                  simple: vnd.ms-excel
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: containsGeneral
+              right:
+                value:
+                  simple: text/rtf
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Extension
+              operator: notContainsGeneral
+              right:
+                value:
+                  simple: xlsb
+          root: File
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Converts the following formats to PDF format:
+        - PPT
+        - PPTX
+        - RTF
+        - XLS
+        - XLSX
+        - XML
+      id: 430b4252-4478-4150-8641-2444119a6005
+      iscommand: false
+      name: Convert a document to PDF
+      script: ConvertFile
+      type: regular
+      version: -1
+    taskid: 430b4252-4478-4150-8641-2444119a6005
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1480,
+          "y": 1000
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      EntryID:
+        complex:
+          accessor: EntryID
+          filters:
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: application/pdf
+            - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: File.Info
+              operator: containsString
+              right:
+                value:
+                  simple: application/pdf
+          root: File
+          transformers:
+          - operator: uniq
+      file_name:
+        simple: PDF_preview
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Get a preview (image) of the PDF files.
+      id: 68c81da0-f91d-4ea4-8616-82a0e333eb6f
+      iscommand: true
+      name: Preview PDF files
+      script: '|||rasterize-pdf'
+      tags:
+      - PDF_Images
+      type: regular
+      version: -1
+    taskid: 68c81da0-f91d-4ea4-8616-82a0e333eb6f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1240,
+          "y": 1380
+        }
+      }
+  "18":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: modules.brand
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: Rasterize
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: modules.state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+                transformers:
+                - operator: uniq
+          operator: isExists
+      label: "yes"
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "13"
+      "yes":
+      - "17"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Check if Rasterize integration is enabled
+      id: d3466327-cfe5-4364-8b19-187f67320432
+      iscommand: false
+      name: Is Rasterize enabled?
+      type: condition
+      version: -1
+    taskid: d3466327-cfe5-4364-8b19-187f67320432
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 930,
+          "y": 1200
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "12_14_yes": 0.55,
+      "12_3_#default#": 0.14,
+      "13_12_yes": 0.55,
+      "13_3_#default#": 0.19,
+      "15_10_#default#": 0.1,
+      "15_16_yes": 0.38,
+      "18_13_#default#": 0.41,
+      "18_17_yes": 0.31,
+      "1_10_#default#": 0.15,
+      "5_10_#default#": 0.19,
+      "5_6_yes": 0.36,
+      "7_10_#default#": 0.1,
+      "7_8_yes": 0.38,
+      "9_10_#default#": 0.11,
+      "9_11_yes": 0.35
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2155,
+        "width": 2180,
+        "x": -320,
+        "y": -10
+      }
+    }
+  }

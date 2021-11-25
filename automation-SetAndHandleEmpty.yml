@@ -1,0 +1,89 @@
+args:
+- default: true
+  description: The key to set in context.
+  name: key
+  required: true
+- description: The value of the key to set in context. The value is usually a DQ expression.
+    Can be an array.
+  isArray: true
+  name: value
+- auto: PREDEFINED
+  description: Whether to append the new context key to the existing context key.
+    If "false", then the existing context key will be overwritten with the new context
+    key.
+  name: append
+  predefined:
+  - "true"
+  - "false"
+- auto: PREDEFINED
+  defaultValue: "false"
+  description: Whether to save the argument as a string. The default value is "false".
+  name: stringify
+  predefined:
+  - "true"
+  - "false"
+comment: Set a value in context under the key you entered. If no value is entered,
+  the script doesn't do anything.
+commonfields:
+  id: SetAndHandleEmpty
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 5.0.0
+    itemVersion: 1.5.11
+    packID: CommonScripts
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.7.24076
+enabled: true
+engineinfo: {}
+name: SetAndHandleEmpty
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+
+  from typing import Text
+
+
+  def get_value(value, stringify=False):
+      if stringify:
+          return str(value)
+      elif not value or not isinstance(value, (Text, bytes, bytearray)):
+          return value
+      else:
+          try:
+              return json.loads(value)
+          except (json.decoder.JSONDecodeError, TypeError):
+              return value
+
+
+  def main():
+      args = demisto.args()
+      value = args.get('value')
+      key = args.get('key')
+      value = get_value(value, args.get('stringify') == 'true')
+      if value:
+          human_readable = f'Key {key} set'
+          context_entry = {key: value}
+      else:
+          human_readable = 'value is None'
+          context_entry = {}
+
+      if args.get('append') == 'false' and context_entry:
+          demisto.executeCommand('DeleteContext', {'key': key})
+
+      return_outputs(human_readable, context_entry)
+
+
+  if __name__ in ('__builtin__', 'builtins'):
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- Utility
+type: python

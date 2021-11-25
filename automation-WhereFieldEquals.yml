@@ -1,0 +1,100 @@
+args:
+- default: true
+  description: The list to apply the transformer to.
+  name: value
+  required: true
+- description: The attribute in the collection items to check equality against `equalTo`.
+  name: field
+  required: true
+- description: The value to filter all items by in the collection.
+  name: equalTo
+  required: true
+- description: The field to extract from each item (Optional).
+  name: getField
+  predefined:
+  - ""
+- auto: PREDEFINED
+  defaultValue: "true"
+  description: Whether the argument should be saved as a string (Optional).
+  name: stringify
+  predefined:
+  - "true"
+  - "false"
+comment: "Return all items from the list where their given 'field' attribute is equal
+  to 'equalTo' argument\n\nE.g. !WhereFieldEquals with the following arguments:\n
+  - value=[{ \"name\": \"192.1,0.82\", \"type\": \"IP\" }, { \"name\": \"myFile.txt\",
+  \"type\": \"File\" }, { \"name\": \"172.0.0.2\", \"type\": \"IP\" }]\n - field='type'\n
+  - equalTo='IP'\n - getField='name' \n\nWill return all items names where field 'type'
+  equals 'IP' - ['192.1,0.82', '172.0.0.2']"
+commonfields:
+  id: WhereFieldEquals
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 5.5.0
+    itemVersion: 1.5.11
+    packID: CommonScripts
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.7.24076
+enabled: true
+engineinfo: {}
+name: WhereFieldEquals
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+
+
+
+  def where_field_equals(args):
+      """
+      Handles the operation of finding a list of objects where the given field is present under the
+      specified location.
+      :param args: dictionary containing the Demisto arguments object.
+      :return: hr_string as a human readable string. entry_context as a dictionary containing the
+      results.
+      """
+      values_to_search = argToList(args.get('value'))
+      field = args.get('field')
+      equal_to = args.get('equalTo')
+      get_field = args.get('getField')
+
+      found_matches = []
+      for dict_item in values_to_search:
+          if isinstance(dict_item, dict) and dict_item.get(field) == equal_to:
+              if get_field:
+                  value = dict_item.get(get_field)
+                  if value:
+                      found_matches.append(value)
+              else:
+                  found_matches.append(dict_item)
+
+      if len(found_matches) == 1:
+          return found_matches[0]
+
+      if argToBoolean(args.get('stringify', 'true')):
+          return json.dumps(found_matches, separators=(',', ':'), ensure_ascii=False)
+      else:
+          return found_matches
+
+
+  def main():
+      args = demisto.args()
+      demisto.results(where_field_equals(args))
+
+
+  # python2 uses __builtin__ python3 uses builtins
+  if __name__ == "__builtin__" or __name__ == "builtins":
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- transformer
+- general
+- entirelist
+type: python

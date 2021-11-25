@@ -1,0 +1,871 @@
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 5.0.0
+    itemVersion: 2.1.2
+    packID: CommonPlaybooks
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+description: |-
+  Calculate and assign the incident severity based on the highest returned severity level from the following calculations:
+
+  - DBotScores of indicators
+  - Critical assets
+  - Email authenticity
+  - Current incident severity
+  - Microsoft Headers
+id: Calculate Severity - Generic v2
+inputs:
+- description: 'Array of all indicators associated with the incident. '
+  key: DBotScore
+  playbookInputQuery: null
+  required: false
+  value:
+    complex:
+      root: DBotScore
+- description: CSV of usernames of critical users.
+  key: CriticalUsers
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: admin,administrator
+- description: CSV of hostnames of critical endpoints.
+  key: CriticalEndpoints
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: admin
+- description: CSV of DN names of critical AD groups.
+  key: CriticalGroups
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: admins,administrators
+- description: User accounts to check against the critical lists.
+  key: Account
+  playbookInputQuery: null
+  required: false
+  value:
+    complex:
+      root: Account
+      transformers:
+      - operator: uniq
+- description: Endpoints to check against the CriticalEndpoints list.
+  key: Endpoint
+  playbookInputQuery: null
+  required: false
+  value:
+    complex:
+      root: Endpoint
+      transformers:
+      - operator: uniq
+- description: 'Indicates the email authenticity resulting from the EmailAuthenticityCheck
+    script. Possible values are: Pass, Fail, Suspicious, and Undetermined.'
+  key: EmailAuthenticityCheck
+  playbookInputQuery: null
+  required: false
+  value:
+    complex:
+      accessor: AuthenticityCheck
+      root: Email
+      transformers:
+      - operator: uniq
+- description: The value is set by the "Process Microsoft's Anti-Spam Headers" Playbook,
+    which calculates the severity after processing the PCL, BCL and PCL values inside
+    Microsoft's headers.
+  key: MicrosoftHeadersSeverityCheck
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: ${Email.MicrosoftHeadersSeverityCheck}
+name: Calculate Severity - Generic v2
+outputs:
+- contextPath: CriticalAssets
+  description: All critical assets involved in the incident.
+  type: unknown
+- contextPath: CriticalAssets.CriticalEndpoints
+  description: Critical endpoints involved in the incident.
+  type: unknown
+- contextPath: CriticalAssets.CriticalEndpointGroups
+  description: Critical endpoint-groups involved in the incident.
+  type: unknown
+- contextPath: CriticalAssets.CriticalUsers
+  description: Critical users involved in the incident.
+  type: unknown
+- contextPath: CriticalAssets.CriticalUserGroups
+  description: Critical user-groups involved in the incident.
+  type: unknown
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "19"
+      - "18"
+      - "24"
+      - "16"
+      - "27"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d3a3d290-90e0-4101-8f6c-aaa23bcc3e1c
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: d3a3d290-90e0-4101-8f6c-aaa23bcc3e1c
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 50
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      severity:
+        simple: low
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Sets the incident severity to "Low".
+      id: cf430274-2565-4433-8dfe-a25a621b0a7c
+      iscommand: true
+      name: Set incident severity to "Low"
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: cf430274-2565-4433-8dfe-a25a621b0a7c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 870
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      severity:
+        simple: medium
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Sets the incident severity to "Medium".
+      id: 4def42ba-2984-40f3-83c0-ec484edc3b97
+      iscommand: true
+      name: Set incident severity to "Medium"
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 4def42ba-2984-40f3-83c0-ec484edc3b97
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 470,
+          "y": 870
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      severity:
+        simple: high
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Sets the incident severity to "High".
+      id: 132c16ae-fb69-4752-8f79-77923b14ca8c
+      iscommand: true
+      name: Set incident severity to "High"
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 132c16ae-fb69-4752-8f79-77923b14ca8c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 870
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 8ee3e05c-0da8-405d-8bb8-a2d7bbf7789f
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 8ee3e05c-0da8-405d-8bb8-a2d7bbf7789f
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 1100
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      severity:
+        simple: critical
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Sets the incident severity to "Critical".
+      id: c7b36df3-1ae7-4b18-819f-9b85d96c4858
+      iscommand: true
+      name: Set incident severity to "Critical"
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: c7b36df3-1ae7-4b18-819f-9b85d96c4858
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 870
+        }
+      }
+  "15":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.DBotScoreSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Critical
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.CriticalAssetsSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Critical
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.EmailAuthenticitySeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Critical
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.IncidentSeverity
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "4"
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: Severities.MicrosoftHeadersSeverityCheck
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "4"
+                root: Severities
+          operator: isExists
+      label: Critical
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.DBotScoreSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: High
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.CriticalAssetsSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: High
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.EmailAuthenticitySeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: High
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.IncidentSeverity
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "3"
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: Severities.MicrosoftHeadersSeverityCheck
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "3"
+                root: Severities
+          operator: isExists
+      label: High
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.DBotScoreSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Medium
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.CriticalAssetsSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Medium
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: Severities.EmailAuthenticitySeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Medium
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.IncidentSeverity
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "2"
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: Severities.MicrosoftHeadersSeverityCheck
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: "2"
+                root: Severities
+          operator: isExists
+      label: Medium
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.DBotScoreSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Low
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.CriticalAssetsSeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Low
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.EmailAuthenticitySeverity
+                    operator: containsGeneral
+                    right:
+                      value:
+                        simple: Low
+                  - ignorecase: true
+                    left:
+                      iscontext: true
+                      value:
+                        simple: Severities.IncidentSeverity
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "1"
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: Severities.MicrosoftHeadersSeverityCheck
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: "1"
+                root: Severities
+          operator: isExists
+      label: Low
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "25"
+      Critical:
+      - "11"
+      High:
+      - "6"
+      Low:
+      - "4"
+      Medium:
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Determines the severity level based on the highest result of all
+        severity calculations.
+      id: be9c8f44-63bb-4ba0-873b-2168cdb2ab06
+      iscommand: false
+      name: Determine incident severity
+      type: condition
+      version: -1
+    taskid: be9c8f44-63bb-4ba0-873b-2168cdb2ab06
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 670
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: Severities.IncidentSeverity
+      value:
+        complex:
+          accessor: severity
+          root: incident
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sets the current severity of the incident in the context.
+      id: 740266f8-5732-4285-81a1-d19dbea15988
+      iscommand: false
+      name: Get current incident severity
+      script: Set
+      type: regular
+      version: -1
+    taskid: 740266f8-5732-4285-81a1-d19dbea15988
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 200
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 0
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Account:
+        complex:
+          root: inputs.Account
+          transformers:
+          - operator: uniq
+      CriticalEndpoints:
+        complex:
+          root: inputs.CriticalEndpoints
+          transformers:
+          - operator: uniq
+      CriticalGroups:
+        complex:
+          root: inputs.CriticalGroups
+          transformers:
+          - operator: uniq
+      CriticalUsers:
+        complex:
+          root: inputs.CriticalUsers
+          transformers:
+          - operator: uniq
+      Endpoint:
+        complex:
+          root: inputs.Endpoint
+          transformers:
+          - operator: uniq
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Determines if a critical asset is associated with the investigation. The playbook returns a severity level of "Critical" if at least one critical asset is associated with the investigation.
+        Critical assets refer to: users, user groups, endpoints and endpoint groups.
+      id: 29bad58f-8797-49ff-8681-68363fc8e9a5
+      iscommand: false
+      name: Calculate Severity - Critical Assets v2
+      playbookId: Calculate Severity - Critical Assets v2
+      type: playbook
+      version: -1
+    taskid: 29bad58f-8797-49ff-8681-68363fc8e9a5
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 200
+        }
+      }
+  "19":
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 0
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      DBotScore:
+        complex:
+          root: inputs.DBotScore
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Calculates the incident severity level according to the highest
+        indicator DBotScore.
+      id: b20ff842-f44e-4314-8d7a-ce51e1d69c16
+      iscommand: false
+      name: Calculate Severity By Highest DBotScore
+      playbookId: Calculate Severity By Highest DBotScore
+      type: playbook
+      version: -1
+    taskid: b20ff842-f44e-4314-8d7a-ce51e1d69c16
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1370,
+          "y": 200
+        }
+      }
+  "24":
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 0
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      EmailAuthenticityCheck:
+        complex:
+          root: inputs.EmailAuthenticityCheck
+    separatecontext: true
+    skipunavailable: true
+    task:
+      brand: ""
+      description: Calculates a severity according to the verdict coming from the
+        CheckEmailAuthenticity script.
+      id: 1a13e3e0-18fb-4c0f-8866-9d56b0df1017
+      iscommand: false
+      name: Calculate Severity By Email Authenticity
+      playbookId: Calculate Severity By Email Authenticity
+      type: playbook
+      version: -1
+    taskid: 1a13e3e0-18fb-4c0f-8866-9d56b0df1017
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": -20,
+          "y": 200
+        }
+      }
+  "25":
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      severity:
+        simple: unknown
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Sets the incident severity to "Unknown".
+      id: e042ddb9-d13d-492a-8ac4-95edfbf9a927
+      iscommand: true
+      name: Set incident severity level to "Unknown"
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: e042ddb9-d13d-492a-8ac4-95edfbf9a927
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 905
+        }
+      }
+  "26":
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: Severities.MicrosoftHeadersSeverityCheck
+      value:
+        simple: ${inputs.MicrosoftHeadersSeverityCheck}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Calculates the severity after processing the PCL, BCL and PCL values
+        inside Microsoft headers. If no value is entered, nothing is returned.
+      id: ec346f9c-5097-4f41-81f7-2fa0243a7a2c
+      iscommand: false
+      name: Set Microsoft Headers Severity Check
+      script: Set
+      type: regular
+      version: -1
+    taskid: ec346f9c-5097-4f41-81f7-2fa0243a7a2c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1950,
+          "y": 450
+        }
+      }
+  "27":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.MicrosoftHeadersSeverityCheck
+          operator: isNotEmpty
+      label: "yes"
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "15"
+      "yes":
+      - "26"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This task verifies that the playbook input "MicrosoftHeadersSeverityCheck"
+        is not empty.
+      id: a69eaf95-968e-4032-8bfd-206412ffc322
+      iscommand: false
+      name: Check if MicrosoftHeadersSeverityCheck is not empty
+      type: condition
+      version: -1
+    taskid: a69eaf95-968e-4032-8bfd-206412ffc322
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1840,
+          "y": 200
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "15_11_Critical": 0.9,
+      "15_25_#default#": 0.59,
+      "15_4_Low": 0.9,
+      "15_5_Medium": 0.81,
+      "15_6_High": 0.82,
+      "27_26_yes": 0.62
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1115,
+        "width": 2350,
+        "x": -20,
+        "y": 50
+      }
+    }
+  }

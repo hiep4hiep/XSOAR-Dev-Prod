@@ -1,0 +1,58 @@
+args:
+- description: Time stamp to convert
+  name: value
+  required: true
+- defaultValue: '%Y-%m-%dT%H:%M:%S'
+  description: Python 'strptime' formatter string
+  name: formatter
+  required: true
+comment: 'Converts a custom-formatted timestamp to UNIX epoch time. Use it to convert
+  custom time stamps to a Demisto date field.  Uses the python strptime format.  For
+  more info, see: https://docs.python.org/3.7/library/datetime.html#strftime-and-strptime-behavior'
+commonfields:
+  id: FormattedDateToEpoch
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 5.0.0
+    itemVersion: 1.5.11
+    packID: CommonScripts
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.7.24076
+enabled: true
+engineinfo: {}
+name: FormattedDateToEpoch
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+  from datetime import datetime, timezone
+
+
+  def date_to_epoch(date, formatter):
+      epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
+      date_obj = datetime.strptime(date, formatter)
+      return int(date_obj.strftime('%s') if date_obj.tzinfo is None else (date_obj - epoch).total_seconds())
+
+
+  def main():
+      args = demisto.args()
+      date_value = args['value']
+      formatter = args['formatter']
+      demisto.results(date_to_epoch(date_value, formatter))
+
+
+  # python2 uses __builtin__ python3 uses builtins
+  if __name__ == "__builtin__" or __name__ == "builtins":
+      main()
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- transformer
+- date
+type: python

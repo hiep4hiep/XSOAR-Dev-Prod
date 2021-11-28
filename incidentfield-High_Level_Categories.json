@@ -18,7 +18,7 @@
 	"hidden": false,
 	"id": "incident_highlevelcategories",
 	"isReadOnly": false,
-	"itemVersion": "3.1.25",
+	"itemVersion": "3.1.26",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "High Level Categories",

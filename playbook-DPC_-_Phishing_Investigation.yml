@@ -100,7 +100,7 @@ inputs:
   required: false
   value:
     simple: "True"
-name: Phishing Investigation - Generic v2_copy
+name: DPC - Phishing Investigation
 outputs: []
 sourceplaybookid: Phishing Investigation - Generic v2
 starttaskid: "0"

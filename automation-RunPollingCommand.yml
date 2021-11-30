@@ -13,26 +13,30 @@ args:
   name: additionalPollingCommandArgNames
 - description: Commas separated arguments values of the polling command
   name: additionalPollingCommandArgValues
-comment: Runs a specified polling command one time. This is useful for initiating
-  a local playbook context before running a polling scheduled task.
+comment: |-
+  Runs a specified polling command one time. This is useful for initiating a local playbook context before running a polling scheduled task.
+
+  This automation runs using the default Limited User role, unless you explicitly change the permissions.
+  For more information, see the section about permissions here:
+  https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
 commonfields:
   id: RunPollingCommand
   version: -1
 contentitemexportablefields:
   contentitemfields:
     fromServerVersion: 5.0.0
-    itemVersion: 1.5.11
+    itemVersion: 1.5.12
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python:2.7.18.24066
+dockerimage: demisto/python:2.7.18.24398
 enabled: true
 engineinfo: {}
 name: RunPollingCommand
 pswd: ""
-runas: DBotRole
+runas: DBotWeakRole
 runonce: false
 script: |2
 

@@ -1,0 +1,231 @@
+category: Messaging
+commonfields:
+  id: EWS_MSAL
+  version: -1
+configuration:
+- display: Username
+  name: credentials
+  required: true
+  type: 9
+- display: Tenant ID
+  name: tenant_id
+  required: true
+  type: 0
+- display: Client ID
+  name: client_id
+  required: true
+  type: 0
+- display: API Permission
+  name: api_permission
+  required: false
+  type: 0
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: The integration uses MSAL lib to authenticate and authorize API access
+  to EWS using ROPC flow which requires username, password and client (application)
+  id
+detaileddescription: |-
+  ### Developer Contributed Integration
+  #### Integration Author: Hiep Nguyen
+  Support and maintenance for this integration are provided by the author. Please use the following contact details:
+  - **Email**: [hnguyen@paloaltonetworks.com](mailto:hnguyen@paloaltonetworks.com)
+  ***
+  ## BaseIntegration Help
+
+  Markdown file for integration configuration  help snippet. In this file add:
+  - Brief information about how to retrieve the API key of your product
+  - Other useful information on how to configure your integration in XSOAR
+
+  Since this is a Markdown file, we encourage you to use MD formatting for sections, sub-sections, lists, etc.
+
+
+
+  ---
+  [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/ews-msal)
+display: EWS_MSAL (Developer Contribution)
+image: data:image/png;base64,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
+name: EWS_MSAL
+script:
+  commands:
+  - arguments: []
+    description: Generate access token, refresh token with expiry date
+    name: msal-get-tokens
+    outputs:
+    - contextPath: MSAL.Tokens
+      description: Access Token, Refresh Token with expiry date
+      type: String
+  - arguments: []
+    description: Generate access token, refresh token with expiry date
+    name: msal-get-tokens-alt
+    outputs:
+    - contextPath: MSAL.Tokens
+      description: Access Token, Refresh Token with expiry date
+      type: String
+  dockerimage: localhost/demisto-msal:latest
+  runonce: false
+  script: |2
+
+    #from msal import authority
+    #from Base.Scripts.CommonServerPython.CommonServerPython import CommandResults, get_integration_context, handle_proxy, return_results, tableToMarkdown
+    #from Base.Scripts.CommonServerPython.CommonServerPython import set_integration_context
+    #
+    #
+    #
+
+    import requests
+    import traceback
+    from typing import Dict, Any
+    import sys
+    import json
+    import logging
+    import msal
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()  # pylint: disable=no-member
+
+    ''' CONSTANTS '''
+
+    DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'  # ISO8601 format with UTC, default in XSOAR
+
+    ''' HELPER FUNCTIONS '''
+
+    # TODO: ADD HERE ANY HELPER FUNCTION YOU MIGHT NEED (if any)
+
+    ''' COMMAND FUNCTIONS '''
+
+    def test_module() -> str:
+
+        message: str = ''
+        try:
+            message = 'ok'
+        except DemistoException as e:
+            if 'Forbidden' in str(e) or 'Authorization' in str(e):  # TODO: make sure you capture authentication errors
+                message = 'Authorization Error: make sure API Key is correctly set'
+            else:
+                raise e
+        return message
+
+    def get_tokens(config: dict, proxies: dict, is_secure: bool):
+        ''' MICROSOFT MSAL CLASS '''
+        app = msal.ClientApplication(
+            client_id=config["client_id"],
+            authority=config["authority"],
+            proxies=proxies,
+            verify=is_secure
+            )
+        result = None
+
+        # Firstly, check the cache to see if this end user has signed in before
+        accounts = app.get_accounts(username=config["username"])
+        if accounts:
+            logging.info("Account(s) exists in cache, probably with token too. Let's try.")
+            result = app.acquire_token_silent(config["scope"], account=accounts[0])
+
+        if not result:
+            logging.info("No suitable token exists in cache. Let's get a new one from AAD.")
+            # See this page for constraints of Username Password Flow.
+            # https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki/Username-Password-Authentication
+            result = app.acquire_token_by_username_password(
+                config["username"], config["password"], scopes=config["scope"])
+        tokens = CommandResults(
+            outputs=result,
+            outputs_prefix="MSAL.Tokens",
+            readable_output=tableToMarkdown("Your MSAL Tokens", result)
+        )
+        return(tokens)
+
+    def get_tokens_alternative(config: dict, proxies: dict, is_secure: bool):
+        url = config["authority"] + "/oauth2/v2.0/token"
+        scope = config["scope"][0]
+        client_id = config["client_id"]
+        username = config["username"]
+        password = config["password"]
+
+        payload=f'grant_type=password&scope={scope}&client_id={client_id}&username={username}&password={password}'
+        headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        response = requests.request("POST", url, headers=headers, data=payload, proxies=proxies, verify=False)
+        result = response.json()
+
+        tokens = CommandResults(
+            outputs=result,
+            outputs_prefix="MSAL.Tokens",
+            readable_output=tableToMarkdown("Your MSAL Tokens", result)
+        )
+        return(tokens)
+
+
+    ''' MAIN FUNCTION '''
+
+
+    def main() -> None:
+        """main function, parses params and runs command functions
+
+        :return:
+        :rtype:
+        """
+        # MSAL Authentication params
+        tenant_id = demisto.params().get('tenant_id')
+        authority = "https://login.microsoftonline.com/" + tenant_id
+        client_id = demisto.params().get('client_id')
+        username = demisto.params().get('credentials').get('identifier')
+        password = demisto.params().get('credentials').get('password')
+        api_permission = demisto.params().get('api_permission','User.Read')
+        scope = []
+        scope.append(api_permission)
+        config = {
+            "authority": authority,
+            "client_id": client_id,
+            "username": username,
+            "password": password,
+            "scope": scope
+        }
+
+        verify_certificate = not demisto.params().get('insecure', False)
+        proxy = demisto.params().get('proxy', False)
+        proxies = handle_proxy()
+
+        demisto.debug(f'Command being called is {demisto.command()}')
+        try:
+            if demisto.command() == 'test-module':
+                # This is the call made when pressing the integration Test button.
+                result = test_module(client)
+                return_results(result)
+
+
+            elif demisto.command() == 'msal-get-tokens':
+                print("Using these proxy settings: ", proxies)
+                return_results(get_tokens(config=config,proxies=proxies,is_secure=verify_certificate))
+
+            elif demisto.command() == 'msal-get-tokens-alt':
+                print("Using these proxy settings: ", proxies)
+                return_results(get_tokens_alternative(config=config,proxies=proxies,is_secure=verify_certificate))
+
+
+        # Log exceptions and return errors
+        except Exception as e:
+            demisto.error(traceback.format_exc())  # print the traceback
+            return_error(f'Failed to execute {demisto.command()} command.\nError:\n{str(e)}')
+
+
+    ''' ENTRY POINT '''
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python

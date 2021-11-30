@@ -23,22 +23,26 @@ args:
   predefined:
   - "true"
   - "false"
-comment: Works the same as the 'Set' command, but can work across incidents by specifying
-  'id' as an argument. Sets a value into the context with the given context key. Doesn't
-  append by default.
+comment: |-
+  Works the same as the 'Set' command, but can work across incidents by specifying 'id' as an argument.
+  Sets a value into the context with the given context key. Doesn't append by default.
+
+  This automation runs using the default Limited User role, unless you explicitly change the permissions.
+  For more information, see the section about permissions here:
+  https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
 commonfields:
   id: SetByIncidentId
   version: -1
 contentitemexportablefields:
   contentitemfields:
     fromServerVersion: 5.0.0
-    itemVersion: 1.5.11
+    itemVersion: 1.5.12
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.9.7.24076
+dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
 name: SetByIncidentId

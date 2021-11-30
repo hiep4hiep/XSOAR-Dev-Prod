@@ -1,0 +1,78 @@
+args:
+- description: Entry ID of the attached excel file
+  name: entryId
+  required: true
+comment: Use entry ID to load and parse excel file
+commonfields:
+  id: ParseExcelToList
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/xlrd-py3:1.0.0.23423
+engineinfo: {}
+name: ParseExcelToList
+outputs:
+- contextPath: ParseExcel.Output
+  description: Result
+  type: String
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  from Base.Scripts.CommonServerPython.CommonServerPython import return_results
+
+
+
+
+  from typing import Dict, Any
+  import traceback
+
+  import xlrd
+
+
+  def parse_excel(file_entry_id):
+
+      res = demisto.getFilePath(file_entry_id)
+      file_path = res['path']
+
+      workbook = xlrd.open_workbook(file_path, on_demand=True)
+      sheet_names = workbook.sheet_names()
+      sheets = []
+      context = {}
+
+      for sheetnum in range(workbook.nsheets):
+          worksheet = workbook.sheet_by_index(sheetnum)
+          first_row = []
+          for col in range(worksheet.ncols):
+              first_row.append(str(worksheet.cell_value(0, col)))
+          data = []
+          for row in range(1, worksheet.nrows):
+              elm = {}
+              for col in range(worksheet.ncols):
+                  elm[first_row[col]] = worksheet.cell_value(row, col)
+              data.append(elm)
+          sheets.append(data)
+          # Send data to XSOAR list
+          demisto.executeCommand("createList", {"listName":"ITSM","listData":data})
+          context["ParseExcel"] = sheets
+          return_results("Parsed Successfully")
+
+  def main():
+      file_entry_id = demisto.args()['entryId']
+      parse_excel(file_entry_id)
+
+
+  # python2 uses __builtin__ python3 uses builtins
+  if __name__ == "__builtin__" or __name__ == "builtins":
+      main()
+scripttarget: 0
+subtype: python3
+tags:
+- basescript
+type: python

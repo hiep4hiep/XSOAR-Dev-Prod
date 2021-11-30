@@ -1,0 +1,29 @@
+args:
+- name: IP
+- name: MD5
+- name: SHA256
+- name: URL
+- name: Domain
+commonfields:
+  id: 0c61061a-6d24-4caf-8e79-d44efe30a45f
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.7.3.286
+enabled: true
+engineinfo: {}
+name: CreateAuscertEmail
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: ""
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

@@ -1,0 +1,87 @@
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 655ac318-9ae5-423d-8fae-075aec0c87ab
+inputs: []
+name: GEL - Save ITSM List
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a9b673ad-a1ee-4432-801a-d1d0d72223d5
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a9b673ad-a1ee-4432-801a-d1d0d72223d5
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryId:
+        simple: 3@${incident.id}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: The automation takes Excel file (entryID) as an input and parses
+        its content to the war room and context
+      id: 6c5d635a-47ab-4ea2-8e92-afd1031e7976
+      iscommand: false
+      name: ParseExcel and Save to list
+      script: 8be2bac3-dbaf-4409-86ee-c501f8d9590d
+      type: regular
+      version: -1
+    taskid: 6c5d635a-47ab-4ea2-8e92-afd1031e7976
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 160
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 205,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

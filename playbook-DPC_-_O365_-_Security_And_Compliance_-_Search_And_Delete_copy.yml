@@ -106,7 +106,7 @@ inputs:
   required: false
   value:
     simple: "3"
-name: O365 - Security And Compliance - Search And Delete_copy
+name: DPC - O365 - Security And Compliance - Search And Delete_copy
 outputs: []
 sourceplaybookid: O365 - Security And Compliance - Search And Delete
 starttaskid: "0"

@@ -1,0 +1,41 @@
+{
+	"brands": null,
+	"defaultIncidentType": "Qradar Generic",
+	"description": "Classifies QRadar events.",
+	"feed": false,
+	"fromServerVersion": "6.0.0",
+	"id": "70629380-fd6d-4c14-83e8-4bf86641cc0f",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "2.1.4",
+	"keyTypeMap": {
+		"SIM User Authentication": "Access",
+		"SOC: Log Source Monitoring - HIGHLY IMPORTANT SERVERS - UNIX (If not able to receive events more than 24H)": "QRadar Log Source Event",
+		"User Login Failure": "Access"
+	},
+	"locked": false,
+	"logicalVersion": 2,
+	"mapping": null,
+	"name": "GEL - QRadar Classifier",
+	"nameRaw": "GEL - QRadar Classifier",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "QRadar",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {
+		"complex": {
+			"accessor": "name",
+			"filters": [],
+			"root": "rules.[0]",
+			"transformers": []
+		},
+		"simple": ""
+	},
+	"type": "classification",
+	"unclassifiedCases": null,
+	"version": -1
+}

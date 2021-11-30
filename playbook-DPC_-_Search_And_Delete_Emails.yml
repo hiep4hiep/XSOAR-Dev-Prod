@@ -99,7 +99,7 @@ inputs:
     complex:
       accessor: emailto
       root: incident
-name: Search And Delete Emails - Generic v2_copy
+name: DPC - Search And Delete Emails
 outputs: []
 sourceplaybookid: Search And Delete Emails - Generic v2
 starttaskid: "0"

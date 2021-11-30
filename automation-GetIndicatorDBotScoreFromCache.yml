@@ -9,7 +9,7 @@ commonfields:
 contentitemexportablefields:
   contentitemfields:
     fromServerVersion: 6.0.0
-    itemVersion: 1.5.11
+    itemVersion: 1.5.12
     packID: CommonScripts
     packPropagationLabels:
     - all

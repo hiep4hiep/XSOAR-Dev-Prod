@@ -129,7 +129,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 152.5,
+          "x": 480,
           "y": 50
         }
       }
@@ -170,7 +170,7 @@ tasks:
       {
         "position": {
           "x": 1022.5,
-          "y": 2350
+          "y": 2495
         }
       }
   "7":
@@ -200,8 +200,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 367.5,
-          "y": 2845
+          "x": 490,
+          "y": 2990
         }
       }
   "8":
@@ -232,8 +232,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 695,
-          "y": 4360
+          "x": 807.5,
+          "y": 4505
         }
       }
   "11":
@@ -261,7 +261,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1135,
+          "x": 1237.5,
           "y": 340
         }
       }
@@ -301,8 +301,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 60,
-          "y": 835
+          "x": 50,
+          "y": 980
         }
       }
   "13":
@@ -348,8 +348,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 60,
-          "y": 1185
+          "x": 50,
+          "y": 1330
         }
       }
   "15":
@@ -392,7 +392,7 @@ tasks:
       {
         "position": {
           "x": 1022.5,
-          "y": 2525
+          "y": 2670
         }
       }
   "16":
@@ -439,8 +439,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 357.5,
-          "y": 4185
+          "x": 490,
+          "y": 4330
         }
       }
   "17":
@@ -485,8 +485,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 910,
-          "y": 3370
+          "x": 1022.5,
+          "y": 3515
         }
       }
   "18":
@@ -514,8 +514,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 60,
-          "y": 675
+          "x": 50,
+          "y": 820
         }
       }
   "22":
@@ -532,6 +532,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
+      description: Detonate file through active integrations that support file detonation
       id: be406ffc-c93b-4890-830c-2536ffbedc6e
       iscommand: false
       name: Detonate File - Generic
@@ -544,8 +545,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 910,
-          "y": 835
+          "x": 1995,
+          "y": 980
         }
       }
   "26":
@@ -560,9 +561,9 @@ tasks:
       wait: 1
     nexttasks:
       '#none#':
-      - "22"
       - "88"
-      - "134"
+      - "135"
+      - "136"
     note: false
     quietmode: 0
     scriptarguments:
@@ -621,7 +622,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1135,
+          "x": 1237.5,
           "y": 485
         }
       }
@@ -634,7 +635,7 @@ tasks:
       '#none#':
       - "97"
       - "98"
-      - "99"
+      - "138"
     note: false
     quietmode: 0
     separatecontext: false
@@ -654,81 +655,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1145,
-          "y": 3545
-        }
-      }
-  "28":
-    id: "28"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    loop:
-      exitCondition: ""
-      iscommand: false
-      max: 100
-      wait: 1
-    nexttasks:
-      '#none#':
-      - "43"
-    note: false
-    quietmode: 0
-    scriptarguments:
-      AttachmentName:
-        complex:
-          accessor: attachmentname
-          root: incident
-      From:
-        complex:
-          accessor: emailfrom
-          root: incident
-      ? |
-        O365AllowNotFoundExchangeLocations
-      : complex:
-          root: inputs.O365AllowNotFoundSearchLocations
-      O365DeleteType:
-        complex:
-          root: inputs.O365DeleteType
-      O365Description:
-        simple: Search for potential phishing
-      O365ExchangeLocation:
-        simple: All
-      O365ExchangeLocationExclusion:
-        complex:
-          root: inputs.O365ExchangeLocationExclusion
-      O365KQL:
-        simple: from:${incident.emailfrom} AND subject:${incident.emailsubject}
-      SearchAndDeleteIntegration:
-        complex:
-          root: inputs.SearchAndDeleteIntegration
-      Subject:
-        complex:
-          accessor: emailsubject
-          root: incident
-      To:
-        complex:
-          accessor: emailto
-          root: incident
-    separatecontext: true
-    skipunavailable: false
-    task:
-      brand: ""
-      description: This playbook searches and delete emails with similar attributes
-        of a malicious email using EWS or Office 365.
-      id: 6838736c-c177-4b2a-883e-43e36cc896bb
-      iscommand: false
-      name: Search And Delete Emails - Generic v2
-      playbookId: Search And Delete Emails - Generic v2
-      type: playbook
-      version: -1
-    taskid: 6838736c-c177-4b2a-883e-43e36cc896bb
-    timertriggers: []
-    type: playbook
-    view: |-
-      {
-        "position": {
-          "x": 1257.5,
-          "y": 4010
+          "x": 1135,
+          "y": 3690
         }
       }
   "29":
@@ -753,8 +681,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 695,
-          "y": 4535
+          "x": 807.5,
+          "y": 4680
         }
       }
   "30":
@@ -782,8 +710,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1155,
-          "y": 3035
+          "x": 1247.5,
+          "y": 3180
         }
       }
   "31":
@@ -811,8 +739,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 367.5,
-          "y": 2700
+          "x": 490,
+          "y": 2845
         }
       }
   "33":
@@ -843,136 +771,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 367.5,
-          "y": 3020
-        }
-      }
-  "34":
-    id: "34"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "43"
-    note: false
-    quietmode: 0
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      description: "Consider the following:\n1. Search for and delete similar emails\n2.
-        Inform the organization about the threat\n3. Hunt the relevant IOCs\n4. Update
-        proxies and firewalls as necessary\n5. Block the malicious sender/ domain
-        in the mail-gateway "
-      id: 945915a4-395f-444f-8500-c80791cddcfd
-      iscommand: false
-      name: Manually remediate  the incident
-      type: regular
-      version: -1
-    taskid: 945915a4-395f-444f-8500-c80791cddcfd
-    timertriggers: []
-    type: regular
-    view: |-
-      {
-        "position": {
-          "x": 1687.5,
-          "y": 4010
-        }
-      }
-  "36":
-    conditions:
-    - condition:
-      - - ignorecase: true
-          left:
-            iscontext: true
-            value:
-              simple: inputs.SearchAndDelete
-          operator: isEqualString
-          right:
-            value:
-              simple: "True"
-      label: "Yes"
-    id: "36"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#default#':
-      - "43"
-      "Yes":
-      - "28"
-    note: false
-    quietmode: 0
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      description: Checks whether the "SearchAndDelete" playbook input is set to True.
-      id: 7047c1ab-98bf-4a58-805b-7788d6e8a96a
-      iscommand: false
-      name: Should emails be searched and deleted?
-      type: condition
-      version: -1
-    taskid: 7047c1ab-98bf-4a58-805b-7788d6e8a96a
-    timertriggers: []
-    type: condition
-    view: |-
-      {
-        "position": {
-          "x": 1145,
-          "y": 3835
-        }
-      }
-  "37":
-    conditions:
-    - condition:
-      - - left:
-            iscontext: true
-            value:
-              complex:
-                filters:
-                - - ignorecase: true
-                    left:
-                      iscontext: true
-                      value:
-                        simple: inputs.BlockIndicators
-                    operator: isEqualString
-                    right:
-                      value:
-                        simple: "True"
-                root: inputs.BlockIndicators
-          operator: isExists
-      label: "yes"
-    id: "37"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#default#':
-      - "43"
-      "yes":
-      - "91"
-    note: false
-    quietmode: 0
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      description: Checks whether the "BlockIndicators" playbook input is set to True.
-      id: d8d3a1c3-6d94-4359-8bda-0e0be77c2f71
-      iscommand: false
-      name: Should indicators be blocked automatically?
-      type: condition
-      version: -1
-    taskid: d8d3a1c3-6d94-4359-8bda-0e0be77c2f71
-    timertriggers: []
-    type: condition
-    view: |-
-      {
-        "position": {
-          "x": 695,
-          "y": 3835
+          "x": 490,
+          "y": 3165
         }
       }
   "39":
@@ -1003,7 +803,7 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 152.5,
+          "x": 480,
           "y": 195
         }
       }
@@ -1035,7 +835,7 @@ tasks:
       {
         "position": {
           "x": 1135,
-          "y": 4200
+          "y": 4345
         }
       }
   "52":
@@ -1063,8 +863,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 910,
-          "y": 1025
+          "x": 1565,
+          "y": 1170
         }
       }
   "53":
@@ -1097,6 +897,10 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
+      description: |-
+        Enrich email addresses.
+        - Get information from Active Directory for internal addresses
+        - Get the domain-squatting reputation for external addresses
       id: 9efe139c-3485-464d-8122-1a3bc8587888
       iscommand: false
       name: Email Address Enrichment - Generic v2.1
@@ -1110,7 +914,7 @@ tasks:
       {
         "position": {
           "x": 50,
-          "y": 1010
+          "y": 1155
         }
       }
   "55":
@@ -1127,6 +931,20 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
+      description: |-
+        Extracts indicators from a file.
+        Supported file types:
+        - CSV
+        - PDF
+        - TXT
+        - HTM, HTML
+        - DOC, DOCX
+        - PPT
+        - PPTX
+        - RTF
+        - XLS
+        - XLSX
+        - XML
       id: 675eab21-6e48-46f8-8c48-831d694b90bc
       iscommand: false
       name: Extract Indicators From File - Generic v2
@@ -1139,8 +957,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1780,
-          "y": 835
+          "x": 1452.5,
+          "y": 980
         }
       }
   "56":
@@ -1170,8 +988,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 910,
-          "y": 1360
+          "x": 1012.5,
+          "y": 1505
         }
       }
   "79":
@@ -1223,8 +1041,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 900,
-          "y": 1650
+          "x": 1012.5,
+          "y": 1805
         }
       }
   "80":
@@ -1252,8 +1070,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 900,
-          "y": 1505
+          "x": 1012.5,
+          "y": 1650
         }
       }
   "82":
@@ -1292,8 +1110,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 900,
-          "y": 1825
+          "x": 1012.5,
+          "y": 1970
         }
       }
   "83":
@@ -1367,8 +1185,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 900,
-          "y": 2000
+          "x": 1012.5,
+          "y": 2145
         }
       }
   "84":
@@ -1385,6 +1203,14 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
+      description: |-
+        Calculate and assign the incident severity based on the highest returned severity level from the following calculations:
+
+        - DBotScores of indicators
+        - Critical assets
+        - Email authenticity
+        - Current incident severity
+        - Microsoft Headers
       id: 32673e2e-72fc-4a00-8054-7e0f357a6981
       iscommand: false
       name: Calculate Severity - Generic v2
@@ -1398,7 +1224,7 @@ tasks:
       {
         "position": {
           "x": 1022.5,
-          "y": 2175
+          "y": 2320
         }
       }
   "85":
@@ -1435,7 +1261,7 @@ tasks:
       {
         "position": {
           "x": 480,
-          "y": 1010
+          "y": 1155
         }
       }
   "87":
@@ -1492,8 +1318,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1350,
-          "y": 835
+          "x": 910,
+          "y": 980
         }
       }
   "88":
@@ -1501,9 +1327,6 @@ tasks:
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
-    nexttasks:
-      '#none#':
-      - "87"
     note: false
     quietmode: 0
     separatecontext: false
@@ -1521,8 +1344,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1350,
-          "y": 675
+          "x": 910,
+          "y": 660
         }
       }
   "89":
@@ -1573,8 +1396,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1462.5,
-          "y": 1185
+          "x": 910,
+          "y": 1320
         }
       }
   "90":
@@ -1629,234 +1452,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1350,
-          "y": 1010
-        }
-      }
-  "91":
-    id: "91"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    loop:
-      exitCondition: ""
-      iscommand: false
-      max: 0
-      wait: 1
-    nexttasks:
-      '#none#':
-      - "43"
-    note: false
-    quietmode: 0
-    scriptarguments:
-      AutoCommit:
-        simple: "No"
-      CustomBlockRule:
-        simple: "True"
-      EmailToBlock:
-        complex:
-          accessor: Indicator
-          filters:
-          - - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: email
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      IP:
-        complex:
-          accessor: Indicator
-          filters:
-          - - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: ip
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      MD5:
-        complex:
-          accessor: Indicator
-          filters:
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Indicator
-              operator: stringHasLength
-              right:
-                value:
-                  simple: "32"
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          - - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: file
-            - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: hash
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      SHA256:
-        complex:
-          accessor: Indicator
-          filters:
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Indicator
-              operator: stringHasLength
-              right:
-                value:
-                  simple: "64"
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          - - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: file
-            - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: hash
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      URL:
-        complex:
-          accessor: Indicator
-          filters:
-          - - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: url
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      Username:
-        complex:
-          accessor: Indicator
-          filters:
-          - - ignorecase: true
-              left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: username
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
-    separatecontext: true
-    skipunavailable: false
-    task:
-      brand: ""
-      description: |+
-        This playbook blocks malicious Indicators using all integrations that are enabled, using the following sub-playbooks:
-
-        - Block URL - Generic
-        - Block Account - Generic
-        - Block IP - Generic v2
-        - Block File - Generic v2
-
-      id: 76349d16-d4f2-4fc4-8ce6-a122526fe168
-      iscommand: false
-      name: Block Indicators - Generic v2
-      playbookId: Block Indicators - Generic v2
-      type: playbook
-      version: -1
-    taskid: 76349d16-d4f2-4fc4-8ce6-a122526fe168
-    timertriggers: []
-    type: playbook
-    view: |-
-      {
-        "position": {
-          "x": 807.5,
-          "y": 4010
+          "x": 910,
+          "y": 1155
         }
       }
   "92":
@@ -1902,8 +1499,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 910,
-          "y": 1185
+          "x": 1565,
+          "y": 1330
         }
       }
   "97":
@@ -1913,26 +1510,26 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "37"
+      - "142"
     note: false
     quietmode: 0
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      id: 646e672b-9f6c-4147-8e4b-4afc3b57321b
+      id: 679f913a-2947-44ed-8dd0-ca8664999b49
       iscommand: false
-      name: Block Indicators
+      name: Report Indicators
       type: title
       version: -1
-    taskid: 646e672b-9f6c-4147-8e4b-4afc3b57321b
+    taskid: 679f913a-2947-44ed-8dd0-ca8664999b49
     timertriggers: []
     type: title
     view: |-
       {
         "position": {
-          "x": 695,
-          "y": 3690
+          "x": 807.5,
+          "y": 3835
         }
       }
   "98":
@@ -1942,55 +1539,26 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "36"
+      - "139"
     note: false
     quietmode: 0
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      id: a443be1b-8b73-4645-8aa1-acc53fcbf525
+      id: 0341c168-32c6-401a-8b4c-fcaa5faeea0d
       iscommand: false
-      name: Search & Delete Email
+      name: Move email to Completed folder
       type: title
       version: -1
-    taskid: a443be1b-8b73-4645-8aa1-acc53fcbf525
+    taskid: 0341c168-32c6-401a-8b4c-fcaa5faeea0d
     timertriggers: []
     type: title
     view: |-
       {
         "position": {
-          "x": 1145,
-          "y": 3690
-        }
-      }
-  "99":
-    id: "99"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "34"
-    note: false
-    quietmode: 0
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      id: 49efbf61-f01f-4883-8be2-eab322544851
-      iscommand: false
-      name: Manual Remediation
-      type: title
-      version: -1
-    taskid: 49efbf61-f01f-4883-8be2-eab322544851
-    timertriggers: []
-    type: title
-    view: |-
-      {
-        "position": {
-          "x": 1687.5,
-          "y": 3850
+          "x": 1237.5,
+          "y": 3835
         }
       }
   "101":
@@ -2018,8 +1586,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 450,
-          "y": 1840
+          "x": 552.5,
+          "y": 1650
         }
       }
   "123":
@@ -2060,8 +1628,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1145,
-          "y": 3195
+          "x": 1135,
+          "y": 3340
         }
       }
   "126":
@@ -2087,10 +1655,10 @@ tasks:
     task:
       brand: ""
       description: |-
-        This playbook is used to find, create and manage phishing campaigns. When a number of similar phishing incidents exist in the system, the playbook can be used to:
-        1. Find and tie together incidents that are related to the same phishing attack (a phishing campaign).
-        2. Search for an existing Phishing Campaign incident or create a new one for the tied Phishing incidents.
-        3. Link all detected phishing incidents to the Phishing Campaign incident that was found or created previously.
+        This playbook is used to find, create and manage phishing campaigns. When a number of similar phishing incidents exist in the system, the playbook can be used to do the following:
+        1. Find and link related incidents to the same phishing attack (a phishing campaign).
+        2. Search for an existing Phishing Campaign incident, or create a new incident for the linked Phishing incidents.
+        3. Link all detected phishing incidents to the Phishing Campaign incident that was found or that was created previously.
         4. Update the Phishing Campaign incident with the latest data about the campaign, and update all related phishing incidents to indicate that they are part of the campaign.
       id: 7f39b05d-3937-4df7-8993-d3469af016d5
       iscommand: false
@@ -2104,8 +1672,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 450,
-          "y": 2000
+          "x": 562.5,
+          "y": 2145
         }
       }
   "130":
@@ -2150,8 +1718,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1360,
-          "y": 3370
+          "x": 1452.5,
+          "y": 3515
         }
       }
   "131":
@@ -2179,8 +1747,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1350,
-          "y": 1665
+          "x": 1462.5,
+          "y": 1650
         }
       }
   "132":
@@ -2221,8 +1789,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1350,
-          "y": 1825
+          "x": 1462.5,
+          "y": 1970
         }
       }
   "133":
@@ -2240,10 +1808,10 @@ tasks:
     task:
       brand: ""
       description: |-
-        This playbook stores the SCL, BCL and PCL scores (if exists) to the associated incident fields (Phishing SCL Score, Phishing PCL Score, and Phishing BCL Score).
+        This playbook stores the SCL, BCL and PCL scores (if exists) to the associated incident fields (Phishing SCL Score, Phishing PCL Score, Phishing BCL Score).
         It also does the following:
-        1) Sets the email classification to "spam" if the "SCL" score is equal to or higher than 5.
-        2) Set the incident severity according to the playbook inputs (default is: PCL/BCL - Medium, SCL - Low). The severity of the incident is set only when one (or more) of the following occurs:
+        1) Sets the email classification to "spam" if the "SCL" score is equal or higher than 5.
+        2) Sets the incident severity according to the playbook inputs (default is: PCL/BCL - Medium, SCL - Low). The severity of the incident is set only when one (or more) of the following occurs:
         - PCL (Phishing Confidence Level) score is between and including 4-8: The message content is likely to be phishing.
         - BCL (Bulk complaint level) score is between and including 4-7: The message is from a bulk sender that generates a mixed number of complaints. Between and including 8-9: The message is from a bulk sender that generates a high number of complaints.
         - SCL (Spam confidence level) score is between and including 5-6: Spam filtering marked the message as Spam. 9: Spam filtering marked the message as High confidence spam)
@@ -2267,8 +1835,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1350,
-          "y": 2000
+          "x": 1462.5,
+          "y": 2145
         }
       }
   "134":
@@ -2303,8 +1871,468 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1780,
+          "x": 1452.5,
+          "y": 805
+        }
+      }
+  "135":
+    id: "135"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "134"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4642d535-e9ea-4601-8a6b-8fd13b390435
+      iscommand: false
+      name: Indicator Extraction
+      type: title
+      version: -1
+    taskid: 4642d535-e9ea-4601-8a6b-8fd13b390435
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1452.5,
           "y": 660
+        }
+      }
+  "136":
+    id: "136"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "143"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 63752b99-d0b1-464c-81d4-724eabae3ab9
+      iscommand: false
+      name: File Sandboxing
+      type: title
+      version: -1
+    taskid: 63752b99-d0b1-464c-81d4-724eabae3ab9
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1995,
+          "y": 660
+        }
+      }
+  "137":
+    id: "137"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "43"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      body:
+        simple: |-
+          Hi ${.=function(val) { if(!(val.Account.length > 1)) return val.ReporterAddress; var reporter = val.ReporterAddress; var account = val.Account && val.Account.filter(function(acc) { return acc.DisplayName && (acc.Email  === reporter || Array.isArray(acc.Email) && acc.Email.indexOf(reporter) > -1) }); return account && account[0] && account[0].DisplayName[0] || reporter || ''; }(val)},
+          We've concluded that the email you forwarded to us is malicious.
+          Thank you for your alertness and your participation in keeping our organization secure.
+
+          Cordially,
+            Your security team
+      subject:
+        simple: 'Re: Phishing Investigation - ${incident.name}'
+      to:
+        simple: ${ReporterAddress}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Send an email to the user explaining that the email they reported
+        is safe.
+      id: 51517149-0c7d-402b-85dd-20379b091968
+      iscommand: true
+      name: Update the user that the reported email is malicious
+      script: '|||send-mail'
+      type: regular
+      version: -1
+    taskid: 51517149-0c7d-402b-85dd-20379b091968
+    timertriggers:
+    - action: stop
+      fieldname: detectionsla
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1677.5,
+          "y": 4155
+        }
+      }
+  "138":
+    id: "138"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "137"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 09fdbef8-4ad9-4ef6-84fe-96546d3ac7e9
+      iscommand: false
+      name: Update the result to user
+      type: title
+      version: -1
+    taskid: 09fdbef8-4ad9-4ef6-84fe-96546d3ac7e9
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1677.5,
+          "y": 3835
+        }
+      }
+  "139":
+    id: "139"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "140"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      folder-path:
+        simple: Inbox
+      query:
+        simple: subject:"${Email.[0].Subject}"
+      target-mailbox:
+        simple: hiep4hiep@v0n0g.onmicrosoft.com
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: EWSO365
+      description: Searches for items in the specified mailbox. Specific permissions
+        are needed for this operation to search in a target mailbox other than the
+        default.
+      id: dab428cc-a657-44fc-8d36-92a86845ffe9
+      iscommand: true
+      name: Search for mail item ID
+      script: EWSO365|||ews-search-mailbox
+      type: regular
+      version: -1
+    taskid: dab428cc-a657-44fc-8d36-92a86845ffe9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 3980
+        }
+      }
+  "140":
+    id: "140"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "43"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      item-id:
+        simple: ${EWS.Items.itemId}
+      target-folder-path:
+        simple: Incident Correspondence/Completed
+      target-mailbox:
+        simple: hiep4hiep@v0n0g.onmicrosoft.com
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: EWSO365
+      description: Move an item to different folder in the mailbox.
+      id: 8dff344c-9ef6-4756-8e90-8f148a7d7637
+      iscommand: true
+      name: Move email to other folder
+      script: EWSO365|||ews-move-item
+      type: regular
+      version: -1
+    taskid: 8dff344c-9ef6-4756-8e90-8f148a7d7637
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 4155
+        }
+      }
+  "141":
+    id: "141"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "43"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      body:
+        simple: |-
+          Here is the list of Indicators:
+          - IP Addresses:
+          - URLs:
+          - Domains:
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: EWSO365
+      description: Sends an email.
+      id: bbc79a57-5e8a-4abb-8041-b1a84dda5bab
+      iscommand: true
+      name: Report Email to AusCERT
+      script: EWSO365|||send-mail
+      type: regular
+      version: -1
+    taskid: bbc79a57-5e8a-4abb-8041-b1a84dda5bab
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 4155
+        }
+      }
+  "142":
+    id: "142"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "141"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Domain:
+        complex:
+          accessor: Indicator
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: domain
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Score
+              operator: greaterThanOrEqual
+              right:
+                value:
+                  simple: "3"
+          root: DBotScore
+          transformers:
+          - operator: uniq
+      IP:
+        complex:
+          accessor: Indicator
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Score
+              operator: greaterThanOrEqual
+              right:
+                value:
+                  simple: "3"
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: ip
+          root: DBotScore
+          transformers:
+          - operator: uniq
+      MD5:
+        complex:
+          accessor: Indicator
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: file
+            - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: hash
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Indicator
+              operator: stringHasLength
+              right:
+                value:
+                  simple: "32"
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Score
+              operator: greaterThanOrEqual
+              right:
+                value:
+                  simple: "3"
+          root: DBotScore
+          transformers:
+          - operator: uniq
+      SHA256:
+        complex:
+          accessor: Indicator
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: file
+            - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: hash
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Indicator
+              operator: stringHasLength
+              right:
+                value:
+                  simple: "64"
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Score
+              operator: greaterThanOrEqual
+              right:
+                value:
+                  simple: "3"
+          root: DBotScore
+          transformers:
+          - operator: uniq
+      URL:
+        complex:
+          accessor: Indicator
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Type
+              operator: isEqualString
+              right:
+                value:
+                  simple: url
+          - - left:
+                iscontext: true
+                value:
+                  simple: DBotScore.Score
+              operator: greaterThanOrEqual
+              right:
+                value:
+                  simple: "3"
+          root: DBotScore
+          transformers:
+          - operator: uniq
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f8b29e6e-1545-4778-89a8-29d40d3e410e
+      iscommand: false
+      name: Create Email body
+      script: 0c61061a-6d24-4caf-8e79-d44efe30a45f
+      type: regular
+      version: -1
+    taskid: f8b29e6e-1545-4778-89a8-29d40d3e410e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 3980
+        }
+      }
+  "143":
+    id: "143"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Detonate a file through VirusTotal (API v3)
+      id: 949226e7-2835-42fe-8b38-2a8b43eb3f72
+      iscommand: false
+      name: Detonate File - VirusTotal (API v3)
+      playbookId: Detonate File - VirusTotal (API v3)
+      type: playbook
+      version: -1
+    taskid: 949226e7-2835-42fe-8b38-2a8b43eb3f72
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1995,
+          "y": 805
         }
       }
 version: -1
@@ -2313,18 +2341,13 @@ view: |-
     "linkLabelsPosition": {
       "15_31_#default#": 0.6,
       "33_16_No": 0.64,
-      "36_28_Yes": 0.5,
-      "36_43_#default#": 0.57,
-      "37_43_#default#": 0.5,
-      "37_91_yes": 0.57,
       "79_84_#default#": 0.3,
-      "90_56_#default#": 0.3,
       "90_89_yes": 0.48
     },
     "paper": {
       "dimensions": {
-        "height": 4550,
-        "width": 2110,
+        "height": 4695,
+        "width": 2325,
         "x": 50,
         "y": 50
       }

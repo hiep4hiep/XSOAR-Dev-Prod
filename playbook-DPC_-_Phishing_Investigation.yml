@@ -635,7 +635,6 @@ tasks:
       '#none#':
       - "97"
       - "98"
-      - "138"
     note: false
     quietmode: 0
     separatecontext: false
@@ -1931,83 +1930,6 @@ tasks:
         "position": {
           "x": 1995,
           "y": 660
-        }
-      }
-  "137":
-    id: "137"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "43"
-    note: false
-    quietmode: 0
-    reputationcalc: 1
-    scriptarguments:
-      body:
-        simple: |-
-          Hi ${.=function(val) { if(!(val.Account.length > 1)) return val.ReporterAddress; var reporter = val.ReporterAddress; var account = val.Account && val.Account.filter(function(acc) { return acc.DisplayName && (acc.Email  === reporter || Array.isArray(acc.Email) && acc.Email.indexOf(reporter) > -1) }); return account && account[0] && account[0].DisplayName[0] || reporter || ''; }(val)},
-          We've concluded that the email you forwarded to us is malicious.
-          Thank you for your alertness and your participation in keeping our organization secure.
-
-          Cordially,
-            Your security team
-      subject:
-        simple: 'Re: Phishing Investigation - ${incident.name}'
-      to:
-        simple: ${ReporterAddress}
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      description: Send an email to the user explaining that the email they reported
-        is safe.
-      id: 51517149-0c7d-402b-85dd-20379b091968
-      iscommand: true
-      name: Update the user that the reported email is malicious
-      script: '|||send-mail'
-      type: regular
-      version: -1
-    taskid: 51517149-0c7d-402b-85dd-20379b091968
-    timertriggers:
-    - action: stop
-      fieldname: detectionsla
-    type: regular
-    view: |-
-      {
-        "position": {
-          "x": 1677.5,
-          "y": 4155
-        }
-      }
-  "138":
-    id: "138"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "137"
-    note: false
-    quietmode: 0
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      id: 09fdbef8-4ad9-4ef6-84fe-96546d3ac7e9
-      iscommand: false
-      name: Update the result to user
-      type: title
-      version: -1
-    taskid: 09fdbef8-4ad9-4ef6-84fe-96546d3ac7e9
-    timertriggers: []
-    type: title
-    view: |-
-      {
-        "position": {
-          "x": 1677.5,
-          "y": 3835
         }
       }
   "139":

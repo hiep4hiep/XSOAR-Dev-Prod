@@ -1,0 +1,417 @@
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 7075f5f5-bccf-4175-8894-fe91f36a78fd
+inputs: []
+name: GEL - QRadar Log Source
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 75892151-5bc4-4c4f-8035-6a0ca7036397
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 75892151-5bc4-4c4f-8035-6a0ca7036397
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d1d8ce72-a5a1-45ca-8f63-6dfc18674fb1
+      iscommand: false
+      name: Collect associated events
+      type: title
+      version: -1
+    taskid: d1d8ce72-a5a1-45ca-8f63-6dfc18674fb1
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ce68e6b0-97ee-452f-8de8-ca080c96acc9
+      iscommand: false
+      name: Extract and Enrich Log Source indicator
+      type: title
+      version: -1
+    taskid: ce68e6b0-97ee-452f-8de8-ca080c96acc9
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 690
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      interval:
+        simple: "1"
+      query_expression:
+        simple: SELECT * FROM events WHERE inOffense(${incident.idoffense}) LIMIT
+          5 START '${QRadar.startTime}'
+      timeout:
+        simple: "600"
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This playbook runs a QRadar query and return its results to the
+        context.
+      id: 61ee7463-a6c6-4715-84ec-0bc44a3f609d
+      iscommand: false
+      name: QRadarFullSearch
+      playbookId: QRadarFullSearch
+      type: playbook
+      version: -1
+    taskid: 61ee7463-a6c6-4715-84ec-0bc44a3f609d
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 515
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      start_time:
+        simple: ${incident.starttime}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b23b2613-451f-4a48-85c1-4e0b8e5c5e62
+      iscommand: false
+      name: Convert Start Time for QRadar search
+      script: 68be939d-574a-4916-8357-9a82eadd6b36
+      type: regular
+      version: -1
+    taskid: b23b2613-451f-4a48-85c1-4e0b8e5c5e62
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 340
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 446d21d1-dcc6-4072-8840-3cca8f22ac1a
+      iscommand: false
+      name: Active Directory Look up for owner's email
+      type: title
+      version: -1
+    taskid: 446d21d1-dcc6-4072-8840-3cca8f22ac1a
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1155
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3b148fd7-84eb-4c98-871a-255d4fa9a2b8
+      iscommand: false
+      name: Pull Server details from Inventory Management
+      type: title
+      version: -1
+    taskid: 3b148fd7-84eb-4c98-871a-255d4fa9a2b8
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 835
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      username:
+        simple: ${ITSM.Search.Username}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Retrieves detailed information about a user account. The user can
+        be specified by name, email address, or as an Active Directory Distinguished
+        Name (DN). If no filter is specified, all users are returned.
+      id: 94d4e05e-2cda-47d4-895a-3a2b53c05cbb
+      iscommand: true
+      name: Search server
+      script: '|||ad-get-user'
+      type: regular
+      version: -1
+    taskid: 94d4e05e-2cda-47d4-895a-3a2b53c05cbb
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1300
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      ip:
+        simple: ${incident.labels.offense_source}
+      list_name:
+        simple: ITSM
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Search for related information of the server using IP address
+      id: 9b1fe2b5-b41a-4307-8e8a-efa2deb860a4
+      iscommand: false
+      name: Get device
+      script: SearchDataFromList
+      type: regular
+      version: -1
+    taskid: 9b1fe2b5-b41a-4307-8e8a-efa2deb860a4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 980
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "18"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 9eba8654-f93c-44cd-8237-57a07140c1f7
+      iscommand: false
+      name: Response process
+      type: title
+      version: -1
+    taskid: 9eba8654-f93c-44cd-8237-57a07140c1f7
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1475
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "19"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      subject:
+        simple: False alarm
+      to:
+        simple: ${ActiveDirectory.Users.mail}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends an email using Gmail.
+      id: 7804ce14-6a64-4bd7-80c4-54b861f56d01
+      iscommand: true
+      name: Send notification email
+      script: '|||send-mail'
+      type: regular
+      version: -1
+    taskid: 7804ce14-6a64-4bd7-80c4-54b861f56d01
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1620
+        }
+      }
+  "19":
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      subject:
+        simple: Log Source Error
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Creates new requests.
+      id: 7f9fcf9c-327a-437d-873a-803420026a38
+      iscommand: true
+      name: Create SDP Ticket
+      script: '|||service-desk-plus-request-create'
+      type: regular
+      version: -1
+    taskid: 7f9fcf9c-327a-437d-873a-803420026a38
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1795
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 1840,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

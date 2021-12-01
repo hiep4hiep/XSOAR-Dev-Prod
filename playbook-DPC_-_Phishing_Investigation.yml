@@ -100,6 +100,12 @@ inputs:
   required: false
   value:
     simple: "True"
+- description: ""
+  key: target_mailbox
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: phishing.report@v0n0g.onmicrosoft.com
 name: DPC - Phishing Investigation
 outputs: []
 sourceplaybookid: Phishing Investigation - Generic v2
@@ -1919,7 +1925,7 @@ tasks:
       folder-path:
         simple: Inbox
       query:
-        simple: subject:"${Email.[0].Subject}"
+        simple: subject:"${Email.Subject}"
       target-mailbox:
         simple: hiep4hiep@v0n0g.onmicrosoft.com
     separatecontext: false
@@ -1929,13 +1935,13 @@ tasks:
       description: Searches for items in the specified mailbox. Specific permissions
         are needed for this operation to search in a target mailbox other than the
         default.
-      id: dab428cc-a657-44fc-8d36-92a86845ffe9
+      id: 38a8e5d1-f9b7-4a21-84e7-807b7521a795
       iscommand: true
       name: Search for mail item ID
       script: EWSO365|||ews-search-mailbox
       type: regular
       version: -1
-    taskid: dab428cc-a657-44fc-8d36-92a86845ffe9
+    taskid: 38a8e5d1-f9b7-4a21-84e7-807b7521a795
     timertriggers: []
     type: regular
     view: |-
@@ -1994,7 +2000,7 @@ tasks:
     note: false
     quietmode: 0
     scriptarguments:
-      body:
+      htmlBody:
         simple: |-
           Here is the list of Indicators:
           - IP Addresses: ${Report.ip}
@@ -2002,6 +2008,8 @@ tasks:
           - Domains: ${Report.domain}
           - MD5: ${Report.md5}
           - SHA256: ${Report.sha256}
+      subject:
+        simple: IOC Report
       to:
         simple: hiep4hiep@gmail.com
     separatecontext: false
@@ -2009,13 +2017,13 @@ tasks:
     task:
       brand: EWSO365
       description: Sends an email.
-      id: 900bdc5e-90d8-4f1a-8ac2-192f459a169a
+      id: d60d6023-ede2-4eb5-8ee5-c7b2416d48e6
       iscommand: true
       name: Report Email to AusCERT
       script: EWSO365|||send-mail
       type: regular
       version: -1
-    taskid: 900bdc5e-90d8-4f1a-8ac2-192f459a169a
+    taskid: d60d6023-ede2-4eb5-8ee5-c7b2416d48e6
     timertriggers: []
     type: regular
     view: |-
@@ -2035,165 +2043,18 @@ tasks:
       - "141"
     note: false
     quietmode: 0
-    scriptarguments:
-      Domain:
-        complex:
-          accessor: Indicator
-          filters:
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: domain
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      IP:
-        complex:
-          accessor: Indicator
-          filters:
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: ip
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      MD5:
-        complex:
-          accessor: Indicator
-          filters:
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: file
-            - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: hash
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Indicator
-              operator: stringHasLength
-              right:
-                value:
-                  simple: "32"
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      SHA256:
-        complex:
-          accessor: Indicator
-          filters:
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: file
-            - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: hash
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Indicator
-              operator: stringHasLength
-              right:
-                value:
-                  simple: "64"
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
-      URL:
-        complex:
-          accessor: Indicator
-          filters:
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Type
-              operator: isEqualString
-              right:
-                value:
-                  simple: url
-          - - left:
-                iscontext: true
-                value:
-                  simple: DBotScore.Score
-              operator: greaterThanOrEqual
-              right:
-                value:
-                  simple: "3"
-          root: DBotScore
-          transformers:
-          - operator: uniq
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      id: f8b29e6e-1545-4778-89a8-29d40d3e410e
+      description: Collect IOC from DBotScore and store in a context key
+      id: 345d28de-2dfa-483a-89de-8587db8216f3
       iscommand: false
-      name: Create Email body
-      script: 0c61061a-6d24-4caf-8e79-d44efe30a45f
+      name: Collect bad IOCs
+      script: CreateIOCList
       type: regular
       version: -1
-    taskid: f8b29e6e-1545-4778-89a8-29d40d3e410e
+    taskid: 345d28de-2dfa-483a-89de-8587db8216f3
     timertriggers: []
     type: regular
     view: |-

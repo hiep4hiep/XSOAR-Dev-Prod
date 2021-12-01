@@ -40,7 +40,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value:
-    simple: "False"
+    simple: "True"
 - description: Set to true to assign only user that is currently on shift. Requires
     Cortex XSOAR v5.5 or later.
   key: OnCall
@@ -532,7 +532,6 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Detonate file through active integrations that support file detonation
       id: be406ffc-c93b-4890-830c-2536ffbedc6e
       iscommand: false
       name: Detonate File - Generic
@@ -896,10 +895,6 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: |-
-        Enrich email addresses.
-        - Get information from Active Directory for internal addresses
-        - Get the domain-squatting reputation for external addresses
       id: 9efe139c-3485-464d-8122-1a3bc8587888
       iscommand: false
       name: Email Address Enrichment - Generic v2.1
@@ -930,20 +925,6 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: |-
-        Extracts indicators from a file.
-        Supported file types:
-        - CSV
-        - PDF
-        - TXT
-        - HTM, HTML
-        - DOC, DOCX
-        - PPT
-        - PPTX
-        - RTF
-        - XLS
-        - XLSX
-        - XML
       id: 675eab21-6e48-46f8-8c48-831d694b90bc
       iscommand: false
       name: Extract Indicators From File - Generic v2
@@ -1202,14 +1183,6 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: |-
-        Calculate and assign the incident severity based on the highest returned severity level from the following calculations:
-
-        - DBotScores of indicators
-        - Critical assets
-        - Email authenticity
-        - Current incident severity
-        - Microsoft Headers
       id: 32673e2e-72fc-4a00-8054-7e0f357a6981
       iscommand: false
       name: Calculate Severity - Generic v2
@@ -1654,10 +1627,10 @@ tasks:
     task:
       brand: ""
       description: |-
-        This playbook is used to find, create and manage phishing campaigns. When a number of similar phishing incidents exist in the system, the playbook can be used to do the following:
-        1. Find and link related incidents to the same phishing attack (a phishing campaign).
-        2. Search for an existing Phishing Campaign incident, or create a new incident for the linked Phishing incidents.
-        3. Link all detected phishing incidents to the Phishing Campaign incident that was found or that was created previously.
+        This playbook is used to find, create and manage phishing campaigns. When a number of similar phishing incidents exist in the system, the playbook can be used to:
+        1. Find and tie together incidents that are related to the same phishing attack (a phishing campaign).
+        2. Search for an existing Phishing Campaign incident or create a new one for the tied Phishing incidents.
+        3. Link all detected phishing incidents to the Phishing Campaign incident that was found or created previously.
         4. Update the Phishing Campaign incident with the latest data about the campaign, and update all related phishing incidents to indicate that they are part of the campaign.
       id: 7f39b05d-3937-4df7-8993-d3469af016d5
       iscommand: false
@@ -1807,10 +1780,10 @@ tasks:
     task:
       brand: ""
       description: |-
-        This playbook stores the SCL, BCL and PCL scores (if exists) to the associated incident fields (Phishing SCL Score, Phishing PCL Score, Phishing BCL Score).
+        This playbook stores the SCL, BCL and PCL scores (if exists) to the associated incident fields (Phishing SCL Score, Phishing PCL Score, and Phishing BCL Score).
         It also does the following:
-        1) Sets the email classification to "spam" if the "SCL" score is equal or higher than 5.
-        2) Sets the incident severity according to the playbook inputs (default is: PCL/BCL - Medium, SCL - Low). The severity of the incident is set only when one (or more) of the following occurs:
+        1) Sets the email classification to "spam" if the "SCL" score is equal to or higher than 5.
+        2) Set the incident severity according to the playbook inputs (default is: PCL/BCL - Medium, SCL - Low). The severity of the incident is set only when one (or more) of the following occurs:
         - PCL (Phishing Confidence Level) score is between and including 4-8: The message content is likely to be phishing.
         - BCL (Bulk complaint level) score is between and including 4-7: The message is from a bulk sender that generates a mixed number of complaints. Between and including 8-9: The message is from a bulk sender that generates a high number of complaints.
         - SCL (Spam confidence level) score is between and including 5-6: Spam filtering marked the message as Spam. 9: Spam filtering marked the message as High confidence spam)
@@ -2024,21 +1997,25 @@ tasks:
       body:
         simple: |-
           Here is the list of Indicators:
-          - IP Addresses:
-          - URLs:
-          - Domains:
+          - IP Addresses: ${Report.ip}
+          - URLs: ${Report.url}
+          - Domains: ${Report.domain}
+          - MD5: ${Report.md5}
+          - SHA256: ${Report.sha256}
+      to:
+        simple: hiep4hiep@gmail.com
     separatecontext: false
     skipunavailable: false
     task:
       brand: EWSO365
       description: Sends an email.
-      id: bbc79a57-5e8a-4abb-8041-b1a84dda5bab
+      id: 900bdc5e-90d8-4f1a-8ac2-192f459a169a
       iscommand: true
       name: Report Email to AusCERT
       script: EWSO365|||send-mail
       type: regular
       version: -1
-    taskid: bbc79a57-5e8a-4abb-8041-b1a84dda5bab
+    taskid: 900bdc5e-90d8-4f1a-8ac2-192f459a169a
     timertriggers: []
     type: regular
     view: |-
@@ -2240,7 +2217,6 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Detonate a file through VirusTotal (API v3)
       id: 949226e7-2835-42fe-8b38-2a8b43eb3f72
       iscommand: false
       name: Detonate File - VirusTotal (API v3)

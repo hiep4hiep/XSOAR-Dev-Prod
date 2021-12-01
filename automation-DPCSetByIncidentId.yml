@@ -44,7 +44,7 @@ contentitemexportablefields:
 dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
-name: SetByIncidentId_copy
+name: DPCSetByIncidentId
 pswd: ""
 runas: DBotWeakRole
 runonce: false

@@ -105,7 +105,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value:
-    simple: phishing.report@v0n0g.onmicrosoft.com
+    simple: hiep4hiep@innothings.vn
 name: DPC - Phishing Investigation
 outputs: []
 sourceplaybookid: Phishing Investigation - Generic v2
@@ -1305,6 +1305,9 @@ tasks:
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
+    nexttasks:
+      '#none#':
+      - "87"
     note: false
     quietmode: 0
     separatecontext: false
@@ -1546,7 +1549,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "126"
+      - "144"
     note: false
     quietmode: 0
     separatecontext: false
@@ -1608,50 +1611,6 @@ tasks:
         "position": {
           "x": 1135,
           "y": 3340
-        }
-      }
-  "126":
-    id: "126"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    loop:
-      exitCondition: ""
-      iscommand: false
-      max: 100
-      wait: 1
-    nexttasks:
-      '#none#':
-      - "84"
-    note: false
-    quietmode: 0
-    scriptarguments:
-      AutomaticallyLinkIncidents:
-        simple: "True"
-    separatecontext: true
-    skipunavailable: true
-    task:
-      brand: ""
-      description: |-
-        This playbook is used to find, create and manage phishing campaigns. When a number of similar phishing incidents exist in the system, the playbook can be used to:
-        1. Find and tie together incidents that are related to the same phishing attack (a phishing campaign).
-        2. Search for an existing Phishing Campaign incident or create a new one for the tied Phishing incidents.
-        3. Link all detected phishing incidents to the Phishing Campaign incident that was found or created previously.
-        4. Update the Phishing Campaign incident with the latest data about the campaign, and update all related phishing incidents to indicate that they are part of the campaign.
-      id: 7f39b05d-3937-4df7-8993-d3469af016d5
-      iscommand: false
-      name: Detect & Manage Phishing Campaigns
-      playbookId: Detect & Manage Phishing Campaigns
-      type: playbook
-      version: -1
-    taskid: 7f39b05d-3937-4df7-8993-d3469af016d5
-    timertriggers: []
-    type: playbook
-    view: |-
-      {
-        "position": {
-          "x": 562.5,
-          "y": 2145
         }
       }
   "130":
@@ -1927,7 +1886,7 @@ tasks:
       query:
         simple: subject:"${Email.Subject}"
       target-mailbox:
-        simple: hiep4hiep@v0n0g.onmicrosoft.com
+        simple: ${inputs.target_mailbox}
     separatecontext: false
     skipunavailable: false
     task:
@@ -1935,13 +1894,13 @@ tasks:
       description: Searches for items in the specified mailbox. Specific permissions
         are needed for this operation to search in a target mailbox other than the
         default.
-      id: 38a8e5d1-f9b7-4a21-84e7-807b7521a795
+      id: 92b5a2b3-3a38-4bac-8a86-80171668292b
       iscommand: true
       name: Search for mail item ID
       script: EWSO365|||ews-search-mailbox
       type: regular
       version: -1
-    taskid: 38a8e5d1-f9b7-4a21-84e7-807b7521a795
+    taskid: 92b5a2b3-3a38-4bac-8a86-80171668292b
     timertriggers: []
     type: regular
     view: |-
@@ -1967,19 +1926,19 @@ tasks:
       target-folder-path:
         simple: Incident Correspondence/Completed
       target-mailbox:
-        simple: hiep4hiep@v0n0g.onmicrosoft.com
+        simple: ${inputs.target_mailbox}
     separatecontext: false
     skipunavailable: false
     task:
       brand: EWSO365
       description: Move an item to different folder in the mailbox.
-      id: 8dff344c-9ef6-4756-8e90-8f148a7d7637
+      id: 792022bf-9693-4957-8707-fca1fc0d2b6e
       iscommand: true
       name: Move email to other folder
       script: EWSO365|||ews-move-item
       type: regular
       version: -1
-    taskid: 8dff344c-9ef6-4756-8e90-8f148a7d7637
+    taskid: 792022bf-9693-4957-8707-fca1fc0d2b6e
     timertriggers: []
     type: regular
     view: |-
@@ -2092,6 +2051,36 @@ tasks:
         "position": {
           "x": 1995,
           "y": 805
+        }
+      }
+  "144":
+    id: "144"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "84"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1be05683-de99-4e10-8abe-7a0b736baf6a
+      iscommand: false
+      name: DPC - Detect & Manage Phishing Campaigns
+      playbookId: eeaca0af-0ebe-4f2b-8dd7-c4135019eef0
+      type: playbook
+      version: -1
+    taskid: 1be05683-de99-4e10-8abe-7a0b736baf6a
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 552.5,
+          "y": 2145
         }
       }
 version: -1

@@ -1,0 +1,56 @@
+comment: This script prints the events fetched from the offense in a table format.
+commonfields:
+  id: QRadarPrintEvents
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 6.0.0
+    itemVersion: 2.1.20
+    packID: QRadar
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.7.24076
+enabled: true
+engineinfo: {}
+name: QRadarPrintEvents
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  import json
+
+
+
+
+
+  def main():
+      try:
+          incident = demisto.incident()
+          events = incident.get('CustomFields', {}).get('events', {})
+
+          if not events:
+              return CommandResults()
+
+          if isinstance(events, list):
+              events_arr = []
+              for event in events:
+                  events_arr.append(json.loads(event))
+              markdown = tableToMarkdown("Offense Events", events_arr, headers=events_arr[0].keys())
+          else:
+              markdown = tableToMarkdown("Offense Events", json.loads(events))
+
+          return {'ContentsFormat': formats['markdown'], 'Type': entryTypes['note'], 'Contents': markdown}
+      except Exception as exp:
+          return_error('could not parse QRadar events', error=exp)
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      return_results(main())
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- dynamic-section
+type: python

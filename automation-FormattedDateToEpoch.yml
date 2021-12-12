@@ -2,12 +2,11 @@ args:
 - description: Time stamp to convert
   name: value
   required: true
-- defaultValue: '%Y-%m-%dT%H:%M:%S'
-  description: Python 'strptime' formatter string
+- description: Python 'strptime' formatter string
   name: formatter
-  required: true
 comment: 'Converts a custom-formatted timestamp to UNIX epoch time. Use it to convert
-  custom time stamps to a Demisto date field.  Uses the python strptime format.  For
+  custom time stamps to a Demisto date field. If you pass formatter argument, we will
+  use it to transform. If not, we will use dateparser.parse for transforming. For
   more info, see: https://docs.python.org/3.7/library/datetime.html#strftime-and-strptime-behavior'
 commonfields:
   id: FormattedDateToEpoch
@@ -15,13 +14,13 @@ commonfields:
 contentitemexportablefields:
   contentitemfields:
     fromServerVersion: 5.0.0
-    itemVersion: 1.5.12
+    itemVersion: 1.6.5
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.9.7.24076
+dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
 name: FormattedDateToEpoch
@@ -30,19 +29,22 @@ runas: DBotWeakRole
 runonce: false
 script: |2
 
+  import dateparser
   from datetime import datetime, timezone
+  from typing import Optional
 
 
-  def date_to_epoch(date, formatter):
+  def date_to_epoch(date: str, formatter: Optional[str] = None) -> int:
       epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
-      date_obj = datetime.strptime(date, formatter)
+      date_obj = datetime.strptime(date, formatter) if formatter \
+          else dateparser.parse(date, settings={'RELATIVE_BASE': datetime(1900, 1, 1)})
       return int(date_obj.strftime('%s') if date_obj.tzinfo is None else (date_obj - epoch).total_seconds())
 
 
   def main():
       args = demisto.args()
       date_value = args['value']
-      formatter = args['formatter']
+      formatter = args.get('formatter')
       demisto.results(date_to_epoch(date_value, formatter))
 
 

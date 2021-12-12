@@ -1,0 +1,51 @@
+{
+	"associatedToAll": false,
+	"associatedTypes": [
+		"Qradar Generic"
+	],
+	"breachScript": "",
+	"caseInsensitive": true,
+	"cliName": "domainoffense",
+	"closeForm": false,
+	"columns": null,
+	"content": true,
+	"defaultRows": null,
+	"description": "ID of associated domain if the offense is associated with a single domain.",
+	"editForm": true,
+	"fieldCalcScript": "",
+	"fromServerVersion": "6.0.0",
+	"group": 0,
+	"hidden": false,
+	"id": "incident_domainoffense",
+	"isReadOnly": false,
+	"itemVersion": "2.1.20",
+	"locked": false,
+	"mergeStrategy": "",
+	"name": "Domain - Offense",
+	"neverSetAsRequired": false,
+	"ownerOnly": false,
+	"packID": "QRadar",
+	"packPropagationLabels": [
+		"all"
+	],
+	"placeholder": "",
+	"propagationLabels": [
+		"all"
+	],
+	"required": false,
+	"runScriptAfterUpdate": false,
+	"script": "",
+	"selectValues": null,
+	"sla": 0,
+	"system": false,
+	"systemAssociatedTypes": null,
+	"threshold": 72,
+	"toServerVersion": "",
+	"type": "shortText",
+	"unmapped": false,
+	"unsearchable": false,
+	"useAsKpi": false,
+	"validatedError": "",
+	"validationRegex": "",
+	"version": -1
+}

@@ -1,0 +1,353 @@
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 5.0.0
+    itemVersion: 2.1.20
+    packID: QRadar
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+deprecated: true
+description: Deprecated. Use the "QRadar - Get Offense Logs"\ \ playbook instead.
+  This playbook retrieves the correlation logs of multiple QIDs.
+id: QRadarCorrelationLog
+inputs:
+- description: The correlation QID.
+  key: QID
+  playbookInputQuery: null
+  required: true
+  value: {}
+- description: The offense start time.
+  key: OffenseStartTime
+  playbookInputQuery: null
+  required: true
+  value: {}
+- description: The offense ID.
+  key: OffenseID
+  playbookInputQuery: null
+  required: true
+  value: {}
+- description: Add more fields for basic query (a list with comma separators)
+  key: additionalQueryFields
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: |-
+    If value "OnlyCRE" get only events made by CRE.
+    Values can be "OnlyCRE", "OnlyNotCRE", "All".
+  key: GetOnlyCREEvents
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: OnlyCRE
+- description: 'Maximum number of log entires to query from QRadar (default: 20)'
+  key: MaxLogsCount
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: "20"
+name: QRadarCorrelationLog
+outputs:
+- contextPath: QRadar.Log
+  description: Logs of QRadar correlations
+  type: unknown
+starttaskid: "0"
+system: true
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+      - "4"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 8eac4af4-139b-450e-86ee-fe015bd40bf3
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 8eac4af4-139b-450e-86ee-fe015bd40bf3
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      interval:
+        simple: "1"
+      query_expression:
+        simple: "\t\tselect qid QID,\n\t\tsourceip as \"SourceIP\",\n\t\tdestinationip
+          as \"DestinationIP\",\n\t\teventcount as \"EventCount\",\n\t\tsourceport
+          as \"SourcePort\",\n\t\tusername as \"Username\",\n\t\tstarttime as \"StartTime\",\n\t\tdestinationport
+          as \"DestinationPort\",\n\t\tmagnitude as \"Magnitude\",\n\t\tidentityip
+          as \"IdentityIP\",\n\t\tCATEGORYNAME(category) as \"Category\",\n\t\tPROTOCOLNAME(protocolid)
+          as \"ProtocolName\",\n\t\tLOGSOURCENAME(logsourceid)${inputs.additionalQueryFields}\n\t\tfrom
+          events where (RULENAME(${inputs.QID}) ILIKE '%') AND \"CRE Name\" IS NULL
+          AND INOFFENSE(${inputs.OffenseID})\nLIMIT ${inputs.MaxLogsCount}\n START
+          '${inputs.OffenseStartTime}'"
+      timeout:
+        simple: "600"
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This playbook runs a QRadar query and return its results to the
+        context.
+      id: ba750359-b6e4-49cb-89c2-e9fc67fa5a00
+      iscommand: false
+      name: QRadarFullSearch
+      playbookId: QRadarFullSearch
+      type: playbook
+      version: -1
+    taskid: ba750359-b6e4-49cb-89c2-e9fc67fa5a00
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 370
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: acf1d671-7a06-47d7-8f34-0d9a9def2b20
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: acf1d671-7a06-47d7-8f34-0d9a9def2b20
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 720
+        }
+      }
+  "3":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.GetOnlyCREEvents
+          operator: inList
+          right:
+            value:
+              simple: OnlyNotCRE,All
+      label: "yes"
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "yes":
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 557f3ad8-f7fd-4c5d-8e28-dadd7c59acc9
+      iscommand: false
+      name: Is OnlyNotCRE or ALL
+      type: condition
+      version: -1
+    taskid: 557f3ad8-f7fd-4c5d-8e28-dadd7c59acc9
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 195
+        }
+      }
+  "4":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.GetOnlyCREEvents
+          operator: inList
+          right:
+            value:
+              simple: OnlyCRE,All
+      label: "yes"
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ee41e8ef-5236-4fbd-84c3-c8dda0fd9593
+      iscommand: false
+      name: Is OnlyCRE or ALL
+      type: condition
+      version: -1
+    taskid: ee41e8ef-5236-4fbd-84c3-c8dda0fd9593
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      interval:
+        simple: "1"
+      query_expression:
+        simple: "\t\tselect qid QID,\n\t\tsourceip as \"SourceIP\",\n\t\tdestinationip
+          as \"DestinationIP\",\n\t\teventcount as \"EventCount\",\n\t\tsourceport
+          as \"SourcePort\",\n\t\tusername as \"Username\",\n\t\tstarttime as \"StartTime\",\n\t\tdestinationport
+          as \"DestinationPort\",\n\t\tmagnitude as \"Magnitude\",\n\t\tidentityip
+          as \"IdentityIP\",\n\t\tCATEGORYNAME(category) as \"Category\",\n\t\tPROTOCOLNAME(protocolid)
+          as \"ProtocolName\",\n\t\tLOGSOURCENAME(logsourceid)${inputs.additionalQueryFields}\n\t\tfrom
+          events where (RULENAME(${inputs.QID}) ILIKE '%') AND \"CRE Name\" <> NULL
+          AND INOFFENSE(${inputs.OffenseID}) \nLIMIT ${inputs.MaxLogsCount}\n START
+          '${inputs.OffenseStartTime}'"
+      timeout:
+        simple: "600"
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      description: This playbook runs a QRadar query and return its results to the
+        context.
+      id: ff2dabeb-8f58-42f5-8f6f-b3deffdb18c9
+      iscommand: false
+      name: QRadarFullSearch
+      playbookId: QRadarFullSearch
+      type: playbook
+      version: -1
+    taskid: ff2dabeb-8f58-42f5-8f6f-b3deffdb18c9
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      capitalize:
+        simple: "False"
+      inplace:
+        simple: "False"
+      input:
+        simple: ${QRadar.Search.Result.events}
+      output_key:
+        simple: QRadar.Log
+      replace_dict:
+        simple: '{"sourceip": "SourceIP", "qid":"QID", "destinationip": "DestinationIP",
+          "category": "CategoryID", "starttime": "StartTime"}'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: 'Enables changing context in two ways. The first is to capitalize
+        the first letter of each key in following level of the context key entered.
+        The second is to change context keys to new values. '
+      id: 8f647022-1139-47e9-87dd-95e9f904ea13
+      iscommand: false
+      name: Change context
+      script: ChangeContext
+      type: regular
+      version: -1
+    taskid: 8f647022-1139-47e9-87dd-95e9f904ea13
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 735,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

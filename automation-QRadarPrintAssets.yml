@@ -1,0 +1,64 @@
+comment: This script prints the assets fetched from the offense in a table format.
+commonfields:
+  id: QRadarPrintAssets
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: 6.0.0
+    itemVersion: 2.1.20
+    packID: QRadar
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.7.24076
+enabled: true
+engineinfo: {}
+name: QRadarPrintAssets
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  import json
+
+
+  import yaml
+
+
+
+  def main():
+      try:
+          incident = demisto.incident()
+          assets = incident.get('CustomFields', {}).get('assettable', {})
+
+          if not assets:
+              return ''
+
+          if not isinstance(assets, dict):
+              assets = json.loads(assets)
+
+          if not isinstance(assets, list):
+              assets = [assets]
+
+          for asset in assets:
+              if "interfaces" in asset:
+                  if isinstance(asset["interfaces"], str):
+                      asset["interfaces"] = json.loads(asset["interfaces"])
+                  # using yaml to prettify the output of the field
+                  asset["interfaces"] = yaml.dump(asset["interfaces"])
+
+          markdown = tableToMarkdown("Asset Table", assets)
+          return {'ContentsFormat': formats['markdown'], 'Type': entryTypes['note'], 'Contents': markdown}
+
+      except Exception as exp:
+          return_error('could not parse QRadar assets', error=exp)
+
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      return_results(main())
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- dynamic-section
+type: python

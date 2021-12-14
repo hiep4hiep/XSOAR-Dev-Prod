@@ -42,8 +42,9 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.5
+    itemVersion: 1.6.8
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -51,6 +52,7 @@ contentitemexportablefields:
     toServerVersion: ""
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: AssignAnalystToIncident
 pswd: ""
 runas: DBotWeakRole

@@ -1,0 +1,1389 @@
+category: Case Management
+commonfields:
+  id: ServiceDeskPlus (On-Premise)
+  version: -1
+configuration:
+- defaultvalue: https://example.com
+  display: On-Premise Server URL
+  name: server_url
+  required: false
+  type: 0
+- display: Technician Key
+  name: technician_key
+  required: true
+  type: 4
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+- defaultvalue: Open
+  display: Incidents status. Supports multi-select.
+  name: fetch_status
+  options:
+  - Open
+  - Closed
+  - On Hold
+  - Resolved
+  - Canceled
+  required: false
+  type: 16
+- defaultvalue: 7 days
+  display: First fetch timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
+  name: first_fetch
+  required: false
+  type: 0
+- defaultvalue: "50"
+  display: Fetch limit - maximum number of incidents per fetch
+  name: max_fetch
+  required: false
+  type: 0
+- display: Fetch query -  see (?). Overrides the status filter, if given.
+  name: fetch_filter
+  required: false
+  type: 12
+- defaultvalue: "1"
+  display: Incidents Fetch Interval
+  name: incidentFetchInterval
+  required: false
+  type: 19
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 5.0.0
+    itemVersion: 1.0.4
+    packID: ServiceDeskPlus_On_Premise
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+description: Deprecated. Use the Service Desk Plus instead.
+detaileddescription: |-
+  ## Create an Integration Instance
+  To create an instance of the Service Desk Plus integration, you need to get a On-Premises Server URL and a Technician Key.
+
+  Follow the next steps to create an instance:
+
+  1. Enter the Server URL info.
+  2. Enter the Technician Key.
+  3. Click the **Test** button to validate the instance.
+
+  **NOTES**
+  - For more details about generating a technician key please refer to the [help documentation](https://help.servicedeskplus.com/api/rest-api.html$key)
+
+  ## Fetch-Incidents Query
+
+  Filters should be in the format "{field':<field_name>, 'condition':<condition>, 'values':'val_1,val_2', 'logical_operator':<op>}".
+  Supports comma-separated values, for example:
+  {"field":"technician.name", "condition":"is", "values":"tech1,tech2", "logical_operator":"AND"}, {"field":"due_by_time", "condition":"greater than", "values":"1592946000000", "logical_operator":"AND"}.
+
+
+  ---
+  [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/service-desk-plus-on-premise)
+display: Service Desk Plus (On-Premise) (Deprecated)
+image: data:image/png;base64,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
+name: ServiceDeskPlus (On-Premise)
+script:
+  commands:
+  - arguments:
+    - description: The unique request id of the request that should be shown.
+      name: request_id
+    - description: |-
+        Use this to get a list of tasks starting from this index.
+        e.g: 6
+      name: start_index
+    - description: |-
+        Use this to mention the number of requests that needs to be returned.
+        e.g: 15. By default, will return only the first 10 requests.
+      name: page_size
+    - description: The column name and value to be searched for in the format of a
+        JSON object. For example, {“subject”:“Change like this”,“priority.name”:“High”}.
+      name: search_fields
+    - description: The name of the filter to use. For example, {“name”:“My_Open”}.
+      name: filter_by
+    deprecated: true
+    description: View the details of requests. If no arguments are passed, details
+      of all requests are returned.
+    name: service-desk-plus-requests-list
+    outputs:
+    - contextPath: ServiceDeskPlus.Request.Requester
+      description: Who made the request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.CreatedTime
+      description: The time the request was created.
+      type: Date
+    - contextPath: ServiceDeskPlus.Request.Template
+      description: The template that was used to create the request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.DisplayId
+      description: The display ID of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Id
+      description: The unique ID of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Subject
+      description: The subject of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Technician
+      description: The technician that was assigned to the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Status
+      description: The status of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.DueByTime
+      description: The due date of the request.
+      type: Date
+    - contextPath: ServiceDeskPlus.Request.Group
+      description: The group to which the request belongs.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.IsServiceRequest
+      description: Indicates whether the request is a service request.
+      type: Boolean
+    - contextPath: ServiceDeskPlus.Request.CancellationRequested
+      description: Indicates whether a cancellation was requested.
+      type: Boolean
+    - contextPath: ServiceDeskPlus.Request.HasNotes
+      description: Indicates whether the command has notes.
+      type: Boolean
+  - arguments:
+    - description: The ID of the request to delete.
+      isArray: true
+      name: request_id
+      required: true
+    deprecated: true
+    description: Deletes the request with the specified ID. To delete multiple IDs,
+      pass a comma-separated list (string) of the IDs of the requests.
+    name: service-desk-plus-request-delete
+  - arguments:
+    - description: Subject of the request.
+      name: subject
+      required: true
+    - description: Description of the request.
+      name: description
+    - auto: PREDEFINED
+      description: Request type. Choose one of the listed options or provide a dictionary
+        representing a request_type object. Can be "Incident", "Request For Information",
+        or "Service Request".
+      name: request_type
+      predefined:
+      - Incident
+      - Request For Information
+      - Service Request
+    - auto: PREDEFINED
+      description: Impact of the request. Choose one of the listed options or provide
+        a dictionary representing an impact object. Can be "Affects Business", "Affects
+        Department", "Affects Group", or "Affects User".
+      name: impact
+      predefined:
+      - Affects Business
+      - Affects Department
+      - Affects Group
+      - Affects User
+    - auto: PREDEFINED
+      defaultValue: Open
+      description: Indicates the current status of this request. Choose one of the
+        listed options or provide a dictionary representing a status object. Can be
+        "Open", "Closed", "On Hold", "Resolved", or "Canceled".
+      name: status
+      predefined:
+      - Open
+      - Closed
+      - On Hold
+      - Resolved
+      - Canceled
+    - auto: PREDEFINED
+      description: The mode in which to create the request. Choose one of the listed
+        options or provide a dictionary representing a mode object. Can be "E-mail",
+        "Phone Call", or "Web Form".
+      name: mode
+      predefined:
+      - E-Mail
+      - Phone Call
+      - Web Form
+    - auto: PREDEFINED
+      description: Level of the request. Choose one of the listed options or provide
+        a dictionary representing a level object. Can be "Tier 1", "Tier 2", "Tier
+        3", or "Tier 4".
+      name: level
+      predefined:
+      - Tier 1
+      - Tier 2
+      - Tier 3
+      - Tier 4
+    - auto: PREDEFINED
+      description: Urgency of the request. Choose one of the listed options or provide
+        a dictionary representing an urgency object. Can be "High", "Low", "Normal",
+        or "Urgent".
+      name: urgency
+      predefined:
+      - High
+      - Low
+      - Normal
+      - Urgent
+    - auto: PREDEFINED
+      description: Priority of the request. Choose one of the listed options or provide
+        a dictionary representing a priority object. Can be "High", "Low", "Normal",
+        or "Meduium".
+      name: priority
+      predefined:
+      - High
+      - Low
+      - Normal
+      - Medium
+    - description: Service category to which this request belongs. String representing
+        the category's name.
+      name: service_category
+    - description: Indicates who made the request. Enter the name of the requester
+        as a string or a dictionary representing a requester object.
+      name: requester
+    - description: Array of asset objects associated to the request.
+      name: assets
+    - description: Denotes the site to which the request belongs. Enter a site name
+        or provide a dictionary representing a site object.
+      name: site
+    - description: Group to which the request belongs. Enter the name of the group
+        or a dictionary representing a group object.
+      name: group
+    - description: Technician assigned to the request. Enter the name of the technician
+        or a dictoinary representing a technician object.
+      name: technician
+    - description: Category to which the request belongs. Enter the name of the category
+        or a dictionary representing a category object.
+      name: category
+    - description: Subcategory to which the request belongs. Enter the name of the
+        subcategory or a dictionary representing a subcategory object.
+      name: subcategory
+    - description: Item of the request. Enter the item's name or a dictionary representing
+        an item object.
+      name: item
+    - description: Array of email IDs to notify about the happenings of the request.
+      name: email_ids_to_notify
+    - description: Boolean value indicating if the request has been marked as First
+        Call Resolution.
+      name: is_fcr
+    - description: Holds the resource data mapped to the request.
+      name: resources
+    - description: 'Holds UDF fields'' values (string) associated with the request
+        in the format: "key1:value1,key2:value2" or a dictionary in the form "{''key1'':''val1'',''key2'':''val2''}".'
+      name: udf_fields
+    deprecated: true
+    description: Creates new requests.
+    name: service-desk-plus-request-create
+    outputs:
+    - contextPath: ServiceDeskPlus.Request.Requester
+      description: Who made the request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.CreatedTime
+      description: The time the request was created.
+      type: Date
+    - contextPath: ServiceDeskPlus.Request.Template
+      description: The template that was used to create the request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.DisplayId
+      description: The display ID of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Id
+      description: The unique ID of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Subject
+      description: The subject of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Technician
+      description: The technician that was assigned to the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Status
+      description: The status of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.DueByTime
+      description: The due date of the request.
+      type: Date
+    - contextPath: ServiceDeskPlus.Request.Group
+      description: The group to which the request belongs.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.IsServiceRequest
+      description: Indicates whether the request is a service request.
+      type: Boolean
+    - contextPath: ServiceDeskPlus.Request.CancellationRequested
+      description: Indicates whether a cancellation was requested.
+      type: Boolean
+    - contextPath: ServiceDeskPlus.Request.HasNotes
+      description: Indicates whether the command has notes.
+      type: Boolean
+  - arguments:
+    - description: The ID of the request.
+      name: request_id
+      required: true
+    - description: Subject of the request.
+      name: subject
+    - description: Description of the request.
+      name: description
+    - auto: PREDEFINED
+      description: Request type. Choose one of the listed options or provide a dictionary
+        representing a request_type object. Can be "Incident", "Request For Information",
+        or "Service Request".
+      name: request_type
+      predefined:
+      - Incident
+      - Request For Information
+      - Service Request
+    - auto: PREDEFINED
+      description: Impact of the request. Choose one of the listed options or provide
+        a dictionary representing an impact object. Can be "Affects Business", "Affects
+        Department", "Affects Group", or "Affects User".
+      name: impact
+      predefined:
+      - Affects Business
+      - Affects Department
+      - Affects Group
+      - Affects User
+    - auto: PREDEFINED
+      defaultValue: Open
+      description: Indicates the current status of this request. Choose one of the
+        listed options or provide a dictionary representing a status object. Can be
+        "Open", "Closed", "On Hold", "Resolved", or "Canceled".
+      name: status
+      predefined:
+      - Open
+      - Closed
+      - On Hold
+      - Resolved
+      - Canceled
+    - auto: PREDEFINED
+      description: The mode in which to create the request. Choose one of the listed
+        options or provide a dictionary representing a mode object. Can be "E-mail",
+        "Phone Call", or "Web Form".
+      name: mode
+      predefined:
+      - E-Mail
+      - Phone Call
+      - Web Form
+    - auto: PREDEFINED
+      description: Level of the request. Choose one of the listed options or provide
+        a dictionary representing a level object. Can be "Tier 1", "Tier 2", "Tier
+        3", or "Tier 4".
+      name: level
+      predefined:
+      - Tier 1
+      - Tier 2
+      - Tier 3
+      - Tier 4
+    - auto: PREDEFINED
+      description: Urgency of the request. Choose one of the listed options or provide
+        a dictionary representing an urgency object. Can be "High", "Low", "Normal",
+        or "Urgent".
+      name: urgency
+      predefined:
+      - High
+      - Low
+      - Normal
+      - Urgent
+    - auto: PREDEFINED
+      description: Priority of the request. Choose one of the listed options or provide
+        a dictionary representing a priority object. Can be "High", "Low", "Normal",
+        or "Meduium".
+      name: priority
+      predefined:
+      - High
+      - Low
+      - Normal
+      - Medium
+    - description: Service category to which this request belongs. String representing
+        the category's name.
+      name: service_category
+    - description: Indicates who made the request. Enter the name of the requester
+        as a string or a dictionary representing a requester object.
+      name: requester
+    - description: Array of asset objects associated to the request.
+      name: assets
+    - description: Denotes the site to which the request belongs. Enter a site name
+        or provide a dictionary representing a site object.
+      name: site
+    - description: Group to which the request belongs. Enter the name of the group
+        or a dictionary representing a group object.
+      name: group
+    - description: Technician assigned to the request. Enter the name of the technician
+        or a dictionary representing a technician object.
+      name: technician
+    - description: Category to which the request belongs. Enter the name of the category
+        or a dictionary representing a category object.
+      name: category
+    - description: Subcategory to which this request belongs. Enter the name of the
+        subcategory or a dictionary representing a subcategory object.
+      name: subcategory
+    - description: Item of the request. Enter the item's name or a dictionary representing
+        an item object.
+      name: item
+    - description: Array of email IDs to notify about the happenings of the request.
+      name: email_ids_to_notify
+    - description: Boolean value indicating if the request has been marked as First
+        Call Resolution.
+      name: is_fcr
+    - description: Holds the resource data mapped to the request.
+      name: resources
+    - description: 'Holds UDF fields'' values (string) associated with the request
+        in the format: "key1:value1,key2:value2" or a dictionary in the form "{''key1'':''val1'',''key2'':''val2''}".'
+      name: udf_fields
+    - description: The reason for updating the request.
+      name: update_reason
+    - description: Comments added while changing the request's status.
+      name: status_change_comments
+    deprecated: true
+    description: Updates the specified request.
+    name: service-desk-plus-request-update
+    outputs:
+    - contextPath: ServiceDeskPlus.Request.Requester
+      description: Who made the request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.CreatedTime
+      description: The time the request was created.
+      type: Date
+    - contextPath: ServiceDeskPlus.Request.Template
+      description: The template that was used to create the request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.DisplayId
+      description: The display ID of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Id
+      description: The unique ID of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Subject
+      description: The subject of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Technician
+      description: The technician that was assigned to the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.Status
+      description: The status of the request.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.DueByTime
+      description: The due date of the request.
+      type: Date
+    - contextPath: ServiceDeskPlus.Request.Group
+      description: The group to which the request belongs.
+      type: String
+    - contextPath: ServiceDeskPlus.Request.IsServiceRequest
+      description: Indicates whether the request is a service request.
+      type: Boolean
+    - contextPath: ServiceDeskPlus.Request.CancellationRequested
+      description: Indicates whether a cancellation was requested.
+      type: Boolean
+    - contextPath: ServiceDeskPlus.Request.HasNotes
+      description: Indicates whether the command has notes.
+      type: Boolean
+  - arguments:
+    - description: The ID of the request to assign.
+      name: request_id
+      required: true
+    - description: The name of the technician to assign to the request.
+      name: technician
+    - description: The name of the group to assign to the request.
+      name: group
+    deprecated: true
+    description: Assigns the specified request to a technician and/or group.
+    name: service-desk-plus-request-assign
+  - arguments:
+    - description: The ID of the request that should be picked up.
+      name: request_id
+      required: true
+    deprecated: true
+    description: Allows a technician to pickup the specified with the given request
+      ID on the technician's name.
+    name: service-desk-plus-request-pickup
+  - arguments:
+    - description: The request for which to get a list of linked requests.
+      name: request_id
+      required: true
+    deprecated: true
+    description: Gets a list with all the linked requests under the specified request.
+    name: service-desk-plus-linked-request-list
+    outputs:
+    - contextPath: ServiceDeskPlus.Request.LinkRequests.Comments
+      description: The comment that was added to the linked request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.LinkRequests.LinkedRequest
+      description: The linked request information.
+      type: Unknown
+  - arguments:
+    - description: The ID of the request to which to add the resolution.
+      name: request_id
+      required: true
+    - description: The content of the resolution to add to the request.
+      name: resolution_content
+    - auto: PREDEFINED
+      description: A boolean value indicating whether the same resolution should be
+        added to all requests linked to the request. Can be "true" or "false".
+      name: add_to_linked_requests
+      predefined:
+      - "true"
+      - "false"
+    deprecated: true
+    description: Adds a resolution to the specified request.
+    name: service-desk-plus-request-resolution-add
+  - arguments:
+    - description: The ID of the request for which to get the resolution.
+      name: request_id
+      required: true
+    deprecated: true
+    description: Gets the resolution of the specified request.
+    name: service-desk-plus-request-resolutions-list
+    outputs:
+    - contextPath: ServiceDeskPlus.Request.Resolution.Content
+      description: The content of the resolution of the request.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.Resolution.SubmittedBy
+      description: The details of who submitted the resolution.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.Resolution.SubmittedOn
+      description: The date the resolution was submitted.
+      type: Unknown
+    - contextPath: ServiceDeskPlus.Request.Resolution.ResolutionAttachments
+      description: The attachments that were added to the resolution.
+      type: Unknown
+  - arguments:
+    - description: The ID of the request for which the links should be modified.
+      name: request_id
+      required: true
+    - auto: PREDEFINED
+      description: Specifies whether to link or unlink this request with the specified
+        requests. Can be "Link" or "Unlink".
+      name: action
+      predefined:
+      - Link
+      - Unlink
+      required: true
+    - description: A comma-separated list of request IDs to link or unlink from the
+        given request. Multiple IDs can be passed, separated by a comma
+      name: linked_requests_id
+      required: true
+    - description: The comment to add when linking requests (optional).
+      name: comment
+    deprecated: true
+    description: Links or unlinks multiple commands.
+    name: service-desk-plus-link-request-modify
+  - arguments:
+    - description: The comments to add when closing the request.
+      name: closure_comments
+    - auto: PREDEFINED
+      description: The closure code to add to the request. Can be "Canceled", "Failed",
+        "Moved", "Postponed", "Success" or "Unable to Reproduce". Additional codes
+        can be added.
+      name: closure_code
+      predefined:
+      - Canceled
+      - Failed
+      - Moved
+      - Postponed
+      - Success
+      - Unable to Reproduce
+    - description: The requester comments to add to the request.
+      name: requester_ack_comments
+    - auto: PREDEFINED
+      description: A boolean value indicating whether the requester needs to acknowledge
+        the resolution. Can be "true" or "false".
+      name: requester_ack_resolution
+      predefined:
+      - "true"
+      - "false"
+    - description: The ID of the request to close.
+      name: request_id
+      required: true
+    deprecated: true
+    description: Closes the specified request.
+    name: service-desk-plus-request-close
+  dockerimage: demisto/python3:3.9.7.24076
+  isfetch: true
+  runonce: false
+  script: |2
+
+
+
+
+    ''' IMPORTS '''
+    from typing import Tuple, Dict, List, Any
+    from _collections import defaultdict
+    import requests
+    import ast
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' CONSTANTS '''
+    API_VERSION = '/api/v3/'
+
+    REQUEST_FIELDS = ['subject', 'description', 'request_type', 'impact', 'status', 'mode', 'level', 'urgency', 'priority',
+                      'service_category', 'requester', 'assets', 'site', 'group', 'technician', 'category', 'subcategory',
+                      'item', 'email_ids_to_notify', 'is_fcr', 'resources', 'udf_fields', 'update_reason']
+    FIELDS_WITH_NAME = ['request_type', 'impact', 'status', 'mode', 'level', 'urgency', 'priority', 'service_category',
+                        'requester', 'site', 'group', 'technician', 'category', 'subcategory', 'item']
+    FIELDS_TO_IGNORE = ['has_draft', 'cancel_flag_comments']
+    HUMAN_READABLE_FIELDS = ['CreatedTime', 'Id', 'Requester', 'Technician', 'Status', 'Subject']
+    FIELDS_WITH_TIME = ['created_time', 'deleted_on', 'due_by_time', 'first_response_due_by_time', 'responded_time',
+                        'resolved_time', 'completed_time', 'assigned_time', 'last_updated_time', 'submitted_on']
+
+
+    class Client(BaseClient):
+        """
+        Client will implement the service API, and should not contain any Demisto logic.
+        Should only do requests and return data.
+        """
+
+        def __init__(self, url: str, use_ssl: bool, use_proxy: bool, technician_key: str,
+                     fetch_time: str = '7 days', fetch_status: list = None,
+                     fetch_limit: int = 50, fetch_filter: str = ''):
+            if fetch_status is None:
+                fetch_status = []
+            self.technician_key = technician_key
+            self.fetch_time = fetch_time
+            self.fetch_status = fetch_status
+            self.fetch_limit = fetch_limit
+            self.fetch_filter = fetch_filter
+            super().__init__(url, verify=use_ssl, proxy=use_proxy, headers={
+                'Accept': 'application/v3+json',
+                'TECHNICIAN_KEY': technician_key
+            })
+
+        def http_request(self, method, url_suffix, full_url=None, params=None):
+            ok_codes = (200, 201, 401)  # includes responses that are ok (200) and error responses that should be
+            # handled by the client and not in the BaseClient
+            try:
+                res = self._http_request(method, url_suffix, full_url=full_url, resp_type='response', ok_codes=ok_codes,
+                                         params=params)
+                if res.status_code in [200, 201]:
+                    try:
+                        return res.json()
+                    except ValueError as exception:
+                        raise DemistoException('Failed to parse json object from response: {}'
+                                               .format(res.content), exception)
+
+                if res.status_code in [401]:
+                    try:
+                        err_msg = f'Unauthorized request - check domain location and the given credentials \n{str(res.json())}'
+                    except ValueError:
+                        err_msg = f'Unauthorized request - check domain location and the given credentials -\n{str(res)}'
+                    raise DemistoException(err_msg)
+
+            except Exception as e:
+                if 'SSL Certificate Verification Failed' in e.args[0]:
+                    return_error('SSL Certificate Verification Failed - try selecting \'Trust any certificate\' '
+                                 'checkbox in the integration configuration.')
+                raise DemistoException(e.args[0])
+
+        def get_requests(self, request_id: str = None, params: dict = None):
+            if request_id:
+                return self.http_request(method='GET', url_suffix=f'requests/{request_id}')
+            else:
+                return self.http_request(method='GET', url_suffix='requests', params=params)
+
+
+    def create_output(request: dict) -> dict:
+        """
+        Creates the output for the context and human readable from the response of an http_request
+
+        Args:
+            request: A single request dict returned from the http_request
+
+        Returns:
+            A dictionary containing all valid fields in the request
+        """
+        output = {}
+        for field in request.keys():
+            value = request.get(field, None)
+            if value not in [None, {}, []] and field not in FIELDS_TO_IGNORE:
+                output[string_to_context_key(field)] = value
+                if field in FIELDS_WITH_TIME:
+                    output[string_to_context_key(field)] = \
+                        timestamp_to_datestring(request.get(field, {}).get('value'))
+
+        if output.get('Status'):
+            output['Status'] = request.get('status', {}).get('name')
+        return output
+
+
+    def args_to_query(args: dict) -> dict:
+        """
+        Converts the given demisto.args into the format required for the http request
+
+        Args:
+            args: The arguments for the current command.
+
+        Returns:
+            A dictionary containing all valid valid query field that were passed in the args, converted into the format
+            required for the http_request.
+        """
+        request_fields: Dict[str, Any] = {}
+        for field in REQUEST_FIELDS:
+            value = args.get(field, None)
+            if value:
+                if field == 'udf_fields':
+                    request_fields[field] = f"{create_udf_field(value)}"
+                elif field not in FIELDS_WITH_NAME or (value[0] == '{' and value[-1] == '}'):  # if the second condition
+                    # holds the user entered an object as the field value and not only the name of the field. For more
+                    # information please refer to the `service-desk-plus-request-create` command in the README.
+                    request_fields[field] = value
+                else:
+                    request_fields[field] = {
+                        'name': value
+                    }
+        return {
+            'request': request_fields
+        }
+
+
+    def create_udf_field(udf_input: str):
+        """
+        Converts the given string with udf keys and values to a valid dictionary for the query.
+
+        Args:
+            udf_input: the string representing the udf values as given by the user.
+
+        Returns:
+            A dictionary where every key is the udf_field key and the value given by the user.
+        """
+        if not udf_input:
+            return {}
+        try:
+            if udf_input[0] == '{' and udf_input[-1] == '}':  # check if the user entered a dict as the value
+                return ast.literal_eval(udf_input)
+
+            fields = udf_input.split(',')
+            udf_dict = {}
+            for field in fields:
+                if field:
+                    field_key_value = field.split(':')
+                    if field_key_value[0] and field_key_value[1]:
+                        udf_dict[field_key_value[0]] = field_key_value[1]
+                    else:
+                        raise Exception('Invalid input')
+            return udf_dict
+        except Exception:
+            raise Exception('Illegal udf fields format. Input format should be a string of key and value separated by : '
+                            'Multiple key;value pairs can be given, separated with a comma')
+
+
+    def create_modify_linked_input_data(linked_requests_id: list, comment: str) -> dict:
+        """
+        Returning the input_data dictionary that should be used to link/unlink the requests were passed.
+
+        Args:
+             linked_requests_id: the requests that should be linked/unlinked with/from the given base request
+             comment: the comment that should be added when linking requests (optional)
+
+         Returns:
+             A dictionary containing the input_data parameter that should be used for linking/un-linking the requests.
+        """
+        all_linked_requests = []
+        for request_id in linked_requests_id:
+            linked_request: Dict[str, Any] = {
+                'linked_request': {
+                    'id': request_id
+                }
+            }
+            if comment:
+                linked_request['comments'] = comment
+            all_linked_requests.append(linked_request)
+        return {
+            'link_requests': all_linked_requests
+        }
+
+
+    def create_human_readable(output: dict) -> dict:
+        """
+        Converts the output of a command to a human readable output
+
+        Args:
+            output: the output that should be converted to the human readable representation
+
+        Returns:
+            dict: the dictionary that represents the human readable output
+        """
+        hr = {}
+        for field in HUMAN_READABLE_FIELDS:
+            if output.get(field):
+                hr[field] = output.get(field)
+                if field in ['Technician', 'Requester']:
+                    hr[field] = output.get(field, {}).get('name')
+        return hr
+
+
+    def resolution_human_readable(output: dict) -> dict:
+        """
+        Creates the human readable dictionary from the output of the resolution of the request
+
+        Args:
+            output: The resolution output that was created for the called request
+
+        Returns:
+            A dictionary containing all the valid fields in the resolution output
+        """
+        hr = {}
+        for key in output.keys():
+            if key == 'SubmittedBy':
+                hr['SubmittedBy'] = output.get('SubmittedBy', {}).get('name', '')
+            else:
+                hr[key] = output.get(key, '')
+        return hr
+
+
+    def create_requests_list_info(start_index, row_count, search_fields, filter_by):
+        """
+        Returning the list_info dictionary that should be used to filter the requests that are being returned.
+
+        Args:
+             start_index: the index of the first request that should be returned
+             row_count: the number of requests that should be returned
+             search_fields: search for specific fields in the requests
+             filter_by: the filter by which to filter the returned requests
+
+         Returns:
+             A dictionary containing the list_info parameter that should be used for filtering the requests.
+
+        """
+        list_info = {}
+        if start_index is not None:
+            list_info['start_index'] = start_index
+        if row_count is not None:
+            list_info['row_count'] = row_count
+        if search_fields:
+            list_info['search_fields'] = search_fields
+        if filter_by:
+            list_info['filter_by'] = filter_by
+        list_info['sort_field'] = 'created_time'
+        list_info['sort_order'] = 'asc'
+        return {
+            'list_info': list_info
+        }
+
+
+    def create_fetch_list_info(time_from: str, time_to: str, status: list, fetch_filter: str, fetch_limit: int) -> dict:
+        """
+        Returning the list_info dictionary that should be used to filter the requests that are being fetched
+        The requests that will be returned when using this list_info are all requests created between 'time_from' and
+        'time_to' (inclusive) and are with the given status, in ascending order of creation time.
+
+        Args:
+             time_from: the time from which requests should be fetched
+             time_to: the time until which requests should be fetched
+             status: the status of the requests that should be fetched
+             fetch_filter: a string representing all the field according to which the results that are being fetched should
+                           be filtered. Multiple fields, separated with a comma, can be used to filter. Every field should
+                           be in the following format: 'field-name condition field-value' where condition is the condition
+                           that this field should satisfy, for example 'is', 'is not', 'greater than' etc.
+             fetch_limit: the maximal number of requests that should be returned.
+
+         Returns:
+             A dictionary containing the list_info parameter that should be used for filtering the requests.
+
+        """
+        list_info = {}
+        try:
+            search_criteria = [{
+                'field': 'created_time',
+                'values': [f'{time_from}', f'{time_to}'],
+                'condition': 'between'
+            }]
+            if fetch_filter:
+                filters = ast.literal_eval(fetch_filter)
+                if isinstance(filters, dict):
+                    query: Dict[str, Any] = {
+                        'field': filters.get('field'),
+                        'condition': filters.get('condition'),
+                        'values': filters.get('values', '').split(','),
+                        'logical_operator': filters.get('logical_operator', 'AND')
+                    }
+                    if filters.get('logical_operator') == 'OR':
+                        raise Exception('Only "AND" is allowed as a logical_operator')
+                    search_criteria.append(query)
+                else:
+                    for filter in filters:
+                        query = {
+                            'field': filter.get('field'),
+                            'condition': filter.get('condition'),
+                            'values': filter.get('values', '').split(','),
+                            'logical_operator': filter.get('logical_operator', 'AND')
+                        }
+                        if filter.get('logical_operator') == 'OR':
+                            raise Exception('Only "AND" is allowed as a logical_operator')
+                        search_criteria.append(query)
+            else:
+                if status:
+                    query = {
+                        'field': 'status.name',
+                        'values': status,
+                        'condition': 'is',
+                        'logical_operator': 'AND'
+                    }
+                    search_criteria.append(query)
+
+            list_info = {
+                'search_criteria': search_criteria,
+                'sort_field': 'created_time',
+                'sort_order': 'asc',
+                'row_count': fetch_limit
+            }
+        except Exception as e:
+            return_error(f'Invalid input format for fetch query. Please see detailed information (?) for valid fetch query '
+                         f'format.\n{e.args[0]}')
+        return {
+            'list_info': list_info
+        }
+
+
+    # Command functions:
+    def list_requests_command(client: Client, args: dict):
+        """
+        Get the details of requests. The returned requests can be filtered by a single request id or by input_data param.
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id', None)
+        start_index = args.get('start_index', None)
+        row_count = args.get('page_size', None)
+        search_fields = args.get('search_fields', None)
+        filter_by = args.get('filter_by', None)
+        list_info = create_requests_list_info(start_index, row_count, search_fields, filter_by)
+        params = {
+            'input_data': f'{list_info}'
+        }
+        result = client.get_requests(request_id, params)
+
+        output = []
+        hr = []
+        context: dict = defaultdict(list)
+        if request_id:
+            requests = [result.get('request', [])]
+        else:
+            requests = result.get('requests', [])
+        for request in requests:
+            request_output = create_output(request)
+            output.append(request_output)
+            hr.append(create_human_readable(request_output))
+
+        context['ServiceDeskPlus(val.ID===obj.ID)'] = {
+            'Request': output
+        }
+        markdown = tableToMarkdown('Requests', t=hr)
+        return markdown, context, result
+
+
+    def delete_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Delete the request(s) with the given request_id
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id', '')
+        requests_list = request_id.split(',')
+        result = {}
+        for request in requests_list:
+            result = client.http_request('DELETE', url_suffix=f'requests/{request}/move_to_trash')
+        hr = f'### Successfully deleted request(s) {requests_list}'
+        return hr, {}, result
+
+
+    def create_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Create a new request with the given args
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        query = args_to_query(args)
+        params = {
+            'input_data': f'{query}'
+        }
+        result = client.http_request('POST', url_suffix='requests', params=params)
+        request = result.get('request', None)
+
+        output = {}
+        context: dict = defaultdict(list)
+        if request:
+            output = create_output(request)
+        hr = create_human_readable(output)
+        markdown = tableToMarkdown('Service Desk Plus request was successfully created', t=hr)
+        context['ServiceDeskPlus(val.ID===obj.ID)'] = {
+            'Request': output
+        }
+        return markdown, context, result
+
+
+    def update_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Updates an existing request with the given args
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        query = args_to_query(args)
+        params = {
+            'input_data': f'{query}'
+        }
+        request_id = args.get('request_id')
+        result = client.http_request('PUT', url_suffix=f'requests/{request_id}', params=params)
+        request = result.get('request', None)
+        output = {}
+        context: dict = defaultdict(list)
+        if request:
+            output = create_output(request)
+
+        hr = create_human_readable(output)
+        markdown = tableToMarkdown('Service Desk Plus request was successfully updated', t=hr)
+        context['ServiceDeskPlus(val.ID===obj.ID)'] = {
+            'Request': output
+        }
+        return markdown, context, result
+
+
+    def assign_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Assigns the given request to the given technician/group
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        query = args_to_query(args)
+        params = {
+            'input_data': f'{query}'
+        }
+        request_id = args.get('request_id')
+        result = client.http_request('PUT', url_suffix=f'requests/{request_id}/assign', params=params)
+        markdown = f'### Service Desk Plus request {request_id} was successfully assigned'
+        return markdown, {}, result
+
+
+    def pickup_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Picks up the given request to the current technician
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id')
+        result = client.http_request('PUT', url_suffix=f'requests/{request_id}/pickup')
+        markdown = f'### Service Desk Plus request {request_id} was successfully picked up'
+        return markdown, {}, result
+
+
+    def linked_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Lists all the requests that are linked to the given request.
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id')
+        result = client.http_request('GET', url_suffix=f'requests/{request_id}/link_requests')
+
+        linked_requests = result.get('link_requests', [])
+        context: dict = defaultdict(list)
+        output = []
+
+        for request in linked_requests:
+            request_output = create_output(request)
+            output.append(request_output)
+
+        markdown = tableToMarkdown(f'Linked requests to request {request_id}', t=output, removeNull=True)
+        context['ServiceDeskPlus.Request(val.ID===obj.ID)'] = {
+            'LinkRequests': output
+        }
+        return markdown, context, result
+
+
+    def modify_linked_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Links/Un-links the given request with all the other requests that where passed as arguments.
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id')
+        action = args.get('action')
+        linked_requests_id = args.get('linked_requests_id', '').split(',')
+        comment = args.get('comment', '')
+        input_data = create_modify_linked_input_data(linked_requests_id, comment)
+        params = {
+            'input_data': f'{input_data}'
+        }
+        if action == 'Link':
+            result = client.http_request('POST', url_suffix=f'requests/{request_id}/link_requests', params=params)
+        else:
+            result = client.http_request('DELETE', url_suffix=f'requests/{request_id}/link_requests', params=params)
+        markdown = f"## {result.get('response_status', {}).get('messages')[0].get('message')}"
+        return markdown, {}, result
+
+
+    def add_resolution_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Adds the resolution to the given request
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id')
+        resolution_content = args.get('resolution_content')
+        add_to_linked_requests = args.get('add_to_linked_requests') if args.get('add_to_linked_requests') else 'false'
+        query = {
+            'resolution': {
+                'content': resolution_content,
+                'add_to_linked_requests': add_to_linked_requests
+            }
+        }
+        params = {
+            'input_data': f'{query}'
+        }
+        result = client.http_request('POST', url_suffix=f'requests/{request_id}/resolutions', params=params)
+
+        if add_to_linked_requests == 'true':
+            markdown = f'### Resolution was successfully added to {request_id} and the linked requests'
+        else:
+            markdown = f'### Resolution was successfully added to {request_id}'
+
+        return markdown, {}, result
+
+
+    def get_resolutions_list_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Gets the resolution of the given request
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id')
+        result = client.http_request('GET', url_suffix=f'requests/{request_id}/resolutions')
+
+        context: dict = defaultdict(list)
+        output = create_output(result.get('resolution', {}))
+        hr = {}
+        if output:
+            context['ServiceDeskPlus.Request(val.ID===obj.ID)'] = {
+                'Resolution': output
+            }
+            hr = resolution_human_readable(output)
+        markdown = tableToMarkdown(f'Resolution of request {request_id}', t=hr)
+        return markdown, context, result
+
+
+    def close_request_command(client: Client, args: dict) -> Tuple[str, dict, Any]:
+        """
+        Close the request with the given request_id with comments and resolution defined by the user.
+
+        Args:
+            client: Client object with request.
+            args: Usually demisto.args()
+
+        Returns:
+            Demisto Outputs.
+        """
+        request_id = args.get('request_id')
+        closure_info: Dict[str, Any] = {
+            "requester_ack_resolution": args.get('requester_ack_resolution', 'false'),
+            "requester_ack_comments": args.get('requester_ack_comments', ''),
+            "closure_comments": args.get('closure_comments', ''),
+        }
+        if args.get('closure_code'):
+            closure_info["closure_code"] = {'name': args.get('closure_code')}
+        input_data = {
+            "request": {
+                "closure_info": closure_info
+            }
+        }
+        params = {
+            'input_data': f'{input_data}'
+        }
+        result = client.http_request('PUT', url_suffix=f'requests/{request_id}/close', params=params)
+        hr = f'### Successfully closed request {request_id}'
+        return hr, {}, result
+
+
+    def fetch_incidents(client: Client, test_command: bool = False) -> list:
+        date_format = '%Y-%m-%dT%H:%M:%S'
+        last_run = {}
+        if not test_command:
+            last_run = demisto.getLastRun()
+
+        if not last_run:  # if first time running
+            try:
+                new_last_run = {
+                    'time': date_to_timestamp(parse_date_range(client.fetch_time, date_format=date_format, utc=False)[0])
+                }
+            except Exception as e:
+                return_error(f'Invalid fetch time range.\n{e.args[0]}')
+        else:
+            new_last_run = last_run
+        demisto_incidents: List = list()
+        time_from = new_last_run.get('time')
+        time_to = date_to_timestamp(datetime.now(), date_format=date_format)
+        list_info = create_fetch_list_info(str(time_from), str(time_to), client.fetch_status, client.fetch_filter,
+                                           client.fetch_limit + 1)
+        params = {
+            'input_data': f'{list_info}'
+        }
+
+        # Get incidents from Service Desk Plus
+        demisto.info(f'Fetching ServiceDeskPlus incidents. with the query params: {str(params)}')
+
+        incidents = client.get_requests(params=params).get('requests', [])
+
+        if incidents:
+            count = 0
+            last_run_id = last_run.get('id', '0')
+            last_incident_id = last_run.get('id', '0')
+            cur_time = new_last_run.get('time', 0)
+            incident_creation_time = new_last_run.get('time', 0)
+
+            for incident in incidents:
+                if count >= client.fetch_limit:
+                    break
+                # Prevent fetching twice the same incident - the last incident that was fetched in the last run, will be the
+                # first incident in the returned incidents from the API call this time.
+                if incident.get('id') == last_run_id:
+                    continue
+                incident_creation_time = int(incident.get('created_time', {}).get('value'))
+                if incident_creation_time >= cur_time:
+                    demisto_incidents.append({
+                        'name': f'{incident.get("subject")} - {incident.get("id")}',
+                        'occurred': timestamp_to_datestring(incident_creation_time),
+                        'rawJSON': json.dumps(incident)
+                    })
+                    count += 1
+                    last_incident_id = incident.get('id')
+
+            if demisto_incidents:
+                new_last_run.update({
+                    'time': incident_creation_time,
+                    'id': last_incident_id
+                })
+
+        if not demisto_incidents:
+            new_last_run.update({
+                'time': time_to
+            })
+
+        if not test_command:
+            demisto.setLastRun(new_last_run)
+        return demisto_incidents
+
+
+    def test_module(client: Client):
+        """
+        Returning 'ok' indicates that the integration works like it is supposed to. Connection to the service is successful.
+        If 'Fetches incidents' is checked in the instance configurations, this function checks that the entered parameters
+        are valid.
+
+        Args:
+            client: Service Desk Plus client
+
+        Returns:
+            'ok' if test passed, anything else will fail the test.
+        """
+        try:
+            client.http_request('GET', 'requests')
+            params: dict = demisto.params()
+
+            if params.get('isFetch'):
+                fetch_incidents(client, test_command=True)
+            return 'ok'
+
+        except Exception as e:
+            raise e
+
+
+    def main():
+        params = demisto.params()
+
+        client = Client(url=params.get('server_url') + API_VERSION,
+                        use_ssl=not params.get('insecure', False),
+                        use_proxy=params.get('proxy', False),
+                        technician_key=params.get('technician_key'),
+                        fetch_time=params.get('first_fetch') if params.get('first_fetch') else '7 days',
+                        fetch_status=params.get('fetch_status'),
+                        fetch_limit=int(params.get('max_fetch')) if params.get('max_fetch') else 50,
+                        fetch_filter=params.get('fetch_filter') if params.get('fetch_filter') else '')
+
+        commands = {
+            'service-desk-plus-requests-list': list_requests_command,
+            'service-desk-plus-request-delete': delete_request_command,
+            'service-desk-plus-request-create': create_request_command,
+            'service-desk-plus-request-update': update_request_command,
+            'service-desk-plus-request-assign': assign_request_command,
+            'service-desk-plus-request-pickup': pickup_request_command,
+            'service-desk-plus-request-close': close_request_command,
+            'service-desk-plus-linked-request-list': linked_request_command,
+            'service-desk-plus-link-request-modify': modify_linked_request_command,
+            'service-desk-plus-request-resolution-add': add_resolution_command,
+            'service-desk-plus-request-resolutions-list': get_resolutions_list_command
+        }
+        command = demisto.command()
+        LOG(f'Command being called is {command}')
+
+        try:
+            if command == 'test-module':
+                demisto.results(test_module(client))
+            elif command == "fetch-incidents":
+                incidents = fetch_incidents(client)
+                demisto.incidents(incidents)
+            elif command in commands:
+                return_outputs(*commands[command](client, demisto.args()))
+            else:
+                return_error('Command not found.')
+        except Exception as e:
+            return_error(f'Failed to execute {command} command. Error: {e}')
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python
+system: true

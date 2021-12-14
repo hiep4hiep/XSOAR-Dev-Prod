@@ -31,8 +31,9 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.5
+    itemVersion: 1.6.8
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -41,6 +42,7 @@ contentitemexportablefields:
 dockerimage: demisto/python:2.7.18.24398
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: ParseEmailFiles
 outputs:
 - contextPath: Email.To
@@ -3547,7 +3549,8 @@ script: |
                       res += replace_decoded
                   ENCODINGS_TYPES.add(encoding)
               else:
-                  res += decoded_s
+                  demisto.debug('Could not find the encoding type of the string, decoding by default with utf-8')
+                  res += decoded_s.decode('utf-8', errors='replace').encode('utf-8')
           return res.strip()
       except Exception:
           for file_data in ENCODINGS_TYPES:

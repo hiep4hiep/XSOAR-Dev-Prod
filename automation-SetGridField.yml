@@ -41,8 +41,9 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.5
+    itemVersion: 1.6.8
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -50,6 +51,7 @@ contentitemexportablefields:
     toServerVersion: ""
 dockerimage: demisto/pandas:1.0.0.23402
 engineinfo: {}
+mainengineinfo: {}
 name: SetGridField
 pswd: ""
 runas: DBotWeakRole

@@ -1,54 +1,59 @@
 args:
 - default: true
-  description: The string(s) to compare with the input string. (could be multiple
-    strings with a comma separator)
+  description: A comma-separated list of strings to compare with the input string.
+  isArray: true
   name: compareString
   required: true
-- description: The input string to compare
+- description: The input string(s) to compare.
   name: inputString
   required: true
 - defaultValue: "3"
-  description: Distance that is considered close
+  description: Distance that is considered close.
   name: distance
-comment: Get the string distance between inputString and compareString (could be a
-  comma separated list) based on Levenshtein Distance algorithm.
+comment: Get the string distance between inputString and compareString (compareString
+  can be a comma-separated list) based on Levenshtein Distance algorithm.
 commonfields:
   id: GetStringsDistance
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.5
+    itemVersion: 1.6.8
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python:2.7.18.24066
+dockerimage: demisto/python:2.7.18.24398
 engineinfo: {}
+mainengineinfo: {}
 name: GetStringsDistance
 outputs:
 - contextPath: LevenshteinDistance
-  description: The closeness of the sender domain to our configured domains
+  description: The closeness of the sender domain to our configured domains.
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |-
-  import re
+script: |2
+
+
+
 
   def levenshtein(s1, s2):
       l1 = len(s1)
       l2 = len(s2)
       matrix = [range(l1 + 1)] * (l2 + 1)
       for zz in range(l2 + 1):
-          matrix[zz] = range(zz,zz + l1 + 1)
-      for zz in range(0,l2):
-          for sz in range(0,l1):
+          matrix[zz] = range(zz, zz + l1 + 1)
+      for zz in range(0, l2):
+          for sz in range(0, l1):
               if s1[sz] == s2[zz]:
-                  matrix[zz+1][sz+1] = min(matrix[zz+1][sz] + 1, matrix[zz][sz+1] + 1, matrix[zz][sz])
+                  matrix[zz + 1][sz + 1] = min(matrix[zz + 1][sz] + 1, matrix[zz][sz + 1] + 1, matrix[zz][sz])
               else:
-                  matrix[zz+1][sz+1] = min(matrix[zz+1][sz] + 1, matrix[zz][sz+1] + 1, matrix[zz][sz] + 1)
+                  matrix[zz + 1][sz + 1] = min(matrix[zz + 1][sz] + 1, matrix[zz][sz + 1] + 1, matrix[zz][sz] + 1)
       return matrix[l2][l1]
+
 
   res = []
   found = False
@@ -58,7 +63,8 @@ script: |-
 
   compare_string = argToList(demisto.get(demisto.args(), 'compareString'))
   if not compare_string:
-      res.append({'Type': entryTypes['error'], 'ContentsFormat': formats['text'], 'Contents': 'Unable to extract compareString from arguments'})
+      res.append({'Type': entryTypes['error'], 'ContentsFormat': formats['text'],
+                  'Contents': 'Unable to extract compareString from arguments'})
   else:
       input_string = demisto.get(demisto.args(), 'inputString')
       if input_string:
@@ -67,18 +73,18 @@ script: |-
               levenshtein_distance = levenshtein(cur_string, input_string)
               distances.append(
                   {
-                      'StringA' : input_string,
-                      'StringB' : cur_string,
-                      'LevenshteinDistance' : levenshtein_distance,
-                      'TooClose' : levenshtein_distance > 0 and levenshtein_distance < close_distance_int
+                      'StringA': input_string,
+                      'StringB': cur_string,
+                      'LevenshteinDistance': levenshtein_distance,
+                      'TooClose': 0 < levenshtein_distance < close_distance_int
                   })
           res.append(
               {
-                  'Type' : entryTypes['note'],
-                  'Contents': {'Distances' : distances},
-                  'ContentsFormat' : formats['json'],
-                  'HumanReadable': tblToMd('Distances', distances, ['StringA','StringB','LevenshteinDistance','TooClose']),
-                  'ReadableContentsFormat' : formats['markdown']
+                  'Type': entryTypes['note'],
+                  'Contents': {'Distances': distances},
+                  'ContentsFormat': formats['json'],
+                  'HumanReadable': tblToMd('Distances', distances, ['StringA', 'StringB', 'LevenshteinDistance', 'TooClose']),
+                  'ReadableContentsFormat': formats['markdown']
               })
 
       else:
@@ -96,5 +102,4 @@ system: true
 tags:
 - server
 - phishing
-- Condition
 type: python

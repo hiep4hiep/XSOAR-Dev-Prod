@@ -15,8 +15,9 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.5
+    itemVersion: 1.6.8
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -25,6 +26,7 @@ contentitemexportablefields:
 dockerimage: demisto/office-utils:2.0.0.23094
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: ExtractIndicatorsFromWordFile
 pswd: ""
 runas: DBotRole

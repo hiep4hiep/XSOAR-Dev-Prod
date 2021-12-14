@@ -21,8 +21,9 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.5
+    itemVersion: 1.6.8
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -31,6 +32,7 @@ contentitemexportablefields:
 dockerimage: demisto/python:2.7.18.24398
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: ExtractIndicatorsFromTextFile
 outputs:
 - contextPath: Domain.Name

@@ -28,7 +28,8 @@ inputs:
   playbookInputQuery: null
   required: true
   value:
-    simple: SELECT * FROM events WHERE inOffense(150) LIMIT 5 START '2021-11-25 01:17:07'
+    simple: SELECT * FROM events WHERE inOffense(150) AND qid='67500096 ' LIMIT 5
+      START '2021-11-25 01:17:07'
 - description: Range of results to return (e.g. 0-20)
   key: range
   playbookInputQuery: null

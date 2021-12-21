@@ -13,12 +13,14 @@ inputs:
   key: suspicious_url
   playbookInputQuery: null
   required: false
-  value: {}
+  value:
+    simple: 8.8.8.8
 - description: ""
   key: suspicious_hash
   playbookInputQuery: null
   required: false
-  value: {}
+  value:
+    simple: 8.8.8.8
 name: Test - TI Search
 outputs: []
 starttaskid: "0"
@@ -28,6 +30,9 @@ tasks:
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
     note: false
     quietmode: 0
     separatecontext: false
@@ -44,8 +49,244 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 50,
-          "y": 50
+          "x": 680,
+          "y": 30
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      url:
+        simple: ${inputs.suspicious_url}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: VirusTotal (API v3)
+      description: Checks the reputation of a URL.
+      id: 9b9af672-41b1-403c-8584-9c44f6e85484
+      iscommand: true
+      name: Check in Virus Total
+      script: VirusTotal (API v3)|||url
+      type: regular
+      version: -1
+    taskid: 9b9af672-41b1-403c-8584-9c44f6e85484
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 680,
+          "y": 170
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      file:
+        simple: ${inputs.suspicious_hash}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: VirusTotal (API v3)
+      description: Checks the file reputation of the specified hash.
+      id: 891e5e60-01a9-4e83-8580-e80122edf603
+      iscommand: true
+      name: Check file with Virus Total
+      script: VirusTotal (API v3)|||file
+      type: regular
+      version: -1
+    taskid: 891e5e60-01a9-4e83-8580-e80122edf603
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 680,
+          "y": 330
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      body:
+        simple: 'This is the link to the requested form: httpsdasd'
+      to:
+        simple: takao@gmail.com
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends an email.
+      id: 207a1022-da22-43e0-85c9-0958c1d8cc3b
+      iscommand: true
+      name: Send notification email
+      script: '|||send-mail'
+      type: regular
+      version: -1
+    taskid: 207a1022-da22-43e0-85c9-0958c1d8cc3b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 680,
+          "y": 480
+        }
+      }
+  "4":
+    form:
+      description: ""
+      expired: false
+      questions:
+      - defaultrows: []
+        fieldassociated: ""
+        gridcolumns: []
+        id: "0"
+        label: ""
+        labelarg:
+          simple: How are you
+        options: []
+        optionsarg: []
+        placeholder: ""
+        readonly: false
+        required: false
+        tooltip: ""
+        type: shortText
+      sender: ""
+      title: This is a VT report survey
+      totalanswers: 0
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    message:
+      bcc: null
+      body:
+        simple: Please fill in
+      cc: null
+      format: ""
+      methods:
+      - email
+      subject:
+        simple: This is the test form
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        simple: tsaishu@paloaltonetworks.com
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 37fefd8e-9971-4cf8-87be-3274ba4c7264
+      iscommand: false
+      name: Ask user to fill the form
+      type: collection
+      version: -1
+    taskid: 37fefd8e-9971-4cf8-87be-3274ba4c7264
+    timertriggers: []
+    type: collection
+    view: |-
+      {
+        "position": {
+          "x": 680,
+          "y": 640
+        }
+      }
+  "5":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: This is a VT report survey.Answers.0
+          operator: isEqualString
+          right:
+            value:
+              simple: Bad
+      label: "yes"
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "yes":
+      - "6"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 0aaee514-62f4-4956-8954-967eeaf8e7ce
+      iscommand: false
+      name: Check if High alert
+      type: condition
+      version: -1
+    taskid: 0aaee514-62f4-4956-8954-967eeaf8e7ce
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 680,
+          "y": 780
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: acfd9f92-3677-4abb-8db0-4230635eb7e3
+      iscommand: false
+      name: Remediation
+      type: regular
+      version: -1
+    taskid: acfd9f92-3677-4abb-8db0-4230635eb7e3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 420,
+          "y": 980
         }
       }
 version: -1
@@ -54,10 +295,10 @@ view: |-
     "linkLabelsPosition": {},
     "paper": {
       "dimensions": {
-        "height": 65,
-        "width": 380,
-        "x": 50,
-        "y": 50
+        "height": 1045,
+        "width": 640,
+        "x": 420,
+        "y": 30
       }
     }
   }

@@ -1,0 +1,58 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 558ed84a-8d3b-4d3c-8c58-43157e3ce889
+inputs:
+- description: ""
+  key: suspicious_url
+  playbookInputQuery: null
+  required: false
+  value: {}
+name: Test - TI Search
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 5bbfa3c0-5e0e-4124-8457-38a40608c2da
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 5bbfa3c0-5e0e-4124-8457-38a40608c2da
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 65,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

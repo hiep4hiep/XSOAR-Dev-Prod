@@ -14,6 +14,11 @@ inputs:
   playbookInputQuery: null
   required: false
   value: {}
+- description: ""
+  key: suspicious_hash
+  playbookInputQuery: null
+  required: false
+  value: {}
 name: Test - TI Search
 outputs: []
 starttaskid: "0"

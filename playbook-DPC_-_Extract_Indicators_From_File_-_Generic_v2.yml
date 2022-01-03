@@ -30,7 +30,7 @@ inputs:
   value:
     complex:
       root: File
-name: Extract Indicators From File - Generic v2_copy
+name: DPC - Extract Indicators From File - Generic v2
 outputs:
 - contextPath: Domain.Name
   description: Extracted domains.

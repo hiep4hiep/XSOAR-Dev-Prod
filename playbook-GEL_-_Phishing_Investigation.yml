@@ -107,7 +107,7 @@ inputs:
   required: false
   value:
     simple: hiep4hiep@innothings.vn
-name: DPC - Phishing Investigation_copy
+name: GEL - Phishing Investigation
 outputs: []
 sourceplaybookid: Phishing Investigation - Generic v2
 starttaskid: "0"

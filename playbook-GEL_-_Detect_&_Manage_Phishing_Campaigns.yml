@@ -140,7 +140,7 @@ inputs:
   required: false
   value:
     simple: "False"
-name: DPC - Detect & Manage Phishing Campaigns_copy
+name: GEL - Detect & Manage Phishing Campaigns
 outputs: []
 sourceplaybookid: Detect & Manage Phishing Campaigns
 starttaskid: "0"

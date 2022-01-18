@@ -37,7 +37,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -51,7 +51,8 @@ name: SetByIncidentId
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('SetByIncidentId', 'start', __line__())
 
 
 
@@ -86,6 +87,8 @@ script: |2
 
   if __name__ in ('__main__', '__builtin__', 'builtins'):
       main()
+
+  register_module_line('SetByIncidentId', 'end', __line__())
 scripttarget: 0
 subtype: python3
 system: true

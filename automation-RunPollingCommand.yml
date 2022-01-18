@@ -26,7 +26,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -40,7 +40,8 @@ name: RunPollingCommand
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('RunPollingCommand', 'start', __line__())
 
 
 
@@ -89,6 +90,8 @@ script: |2
 
   if __name__ in ('__main__', '__builtin__', 'builtins'):
       main(demisto.args())
+
+  register_module_line('RunPollingCommand', 'end', __line__())
 scripttarget: 0
 subtype: python2
 system: true

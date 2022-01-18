@@ -8,12 +8,7 @@ args:
 - defaultValue: "20"
   description: Maximum number of images to extract from the PDF file.
   name: maxImages
-comment: |-
-  Load a PDF file's content and metadata into context.
-
-  This automation runs using the default Limited User role, unless you explicitly change the permissions.
-  For more information, see the section about permissions here:
-  https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+comment: Load a PDF file's content and metadata into context.
 commonfields:
   id: ReadPDFFileV2
   version: -1
@@ -21,7 +16,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -128,9 +123,10 @@ outputs:
   description: The email address of the account.
   type: String
 pswd: ""
-runas: DBotWeakRole
+runas: DBotRole
 runonce: false
-script: |2
+script: |
+  register_module_line('ReadPDFFileV2', 'start', __line__())
 
 
 
@@ -466,6 +462,8 @@ script: |2
   # python2 uses __builtin__ python3 uses builtins
   if __name__ == "__builtin__" or __name__ == "builtins":
       main()
+
+  register_module_line('ReadPDFFileV2', 'end', __line__())
 scripttarget: 0
 subtype: python3
 system: true

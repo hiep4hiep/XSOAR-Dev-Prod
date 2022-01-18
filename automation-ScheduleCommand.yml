@@ -19,7 +19,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -31,7 +31,8 @@ name: ScheduleCommand
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: return executeCommand("scheduleEntry", args);
+script: |
+  return executeCommand("scheduleEntry", args);
 scripttarget: 0
 system: true
 tags:

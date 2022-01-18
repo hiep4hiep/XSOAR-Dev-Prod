@@ -58,8 +58,9 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.16.6
+    itemVersion: 1.18.3
     packID: Base
     packPropagationLabels:
     - all
@@ -67,6 +68,7 @@ contentitemexportablefields:
     toServerVersion: ""
 dockerimage: demisto/python3:3.9.8.24399
 engineinfo: {}
+mainengineinfo: {}
 name: GetIncidentsByQuery
 outputs:
 - contextPath: GetIncidentsByQuery.Filename
@@ -78,7 +80,8 @@ outputs:
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('GetIncidentsByQuery', 'start', __line__())
 
 
   import pickle
@@ -320,6 +323,8 @@ script: |2
   if __name__ in ['builtins', '__main__']:
       entry = main()
       demisto.results(entry)
+
+  register_module_line('GetIncidentsByQuery', 'end', __line__())
 scripttarget: 0
 subtype: python3
 system: true

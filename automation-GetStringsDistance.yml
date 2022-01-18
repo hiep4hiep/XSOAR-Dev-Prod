@@ -19,7 +19,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -35,7 +35,8 @@ outputs:
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('GetStringsDistance', 'start', __line__())
 
 
 
@@ -96,6 +97,8 @@ script: |2
               })
 
       demisto.results(res)
+
+  register_module_line('GetStringsDistance', 'end', __line__())
 scripttarget: 0
 subtype: python2
 system: true

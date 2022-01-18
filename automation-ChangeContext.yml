@@ -32,13 +32,13 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.9.7.24076
+dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -46,7 +46,8 @@ name: ChangeContext
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('ChangeContext', 'start', __line__())
 
 
   import json
@@ -89,6 +90,8 @@ script: |2
 
   if __name__ in ['__main__', 'builtin', 'builtins']:
       main()
+
+  register_module_line('ChangeContext', 'end', __line__())
 scripttarget: 0
 subtype: python3
 system: true

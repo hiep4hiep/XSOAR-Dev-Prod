@@ -16,9 +16,7 @@ inputs:
   playbookInputQuery: null
   required: false
   value:
-    complex:
-      accessor: targetfirewallversion
-      root: incident
+    simple: 10.1.3
 name: Ramsay - Firewall Version and Content Upgrade
 outputs: []
 sourceplaybookid: NetOps - Firewall Version and Content Upgrade

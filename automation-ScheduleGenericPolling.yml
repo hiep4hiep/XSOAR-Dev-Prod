@@ -43,7 +43,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -57,7 +57,8 @@ name: ScheduleGenericPolling
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('ScheduleGenericPolling', 'start', __line__())
 
 
 
@@ -113,6 +114,8 @@ script: |2
                                })
   if isError(res[0]):
       return_error(res)
+
+  register_module_line('ScheduleGenericPolling', 'end', __line__())
 scripttarget: 0
 subtype: python2
 system: true

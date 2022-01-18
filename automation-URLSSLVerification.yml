@@ -19,13 +19,13 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python:2.7.18.24066
+dockerimage: demisto/python:2.7.18.24398
 engineinfo: {}
 mainengineinfo: {}
 name: URLSSLVerification
@@ -55,6 +55,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
+  register_module_line('URLSSLVerification', 'start', __line__())
   import requests
 
 
@@ -166,6 +167,8 @@ script: |
 
   if __name__ in ['__main__', '__builtin__', 'builtins']:
       main()
+
+  register_module_line('URLSSLVerification', 'end', __line__())
 scripttarget: 0
 subtype: python2
 system: true

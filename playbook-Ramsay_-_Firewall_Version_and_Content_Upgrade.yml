@@ -19,7 +19,7 @@ inputs:
     complex:
       accessor: targetfirewallversion
       root: incident
-name: NetOps - Firewall Version and Content Upgrade_copy
+name: Ramsay - Firewall Version and Content Upgrade
 outputs: []
 sourceplaybookid: NetOps - Firewall Version and Content Upgrade
 starttaskid: "0"

@@ -27,8 +27,9 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 1.16.6
+    itemVersion: 1.18.3
     packID: Base
     packPropagationLabels:
     - all
@@ -37,11 +38,13 @@ contentitemexportablefields:
 dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: GetIndicatorsByQuery
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('GetIndicatorsByQuery', 'start', __line__())
 
 
   import hashlib
@@ -163,6 +166,8 @@ script: |2
 
   if __name__ in ['__main__', '__builtin__', 'builtins']:
       demisto.results(main())
+
+  register_module_line('GetIndicatorsByQuery', 'end', __line__())
 scripttarget: 0
 subtype: python3
 system: true

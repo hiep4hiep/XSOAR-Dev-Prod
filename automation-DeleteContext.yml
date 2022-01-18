@@ -35,7 +35,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -46,7 +46,7 @@ engineinfo: {}
 mainengineinfo: {}
 name: DeleteContext
 pswd: ""
-runas: DBotWeakRole
+runas: DBotRole
 runonce: false
 script: |
   function errorEntry(text) {

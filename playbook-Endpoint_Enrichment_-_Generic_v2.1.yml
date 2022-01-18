@@ -1,7 +1,8 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.4
+    itemVersion: 2.1.8
     packID: CommonPlaybooks
     packPropagationLabels:
     - all
@@ -190,8 +191,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1280,
-          "y": 440
+          "x": 1750,
+          "y": 410
         }
       }
   "2":
@@ -246,8 +247,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 360,
-          "y": 750
+          "x": 380,
+          "y": 890
         }
       }
   "3":
@@ -354,8 +355,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 360,
-          "y": 1086
+          "x": 500,
+          "y": 1056
         }
       }
   "8":
@@ -410,8 +411,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 830,
-          "y": 750
+          "x": 1300,
+          "y": 720
         }
       }
   "9":
@@ -449,8 +450,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 830,
-          "y": 1086
+          "x": 1300,
+          "y": 1056
         }
       }
   "10":
@@ -505,8 +506,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 2150,
-          "y": 770
+          "x": 2620,
+          "y": 740
         }
       }
   "16":
@@ -516,7 +517,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "2"
+      - "33"
     note: false
     quietmode: 0
     separatecontext: false
@@ -534,8 +535,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 360,
-          "y": 605
+          "x": 610,
+          "y": 575
         }
       }
   "18":
@@ -563,8 +564,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 830,
-          "y": 605
+          "x": 1300,
+          "y": 575
         }
       }
   "19":
@@ -592,8 +593,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1280,
-          "y": 605
+          "x": 1750,
+          "y": 575
         }
       }
   "20":
@@ -621,8 +622,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 2150,
-          "y": 605
+          "x": 2620,
+          "y": 575
         }
       }
   "22":
@@ -750,7 +751,7 @@ tasks:
       {
         "position": {
           "x": -616,
-          "y": 440
+          "y": 410
         }
       }
   "26":
@@ -791,8 +792,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1280,
-          "y": 1086
+          "x": 1750,
+          "y": 1056
         }
       }
   "27":
@@ -838,8 +839,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 2250,
-          "y": 1070
+          "x": 2720,
+          "y": 1040
         }
       }
   "28":
@@ -880,8 +881,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 2250,
-          "y": 1220
+          "x": 2720,
+          "y": 1190
         }
       }
   "29":
@@ -918,8 +919,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 2460,
-          "y": 1440
+          "x": 2930,
+          "y": 1410
         }
       }
   "30":
@@ -947,8 +948,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1710,
-          "y": 605
+          "x": 2180,
+          "y": 575
         }
       }
   "31":
@@ -1003,8 +1004,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1710,
-          "y": 770
+          "x": 2180,
+          "y": 740
         }
       }
   "32":
@@ -1037,8 +1038,105 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1730,
-          "y": 1086
+          "x": 2200,
+          "y": 1056
+        }
+      }
+  "33":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: brand
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: modules.brand
+                    operator: isExists
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: modules.state
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: active
+                root: modules
+          operator: isEqualString
+          right:
+            value:
+              simple: McAfee ePO v2
+      label: "yes"
+    id: "33"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "2"
+      "yes":
+      - "34"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: "Gets a value and returns it. This is to be used in playbook conditional
+        tasks - get a value from incident field, label or context, and act accordingly.
+        \nIf an array is returned. the first value will be the decision making value."
+      id: cb25c554-4bce-4f19-8bf1-974a6a51c57d
+      iscommand: false
+      name: is Mcafee ePolicy Orchestrator v2 enabled
+      type: condition
+      version: -1
+    taskid: cb25c554-4bce-4f19-8bf1-974a6a51c57d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 610,
+          "y": 720
+        }
+      }
+  "34":
+    id: "34"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      searchText:
+        simple: ${inputs.Hostname}
+      verbose:
+        simple: "false"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: McAfee ePO v2
+      description: Finds systems in the McAfee ePO system tree.
+      id: 06214be3-c325-4805-8b3f-ad0a3bce4872
+      iscommand: true
+      name: Get- host information from McAfee ePO v2
+      script: McAfee ePO v2|||epo-find-system
+      type: regular
+      version: -1
+    taskid: 06214be3-c325-4805-8b3f-ad0a3bce4872
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 900,
+          "y": 1056
         }
       }
 version: -1
@@ -1051,7 +1149,7 @@ view: |-
       "22_4_#default#": 0.15,
       "28_29_yes": 0.4,
       "28_4_#default#": 0.1,
-      "2_4_#default#": 0.21,
+      "2_4_#default#": 0.43,
       "2_5_yes": 0.64,
       "31_32_yes": 0.64,
       "31_4_#default#": 0.1,
@@ -1064,7 +1162,7 @@ view: |-
     "paper": {
       "dimensions": {
         "height": 1645,
-        "width": 3456,
+        "width": 3926,
         "x": -616,
         "y": 50
       }

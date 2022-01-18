@@ -13,13 +13,13 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.9.7.24076
+dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -27,7 +27,8 @@ name: FirstArrayElement
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: |2
+script: |
+  register_module_line('FirstArrayElement', 'start', __line__())
 
 
 
@@ -42,6 +43,8 @@ script: |2
 
   if __name__ == "__builtin__" or __name__ == "builtins":
       main()
+
+  register_module_line('FirstArrayElement', 'end', __line__())
 scripttarget: 0
 subtype: python3
 system: true

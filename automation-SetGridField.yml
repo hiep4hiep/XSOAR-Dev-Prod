@@ -43,7 +43,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.8
+    itemVersion: 1.6.23
     packID: CommonScripts
     packPropagationLabels:
     - all
@@ -56,29 +56,29 @@ name: SetGridField
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: "# STD Libraries\nfrom typing import Optional, List, Dict, Any\n# 3-rd party
-  libraries\nimport pandas as pd\nimport phrases_case\n# Local packages\n\n\n\n\n\ndef
-  normalized_string(phrase: str) -> str:\n    \"\"\" Normalize a string to flatcase
-  (to match `cli name`).\n\n    Args:\n        phrase: Phrase to normalize.\n\n    Returns:\n
-  \       str: Normalized phrase.\n\n    Examples:\n        >>> normalized_string(\"TestWord\")\n
-  \       \"testword\"\n        >>> normalized_string(\"hello_world\")\n        \"helloworld\"\n
-  \   \"\"\"\n    return phrases_case.camel(phrase).replace(\"'\", \"\").lower()\n\n\ndef
-  normalized_column_name(phrase: str) -> str:\n    \"\"\" Normalize columns or Grid
-  to connected word in lowercase, to match the logic of stripToClumnName() from\n
-  \       the client's `strings.js` and the server logic.\n\n    Args:\n        phrase:
-  Phrase to normalize.\n\n    Returns:\n        str: Normalized phrase.\n\n    Examples:\n
-  \       >>> normalized_string(\"Test Word!@#$%^&*()-=+\")\n        \"testword\"\n
-  \       >>> normalized_string(\"hello\U0001F9A6_world@\")\n        \"hello_world\"\n
-  \   \"\"\"\n    return re.sub(r'[^a-zA-Z\\d_]', '', phrase).lower()\n\n\ndef filter_dict(dict_obj:
-  Dict[Any, Any], keys: List[str], max_keys: Optional[int] = None) -> Dict[Any, Any]:\n
-  \   \"\"\" Filter keys from Dictionary:\n            1. Will only save keys which
-  specified in keys parameters.\n            2. If key in index 0 is \"*\", will save
-  all keys until max_keys (as much as Grid can include).\n\n    Args:\n        dict_obj:
-  Dictionary to filter keys from.\n        keys: Keys to save.\n        max_keys:
-  Max keys to save in case of keys[0] = \"*\"\n\n    Returns:\n        dict: Filtered
-  dict.\n    \"\"\"\n    # Iterate over all the items in dictionary\n    if keys[0]
-  != \"*\":\n        # create empty dict of given headers\n        new_dict = {key:
-  None for key in keys}\n        for (key, value) in dict_obj.items():\n            #
+script: "register_module_line('SetGridField', 'start', __line__())\n# STD Libraries\nfrom
+  typing import Optional, List, Dict, Any\n# 3-rd party libraries\nimport pandas as
+  pd\nimport phrases_case\n# Local packages\n\n\n\n\n\ndef normalized_string(phrase:
+  str) -> str:\n    \"\"\" Normalize a string to flatcase (to match `cli name`).\n\n
+  \   Args:\n        phrase: Phrase to normalize.\n\n    Returns:\n        str: Normalized
+  phrase.\n\n    Examples:\n        >>> normalized_string(\"TestWord\")\n        \"testword\"\n
+  \       >>> normalized_string(\"hello_world\")\n        \"helloworld\"\n    \"\"\"\n
+  \   return phrases_case.camel(phrase).replace(\"'\", \"\").lower()\n\n\ndef normalized_column_name(phrase:
+  str) -> str:\n    \"\"\" Normalize columns or Grid to connected word in lowercase,
+  to match the logic of stripToClumnName() from\n        the client's `strings.js`
+  and the server logic.\n\n    Args:\n        phrase: Phrase to normalize.\n\n    Returns:\n
+  \       str: Normalized phrase.\n\n    Examples:\n        >>> normalized_string(\"Test
+  Word!@#$%^&*()-=+\")\n        \"testword\"\n        >>> normalized_string(\"hello\U0001F9A6_world@\")\n
+  \       \"hello_world\"\n    \"\"\"\n    return re.sub(r'[^a-zA-Z\\d_]', '', phrase).lower()\n\n\ndef
+  filter_dict(dict_obj: Dict[Any, Any], keys: List[str], max_keys: Optional[int] =
+  None) -> Dict[Any, Any]:\n    \"\"\" Filter keys from Dictionary:\n            1.
+  Will only save keys which specified in keys parameters.\n            2. If key in
+  index 0 is \"*\", will save all keys until max_keys (as much as Grid can include).\n\n
+  \   Args:\n        dict_obj: Dictionary to filter keys from.\n        keys: Keys
+  to save.\n        max_keys: Max keys to save in case of keys[0] = \"*\"\n\n    Returns:\n
+  \       dict: Filtered dict.\n    \"\"\"\n    # Iterate over all the items in dictionary\n
+  \   if keys[0] != \"*\":\n        # create empty dict of given headers\n        new_dict
+  = {key: None for key in keys}\n        for (key, value) in dict_obj.items():\n            #
   Check if item satisfies the given condition then add to new dict\n            if
   value not in ('', None) and key in keys:\n                new_dict[key] = value\n\n
   \   else:\n        if max_keys:\n            new_dict = dict(list(dict_obj.items())[:max_keys])\n
@@ -222,7 +222,8 @@ script: "# STD Libraries\nfrom typing import Optional, List, Dict, Any\n# 3-rd p
   \           return_results(f'Set grid {grid_id} using {context_path} successfully.')\n\n
   \   except Exception as exc:\n        return_error(f'Failed to execute setGridField.
   Error: {str(exc)}', error=traceback.format_exc())\n\n\nif __name__ in ('__main__',
-  '__builtin__', 'builtins'):\n    main()\n"
+  '__builtin__', 'builtins'):\n    main()\n\nregister_module_line('SetGridField',
+  'end', __line__())\n"
 scripttarget: 0
 subtype: python3
 system: true

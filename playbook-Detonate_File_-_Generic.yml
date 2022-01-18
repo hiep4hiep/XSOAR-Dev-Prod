@@ -1,7 +1,8 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.4
+    itemVersion: 2.1.8
     packID: CommonPlaybooks
     packPropagationLabels:
     - all
@@ -958,7 +959,7 @@ tasks:
       id: 0a805640-8d5e-46d4-87f2-04a0781a6ca5
       iscommand: false
       name: WildFire - Detonate file
-      playbookName: WildFire - Detonate file
+      playbookId: WildFire - Detonate file
       type: playbook
       version: -1
     taskid: 0a805640-8d5e-46d4-87f2-04a0781a6ca5

@@ -1,9 +1,6 @@
 args:
-- name: IP
-- name: MD5
-- name: SHA256
-- name: URL
-- name: Domain
+- defaultValue: "3"
+  name: bad_score
 commonfields:
   id: 0c61061a-6d24-4caf-8e79-d44efe30a45f
   version: -1
@@ -19,10 +16,54 @@ dockerimage: demisto/python3:3.7.3.286
 enabled: true
 engineinfo: {}
 name: CreateAuscertEmail
+outputs:
+- contextPath: Report
 pswd: ""
 runas: DBotWeakRole
 runonce: false
-script: ""
+script: |2-
+
+  def collect_bad_ioc(ctx, bad_score):
+      ip_list = []
+      md5_list = []
+      sha256_list = []
+      url_list = []
+      domain_list = []
+      if 'DBotScore' in ctx:
+          for ioc in ctx['DBotScore']:
+              if int(ioc['Score']) >= bad_score:
+                  if ioc['Type'] == 'ip':
+                      ip_list.append(ioc['Indicator'])
+                  elif ioc['Type'] == 'domain':
+                      domain_list.append(ioc['Indicator'])
+                  elif ioc['Type'] == 'url':
+                      url_list.append(ioc['Indicator'])
+                  elif ioc['Type'] == 'hash' or ioc['Type'] == 'file':
+                      if len(ioc['Indicator']) == 32:
+                          md5_list.append(ioc['Indicator'])
+                      elif len(ioc['Indicator']) == 64:
+                          sha256_list.append(ioc['Indicator'])
+      ioc_data = {
+          'ip': list(set(ip_list)), # Using set to get unique list then convert back to list
+          'url': list(set(url_list)),
+          'md5': list(set(md5_list)),
+          'sha256': list(set(sha256_list)),
+          'domain': list(set(domain_list))
+      }
+      return ioc_data
+
+  def write_context(ioc_data):
+      result = CommandResults(
+          outputs = ioc_data,
+          outputs_prefix = "Report"
+          )
+      return_results(result)
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      ctx = demisto.context()
+      bad_score = demisto.args().get('bad_score', 3)
+      ioc_data = collect_bad_ioc(ctx, int(bad_score))
+      write_context(ioc_data)
 scripttarget: 0
 subtype: python3
 tags: []

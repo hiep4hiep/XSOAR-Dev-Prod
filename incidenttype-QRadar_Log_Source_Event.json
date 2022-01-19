@@ -1,0 +1,36 @@
+{
+	"autorun": true,
+	"closureScript": "",
+	"color": "#D5A2C1",
+	"days": 0,
+	"daysR": 0,
+	"default": false,
+	"detached": false,
+	"disabled": false,
+	"extractSettings": {
+		"fieldCliNameToExtractSettings": {},
+		"mode": "Specific"
+	},
+	"fromServerVersion": "",
+	"hours": 0,
+	"hoursR": 0,
+	"id": "QRadar Log Source Event",
+	"itemVersion": "",
+	"layout": "Qradar Generic",
+	"locked": false,
+	"name": "QRadar Log Source Event",
+	"onChangeRepAlg": 0,
+	"packID": "",
+	"playbookId": "7075f5f5-bccf-4175-8894-fe91f36a78fd",
+	"preProcessingScript": "",
+	"propagationLabels": [
+		"all"
+	],
+	"readonly": false,
+	"reputationCalc": 0,
+	"system": false,
+	"toServerVersion": "",
+	"version": -1,
+	"weeks": 0,
+	"weeksR": 0
+}

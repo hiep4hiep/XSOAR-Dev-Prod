@@ -168,8 +168,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 460,
-          "y": -50
+          "x": 377.5,
+          "y": 50
         }
       }
   "1":
@@ -247,8 +247,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 460,
-          "y": 90
+          "x": 377.5,
+          "y": 195
         }
       }
   "2":
@@ -288,8 +288,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 460,
-          "y": 260
+          "x": 377.5,
+          "y": 370
         }
       }
   "3":
@@ -329,8 +329,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 460,
-          "y": 670
+          "x": 490,
+          "y": 690
         }
       }
   "5":
@@ -366,56 +366,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 720,
-          "y": 1020
-        }
-      }
-  "6":
-    id: "6"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "19"
-    note: false
-    quietmode: 0
-    reputationcalc: 1
-    scriptarguments:
-      errorUnfinished:
-        simple: "true"
-      id:
-        complex:
-          root: CreatedIncidentID
-      key:
-        simple: EmailCampaign
-      retry-count:
-        simple: "3"
-      retry-interval:
-        simple: "60"
-      value:
-        complex:
-          root: EmailCampaign
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      description: Works the same as the 'Set' command. Updates the phishing campaign
-        incident with the latest information about the incidents involved in it.
-      id: 724b3269-bfa9-4b15-8777-6a675f6a5f36
-      iscommand: false
-      name: Update the new campaign incident with the campaign data
-      script: SetByIncidentId
-      type: regular
-      version: -1
-    taskid: 724b3269-bfa9-4b15-8777-6a675f6a5f36
-    timertriggers: []
-    type: regular
-    view: |-
-      {
-        "position": {
-          "x": 720,
-          "y": 1360
+          "x": 705,
+          "y": 1040
         }
       }
   "7":
@@ -456,8 +408,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 460,
-          "y": 820
+          "x": 490,
+          "y": 865
         }
       }
   "8":
@@ -485,8 +437,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1200,
-          "y": 530
+          "x": -120,
+          "y": 2590
         }
       }
   "9":
@@ -537,8 +489,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 190,
-          "y": 1020
+          "x": 275,
+          "y": 1565
         }
       }
   "10":
@@ -548,7 +500,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "6"
+      - "25"
     note: false
     quietmode: 0
     reputationcalc: 1
@@ -574,8 +526,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 720,
-          "y": 1180
+          "x": 705,
+          "y": 1215
         }
       }
   "12":
@@ -632,8 +584,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 120,
-          "y": 1900
+          "x": 275,
+          "y": 2090
         }
       }
   "13":
@@ -679,8 +631,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 450,
-          "y": 1710
+          "x": 490,
+          "y": 1915
         }
       }
   "15":
@@ -705,8 +657,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 1200,
-          "y": 2690
+          "x": 290,
+          "y": 2800
         }
       }
   "17":
@@ -734,8 +686,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 460,
-          "y": 530
+          "x": 490,
+          "y": 545
         }
       }
   "18":
@@ -794,8 +746,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 190,
-          "y": 1180
+          "x": 275,
+          "y": 1740
         }
       }
   "19":
@@ -848,8 +800,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 720,
-          "y": 1530
+          "x": 705,
+          "y": 1740
         }
       }
   "20":
@@ -895,8 +847,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 450,
-          "y": 2260
+          "x": 490,
+          "y": 2440
         }
       }
   "21":
@@ -937,8 +889,8 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 450,
-          "y": 2460
+          "x": 655,
+          "y": 2615
         }
       }
   "23":
@@ -994,8 +946,62 @@ tasks:
     view: |-
       {
         "position": {
-          "x": 450,
-          "y": 2090
+          "x": 490,
+          "y": 2265
+        }
+      }
+  "25":
+    continueonerror: true
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "19"
+    note: false
+    quietmode: 0
+    reputationcalc: 1
+    scriptarguments:
+      errorUnfinished:
+        simple: "true"
+      id:
+        complex:
+          root: CreatedIncidentID
+      key:
+        simple: EmailCampaign
+      retry-count:
+        simple: "5"
+      retry-interval:
+        simple: "5"
+      value:
+        complex:
+          root: EmailCampaign
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Works the same as the 'Set' command, but can work across incidents by specifying 'id' as an argument.
+        Sets a value into the context with the given context key. Doesn't append by default.
+
+        This automation runs using the default Limited User role, unless you explicitly change the permissions.
+        For more information, see the section about permissions here:
+        https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+      id: d7891412-e8d2-4861-8743-6620888ea531
+      iscommand: false
+      name: Update the new campaign incident with the campaign data
+      script: 0dba5574-0542-4f34-8f29-5d93a60e460b
+      type: regular
+      version: -1
+    taskid: d7891412-e8d2-4861-8743-6620888ea531
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 705,
+          "y": 1390
         }
       }
 version: -1
@@ -1009,10 +1015,10 @@ view: |-
     },
     "paper": {
       "dimensions": {
-        "height": 2805,
-        "width": 1460,
-        "x": 120,
-        "y": -50
+        "height": 2815,
+        "width": 1205,
+        "x": -120,
+        "y": 50
       }
     }
   }

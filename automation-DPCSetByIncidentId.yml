@@ -35,8 +35,8 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
-    fromServerVersion: 5.0.0
-    itemVersion: 1.5.12
+    fromServerVersion: ""
+    itemVersion: ""
     packID: ""
     propagationLabels:
     - all
@@ -46,7 +46,7 @@ enabled: true
 engineinfo: {}
 name: DPCSetByIncidentId
 pswd: ""
-runas: DBotWeakRole
+runas: DBotRole
 runonce: false
 script: |2
 
@@ -84,8 +84,8 @@ script: |2
   if __name__ in ('__main__', '__builtin__', 'builtins'):
       main()
 scripttarget: 0
-sourcescripid: SetByIncidentId
 subtype: python3
 tags:
 - DemistoAPI
+- dpc
 type: python

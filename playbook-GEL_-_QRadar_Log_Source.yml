@@ -1,5 +1,6 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
@@ -19,54 +20,25 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "1"
+      - "20"
     note: false
     quietmode: 0
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      id: 75892151-5bc4-4c4f-8035-6a0ca7036397
+      id: bf1c6728-7074-447a-8149-d30993c333a0
       iscommand: false
       name: ""
       version: -1
-    taskid: 75892151-5bc4-4c4f-8035-6a0ca7036397
+    taskid: bf1c6728-7074-447a-8149-d30993c333a0
     timertriggers: []
     type: start
     view: |-
       {
         "position": {
-          "x": 50,
+          "x": 367.5,
           "y": 50
-        }
-      }
-  "1":
-    id: "1"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "4"
-    note: false
-    quietmode: 0
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      id: d1d8ce72-a5a1-45ca-8f63-6dfc18674fb1
-      iscommand: false
-      name: Collect associated events
-      type: title
-      version: -1
-    taskid: d1d8ce72-a5a1-45ca-8f63-6dfc18674fb1
-    timertriggers: []
-    type: title
-    view: |-
-      {
-        "position": {
-          "x": 50,
-          "y": 195
         }
       }
   "2":
@@ -83,126 +55,19 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: ce68e6b0-97ee-452f-8de8-ca080c96acc9
+      id: fdadd6e2-a2c0-4e80-81d2-0feef5a27123
       iscommand: false
       name: Extract and Enrich Log Source indicator
       type: title
       version: -1
-    taskid: ce68e6b0-97ee-452f-8de8-ca080c96acc9
+    taskid: fdadd6e2-a2c0-4e80-81d2-0feef5a27123
     timertriggers: []
     type: title
     view: |-
       {
         "position": {
-          "x": 50,
-          "y": 690
-        }
-      }
-  "3":
-    id: "3"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    loop:
-      exitCondition: ""
-      iscommand: false
-      max: 100
-      wait: 1
-    nexttasks:
-      '#none#':
-      - "2"
-    note: false
-    quietmode: 0
-    scriptarguments:
-      interval:
-        simple: "1"
-      query_expression:
-        simple: SELECT * FROM events WHERE inOffense(${incident.idoffense}) LIMIT
-          5 START '${QRadar.startTime}'
-      timeout:
-        simple: "600"
-    separatecontext: true
-    skipunavailable: false
-    task:
-      brand: ""
-      description: This playbook runs a QRadar query and return its results to the
-        context.
-      id: 61ee7463-a6c6-4715-84ec-0bc44a3f609d
-      iscommand: false
-      name: QRadarFullSearch
-      playbookId: QRadarFullSearch
-      type: playbook
-      version: -1
-    taskid: 61ee7463-a6c6-4715-84ec-0bc44a3f609d
-    timertriggers: []
-    type: playbook
-    view: |-
-      {
-        "position": {
-          "x": 50,
-          "y": 515
-        }
-      }
-  "4":
-    id: "4"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "3"
-    note: false
-    quietmode: 0
-    scriptarguments:
-      start_time:
-        simple: ${incident.starttime}
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      id: b23b2613-451f-4a48-85c1-4e0b8e5c5e62
-      iscommand: false
-      name: Convert Start Time for QRadar search
-      script: 68be939d-574a-4916-8357-9a82eadd6b36
-      type: regular
-      version: -1
-    taskid: b23b2613-451f-4a48-85c1-4e0b8e5c5e62
-    timertriggers: []
-    type: regular
-    view: |-
-      {
-        "position": {
-          "x": 50,
-          "y": 340
-        }
-      }
-  "5":
-    id: "5"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "8"
-    note: false
-    quietmode: 0
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      id: 446d21d1-dcc6-4072-8840-3cca8f22ac1a
-      iscommand: false
-      name: Active Directory Look up for owner's email
-      type: title
-      version: -1
-    taskid: 446d21d1-dcc6-4072-8840-3cca8f22ac1a
-    timertriggers: []
-    type: title
-    view: |-
-      {
-        "position": {
-          "x": 50,
-          "y": 1155
+          "x": 695,
+          "y": 370
         }
       }
   "6":
@@ -219,65 +84,30 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 3b148fd7-84eb-4c98-871a-255d4fa9a2b8
+      id: 67afe2d1-6bde-4993-86cb-aedb101a06d1
       iscommand: false
-      name: Pull Server details from Inventory Management
+      name: Pull Server details from HPE Inventory Management
       type: title
       version: -1
-    taskid: 3b148fd7-84eb-4c98-871a-255d4fa9a2b8
+    taskid: 67afe2d1-6bde-4993-86cb-aedb101a06d1
     timertriggers: []
     type: title
     view: |-
       {
         "position": {
-          "x": 50,
-          "y": 835
-        }
-      }
-  "8":
-    id: "8"
-    ignoreworker: false
-    isautoswitchedtoquietmode: false
-    isoversize: false
-    nexttasks:
-      '#none#':
-      - "14"
-    note: false
-    quietmode: 0
-    scriptarguments:
-      username:
-        simple: ${ITSM.Search.Username}
-    separatecontext: false
-    skipunavailable: false
-    task:
-      brand: ""
-      description: Retrieves detailed information about a user account. The user can
-        be specified by name, email address, or as an Active Directory Distinguished
-        Name (DN). If no filter is specified, all users are returned.
-      id: 94d4e05e-2cda-47d4-895a-3a2b53c05cbb
-      iscommand: true
-      name: Search server
-      script: '|||ad-get-user'
-      type: regular
-      version: -1
-    taskid: 94d4e05e-2cda-47d4-895a-3a2b53c05cbb
-    timertriggers: []
-    type: regular
-    view: |-
-      {
-        "position": {
-          "x": 50,
-          "y": 1300
+          "x": 695,
+          "y": 515
         }
       }
   "9":
+    continueonerror: true
     id: "9"
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
     nexttasks:
       '#none#':
-      - "5"
+      - "24"
     note: false
     quietmode: 0
     scriptarguments:
@@ -285,29 +115,175 @@ tasks:
         simple: ${incident.labels.offense_source}
       list_name:
         simple: ITSM
+      search_by:
+        simple: Qradar Logsource ID
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
       description: Search for related information of the server using IP address
-      id: 9b1fe2b5-b41a-4307-8e8a-efa2deb860a4
+      id: 8353a970-296a-4636-8e60-b31fe2cf671f
       iscommand: false
-      name: Get device
+      name: Get server information by Log Source ID
       script: SearchDataFromList
       type: regular
       version: -1
-    taskid: 9b1fe2b5-b41a-4307-8e8a-efa2deb860a4
+    taskid: 8353a970-296a-4636-8e60-b31fe2cf671f
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": 50,
-          "y": 980
+          "x": 695,
+          "y": 660
         }
       }
-  "14":
-    id: "14"
+  "18":
+    continueonerror: true
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      subject:
+        simple: False alarm
+      to:
+        simple: someone@domain.com
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends an email using Gmail.
+      id: cc79be5d-ff8d-422b-816a-4264502a7c9d
+      iscommand: true
+      name: Send notification email
+      script: '|||send-mail'
+      type: regular
+      version: -1
+    taskid: cc79be5d-ff8d-422b-816a-4264502a7c9d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 2555
+        }
+      }
+  "20":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ${incident.name}
+          operator: containsGeneral
+          right:
+            value:
+              simple: Log source
+      label: logsource
+    id: "20"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "21"
+      logsource:
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 8fea564b-159c-460c-87fa-0b0b91ccfc48
+      iscommand: false
+      name: Check offense type
+      type: condition
+      version: -1
+    taskid: 8fea564b-159c-460c-87fa-0b0b91ccfc48
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 367.5,
+          "y": 195
+        }
+      }
+  "21":
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: 8bcf988e-deef-4376-8b5c-0e16cdd998a3
+      iscommand: true
+      name: End
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 8bcf988e-deef-4376-8b5c-0e16cdd998a3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 255,
+          "y": 2730
+        }
+      }
+  "22":
+    continueonerror: true
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "27"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      ip:
+        simple: ${incident.labels.offense_source}
+      list_name:
+        simple: ITSM_Endpoint
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Search for related information of the server using IP address
+      id: 59e51a46-b85e-44e2-862d-d52328155395
+      iscommand: false
+      name: Get endpoint information
+      script: SearchDataFromList
+      type: regular
+      version: -1
+    taskid: 59e51a46-b85e-44e2-862d-d52328155395
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 920,
+          "y": 1360
+        }
+      }
+  "23":
+    id: "23"
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
@@ -316,90 +292,496 @@ tasks:
       - "18"
     note: false
     quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${ITSM.Search}
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      id: 9eba8654-f93c-44cd-8237-57a07140c1f7
+      description: Prints text to war room (Markdown supported)
+      id: c444adcd-a584-4350-8bf7-c384221e8887
       iscommand: false
-      name: Response process
-      type: title
+      name: Query AD for Owner's Email address
+      script: Print
+      type: regular
       version: -1
-    taskid: 9eba8654-f93c-44cd-8237-57a07140c1f7
+    taskid: c444adcd-a584-4350-8bf7-c384221e8887
     timertriggers: []
-    type: title
+    type: regular
     view: |-
       {
         "position": {
-          "x": 50,
-          "y": 1475
+          "x": 695,
+          "y": 2380
         }
       }
-  "18":
-    id: "18"
+  "24":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ITSM.Search
+          operator: isEmpty
+      label: "yes"
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "27"
+      "yes":
+      - "26"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b49539b9-80f5-4209-8ac0-0da6b2700198
+      iscommand: false
+      name: Continue Searching
+      type: condition
+      version: -1
+    taskid: b49539b9-80f5-4209-8ac0-0da6b2700198
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 835
+        }
+      }
+  "25":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ITSM.Search
+          operator: isEmpty
+      label: "yes"
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "27"
+      "yes":
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1788c2c1-59af-452d-88c9-76784f191179
+      iscommand: false
+      name: Continue Searching
+      type: condition
+      version: -1
+    taskid: 1788c2c1-59af-452d-88c9-76784f191179
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 807.5,
+          "y": 1185
+        }
+      }
+  "26":
+    continueonerror: true
+    id: "26"
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
     nexttasks:
       '#none#':
-      - "19"
+      - "25"
     note: false
     quietmode: 0
     scriptarguments:
-      subject:
-        simple: False alarm
-      to:
-        simple: ${ActiveDirectory.Users.mail}
+      ip:
+        simple: ${incident.labels.offense_source}
+      list_name:
+        simple: ITSM
+      search_by:
+        simple: IP Address
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      description: Sends an email using Gmail.
-      id: 7804ce14-6a64-4bd7-80c4-54b861f56d01
-      iscommand: true
-      name: Send notification email
-      script: '|||send-mail'
+      description: Search for related information of the server using IP address
+      id: 2e069f42-c8c9-4933-8ec8-35b46ba7a762
+      iscommand: false
+      name: Get server information by IP Address
+      script: SearchDataFromList
       type: regular
       version: -1
-    taskid: 7804ce14-6a64-4bd7-80c4-54b861f56d01
+    taskid: 2e069f42-c8c9-4933-8ec8-35b46ba7a762
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": 50,
-          "y": 1620
+          "x": 807.5,
+          "y": 1010
         }
       }
-  "19":
-    id: "19"
+  "27":
+    id: "27"
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 983f85c6-2ca8-44bc-8139-4045d5aed9d6
+      iscommand: false
+      name: Notify user and create ticket
+      type: title
+      version: -1
+    taskid: 983f85c6-2ca8-44bc-8139-4045d5aed9d6
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1535
+        }
+      }
+  "28":
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "34"
     note: false
     quietmode: 0
     scriptarguments:
+      category:
+        simple: Others
+      description:
+        simple: |-
+          Hello,
+          The ${ITSM.Search.IP_Name} has failed to send log for 720 minutes. Please check and fix the issue. If the server is no longer in use, please update soc.
+      group:
+        simple: ${ITSM.Search.Group}
+      impact:
+        simple: '{"id": "2", "name": "Low < 5 users"}'
+      item:
+        simple: Others
+      level:
+        simple: Third Level Support
+      request_type:
+        simple: Service Request
+      requester:
+        simple: Mohd Aiman Hakim Mohd Ghazali
+      site:
+        simple: Menara Great Eastern
+      subcategory:
+        simple: Others
       subject:
-        simple: Log Source Error
+        simple: '[Test] SOC: Log Sources ${ITSM.Search.IP_Name} error'
+      udf_fields:
+        simple: udf_pick_61502:GELS
+      urgency:
+        simple: Low
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
       description: Creates new requests.
-      id: 7f9fcf9c-327a-437d-873a-803420026a38
+      id: 5f86dfe3-2b34-4dbc-8d50-4d685714d017
       iscommand: true
       name: Create SDP Ticket
       script: '|||service-desk-plus-request-create'
       type: regular
       version: -1
-    taskid: 7f9fcf9c-327a-437d-873a-803420026a38
+    taskid: 5f86dfe3-2b34-4dbc-8d50-4d685714d017
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 2030
+        }
+      }
+  "29":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ITSM.Search.Platform
+          operator: isEqualString
+          right:
+            value:
+              simple: UNIX
+      label: unix
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ITSM.Search.Platform
+          operator: isEqualString
+          right:
+            value:
+              simple: WINTEL
+      label: wintel
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ITSM.Search.Platform
+          operator: isEqualString
+          right:
+            value:
+              simple: NETWORK
+      label: network
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ITSM.Search.Platform
+          operator: isEqualString
+          right:
+            value:
+              simple: AS400
+      label: as400
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      as400:
+      - "33"
+      network:
+      - "31"
+      unix:
+      - "30"
+      wintel:
+      - "32"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: dc05c328-f5da-4d52-8d90-f8f83b34ebf2
+      iscommand: false
+      name: Check for log source's platform
+      type: condition
+      version: -1
+    taskid: dc05c328-f5da-4d52-8d90-f8f83b34ebf2
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1680
+        }
+      }
+  "30":
+    id: "30"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: ITSM.Search.Group
+      value:
+        simple: Unix Support(e2p)
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: e9476ac8-4f00-4380-8d4b-028c1a6e142e
+      iscommand: false
+      name: Set group to unix support (e2p)
+      script: Set
+      type: regular
+      version: -1
+    taskid: e9476ac8-4f00-4380-8d4b-028c1a6e142e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 1855
+        }
+      }
+  "31":
+    id: "31"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: ITSM.Search.Group
+      value:
+        simple: Network Support (e2p)
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 65e9f4a9-8603-4c3e-83dc-9da7311d24dc
+      iscommand: false
+      name: Set group to network support (e2p)
+      script: Set
+      type: regular
+      version: -1
+    taskid: 65e9f4a9-8603-4c3e-83dc-9da7311d24dc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1855
+        }
+      }
+  "32":
+    id: "32"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: ITSM.Search.Group
+      value:
+        simple: Wintel Support (e2p)
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: c1b08df5-b591-41e5-89d9-4b7bd6bd71e4
+      iscommand: false
+      name: Set group to wintel support (e2p)
+      script: Set
+      type: regular
+      version: -1
+    taskid: c1b08df5-b591-41e5-89d9-4b7bd6bd71e4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 1855
+        }
+      }
+  "33":
+    id: "33"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: ITSM.Search.Group
+      value:
+        simple: as400supportgroup
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 1320ec62-62d3-4524-81c9-6ef3fb01a90c
+      iscommand: false
+      name: Set group to AS400 support
+      script: Set
+      type: regular
+      version: -1
+    taskid: 1320ec62-62d3-4524-81c9-6ef3fb01a90c
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
           "x": 50,
-          "y": 1795
+          "y": 1855
+        }
+      }
+  "34":
+    id: "34"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      sdpassignedgroup:
+        simple: ${ServiceDeskPlus.Request.Group.name}
+      sdpcreatedtime:
+        simple: ${ServiceDeskPlus.Request.CreatedTime}
+      sdpdescription:
+        simple: ${ServiceDeskPlus.Request.Description}
+      sdprequester:
+        simple: ${ServiceDeskPlus.Request.Requester.name}
+      sdpticketid:
+        simple: ${ServiceDeskPlus.Request.Id}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.set.incident
+      id: e4defb3c-1241-41ec-8704-9bbe20afa918
+      iscommand: true
+      name: Add SDP Ticket info to layout
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: e4defb3c-1241-41ec-8704-9bbe20afa918
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 2205
         }
       }
 version: -1
@@ -408,8 +790,8 @@ view: |-
     "linkLabelsPosition": {},
     "paper": {
       "dimensions": {
-        "height": 1840,
-        "width": 380,
+        "height": 2775,
+        "width": 1670,
         "x": 50,
         "y": 50
       }

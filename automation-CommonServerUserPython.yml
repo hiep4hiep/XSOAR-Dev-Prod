@@ -1,0 +1,25 @@
+comment: Common user defined code that will be merged into each server script when
+  it runs
+commonfields:
+  id: CommonServerUserPython
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+engineinfo: {}
+name: CommonServerUserPython
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: ""
+scripttarget: 0
+subtype: python2
+tags:
+- infra
+- server
+type: python

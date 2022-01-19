@@ -1,0 +1,940 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: McAfeeNSMv2
+  version: -1
+configuration:
+- defaultvalue: https://example.net
+  display: Server URL (e.g. https://example.net)
+  name: url
+  required: true
+  type: 0
+- display: Username
+  name: credentials
+  required: true
+  type: 9
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+description: Newer version of McAfeeNSM Integration
+display: McAfeeNSMv2
+image: data:image/png;base64,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
+name: McAfeeNSMv2
+script:
+  commands:
+  - arguments:
+    - description: The numerical ID Of admin domain to add the object to
+      name: domain
+      required: true
+    - description: IP address
+      name: ipv4_address
+      required: true
+    - description: Object name
+      name: name
+      required: true
+    - description: Object description
+      name: description
+    description: Add an IPv4 address as a rule object
+    name: mcafeensm-add-rule-object-host-ipv4
+    outputs:
+    - contextPath: McAfeeNSM.CreatedHostV4Object.createdResourceId
+      type: Unknown
+  - arguments: []
+    description: Get all the administrative domains from McAfeeNSM
+    name: mcafeensm-get-domains
+    outputs:
+    - contextPath: McAfeeNSM.AdminDomains.id
+      description: Admin Domain ID
+      type: Unknown
+    - contextPath: McAfeeNSM.AdminDomains.name
+      description: Admin Domain name
+      type: Unknown
+  - arguments:
+    - description: The Domain ID of the admin domain in which to add the rule
+      name: domain
+      required: true
+    - description: Policy name
+      name: name
+      required: true
+    - description: Policy description
+      name: description
+    - description: The ID of the source address rule object
+      isArray: true
+      name: source_address_id
+    - description: The ID of the destination address rule object
+      isArray: true
+      name: destination_address_id
+    - description: The ID of the service rule object.
+      name: service_id
+    - description: The ID of the application rule object
+      name: application_id
+    - auto: PREDEFINED
+      description: The action to take on the rule.
+      name: response
+      predefined:
+      - SCAN
+      - DROP
+      - DENY
+      - IGNORE
+      - STATELESS_IGNORE
+      - STATELESS_DROP
+      - REQUIRE_AUTHENTICATION
+    - auto: PREDEFINED
+      description: Rule direction
+      name: direction
+      predefined:
+      - INBOUND
+      - OUTBOUND
+    description: Add a firewall policy and rule to McafeeNSM
+    name: mcafeensm-add-firewall-policy
+    outputs:
+    - contextPath: NSMCreatedPolicy.createdResourceId
+      description: ID Of created policy
+      type: Unknown
+  - arguments:
+    - description: ID of firewall policy
+      name: id
+      required: true
+    description: Get a single firewall policy by ID
+    name: mcafeensm-get-firewall-policy
+    outputs:
+    - contextPath: McAfeeNSM.NSMFirewallPolicy.FirewallPolicyId
+      description: ID Of firewall policy
+      type: Unknown
+    - contextPath: McAfeeNSM.NSMFirewallPolicy.Name
+      description: Name of firewall policy
+      type: Unknown
+    - contextPath: McAfeeNSM.NSMFirewallPolicy.MemberDetails.MemberRuleList
+      description: List of policy rule members
+      type: Unknown
+  - arguments:
+    - description: NSM Admin domain
+      name: domain_id
+      required: true
+    description: List all the firewall policies in the given domain
+    name: mcafeensm-list-firewall-policies
+    outputs:
+    - contextPath: McAfeeNSM.NSMFirewallPolicies.FirewallPolicyId
+      description: Policy ID
+      type: Unknown
+    - contextPath: McAfeeNSM.NSMFirewallPolicies.Name
+      description: Policy name
+      type: Unknown
+  - arguments:
+    - description: Domain ID
+      name: domain
+      required: true
+    - description: IPV6 address
+      name: ipv6_address
+      required: true
+    - description: New Object name
+      name: name
+      required: true
+    - description: New object description
+      name: description
+    description: Add an IPv6 object
+    name: mcafeensm-add-rule-object-host-ipv6
+    outputs:
+    - contextPath: McAfeeNSM.CreatedHostV6Object.createdResourceId
+      description: ID of created IPv6 object
+      type: Unknown
+  - arguments:
+    - description: The Domain ID of the admin domain in which to add the rule
+      name: domain
+      required: true
+    - description: Policy name
+      name: name
+      required: true
+    - description: Policy description
+      name: description
+    - description: The ID of the source address rule object
+      isArray: true
+      name: source_address_id
+    - description: The ID of the destination address rule object
+      isArray: true
+      name: destination_address_id
+    - description: The ID of the service rule object.
+      name: service_id
+    - description: The ID of the application rule object
+      name: application_id
+    - auto: PREDEFINED
+      description: The action to take on the rule.
+      name: response
+      predefined:
+      - SCAN
+      - DROP
+      - DENY
+      - IGNORE
+      - STATELESS_IGNORE
+      - STATELESS_DROP
+      - REQUIRE_AUTHENTICATION
+    - auto: PREDEFINED
+      description: Rule direction
+      name: direction
+      predefined:
+      - INBOUND
+      - OUTBOUND
+    description: Removes a single firewall policy.
+    name: mcafeensm-delete-firewall-policy
+    outputs:
+    - contextPath: McAfeeNSM.NSMDeletedRuleObject.id
+      description: Deleted policy ID
+      type: Unknown
+    - contextPath: McAfeeNSM.NSMDeletedRuleObject.status
+      description: Deletion status
+      type: Unknown
+  - arguments:
+    - description: Rule Object ID
+      name: rule_object_id
+      required: true
+    - description: New IPv4 or IPv6 value to update
+      name: update_value
+      required: true
+    - auto: PREDEFINED
+      description: Update method
+      name: update_method
+      predefined:
+      - Replace
+      - Merge
+      required: true
+    description: Update the value of a rule object by replacing or merging with input
+      item
+    name: mcafeensm-update-rule-object
+    outputs:
+    - contextPath: McAfeeNSM.NSMUpdatedRuleObject.id
+      description: Updated object ID
+      type: Unknown
+    - contextPath: McAfeeNSM.NSMUpdatedRuleObject.status
+      description: Update status
+      type: Unknown
+  - arguments:
+    - description: Domain ID
+      name: domain
+      required: true
+    - name: name
+    - name: description
+    - description: ID of source address rule object. Will be added to first member
+        rule.
+      name: source_address_id
+    - description: ID of destination address rule object. Will be added to first member
+        rule.
+      name: destination_address_id
+    - description: ID Of service object. Will be added to first member rule.
+      name: service_id
+    - description: ID of application object. Will be added to first member rule.
+      name: application_id
+    - auto: PREDEFINED
+      description: Rule response.
+      name: response
+      predefined:
+      - SCAN
+      - DROP
+      - DENY
+      - IGNORE
+      - STATELESS_IGNORE
+      - STATELESS_DROP
+      - REQUIRE_AUTHENTICATION
+    - auto: PREDEFINED
+      description: Rule Direction
+      name: direction
+      predefined:
+      - INBOUND
+      - OUTBOUND
+    - description: Policy ID to update
+      name: policy_id
+    description: Updates the firewall policy with the given ID. This command performs
+      a shallow merge to patch the old object with the new values.
+    name: mcafeensm-update-firewall-policy
+  dockerimage: demisto/python3:3.9.5.21272
+  runonce: false
+  script: |-
+    ''' IMPORTS '''
+
+    import json
+    import requests
+    import dateparser
+    import base64
+    from urllib.parse import urljoin
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' CONSTANTS '''
+    DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+    SDK_API_URL = "sdkapi"
+    OUTPUT_PREFIX = "McAfeeNSM."
+
+    def n_error_handler(res: requests.Response):
+            err_msg = f'Nguvl [{res.status_code}] - {res.reason}'
+            print(err_msg)
+            #for m in kwargs:
+            #    print(m)
+
+    class Client(BaseClient):
+        """
+        Client will implement the service API, and should not contain any Demisto logic.
+        Should only do requests and return data.
+        """
+        BASE_HEADERS = {
+            "Accept": "application/vnd.nsm.v2.0+json",
+            "Content-Type": "application/json"
+        }
+        session_token: bytes
+        headers: dict = BASE_HEADERS
+
+        @staticmethod
+        def nsm_error_handler(res: requests.Response):
+            err_msg = f'Nguvl [{res.status_code}] - {res.reason}'
+            print(err_msg)
+            #for m in kwargs:
+            #    print(m)
+
+        def login(self, username: str, password: str):
+            """
+            Logs the client into Mcafee NSM
+            """
+            creds = f"{username}:{password}"
+            creds = base64.b64encode(creds.encode())
+            headers = self.BASE_HEADERS.copy()
+            headers["NSM-SDK-API"] = str(creds.decode())
+
+            url = "/".join(["", SDK_API_URL, "session"])
+            data = self._http_request(
+                method='GET',
+                url_suffix=url,
+                headers=headers
+            )
+
+            if 'session' not in data:
+                raise ConnectionError("Failed to Login to NSM")
+
+            self.session_token = base64.b64encode(f"{data.get('session')}:{data.get('userId')}".encode())
+            self.headers["NSM-SDK-API"] = str(self.session_token.decode())
+            return self.session_token
+
+        def get_domains(self):
+            return self._http_request(
+                method='GET',
+                url_suffix="/".join(["", SDK_API_URL, "domain"]),
+                headers=self.headers
+            )
+
+        def get_firewall_policies(self, domain_id: str):
+            return self._http_request(
+                method='GET',
+                url_suffix="/".join(["", SDK_API_URL, "domain", str(domain_id), "firewallpolicy"]),
+                headers=self.headers
+            )
+
+        def get_rule_object(self, rule_object_id):
+            """Get a single rule object."""
+            data = self._http_request(
+                method='GET',
+                url_suffix="/".join(["", SDK_API_URL, "ruleobject", str(rule_object_id)]),
+                headers=self.headers
+            )
+
+            data["object_type"] = data.get("RuleObjDef").get("ruleobjType")
+            data["object_name"] = data.get("RuleObjDef").get("name")
+            data["object_description"] = data.get("RuleObjDef").get("description")
+            data["object_domain"] = data.get("RuleObjDef").get("domain")
+            data["host_ipv4"] = data.get("RuleObjDef").get("HostIPv4")
+            data["host_ipv6"] = data.get("RuleObjDef").get("HostIPv6")
+
+            return data
+
+
+        def get_firewall_policy(self, policy_id):
+            """Get a single rule object."""
+            data = self._http_request(
+                method='GET',
+                url_suffix="/".join(["", SDK_API_URL, "firewallpolicy", str(policy_id)]),
+                headers=self.headers,
+                error_handler=n_error_handler
+            )
+
+            return data
+
+        def delete_firewall_policy(self, policy_id):
+            """Delete a single rule object."""
+            data = self._http_request(
+                method='DELETE',
+                url_suffix="/".join(["", SDK_API_URL, "firewallpolicy", str(policy_id)]),
+                headers=self.headers
+            )
+
+            return data
+
+        def add_hostv4_rule_object(self, domain: int, name: str, description: str, ipv4_address: str):
+            """Convienience wrapper for adding an IPv4 address object"""
+            object_data = {
+                'hostIPv4AddressList': [
+                    ipv4_address
+                ]
+            }
+            d = self.add_rule_object(domain, name, "HostIPv4", object_data, description)
+            return d
+
+        def add_hostv6_rule_object(self, domain: int, name: str, description: str, ipv6_address: str):
+            """Convienience wrapper for adding an IPv4 address object"""
+            object_data = {
+                'hostIPAddressList': [
+                    ipv6_address
+                ]
+            }
+            d = self.add_rule_object(domain, name, "HostIPv4", object_data, description)
+            return d
+
+        def add_rule_object(self, domain: int, name: str, object_type: str,
+                            object_data: dict, description):
+            """
+            Add a rule object to the NSM API.
+
+            :param domain: NSM Domain to add object to
+            :name: The Rule object name
+            :description: Rule object description
+            :object_type: Object type. One of;
+                [HostIPv4, HostIPv6, HostDNSName, IPv4AddressRange, IPv6AddressRange, NetworkIPv4, NetworkIPv6]
+
+            ref; https://docs.mcafee.com/bundle/network-security-platform-9.1.x-manager-api-reference-guide/page/GUID-CDBF18A1-C8D5-42DF-A95E-7CC849742F11.html
+            """
+            type_map = {
+                "HostIPv4": "HOST_IPV_4",
+                "HostIPv6": "HOST_IPV_6",
+            }
+            d = {
+                'RuleObjDef': {
+                    'domain': domain,
+                    'name': name,
+                    'description': description,
+                    'visibleToChild': True,
+                    object_type: object_data,
+                    "ruleobjType": type_map.get(object_type)
+                }
+            }
+
+            url = "/".join(["", SDK_API_URL, "ruleobject"])
+            data = self._http_request(
+                method='POST',
+                url_suffix=url,
+                headers=self.headers,
+                json_data=d
+            )
+            data["object_type"] = type_map.get(object_type)
+            data["object_name"] = name
+            return data
+
+
+        def update_rule_object(self, rule_object_id: int, added_object_value: list, update_method: str):
+            """
+            Update a rule object to the NSM API.
+
+            :rule_object_id: The target object id to update
+            :added_object_value: A LIST of object to update
+
+            ref; https://docs.mcafee.com/bundle/network-security-platform-9.1.x-manager-api-reference-guide/page/GUID-0BF2A82C-DCC3-4770-A4D2-93E7C16FA1C7.html
+            """
+            # GENERATE RULE VALUE OBJECT LIST
+            # Get current value of the rule_object_id
+            current = self.get_rule_object(rule_object_id)
+            object_type = current["object_type"]
+            if object_type == "HOST_IPV_4":
+                current_value_list = current["host_ipv4"].get("hostIPv4AddressList")
+            elif object_type == "HOST_IPV_6":
+                current_value_list = current["host_ipv6"].get("hostIPv6AddressList")
+            # Compare and generate new object list
+            new_value_list = update_rule_object_item(current_value_list, added_object_value, update_method)
+
+            # GENERATE BODY DATA
+            type_map = {
+                "HOST_IPV_4": "HostIPv4",
+                "HOST_IPV_6": "HostIPv6",
+            }
+            data_map = {
+                "HostIPv4": {
+                    "hostIPv4AddressList": new_value_list
+                },
+                "HostIPv6": {
+                    "hostIPv6AddressList": new_value_list
+                },
+            }
+            d = {
+                'RuleObjDef': {
+                    'ruleobjId': rule_object_id,
+                    'name': current.get("object_name"),
+                    'description': current.get("object_description"),
+                    'domain': current.get("object_domain"),
+                    'visibleToChild': True,
+                    type_map.get(object_type): data_map.get(type_map.get(object_type)),
+                    'ruleobjType': object_type
+                }
+            }
+
+            # API CALL
+            url = "/".join(["", SDK_API_URL, "ruleobject", rule_object_id])
+            data = self._http_request(
+                method='PUT',
+                url_suffix=url,
+                headers=self.headers,
+                json_data=d
+            )
+            data["object_type"] = type_map.get(object_type)
+            data["object_name"] = current.get("object_name")
+            return data
+
+        @staticmethod
+        def make_firewall_policy_request_data(
+                domain: int,
+                name: str,
+                source_address_object_list: list,
+                destination_address_object_list: list,
+                service_object_list: list,
+                application_object_list: list,
+                time_object_list: list,
+                source_user_list: list,
+                direction: str = "INBOUND",
+                response: str = "SCAN",
+                description: str = None
+        ):
+            """Given a set of attributes, creates the JSON Payload for a firewall policy request"""
+
+            d = {
+                "Name": name,
+                "DomainId": domain,
+                "Description": description,
+                "VisibleToChild": True,
+                "PolicyType": "ADVANCED",
+                "IsEditable": True,
+                "MemberDetails": {
+                    "MemberRuleList": [{
+                        "Description": description,
+                        "Enabled": True,
+                        "Response": response,
+                        "Direction": direction,
+                        "SourceAddressObjectList": source_address_object_list,
+                        "DestinationAddressObjectList": destination_address_object_list,
+                        "SourceUserObjectList": source_user_list,
+                        "ServiceObjectList": service_object_list,
+                        "ApplicationObjectList": [],
+                        "TimeObjectList": time_object_list
+                    }]
+                }
+            }
+
+            return d
+
+        def update_firewall_policy(self, policy_id, policy_data: dict):
+            """
+            Updates a firewall policy object
+
+            :param: policy_id: ID Of policy object to update
+            :param: policy_data: JSON dictionary from `Client.make_firewall_policy_request_data`
+            """
+            url = "/".join(["", SDK_API_URL, "firewallpolicy", policy_id])
+            data = self._http_request(
+                method='PUT',
+                url_suffix=url,
+                headers=self.headers,
+                json_data=policy_data
+            )
+            return data
+
+        def add_firewall_policy(self, policy_data: dict):
+            """
+            Adds a firewall policy to the system
+
+            :param: policy_data: JSON dictionary from `Client.make_firewall_policy_request_data`
+            """
+            url = "/".join(["", SDK_API_URL, "firewallpolicy"])
+            data = self._http_request(
+                method='POST',
+                url_suffix=url,
+                headers=self.headers,
+                json_data=policy_data
+            )
+            return data
+
+
+    class CommandRegister:
+        commands: dict = {}
+
+        def command(self, command_name: str):
+            """
+            Register a Command for this Integration
+
+            :param command_name: The XSOAR integration command
+            """
+
+            def _decorator(func):
+                self.commands[command_name] = func
+
+                def _wrapper(client, demisto_args=None):
+                    return func(client, demisto_args)
+
+                return _wrapper
+
+            return _decorator
+
+        def run_command(self, command_name: str, client: Client, demisto_args: dict):
+            if command_name not in self.commands:
+                raise DemistoException("Command not found.")
+
+            func = self.commands.get(command_name)
+            command_result = func(client, demisto_args)
+            return_results(command_result)
+
+
+    # This is the store of all the commands available to this integration
+    COMMANDS = CommandRegister()
+
+
+    @COMMANDS.command("test-module")
+    def test_module(client: Client, demisto_args: dict):
+        """
+        Returning 'ok' indicates that the integration works like it is supposed to.
+        Connection to the service is successful.
+
+        Args:
+            client: McAfee NSM Client
+
+        Returns:
+            'ok' if test passed, anything else will fail the test.
+        """
+        return 'ok'
+
+
+    @COMMANDS.command("mcafeensm-add-rule-object-host-ipv4")
+    def add_hostv4_rule_object(client: Client, demisto_args: dict):
+        domain = demisto_args.get("domain")
+        ip_address = demisto_args.get("ipv4_address")
+        name = demisto_args.get("name")
+        description = demisto_args.get("description", None)
+
+        data = client.add_hostv4_rule_object(
+            domain=domain, name=name, description=description, ipv4_address=ip_address)
+
+        return CommandResults(
+            readable_output=tableToMarkdown("Created Object", data),
+            outputs_prefix=OUTPUT_PREFIX + "CreatedHostV4Object",
+            outputs_key_field='createdResourceId',
+            outputs=data
+        )
+
+
+    @COMMANDS.command("mcafeensm-add-rule-object-host-ipv6")
+    def add_hostv6_rule_object(client: Client, demisto_args: dict):
+        domain = demisto_args.get("domain")
+        ip_address = demisto_args.get("ipv6_address")
+        name = demisto_args.get("name")
+        description = demisto_args.get("description", None)
+
+        data = client.add_hostv6_rule_object(
+            domain=domain, name=name, description=description, ipv6_address=ip_address)
+
+        return CommandResults(
+            readable_output=tableToMarkdown("Created Object", data),
+            outputs_prefix=OUTPUT_PREFIX + "CreatedHostV6Object",
+            outputs_key_field='createdResourceId',
+            outputs=data
+        )
+
+
+    @COMMANDS.command("mcafeensm-update-rule-object-host-ipv4")
+    def update_hostv4_rule_object(client: Client, demisto_args: dict):
+        domain = demisto_args.get("domain")
+        ip_address = demisto_args.get("ipv4_address")
+        name = demisto_args.get("name")
+        description = demisto_args.get("description", None)
+
+        data = client.add_hostv4_rule_object(
+            domain=domain, name=name, description=description, ipv4_address=ip_address)
+
+        return CommandResults(
+            readable_output=tableToMarkdown("Updated Object", data),
+            outputs_prefix=OUTPUT_PREFIX + "UpdatedHostV4Object",
+            outputs_key_field='updatedResourceId',
+            outputs=data
+        )
+
+
+    @COMMANDS.command("mcafeensm-get-domains")
+    def get_domains(client: Client, demisto_args: dict):
+        data = client.get_domains()
+        return CommandResults(
+            readable_output=tableToMarkdown("NSM Admin Domains", data.get("DomainDescriptor"),
+                                            headers=["id", "name"]),
+            outputs_prefix=OUTPUT_PREFIX + "AdminDomains",
+            outputs=data
+        )
+
+
+    @COMMANDS.command("mcafeensm-list-firewall-policies")
+    def list_firewall_policies(client: Client, demisto_args: dict):
+        domain_id = demisto.args().get("domain_id")
+        data = client.get_firewall_policies(domain_id)
+        return CommandResults(
+            readable_output=tableToMarkdown("NSM Firewall Policies", data, headers=["FirewallPolicyId", "Name"]),
+            outputs_prefix=OUTPUT_PREFIX + "NSMFirewallPolicies",
+            outputs=data
+        )
+
+
+    @COMMANDS.command("mcafeensm-get-rule-object")
+    def get_rule_object(client: Client, demisto_args: dict):
+        rule_object_id = demisto_args.get("id")
+        data = client.get_rule_object(rule_object_id)
+        data["id"] = rule_object_id
+        return CommandResults(
+            readable_output=tableToMarkdown("NSM Rule Object", data,
+                                            headers=["id", "object_name", "object_type"]),
+            outputs_prefix=OUTPUT_PREFIX + "NSMRuleObject",
+            outputs=data
+        )
+
+
+    @COMMANDS.command("mcafeensm-get-firewall-policy")
+    def get_firewall_policy(client: Client, demisto_args: dict):
+        policy_id = demisto_args.get("id")
+        data = client.get_firewall_policy(policy_id)
+        data["id"] = policy_id
+        return CommandResults(
+            readable_output="## Error nguvl"
+        )
+
+
+    @COMMANDS.command("mcafeensm-delete-firewall-policy")
+    def delete_firewall_policy(client: Client, demisto_args: dict):
+        policy_id = demisto_args.get("id")
+        data = client.delete_firewall_policy(policy_id)
+        data["id"] = policy_id
+        return CommandResults(
+            readable_output=tableToMarkdown("NSM Firewall Policy", data,
+                                            headers=["id", "status"]),
+            outputs_prefix=OUTPUT_PREFIX + "NSMDeletedRuleObject",
+            outputs=data
+        )
+
+
+    def resolve_id_to_policy_object(client: Client, object_id: int, fallback_type: str = None,
+                                    fallback_name="Any"):
+        """Looks up the given ID in McAfeeNSM and returns the policy object dict"""
+        if not object_id:
+            return [{
+                "RuleObjectId": "-1",
+                "Name": fallback_name,
+                "RuleObjectType": fallback_type
+            }]
+
+        rule_object = client.get_rule_object(object_id)
+        r = [{
+            "RuleObjectId": str(object_id),
+            "Name": rule_object.get("object_name"),
+            "RuleObjectType": rule_object.get("object_type"),
+        }]
+        return r
+
+
+    def args_to_firewall_policy_data(client: Client, demisto_args: dict):
+        """Converts arguments available to a policy-related command into the dict required by Policy calls"""
+        domain = demisto_args.get("domain")
+        name = demisto_args.get("name")
+        description = demisto_args.get("description", None)
+        source_address_object_id = demisto_args.get("source_address_id")
+        source_addresses = resolve_id_to_policy_object(client, source_address_object_id)
+
+        destination_address_object_id = demisto_args.get("destination_address_id")
+        destination_addresses = resolve_id_to_policy_object(client, destination_address_object_id)
+
+        service_object_id = demisto_args.get("service_id")
+        service_objects = resolve_id_to_policy_object(client, service_object_id)
+
+        application_object_id = demisto_args.get("application_id")
+        application_objects = resolve_id_to_policy_object(client, application_object_id, "APPLICATION")
+
+        time_object_id = demisto_args.get("time_id")
+        time_objects = resolve_id_to_policy_object(client, time_object_id, None, "Always")
+
+        source_user_id = demisto_args.get("user_id")
+        source_user_objects = resolve_id_to_policy_object(client, source_user_id, "USER")
+
+        response = demisto_args.get("response", "SCAN")
+        direction = demisto_args.get("direction", "INBOUND")
+
+        return Client.make_firewall_policy_request_data(
+            domain=domain,
+            name=name,
+            description=description,
+            source_address_object_list=source_addresses,
+            destination_address_object_list=destination_addresses,
+            service_object_list=service_objects,
+            application_object_list=application_objects,
+            source_user_list=source_user_objects,
+            response=response,
+            direction=direction,
+            time_object_list=time_objects
+        )
+
+
+    @COMMANDS.command("mcafeensm-add-firewall-policy")
+    def add_firewall_policy(client: Client, demisto_args: Dict):
+        """
+        Adds a single firewall policy with a single rule included to McAfee NSM.
+        This command looks up the original object using the ruleobject endpoint for simplicity.
+        """
+        policy_data = args_to_firewall_policy_data(client, demisto_args)
+        data = client.add_firewall_policy(policy_data)
+
+        return CommandResults(
+            readable_output=tableToMarkdown("NSM Created Policy", data),
+            outputs_prefix=OUTPUT_PREFIX + "NSMCreatedPolicy",
+            outputs=data
+        )
+
+
+    def merge_dict_item(left, right):
+        if right is None:
+            return left
+
+        if left == right:
+            return left
+
+        if type(left) is list:
+            return left + right
+
+        return right
+
+    def update_rule_object_item(left, right, method):
+        if method == "Replace":
+            return right
+        elif method == "Merge":
+            if right is None:
+                return left
+
+            if left == right:
+                return left
+
+            if type(left) is list:
+                return left + right
+
+
+    def merge_member_rules(left: dict, right: dict):
+        new_member_rule_list = []
+        right_member_rules = right.get("MemberDetails").get("MemberRuleList")
+        for idx, left_member_rule in enumerate(left.get("MemberDetails").get("MemberRuleList")):
+            new_member_rule = {}
+            right_member_rule = right_member_rules[idx]
+            for k, v in left_member_rule.items():
+                new_member_rule[k] = merge_dict_item(v, right_member_rule.get(k))
+
+            new_member_rule_list.append(new_member_rule)
+
+        return new_member_rule_list
+
+
+    @COMMANDS.command("mcafeensm-update-firewall-policy")
+    def update_firewall_policy(client: Client, demisto_args: Dict):
+        """
+        Updates a single firewall policy
+        """
+        update_policy_data = args_to_firewall_policy_data(client, demisto_args)
+        policy_id = demisto_args.get("policy_id")
+
+        # Get the old firewall policy
+        old_policy_data = client.get_firewall_policy(policy_id)
+
+        # Merge the update data with the old data and send
+        new_policy_data = old_policy_data
+        new_member_rules = merge_member_rules(old_policy_data, update_policy_data)
+        new_policy_data["MemberDetails"]["MemberRuleList"] = new_member_rules
+
+        data = client.update_firewall_policy(policy_id, new_policy_data)
+
+        return CommandResults(
+            readable_output=tableToMarkdown("NSM Updated Policy", data),
+            outputs_prefix=OUTPUT_PREFIX + "NSMUpatedPolicy",
+            outputs=data
+        )
+
+    @COMMANDS.command("mcafeensm-update-rule-object")
+    def update_rule_object(client: Client, demisto_args: Dict):
+        """
+        Updates a single rule object
+        """
+        # Collect command arguments
+        rule_object_id = demisto_args.get("rule_object_id")
+        update_method = demisto_args.get("update_method")
+        update_value = []
+        update_value.append(demisto_args.get("update_value"))
+        # Send update to NSM API
+        data = client.update_rule_object(
+            rule_object_id=rule_object_id,
+            added_object_value=update_value,
+            update_method=update_method
+        )
+        # Generate command outputs
+        if "status" in data:
+            if data['status'] == 1:
+                status = f"Rule {rule_object_id} was updated successfully"
+            else:
+                status = "status: " + data['status']
+        else:
+            status = data
+
+        results = {
+            "id": rule_object_id,
+            "status": status
+        }
+
+        return CommandResults(
+            readable_output=status,
+            outputs_prefix=OUTPUT_PREFIX + "NSMUpdatedRuleObject",
+            outputs=results
+        )
+
+
+
+    def main():
+        """
+            PARSE AND VALIDATE INTEGRATION PARAMS
+        """
+        username = demisto.params().get('credentials').get('identifier')
+        password = demisto.params().get('credentials').get('password')
+
+        # get the service API url
+        base_url = demisto.params().get('url')
+
+        verify_certificate = not demisto.params().get('insecure', False)
+
+        proxy = demisto.params().get('proxy', False)
+
+        LOG(f'Command being called is {demisto.command()}')
+        try:
+            client = Client(
+                base_url=base_url,
+                verify=verify_certificate,
+                proxy=proxy)
+            client.login(username, password)
+
+            COMMANDS.run_command(demisto.command(), client, demisto.args())
+
+        # Log exceptions
+        except Exception as e:
+            return_error(f'Failed to execute {demisto.command()} command. Error: {str(e)}')
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+  subtype: python3
+  type: python

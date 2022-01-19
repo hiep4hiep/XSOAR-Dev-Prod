@@ -1,0 +1,168 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 2b6f9bd5-eef2-462a-830c-13acf107155a
+inputs: []
+name: Test - Email Ask
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d1de0d1b-120d-4362-8efa-3dc84efb620f
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: d1de0d1b-120d-4362-8efa-3dc84efb620f
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    message:
+      bcc: null
+      body:
+        simple: Hello
+      cc: null
+      format: ""
+      methods:
+      - email
+      replyOptions:
+      - "Yes"
+      - "No"
+      subject:
+        simple: Please check this
+      timings:
+        completeafterreplies: 1
+        retriescount: 2
+        retriesinterval: 360
+      to:
+        simple: hiep4hiep@gmail.com
+    nexttasks:
+      '#default#':
+      - "3"
+      "Yes":
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1661327d-91d1-4077-8db3-0321fbcfe348
+      iscommand: false
+      name: Ask user
+      type: condition
+      version: -1
+    taskid: 1661327d-91d1-4077-8db3-0321fbcfe348
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 160
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: "Yes"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 9a942572-f791-4142-8564-a2c1cb9251bc
+      iscommand: false
+      name: "Yes"
+      script: Print
+      type: regular
+      version: -1
+    taskid: 9a942572-f791-4142-8564-a2c1cb9251bc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 370,
+          "y": 330
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: Else
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: cf6420eb-de34-49cc-8d73-b4431a300f37
+      iscommand: false
+      name: Else
+      script: Print
+      type: regular
+      version: -1
+    taskid: cf6420eb-de34-49cc-8d73-b4431a300f37
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 780,
+          "y": 330
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 375,
+        "width": 790,
+        "x": 370,
+        "y": 50
+      }
+    }
+  }

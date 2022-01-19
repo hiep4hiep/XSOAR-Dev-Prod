@@ -1,0 +1,87 @@
+args:
+- defaultValue: "3"
+  description: The min bad score to identify the bad IOC
+  name: bad_score
+comment: Collect IOC from DBotScore and store in a context key
+commonfields:
+  id: CreateIOCList
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.7.24076
+engineinfo: {}
+name: CreateIOCList
+outputs:
+- contextPath: Report
+  description: Store IOC list
+  type: String
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |2
+
+
+
+
+  from typing import Dict, Any
+  import traceback
+
+
+  ''' STANDALONE FUNCTION '''
+
+
+  def collect_bad_ioc(ctx, bad_score):
+      ip_list = []
+      md5_list = []
+      sha256_list = []
+      url_list = []
+      domain_list = []
+      if 'DBotScore' in ctx:
+          for ioc in ctx['DBotScore']:
+              if int(ioc['Score']) >= bad_score:
+                  if ioc['Type'] == 'ip':
+                      ip_list.append(ioc['Indicator'])
+                  elif ioc['Type'] == 'domain':
+                      domain_list.append(ioc['Indicator'])
+                  elif ioc['Type'] == 'url':
+                      url_list.append(ioc['Indicator'])
+                  elif ioc['Type'] == 'hash' or ioc['Type'] == 'file':
+                      if len(ioc['Indicator']) == 32:
+                          md5_list.append(ioc['Indicator'])
+                      elif len(ioc['Indicator']) == 64:
+                          sha256_list.append(ioc['Indicator'])
+      ioc_data = {
+          'ip': list(set(ip_list)), # Using set to get unique list then convert back to list
+          'url': list(set(url_list)),
+          'md5': list(set(md5_list)),
+          'sha256': list(set(sha256_list)),
+          'domain': list(set(domain_list))
+      }
+      return ioc_data
+
+  def write_context(ioc_data):
+      result = CommandResults(
+          outputs = ioc_data,
+          outputs_prefix = "Report"
+          )
+      return_results(result)
+
+
+  ''' ENTRY POINT '''
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      ctx = demisto.context()
+      bad_score = demisto.args().get('bad_score', 3)
+      ioc_data = collect_bad_ioc(ctx, int(bad_score))
+      write_context(ioc_data)
+scripttarget: 0
+subtype: python3
+tags:
+- dpc
+type: python

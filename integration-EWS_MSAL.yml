@@ -75,6 +75,20 @@ script:
     - contextPath: MSAL.Tokens
       description: Access Token, Refresh Token with expiry date
       type: String
+  - arguments: []
+    description: Generate access token, refresh token with expiry date
+    name: msal-get-tokens-pkce
+    outputs:
+    - contextPath: MSAL.Tokens
+      description: Access Token, Refresh Token with expiry date by Device code flow
+      type: String
+  - arguments: []
+    description: Generate access token, refresh token with expiry date
+    name: msal-acquire-tokens-pkce
+    outputs:
+    - contextPath: MSAL.Tokens
+      description: Access Token, Refresh Token with expiry date by Device code flow
+      type: String
   dockerimage: localhost/demisto-msal:latest
   runonce: false
   script: |2
@@ -93,6 +107,7 @@ script:
     import json
     import logging
     import msal
+    import os
 
     # Disable insecure warnings
     requests.packages.urllib3.disable_warnings()  # pylint: disable=no-member
@@ -106,9 +121,19 @@ script:
     # TODO: ADD HERE ANY HELPER FUNCTION YOU MIGHT NEED (if any)
 
     ''' COMMAND FUNCTIONS '''
+    def set_noproxy():
+        proxies = handle_proxy() # Get system proxies setting
+
+        os.environ['NO_PROXY'] = os.environ['no_proxy'] = '127.0.0.1,localhost,*.c0.dbs.com,*.sgp.dbs.com,*.uat.dbs.com,sts1.dbsbank.asia,sts.dbs.com,c0.dbs.com,sgp.dbs.com'
+        os.environ['HTTP_PROXY'] = os.environ['http_proxy'] = proxies.get('http', None)
+        os.environ['HTTPS_PROXY'] = os.environ['https_proxy'] = proxies.get('https', None)
+
+        print("System proxies settings: \
+        \n- http: " + os.environ.get('HTTP_PROXY') + \
+        "\n- https: " + os.environ.get('HTTPS_PROXY') + \
+        "\n- no proxy: " + os.environ.get('NO_PROXY'))
 
     def test_module() -> str:
-
         message: str = ''
         try:
             message = 'ok'
@@ -119,12 +144,11 @@ script:
                 raise e
         return message
 
-    def get_tokens(config: dict, proxies: dict, is_secure: bool):
+    def get_tokens(config: dict, is_secure: bool):
         ''' MICROSOFT MSAL CLASS '''
         app = msal.ClientApplication(
             client_id=config["client_id"],
             authority=config["authority"],
-            proxies=proxies,
             verify=is_secure
             )
         result = None
@@ -148,7 +172,50 @@ script:
         )
         return(tokens)
 
-    def get_tokens_alternative(config: dict, proxies: dict, is_secure: bool):
+    def get_tokens_device_flow(config: dict, is_secure: bool):
+
+        # Create a preferably long-lived app instance which maintains a token cache.
+        app = msal.PublicClientApplication(
+            config["client_id"],
+            authority=config["authority"],
+            verify=is_secure
+            )
+
+        result = None
+        accounts = app.get_accounts()
+        if accounts:
+            logging.info("Account(s) exists in cache, probably with token too. Let's try.")
+            print("Pick the account you want to use to proceed:")
+            for a in accounts:
+                print(a["username"])
+            chosen = accounts[0]
+            result = app.acquire_token_silent(config["scope"], account=chosen)
+
+        if not result:
+            logging.info("No suitable token exists in cache. Let's get a new one from AAD.")
+
+            flow = app.initiate_device_flow(scopes=config["scope"])
+            if "user_code" not in flow:
+                raise ValueError(
+                    "Fail to create device flow. Err: %s" % json.dumps(flow, indent=4))
+            context = {"flow": flow}
+            set_integration_context(context)
+            return_results(flow["message"])
+
+    def acquire_token(config: dict, is_secure: bool):
+        app = msal.PublicClientApplication(
+            client_id=config["client_id"],
+            authority=config["authority"],
+            verify=is_secure
+            )
+        context = get_integration_context()
+        flow = context["flow"]
+
+        result = app.acquire_token_by_device_flow(flow)  # By default it will block
+        return_results(result)
+
+
+    def get_tokens_alternative(config: dict, is_secure: bool):
         url = config["authority"] + "/oauth2/v2.0/token"
         scope = config["scope"][0]
         client_id = config["client_id"]
@@ -159,7 +226,7 @@ script:
         headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
         }
-        response = requests.request("POST", url, headers=headers, data=payload, proxies=proxies, verify=False)
+        response = requests.request("POST", url, headers=headers, data=payload, verify=False, allow_redirects=True)
         result = response.json()
 
         tokens = CommandResults(
@@ -199,6 +266,9 @@ script:
         verify_certificate = not demisto.params().get('insecure', False)
         proxy = demisto.params().get('proxy', False)
         proxies = handle_proxy()
+        set_noproxy()
+        # Initiate PCA App
+
 
         demisto.debug(f'Command being called is {demisto.command()}')
         try:
@@ -209,12 +279,16 @@ script:
 
 
             elif demisto.command() == 'msal-get-tokens':
-                print("Using these proxy settings: ", proxies)
-                return_results(get_tokens(config=config,proxies=proxies,is_secure=verify_certificate))
+                return_results(get_tokens(config=config,is_secure=verify_certificate))
 
             elif demisto.command() == 'msal-get-tokens-alt':
-                print("Using these proxy settings: ", proxies)
-                return_results(get_tokens_alternative(config=config,proxies=proxies,is_secure=verify_certificate))
+                return_results(get_tokens_alternative(config=config,is_secure=verify_certificate))
+
+            elif demisto.command() == 'msal-get-tokens-pkce':
+                return_results(get_tokens_device_flow(config=config,is_secure=verify_certificate))
+
+            elif demisto.command() == 'msal-acquire-tokens-pkce':
+                return_results(acquire_token(config=config,is_secure=verify_certificate))
 
 
         # Log exceptions and return errors

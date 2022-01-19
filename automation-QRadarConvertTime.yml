@@ -1,0 +1,39 @@
+args:
+- name: start_time
+  required: true
+commonfields:
+  id: 68be939d-574a-4916-8357-9a82eadd6b36
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.8.24399
+enabled: true
+engineinfo: {}
+name: QRadarConvertTime
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  from datetime import datetime
+
+  # default start_time format 2021-10-28T13:17:07.274000+00:00
+  # expected start_time format 2021-10-28 13:17:07
+
+  origin_start_time = demisto.args().get('start_time')[0:-6]
+
+  parse = datetime.strptime(origin_start_time,"%Y-%m-%dT%H:%M:%S.%f")
+  qradar_start_time = parse.strftime("%Y-%m-%d %H:%M:%S")
+
+  demisto.setContext("QRadar.startTime", qradar_start_time)
+  return_results(qradar_start_time)
+scripttarget: 0
+subtype: python3
+tags:
+- transformer
+type: python

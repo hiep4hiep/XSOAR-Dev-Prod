@@ -1550,7 +1550,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "144"
+      - "145"
     note: false
     quietmode: 0
     separatecontext: false
@@ -1977,13 +1977,13 @@ tasks:
     task:
       brand: EWSO365
       description: Sends an email.
-      id: d60d6023-ede2-4eb5-8ee5-c7b2416d48e6
+      id: c748886e-120a-4fa1-8f5c-93635fc50989
       iscommand: true
-      name: Report Email to AusCERT
+      name: Report Email to SOC
       script: EWSO365|||send-mail
       type: regular
       version: -1
-    taskid: d60d6023-ede2-4eb5-8ee5-c7b2416d48e6
+    taskid: c748886e-120a-4fa1-8f5c-93635fc50989
     timertriggers: []
     type: regular
     view: |-
@@ -2054,8 +2054,8 @@ tasks:
           "y": 805
         }
       }
-  "144":
-    id: "144"
+  "145":
+    id: "145"
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
@@ -2068,13 +2068,13 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 1be05683-de99-4e10-8abe-7a0b736baf6a
+      id: b669a1f3-e9e6-4714-87cc-9a5afbf06a68
       iscommand: false
-      name: DPC - Detect & Manage Phishing Campaigns
-      playbookId: eeaca0af-0ebe-4f2b-8dd7-c4135019eef0
+      name: GEL - Detect & Manage Phishing Campaigns
+      playbookId: b0b3fdd6-3ff5-4f29-8ce9-0deec388acff
       type: playbook
       version: -1
-    taskid: 1be05683-de99-4e10-8abe-7a0b736baf6a
+    taskid: b669a1f3-e9e6-4714-87cc-9a5afbf06a68
     timertriggers: []
     type: playbook
     view: |-

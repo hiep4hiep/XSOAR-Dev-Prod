@@ -1,0 +1,3518 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: VirusTotal (API v3)
+  version: -1
+configuration:
+- display: API Key (leave empty. Fill in the API key in the password field.)
+  displaypassword: API Key
+  hiddenusername: true
+  name: credentials
+  required: true
+  type: 9
+- additionalinfo: Reliability of the source providing the intelligence data
+  defaultvalue: C - Fairly reliable
+  display: Source Reliability
+  name: feedReliability
+  options:
+  - A - Completely reliable
+  - B - Usually reliable
+  - C - Fairly reliable
+  - D - Not usually reliable
+  - E - Unreliable
+  - F - Reliability cannot be judged
+  required: false
+  type: 15
+- defaultvalue: "false"
+  display: Premium Subscription
+  name: is_premium_api
+  required: false
+  type: 8
+- defaultvalue: "10"
+  display: File Threshold. Minimum number of positive results from VT scanners to
+    consider the file malicious.
+  name: fileThreshold
+  required: false
+  type: 0
+- defaultvalue: "10"
+  display: IP Threshold. Minimum number of positive results from VT scanners to consider
+    the IP malicious.
+  name: ipThreshold
+  required: false
+  type: 0
+- defaultvalue: "10"
+  display: URL Threshold. Minimum number of positive results from VT scanners to consider
+    the URL malicious.
+  name: urlThreshold
+  required: false
+  type: 0
+- defaultvalue: "10"
+  display: Domain Threshold. Minimum number of positive results from VT scanners to
+    consider the domain malicious.
+  name: domainThreshold
+  required: false
+  type: 0
+- display: Preferred Vendors List. CSV list of vendors who are considered more trustworthy.
+  name: preferredVendors
+  required: false
+  type: 12
+- defaultvalue: "5"
+  display: 'Preferred Vendor Threshold. The minimum number of highly trusted vendors
+    required to consider a domain, IP address, URL, or file as malicious. '
+  name: preferredVendorsThreshold
+  required: false
+  type: 0
+- defaultvalue: "true"
+  display: Enable score analyzing by Crowdsourced Yara Rules, Sigma, and IDS
+  name: crowdsourced_yara_rules_enabled
+  required: false
+  type: 8
+- defaultvalue: "1"
+  display: Crowdsourced Yara Rules Threshold
+  name: yaraRulesThreshold
+  required: false
+  type: 0
+- defaultvalue: "5"
+  display: Sigma and Intrusion Detection Rules Threshold
+  name: SigmaIDSThreshold
+  required: false
+  type: 0
+- defaultvalue: "10000"
+  display: Domain Popularity Ranking Threshold
+  name: domain_popularity_ranking
+  required: false
+  type: 0
+- defaultvalue: "3"
+  display: 'Premium Subscription Only: Relationship Files Threshold'
+  name: relationship_threshold
+  required: false
+  type: 0
+- additionalinfo: Select the list of relationships to retrieve from the API. Note
+    that relationships that are signed with * key are available only for the VirusTotal
+    premium API key.
+  defaultvalue: communicating files,* downloaded files,referrer files,* urls
+  display: IP Relationships
+  name: ip_relationships
+  options:
+  - communicating files
+  - '* downloaded files'
+  - referrer files
+  - '* urls'
+  required: false
+  type: 16
+- additionalinfo: Select the list of relationships to retrieve from the API. Note
+    that relationships that are signed with * key are available only for the VirusTotal
+    premium API key.
+  defaultvalue: '* cname records,* caa records,communicating files,* downloaded files,immediate
+    parent,* mx records,* ns records,parent,referrer files,siblings,* soa records,subdomains,*
+    urls'
+  display: Domain Relationships
+  name: domain_relationships
+  options:
+  - '* cname records'
+  - '* caa records'
+  - communicating files
+  - '* downloaded files'
+  - immediate parent
+  - '* mx records'
+  - '* ns records'
+  - parent
+  - referrer files
+  - siblings
+  - '* soa records'
+  - subdomains
+  - '* urls'
+  required: false
+  type: 16
+- additionalinfo: Select the list of relationships to retrieve from the API. Note
+    that relationships that are signed with * key are available only for the VirusTotal
+    premium API key.
+  defaultvalue: communicating files,* contacted domains,* contacted ips,* downloaded
+    files,last serving ip address,network location,* redirecting urls,* redirects
+    to,* referrer files,* referrer urls
+  display: URL Relationships
+  name: url_relationships
+  options:
+  - communicating files
+  - '* contacted domains'
+  - '* contacted ips'
+  - '* downloaded files'
+  - last serving ip address
+  - network location
+  - '* redirecting urls'
+  - '* redirects to'
+  - '* referrer files'
+  - '* referrer urls'
+  required: false
+  type: 16
+- additionalinfo: Select the list of relationships to retrieve from the API. Note
+    that relationships that are signed with * key are available only for the VirusTotal
+    premium API key.
+  defaultvalue: '* carbonblack children,* carbonblack parents,* compressed parents,contacted
+    domains,contacted ips,contacted urls,dropped files,* email attachments,* email
+    parents,* embedded domains,* embedded ips,* embedded urls,execution parents,*
+    itw domains,* itw ips,* overlay children,* overlay parents,* pcap children,* pcap
+    parents,pe resource children,pe resource parents,* similar files'
+  display: File Relationships
+  name: file_relationships
+  options:
+  - '* carbonblack children'
+  - '* carbonblack parents'
+  - '* compressed parents'
+  - contacted domains
+  - contacted ips
+  - contacted urls
+  - dropped files
+  - '* email attachments'
+  - '* email parents'
+  - '* embedded domains'
+  - '* embedded ips'
+  - '* embedded urls'
+  - execution parents
+  - '* itw domains'
+  - '* itw ips'
+  - '* overlay children'
+  - '* overlay parents'
+  - '* pcap children'
+  - '* pcap parents'
+  - pe resource children
+  - pe resource parents
+  - '* similar files'
+  required: false
+  type: 16
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 5.5.0
+    itemVersion: 2.1.9
+    packID: VirusTotal
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+description: Analyzes suspicious hashes, URLs, domains, and IP addresses.
+detaileddescription: |-
+  ### Partner Contributed Integration
+  #### Integration Author: VirusTotal
+  Support and maintenance for this integration are provided by the author. Please use the following contact details:
+  - **Email**: [contact@virustotal.com](mailto:contact@virustotal.com)
+  - **URL**: [https://www.virustotal.com](https://www.virustotal.com)
+  ***
+  ### Authorization:
+  Your API key can be found in your VirusTotal account user menu.
+  Your API key carries all your privileges, so keep it secure and don't share it with anyone.
+
+  ### Cortex XSOAR version 6.0.0 and below:
+  Fill anything in the "Username" fill box. Use you API key in the password fill box.
+
+  ---
+  [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/virus-total-api-v3)
+display: VirusTotal (API v3) (Partner Contribution)
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAYCAYAAAAxkDmIAAAH2ElEQVR42u1aaYxTVRRG3ABRdBTXURRRIChBJjPttPPazsgiCLLERpa277WdGWAksqiAuEFUMi4xBqLRgIhAJCCSoIxKDEgUoYJLWJREfxhj0CBCEAiME+T4fW9u67PzynQ6ncVJX3LT9r77zj3nfPd+95zz2snnl+5uQ2KeCpGScMs0LWJ+HvME5ZZOuav1L6chNwOAr5NB9pSjVTSzlecAbhdXQUhucodltwkyATHkJNoa9K0CQKszbXj+cy2aA7hdXO4Jcj3oeqcXIAOUOoCzqNnsoMt92MUE+M8cwO1hJwfkOndEthNkBcxrBZVyYabyig3x5wBuZ5crKFe7wrLN8y/IbxDklgLYZUghGKOmRJcNZJGUDGPIk94KjDNknnpuNn+jf3xb+Kk4LMOh9ybok7JBt/XFUclrPa3kPJcuz9MvWkiKUg7TwtITFL01sZMNeXPECLm4JQAuNORayD/qmyqCOafYjvHXjymdJgIDKtmHz3eHzjBlP9EWAEPX6WUPilBvtrivvJWqD7pq+O0ol/x0ZWKRP+SJyEvOoPTPFGD4KUa9NEPGnhscv+RhBW627OS3fYZ0aQmKJkuYABuyhUo2uG9IBA6knN8cE+Ua08G6DMAzoxAU9m4LgItgD2wbTwYB490PwH9UOn7APne52T+mKT5DYLqnbBr8EJSRmQKMuT/zTTE35ejGV9QkuQKK13hV2sPIGnTdLdsAa7rcDbo7C+Y4iWf6JSuN5z/mAgCoS+O9lOcFvTvKATivBdLZGZDBMFDD4uzqMOQ26D4LbSFpkqyE5uXuaEBrk2QQGMFDe639GOvgrsJzTwGsAGX6/XJ+ikUao2Mx/ws2fujHRcpjBkfLXNh77wDUIBL3A9KHeqMdoL9cIXOMW9mSl7A5LDdC1j1kMezQ+YiXokxzMwaYl2OyXIaH3ifAKldeOzAol2QT4ILR0g1zfEd6AyCPWO/BiL4EHqv7rDskpZazeyUMSYzvgyME3/dhrrOQtQLfj5dW1VOnD06AQwxSPO69Z5UPR1+Evl3Uk85Tc17q1pkiknLr7Va61RWV29gB0HFvl9LnZWs/9FwAOSe9uKdFlSz6MSrfQleHYqNl1K0kYqlBqDmLQzLK55MLeJ7j/inKUccAPzn+IOOYjAFOGByWDXGQ+Z192QJYnT/PqnM4Zg3qoPCjSuG93JnnAhjz7FV5N4H8lM6G8xZSV+6glADrstsKMMbMpC6UVxKSccVgGMxn4Pdy7qI0AaaOFQCTwJ2gHc6wDAYLDOXRp2zab24gpJMAvBrjfjX1R3yBMc/hdzVZgxuKdQr83sSYA3KDjAHw/Wel5/JmAcyLzsXD6+gIKk3qpnJZBLgABtSx0RHsI9BQ9Eul8NPsawxgzGcbrGlwdro7GHLeKTWPBPtaQDoAY9d1wfdv2AcGmmMdjl15A+4dUXQ8xhLcxuhb+HXYf8RD/iBDLm+QgUSkUsUuH8X7MgY4nwDrspZKseH7Eq6sbAFMI6DUdnNFItRXyjpBb2cA+mlXVO5gX2MUzR3gDojWHIB5VlI25j0KmUtwNIxgcNcUgHHu94Hdf0FGbZLuuDAeRSXaCtnzLQDvIsCk5VRTcXEgRXORWYgBGRWfHzYLYHUmmRRNB8K51aSDbBc6XAho1LnyvaLOF9UK3cz50gWYZ3VzAGYtADavJ5twfhV7HGQA5auS7ukAjBRpIHXBvH8giOuVHNihf4tazM80BjDHQ6cgFvsO6HEcTdBq2aA3barJGGB1Rmyk4zVSikWhbAPMAMaNsXDM36SuEgCmghud91sCYAYwPAYSAFsuHhW4NxftCwZcar7H0gEY8voz4EM7DXCSd3DnBFuFZEZjAGPMEGYZ0OEYCzy0D323Q0ZQxUSZ7WCmDazI0Mlq5y5o6VIllN0IpTnXXg30ht+HSI9ZBHidTQC5LwFw6kraWzyX6Y80KToPdv9iAqbLxORqIe79nqwr+nab44My3DoeTPIwixcsHSenlxkCrAodumxOgKvL461Ri8ackz2ktoiK2OFY9mcB4KmsLnGMAwEd7LkV3x9g/sq54ETrGTwe94cRCAaXpFjMt00tkMVNiKJfUVHufkdISgr80gPxQV/IWK1y5p3Fs6SrBeCt9DcjfzBnPnbyXUMqpQd0n6BA+4p5L2Mfp5kn871BBhSt+aUnq0oWcOe01ssGFiSg3CHLkTAsBcBryqpMQ+ZZougf+BzTGruaNymOxqszrE6t/gOQccpDxxoyUjl6gwLmBNphtFrI5SLYY1s5qw8Q91AfBmWJ/H6iXMXdRRDir03RzngJbkT2JVM30ypSMfViYAmZZ5grq1pETOlUi3tHKAuyP6Fe/LQAHKMe8OMY+0BnHOgDq1WBe5opR2u/TWJeCCNms2LDHWQ3hjTmAXUxvYpH4aw2wXEzCyeoXNUGZNIcjK+B/JXMJ+/kMaRLiFUvRLu94pUnd1Smo+91vtdmnsk8mrSbssiPXUZ9WBFLDuJYsoReiykLn8tgX7QoJFfayWF0jHmXYv5VzIVZqYsvfObAwGQNdH+VjMCIWoPe0HesxS9+6oHjtbft60Ie/lxhZmoSkgD7c68LO8oL/7DsUDv3sBMcnnvh30GuQpTfGCSQ+xlw4PtP2PorSCm5v+x0hD/dGdY/3cUj2Nyf7v73l/m3WV125v422zGvfwBqKBTHeNI1tAAAAABJRU5ErkJggg==
+name: VirusTotal (API v3)
+script:
+  commands:
+  - arguments:
+    - default: true
+      description: Hash of the file to query. Supports MD5, SHA1, and SHA256.
+      isArray: true
+      name: file
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether to return extended data (last_analysis_results).
+      name: extended_data
+      predefined:
+      - "true"
+      - "false"
+    description: Checks the file reputation of the specified hash.
+    name: file
+    outputs:
+    - contextPath: File.MD5
+      description: Bad MD5 hash.
+    - contextPath: File.SHA1
+      description: Bad SHA1 hash.
+    - contextPath: File.SHA256
+      description: Bad SHA256 hash.
+    - contextPath: File.Relationships.EntityA
+      description: The source of the relationship.
+      type: string
+    - contextPath: File.Relationships.EntityB
+      description: The destination of the relationship.
+      type: string
+    - contextPath: File.Relationships.Relationship
+      description: The name of the relationship.
+      type: string
+    - contextPath: File.Relationships.EntityAType
+      description: The type of the source of the relationship.
+      type: string
+    - contextPath: File.Relationships.EntityBType
+      description: The type of the destination of the relationship.
+      type: string
+    - contextPath: File.Malicious.Vendor
+      description: For malicious files, the vendor that made the decision.
+    - contextPath: File.Malicious.Detections
+      description: For malicious files, the total number of detections.
+    - contextPath: File.Malicious.TotalEngines
+      description: For malicious files, the total number of engines that checked the
+        file hash.
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the DBot score.
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: Number
+    - contextPath: DBotScore.Reliability
+      description: Reliability of the source providing the intelligence data.
+      type: String
+    - contextPath: VirusTotal.File.attributes.type_description
+      description: Description of the type of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.tlsh
+      description: The locality-sensitive hashing.
+      type: String
+    - contextPath: VirusTotal.File.attributes.exiftool.MIMEType
+      description: MIME type of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.names
+      description: Names of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.javascript_info.tags
+      description: Tags of the JavaScript.
+      type: String
+    - contextPath: VirusTotal.File.attributes.exiftool.FileType
+      description: The file type.
+      type: String
+    - contextPath: VirusTotal.File.attributes.exiftool.WordCount
+      description: Total number of words in the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.exiftool.LineCount
+      description: Total number of lines in file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.crowdsourced_ids_stats.info
+      description: Number of IDS that marked the file as "info".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.crowdsourced_ids_stats.high
+      description: Number of IDS that marked the file as "high".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.crowdsourced_ids_stats.medium
+      description: Number of IDS that marked the file as "medium".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.crowdsourced_ids_stats.low
+      description: Number of IDS that marked the file as "low".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.sigma_analysis_stats.critical
+      description: Number of Sigma analysis that marked the file as "critical".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.sigma_analysis_stats.high
+      description: Number of Sigma analysis that marked the file as "high".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.sigma_analysis_stats.medium
+      description: Number of Sigma analysis that marked the file as "medium".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.sigma_analysis_stats.low
+      description: Number of Sigma analysis that marked the file as "low".
+      type: Number
+    - contextPath: VirusTotal.File.attributes.exiftool.MIMEEncoding
+      description: The MIME encoding.
+      type: String
+    - contextPath: VirusTotal.File.attributes.exiftool.FileTypeExtension
+      description: The file type extension.
+      type: String
+    - contextPath: VirusTotal.File.attributes.exiftool.Newlines
+      description: Number of newlines signs.
+      type: String
+    - contextPath: VirusTotal.File.attributes.trid.file_type
+      description: The TrID file type.
+      type: String
+    - contextPath: VirusTotal.File.attributes.trid.probability
+      description: The TrID probability.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.crowdsourced_yara_results.description
+      description: Description of the YARA rule.
+      type: String
+    - contextPath: VirusTotal.File.attributes.crowdsourced_yara_results.source
+      description: Source of the YARA rule.
+      type: String
+    - contextPath: VirusTotal.File.attributes.crowdsourced_yara_results.author
+      description: Author of the YARA rule.
+      type: String
+    - contextPath: VirusTotal.File.attributes.crowdsourced_yara_results.ruleset_name
+      description: Rule set name of the YARA rule.
+      type: String
+    - contextPath: VirusTotal.File.attributes.crowdsourced_yara_results.rule_name
+      description: Name of the YARA rule.
+      type: String
+    - contextPath: VirusTotal.File.attributes.crowdsourced_yara_results.ruleset_id
+      description: ID of the YARA rule.
+      type: String
+    - contextPath: VirusTotal.File.attributes.names
+      description: Name of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.last_modification_date
+      description: The last modification date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.type_tag
+      description: Tag of the type.
+      type: String
+    - contextPath: VirusTotal.File.attributes.total_votes.harmless
+      description: Total number of harmless votes.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.total_votes.malicious
+      description: Total number of malicious votes.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.size
+      description: Size of the file.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.popular_threat_classification.suggested_threat_label
+      description: Suggested thread label.
+      type: String
+    - contextPath: VirusTotal.File.attributes.popular_threat_classification.popular_threat_name
+      description: The popular thread name.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.times_submitted
+      description: Number of times the file was submitted.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_submission_date
+      description: Last submission date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.downloadable
+      description: Whether the file is downloadable.
+      type: Boolean
+    - contextPath: VirusTotal.File.attributes.sha256
+      description: SHA-256 hash of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.type_extension
+      description: Extension of the type.
+      type: String
+    - contextPath: VirusTotal.File.attributes.tags
+      description: File tags.
+      type: String
+    - contextPath: VirusTotal.File.attributes.last_analysis_date
+      description: Last analysis date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.unique_sources
+      description: Unique sources.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.first_submission_date
+      description: First submission date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.ssdeep
+      description: SSDeep hash of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.md5
+      description: MD5 hash of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.sha1
+      description: SHA-1 hash of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.magic
+      description: Identification of file by the magic number.
+      type: String
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.harmless
+      description: The number of engines that found the indicator to be harmless.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.type-unsupported
+      description: The number of engines that found the indicator to be of type unsupported.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.suspicious
+      description: The number of engines that found the indicator to be suspicious.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.confirmed-timeout
+      description: The number of engines that confirmed the timeout of the indicator.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.timeout
+      description: The number of engines that timed out for the indicator.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.failure
+      description: The number of failed analysis engines.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.malicious
+      description: The number of engines that found the indicator to be malicious.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.last_analysis_stats.undetected
+      description: The number of engines that could not detect the indicator.
+      type: Number
+    - contextPath: VirusTotal.File.attributes.meaningful_name
+      description: Meaningful name of the file.
+      type: String
+    - contextPath: VirusTotal.File.attributes.reputation
+      description: The reputation of the file.
+      type: Number
+    - contextPath: VirusTotal.File.type
+      description: Type of the indicator (file).
+      type: String
+    - contextPath: VirusTotal.File.id
+      description: Type ID of the indicator.
+      type: String
+    - contextPath: VirusTotal.File.links.self
+      description: Link to the response.
+      type: String
+  - arguments:
+    - default: true
+      description: IP address to check.
+      isArray: true
+      name: ip
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether to return extended data (last_analysis_results).
+      name: extended_data
+      predefined:
+      - "true"
+      - "false"
+    description: Checks the reputation of an IP address.
+    name: ip
+    outputs:
+    - contextPath: IP.Address
+      description: Bad IP address.
+    - contextPath: IP.ASN
+      description: Bad IP ASN.
+    - contextPath: IP.Geo.Country
+      description: Bad IP country.
+    - contextPath: IP.Relationships.EntityA
+      description: The source of the relationship.
+      type: string
+    - contextPath: IP.Relationships.EntityB
+      description: The destination of the relationship.
+      type: string
+    - contextPath: IP.Relationships.Relationship
+      description: The name of the relationship.
+      type: string
+    - contextPath: IP.Relationships.EntityAType
+      description: The type of the source of the relationship.
+      type: string
+    - contextPath: IP.Relationships.EntityBType
+      description: The type of the destination of the relationship.
+      type: string
+    - contextPath: IP.Malicious.Vendor
+      description: For malicious IPs, the vendor that made the decision.
+    - contextPath: IP.Malicious.Description
+      description: For malicious IPs, the reason that the vendor made the decision.
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the DBot score.
+    - contextPath: DBotScore.Score
+      description: The actual score.
+    - contextPath: DBotScore.Reliability
+      description: Reliability of the source providing the intelligence data.
+      type: String
+    - contextPath: VirusTotal.IP.attributes.regional_internet_registry
+      description: Regional internet registry (RIR).
+      type: String
+    - contextPath: VirusTotal.IP.attributes.jarm
+      description: JARM data.
+      type: String
+    - contextPath: VirusTotal.IP.attributes.network
+      description: Network data.
+      type: String
+    - contextPath: VirusTotal.IP.attributes.country
+      description: The country where the IP is located.
+      type: String
+    - contextPath: VirusTotal.IP.attributes.as_owner
+      description: IP owner.
+      type: String
+    - contextPath: VirusTotal.IP.attributes.last_analysis_stats.harmless
+      description: The number of engines that found the domain to be harmless.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.last_analysis_stats.malicious
+      description: The number of engines that found the indicator to be malicious.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.last_analysis_stats.suspicious
+      description: The number of engines that found the indicator to be suspicious.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.last_analysis_stats.undetected
+      description: The number of engines that could not detect the indicator.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.last_analysis_stats.timeout
+      description: The number of engines that timed out for the indicator.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.asn
+      description: ASN data.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.whois_date
+      description: Date of the last update of the whois record.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.reputation
+      description: IP reputation.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.last_modification_date
+      description: Last modification date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.total_votes.harmless
+      description: Total number of harmless votes.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.total_votes.malicious
+      description: Total number of malicious votes.
+      type: Number
+    - contextPath: VirusTotal.IP.attributes.continent
+      description: The continent where the IP is located.
+      type: String
+    - contextPath: VirusTotal.IP.attributes.whois
+      description: whois data.
+      type: String
+    - contextPath: VirusTotal.IP.type
+      description: Indicator IP type.
+      type: String
+    - contextPath: VirusTotal.IP.id
+      description: ID of the IP.
+      type: String
+  - arguments:
+    - default: true
+      description: URL to check.
+      isArray: true
+      name: url
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether to return extended data (last_analysis_results).
+      name: extended_data
+      predefined:
+      - "true"
+      - "false"
+    description: Checks the reputation of a URL.
+    name: url
+    outputs:
+    - contextPath: URL.Data
+      description: Bad URLs found.
+    - contextPath: URL.Malicious.Vendor
+      description: For malicious URLs, the vendor that made the decision.
+    - contextPath: URL.Malicious.Description
+      description: For malicious URLs, the reason that the vendor made the decision.
+    - contextPath: URL.Relationships.EntityA
+      description: The source of the relationship.
+      type: string
+    - contextPath: URL.Relationships.EntityB
+      description: The destination of the relationship.
+      type: string
+    - contextPath: URL.Relationships.Relationship
+      description: The name of the relationship.
+      type: string
+    - contextPath: URL.Relationships.EntityAType
+      description: The type of the source of the relationship.
+      type: string
+    - contextPath: URL.Relationships.EntityBType
+      description: The type of the destination of the relationship.
+      type: string
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the DBot score.
+    - contextPath: DBotScore.Score
+      description: The actual score.
+    - contextPath: DBotScore.Reliability
+      description: Reliability of the source providing the intelligence data.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.favicon.raw_md5
+      description: The MD5 hash of the URL.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.favicon.dhash
+      description: Difference hash.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.last_modification_date
+      description: Last modification date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.times_submitted
+      description: The number of times the url has been submitted.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.total_votes.harmless
+      description: Total number of harmless votes.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.total_votes.malicious
+      description: Total number of malicious votes.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.threat_names
+      description: Name of the threats found.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.last_submission_date
+      description: The last submission date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_http_response_content_length
+      description: The last HTTPS response length.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_http_response_headers.date
+      description: The last response header date.
+      type: Date
+    - contextPath: VirusTotal.URL.attributes.last_http_response_headers.x-sinkhole
+      description: DNS sinkhole from last response.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.last_http_response_headers.content-length
+      description: The content length of the last response.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.last_http_response_headers.content-type
+      description: The content type of the last response.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.reputation
+      description: Reputation of the indicator.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_analysis_date
+      description: The date of the last analysis in epoch format.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.has_content
+      description: Whether the url has content in it.
+      type: Boolean
+    - contextPath: VirusTotal.URL.attributes.first_submission_date
+      description: The first submission date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_http_response_content_sha256
+      description: The SHA-256 hash of the content of the last response.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.last_http_response_code
+      description: Last response status code.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_final_url
+      description: Last final URL.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.url
+      description: The URL itself.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.title
+      description: Title of the page.
+      type: String
+    - contextPath: VirusTotal.URL.attributes.last_analysis_stats.harmless
+      description: The number of engines that found the domain to be harmless.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_analysis_stats.malicious
+      description: The number of engines that found the indicator to be malicious.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_analysis_stats.suspicious
+      description: The number of engines that found the indicator to be suspicious.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_analysis_stats.undetected
+      description: The number of engines that could not detect the indicator.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.last_analysis_stats.timeout
+      description: The number of engines that timed out for the indicator.
+      type: Number
+    - contextPath: VirusTotal.URL.attributes.outgoing_links
+      description: Outgoing links of the URL page.
+      type: String
+    - contextPath: VirusTotal.URL.type
+      description: Type of the indicator (url).
+      type: String
+    - contextPath: VirusTotal.URL.id
+      description: ID of the indicator.
+      type: String
+    - contextPath: VirusTotal.URL.links.self
+      description: Link to the response.
+      type: String
+  - arguments:
+    - default: true
+      description: Domain name to check.
+      isArray: true
+      name: domain
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether to return extended data (last_analysis_results).
+      name: extended_data
+      predefined:
+      - "true"
+      - "false"
+    description: Checks the reputation of a domain.
+    name: domain
+    outputs:
+    - contextPath: Domain.Name
+      description: Bad domain found.
+    - contextPath: Domain.Malicious.Vendor
+      description: For malicious domains, the vendor that made the decision.
+    - contextPath: Domain.Malicious.Description
+      description: For malicious domains, the reason that the vendor made the decision.
+    - contextPath: Domain.Relationships.EntityA
+      description: The source of the relationship.
+      type: string
+    - contextPath: Domain.Relationships.EntityB
+      description: The destination of the relationship.
+      type: string
+    - contextPath: Domain.Relationships.Relationship
+      description: The name of the relationship.
+      type: string
+    - contextPath: Domain.Relationships.EntityAType
+      description: The type of the source of the relationship.
+      type: string
+    - contextPath: Domain.Relationships.EntityBType
+      description: The type of the destination of the relationship.
+      type: string
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+    - contextPath: DBotScore.Score
+      description: The actual DBot score.
+    - contextPath: DBotScore.Reliability
+      description: Reliability of the source providing the intelligence data.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.last_dns_records.type
+      description: The type of the last DNS records.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.last_dns_records.value
+      description: The value of the last DNS records.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.last_dns_records.ttl
+      description: The time To live (ttl) of the last DNS records.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.jarm
+      description: JARM data.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.whois
+      description: whois data.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.last_dns_records_date
+      description: The last DNS records date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.last_analysis_stats.harmless
+      description: The number of engines that found the domain to be harmless.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.last_analysis_stats.malicious
+      description: The number of engines that found the indicator to be malicious.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.last_analysis_stats.suspicious
+      description: The number of engines that found the indicator to be suspicious.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.last_analysis_stats.undetected
+      description: The number of engines that could not detect the indicator.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.last_analysis_stats.timeout
+      description: The number of engines that timed out for the indicator.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.favicon.raw_md5
+      description: MD5 hash of the domain.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.favicon.dhash
+      description: Difference hash.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.reputation
+      description: Reputation of the indicator.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.registrar
+      description: Registrar information.
+      type: String
+    - contextPath: VirusTotal.Domain.attributes.last_update_date
+      description: Last updated date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.last_modification_date
+      description: Last modification date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.creation_date
+      description: Creation date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.total_votes.harmless
+      description: Total number of harmless votes.
+      type: Number
+    - contextPath: VirusTotal.Domain.attributes.total_votes.malicious
+      description: Total number of malicious votes.
+      type: Number
+    - contextPath: VirusTotal.Domain.type
+      description: Type of indicator (domain).
+      type: String
+    - contextPath: VirusTotal.Domain.id
+      description: ID of the domain.
+      type: String
+    - contextPath: VirusTotal.Domain.links.self
+      description: Link to the domain investigation.
+      type: String
+  - arguments:
+    - default: true
+      description: The file entry ID to submit.
+      isArray: true
+      name: entryID
+      required: true
+    - description: Premium API extension. Special upload URL for files larger than
+        32 MB. Can be acquired from the vt-file-scan-upload-url command.
+      name: uploadURL
+    description: Submits a file for scanning. Use the vt-analysis-get command to get
+      the scan results.
+    name: file-scan
+    outputs:
+    - contextPath: VirusTotal.Submission.type
+      description: The submission type.
+      type: String
+    - contextPath: VirusTotal.Submission.id
+      description: The ID of the submission.
+      type: String
+    - contextPath: VirusTotal.Submission.EntryID
+      description: The entry ID of the file detonated.
+      type: String
+    - contextPath: VirusTotal.Submission.Extension
+      description: File extension.
+      type: String
+    - contextPath: VirusTotal.Submission.Info
+      description: File info.
+      type: String
+    - contextPath: VirusTotal.Submission.MD5
+      description: MD5 hash of the file.
+      type: String
+    - contextPath: VirusTotal.Submission.Name
+      description: Name of the file.
+      type: String
+    - contextPath: VirusTotal.Submission.SHA1
+      description: SHA-1 hash of the file
+      type: String
+    - contextPath: VirusTotal.Submission.SHA256
+      description: SHA-256 of the file.
+      type: String
+    - contextPath: VirusTotal.Submission.SHA512
+      description: SHA-512 of the file.
+      type: String
+    - contextPath: VirusTotal.Submission.SSDeep
+      description: SSDeep of the file.
+      type: String
+    - contextPath: VirusTotal.Submission.Size
+      description: Size of the file.
+      type: Number
+    - contextPath: VirusTotal.Submission.Type
+      description: The type of the submission (analysis).
+      type: String
+  - arguments:
+    - default: true
+      description: Hash of the file to rescan. Supports MD5, SHA1, and SHA256.
+      name: file
+      required: true
+    description: Rescans an already submitted file. This avoids having to upload the
+      file again. Use the vt-analysis-get command to get the scan results.
+    name: file-rescan
+    outputs:
+    - contextPath: VirusTotal.Submission.Type
+      description: The type of the submission (analysis).
+      type: String
+    - contextPath: VirusTotal.Submission.id
+      description: The ID of the submission
+      type: String
+    - contextPath: VirusTotal.Submission.hash
+      description: The indicator sent to rescan.
+      type: String
+  - arguments:
+    - default: true
+      description: The URL to scan.
+      name: url
+      required: true
+    description: Scans a specified URL. Use the vt-analysis-get command to get the
+      scan results.
+    name: url-scan
+    outputs:
+    - contextPath: VirusTotal.Submission.Type
+      description: The type of the submission (analysis).
+      type: String
+    - contextPath: VirusTotal.Submission.id
+      description: The ID of the submission.
+      type: String
+    - contextPath: VirusTotal.Submission.hash
+      description: The indicator sent to rescan.
+      type: String
+  - arguments:
+    - description: The file hash (MD5, SHA1, orSHA256), Domain, URL or IP on which
+        you're commenting on. If not supplied, will try to determine if it's a hash
+        or a url.
+      name: resource
+      required: true
+    - auto: PREDEFINED
+      description: The type of the resource on which you're commenting.
+      name: resource_type
+      predefined:
+      - ip
+      - url
+      - domain
+      - hash
+    - description: 'The actual review that you can tag by using the "#" twitter-like
+        syntax, for example, #disinfection #zbot, and reference users using the "@"
+        syntax, for example, @VirusTotalTeam.'
+      name: comment
+      required: true
+    description: Adds comments to files and URLs.
+    name: vt-comments-add
+    outputs:
+    - contextPath: VirusTotal.Comments.comments.attributes.date
+      description: The date of the comment in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.text
+      description: The text of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.positive
+      description: Number of positive votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.abuse
+      description: Number of abuse votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.negative
+      description: Number of negative votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.html
+      description: The HTML content.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.type
+      description: The type of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.id
+      description: ID of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.links.self
+      description: Link to the request.
+      type: String
+  - arguments: []
+    description: Premium API. Get a special URL for files larger than 32 MB.
+    name: vt-file-scan-upload-url
+    outputs:
+    - contextPath: VirusTotal.FileUploadURL
+      description: The special upload URL for large files.
+  - arguments:
+    - default: true
+      description: Comment ID
+      name: id
+      required: true
+    description: Delete a comment.
+    name: vt-comments-delete
+  - arguments:
+    - description: The file hash (MD5, SHA1, orSHA256), Domain, URL or IP on which
+        you're commenting on. If not supplied, will try to determine if it's a hash
+        or a url.
+      name: resource
+      required: true
+    - auto: PREDEFINED
+      description: The type of the resource on which you're commenting. If not supplied,
+        will determine if it's a url or a file.
+      name: resource_type
+      predefined:
+      - ip
+      - url
+      - domain
+      - file
+    - defaultValue: "10"
+      description: Maximum comments to fetch.
+      name: limit
+    - description: Fetch only comments before the given time.
+      name: before
+    description: Retrieves comments for a given resource.
+    name: vt-comments-get
+    outputs:
+    - contextPath: VirusTotal.Comments.id
+      description: ID that contains the comment (the given hash, domain, url, or ip).
+      type: String
+    - contextPath: VirusTotal.Comments.comments.attributes.date
+      description: The date of the comment in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.text
+      description: The text of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.positive
+      description: Number of positive votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.abuse
+      description: Number of abuse votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.negative
+      description: Number of negative votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.html
+      description: The HTML content.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.type
+      description: The type of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.id
+      description: ID of the commented.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.links.self
+      description: Link to the request
+      type: String
+  - arguments:
+    - default: true
+      description: The comment's ID. Can be retrieved using the vt-comments-get command.
+      name: id
+      required: true
+    description: Retrieves a comment by comment ID.
+    name: vt-comments-get-by-id
+    outputs:
+    - contextPath: VirusTotal.Comments.comments.id
+      description: ID of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.attributes.date
+      description: The date of the comment in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.text
+      description: The text of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.positive
+      description: Number of positive votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.abuse
+      description: Number of abuse votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.votes.negative
+      description: Number of negative votes.
+      type: Number
+    - contextPath: VirusTotal.Comments.comments.attributes.html
+      description: The HTML content.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.type
+      description: The type of the comment.
+      type: String
+    - contextPath: VirusTotal.Comments.comments.links.self
+      description: Link to the request.
+      type: String
+  - arguments:
+    - default: true
+      description: 'This endpoint searches any of the following: A file hash, URL,
+        domain, IP address, tag comments.'
+      name: query
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether to return extended data (last_analysis_results).
+      name: extended_data
+      predefined:
+      - "true"
+      - "false"
+    - defaultValue: "10"
+      description: Maximum number of results to fetch.
+      name: limit
+    description: Search for an indicator in Virus Total.
+    name: vt-search
+    outputs:
+    - contextPath: VirusTotal.SearchResults.attributes.last_analysis_stats.harmless
+      description: Number of engines that found the indicator to be harmless.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.last_analysis_stats.malicious
+      description: Number of engines that found the indicator to be malicious.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.last_analysis_stats.suspicious
+      description: Number of engines that found the indicator to be suspicious.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.last_analysis_stats.undetected
+      description: Number of engines that could not detect the indicator.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.last_analysis_stats.timeout
+      description: Number of engines that timed out.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.reputation
+      description: The indicator's reputation
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.last_modification_date
+      description: The last modification date in epoch format.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.total_votes.harmless
+      description: Total number of harmless votes.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.attributes.total_votes.malicious
+      description: Total number of malicious votes.
+      type: Number
+    - contextPath: VirusTotal.SearchResults.type
+      description: The type of the indicator (ip, domain, url, file).
+      type: String
+    - contextPath: VirusTotal.SearchResults.id
+      description: ID of the indicator.
+      type: String
+    - contextPath: VirusTotal.SearchResults.links.self
+      description: Link to the response.
+      type: String
+  - arguments:
+    - default: true
+      description: Hash of the file to query. Supports MD5, SHA1, and SHA256.
+      name: file
+      required: true
+    - defaultValue: "10"
+      description: Maximum number of results to fetch.
+      name: limit
+    description: Retrieves a behavioral relationship of the given file hash.
+    name: vt-file-sandbox-report
+    outputs:
+    - contextPath: SandboxReport.attributes.analysis_date
+      description: The date of the analysis in epoch format.
+      type: Number
+    - contextPath: SandboxReport.attributes.behash
+      description: Behash of the attribute.
+      type: String
+    - contextPath: SandboxReport.attributes.command_executions
+      description: Which command were executed.
+      type: String
+    - contextPath: SandboxReport.attributes.dns_lookups.hostname
+      description: Host names found in the lookup.
+      type: String
+    - contextPath: SandboxReport.attributes.dns_lookups.resolved_ips
+      description: The IPs that were resolved.
+      type: String
+    - contextPath: SandboxReport.attributes.files_attribute_changed
+      description: The file attributes that were changed.
+      type: String
+    - contextPath: SandboxReport.attributes.has_html_report
+      description: Whether there is an HTML report.
+      type: Boolean
+    - contextPath: SandboxReport.attributes.has_pcap
+      description: Whether the IP has a PCAP file.
+      type: Boolean
+    - contextPath: SandboxReport.attributes.http_conversations.request_method
+      description: The request method of the HTTP conversation.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_headers.Cache-Control
+      description: The cache-control method of the response header.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_headers.Connection
+      description: The connection of the response header.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_headers.Content-Length
+      description: THe Content-Length of the response header.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_headers.Content-Type
+      description: The Content-Type of the response header.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_headers.Pragma
+      description: The pragma of the  response header.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_headers.Server
+      description: The server of the response header.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_headers.Status-Line
+      description: The Status-Line of the response header.
+      type: String
+    - contextPath: SandboxReport.attributes.http_conversations.response_status_code
+      description: The response status code.
+      type: Number
+    - contextPath: SandboxReport.attributes.http_conversations.url
+      description: The conversation URL.
+      type: String
+    - contextPath: SandboxReport.attributes.last_modification_date
+      description: Last modified data in epoch format.
+      type: Number
+    - contextPath: SandboxReport.attributes.modules_loaded
+      description: Loaded modules.
+      type: String
+    - contextPath: SandboxReport.attributes.mutexes_created
+      description: The mutexes that were created.
+      type: String
+    - contextPath: SandboxReport.attributes.mutexes_opened
+      description: The mutexes that were opened.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_created
+      description: The processes that were created.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_tree.name
+      description: The name of the process tree.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_tree.process_id
+      description: The ID of the process.
+      type: String
+    - contextPath: SandboxReport.attributes.registry_keys_deleted
+      description: Deleted registry keys.
+      type: String
+    - contextPath: SandboxReport.attributes.registry_keys_set.key
+      description: Key of the registry key.
+      type: String
+    - contextPath: SandboxReport.attributes.registry_keys_set.value
+      description: Value of the registry key.
+      type: String
+    - contextPath: SandboxReport.attributes.sandbox_name
+      description: The name of the sandbox.
+      type: String
+    - contextPath: SandboxReport.attributes.services_started
+      description: The services that were started.
+      type: String
+    - contextPath: SandboxReport.attributes.verdicts
+      description: The verdicts.
+      type: String
+    - contextPath: SandboxReport.id
+      description: The IP analyzed.
+      type: String
+    - contextPath: SandboxReport.links.self
+      description: Link to the response.
+      type: String
+    - contextPath: SandboxReport.attributes.files_dropped.path
+      description: Path of the file dropped.
+      type: String
+    - contextPath: SandboxReport.attributes.files_dropped.sha256
+      description: SHA-256 hash of the dropped files.
+      type: String
+    - contextPath: SandboxReport.attributes.files_opened
+      description: The files that were opened.
+      type: String
+    - contextPath: SandboxReport.attributes.files_written
+      description: The files that were written.
+      type: String
+    - contextPath: SandboxReport.attributes.ip_traffic.destination_ip
+      description: Destination IP in the traffic.
+      type: String
+    - contextPath: SandboxReport.attributes.ip_traffic.destination_port
+      description: Destination port in the traffic.
+      type: Number
+    - contextPath: SandboxReport.attributes.ip_traffic.transport_layer_protocol
+      description: Transport layer protocol in the traffic.
+      type: String
+    - contextPath: SandboxReport.attributes.registry_keys_opened
+      description: The registry keys that were opened.
+      type: String
+    - contextPath: SandboxReport.attributes.tags
+      description: The tags of the DNS data.
+      type: String
+    - contextPath: SandboxReport.attributes.files_copied.destination
+      description: Destination of the files copied.
+      type: String
+    - contextPath: SandboxReport.attributes.files_copied.source
+      description: Source of the files copied.
+      type: String
+    - contextPath: SandboxReport.attributes.permissions_requested
+      description: The permissions that where requested.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_injected
+      description: The processes that were injected.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_terminated
+      description: The processes that were terminated.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_tree.children.name
+      description: The name of the children of the process.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_tree.children.process_id
+      description: The ID of the children of the process.
+      type: String
+    - contextPath: SandboxReport.attributes.services_opened
+      description: The services that were opened.
+      type: String
+    - contextPath: SandboxReport.attributes.text_highlighted
+      description: The text that was highlighted.
+      type: String
+    - contextPath: SandboxReport.attributes.calls_highlighted
+      description: The calls that were highlighted.
+      type: String
+    - contextPath: SandboxReport.attributes.processes_tree.children.time_offset
+      description: The time offset of the children in the process.
+      type: Number
+    - contextPath: SandboxReport.links.self
+      description: The link to the response.
+      type: String
+    - contextPath: SandboxReport.meta.count
+      description: The number of objects that were found in the attributes.
+      type: Number
+  - arguments:
+    - default: true
+      description: IP for which to get its DNS data.
+      name: ip
+      required: true
+    - defaultValue: "10"
+      description: Maximum number of results to fetch.
+      name: limit
+    description: Returns passive DNS records by indicator.
+    name: vt-passive-dns-data
+    outputs:
+    - contextPath: VirusTotal.PassiveDNS.attributes.date
+      description: Date of the DNS analysis in epoch format.
+      type: Number
+    - contextPath: VirusTotal.PassiveDNS.attributes.host_name
+      description: The DNS host name.
+      type: String
+    - contextPath: VirusTotal.PassiveDNS.attributes.ip_address
+      description: The DNS IP address.
+      type: String
+    - contextPath: VirusTotal.PassiveDNS.attributes.resolver
+      description: The name of the resolver.
+      type: String
+    - contextPath: VirusTotal.PassiveDNS.id
+      description: The ID of the resolution.
+      type: String
+    - contextPath: VirusTotal.PassiveDNS.links.self
+      description: The link to the resolution.
+      type: String
+    - contextPath: VirusTotal.PassiveDNS.type
+      description: The type of the resolution.
+      type: String
+  - arguments:
+    - default: true
+      description: ID of the analysis (from file-scan, file-rescan, or url-scan)
+      name: id
+      required: true
+    - defaultValue: "false"
+      description: Whether to return extended data (last_analysis_results).
+      name: extended_data
+    description: Retrieves resolutions of the given IP.
+    name: vt-analysis-get
+    outputs:
+    - contextPath: VirusTotal.Analysis.data.attributes.date
+      description: Date of the analysis in epoch format.
+      type: Number
+    - contextPath: VirusTotal.Analysis.data.attributes.stats.harmless
+      description: Number of engines that found the indicator to be harmless.
+      type: Number
+    - contextPath: VirusTotal.Analysis.data.attributes.stats.malicious
+      description: Number of engines that found the indicator to be malicious.
+      type: Number
+    - contextPath: VirusTotal.Analysis.data.attributes.stats.suspicious
+      description: Number of engines that found the indicator to be suspicious.
+      type: Number
+    - contextPath: VirusTotal.Analysis.data.attributes.stats.timeout
+      description: he number of engines that timed out for the indicator.
+      type: Number
+    - contextPath: VirusTotal.Analysis.data.attributes.stats.undetected
+      description: Number of engines the found the indicator to be undetected.
+      type: Number
+    - contextPath: VirusTotal.Analysis.data.attributes.status
+      description: Status of the analysis.
+      type: String
+    - contextPath: VirusTotal.Analysis.data.id
+      description: ID of the analysis.
+      type: String
+    - contextPath: VirusTotal.Analysis.data.type
+      description: Type of object (analysis).
+      type: String
+    - contextPath: VirusTotal.Analysis.meta.file_info.sha256
+      description: SHA-256 hash of the file (if it is a file).
+      type: String
+    - contextPath: VirusTotal.Analysis.meta.file_info.sha1
+      description: SHA-1 hash of the file (if it is a file).
+      type: String
+    - contextPath: VirusTotal.Analysis.meta.file_info.md5
+      description: MD5 hash of the file (if it is a file).
+      type: String
+    - contextPath: VirusTotal.Analysis.meta.file_info.name
+      description: Name of the file (if it is a file).
+    - contextPath: VirusTotal.Analysis.meta.file_info.size
+      description: Size of the file (if it is a file).
+      type: String
+    - contextPath: VirusTotal.Analysis.meta.url_info.id
+      description: ID of the url (if it is a URL).
+      type: String
+    - contextPath: VirusTotal.Analysis.meta.url_info.url
+      description: The URL (if it is a URL).
+      type: String
+    - contextPath: VirusTotal.Analysis.id
+      description: The analysis ID.
+      type: String
+  dockerimage: demisto/python3:3.9.7.24076
+  runonce: false
+  script: |
+    """
+    An integration module for the Virus Total v3 API.
+    API Documentation:
+        https://developers.virustotal.com/v3.0/reference
+    """
+    from collections import defaultdict
+    from typing import Callable
+
+    from dateparser import parse
+
+
+
+    INTEGRATION_NAME = "VirusTotal"
+    COMMAND_PREFIX = "vt"
+    INTEGRATION_ENTRY_CONTEXT = "VirusTotal"
+
+    INDICATOR_TYPE = {
+        'ip': FeedIndicatorType.IP,
+        'ip_address': FeedIndicatorType.IP,
+        'domain': FeedIndicatorType.Domain,
+        'file': FeedIndicatorType.File,
+        'url': FeedIndicatorType.URL
+    }
+
+
+    """ RELATIONSHIP TYPE"""
+    RELATIONSHIP_TYPE = {
+        'file': {
+            'carbonblack_children': EntityRelationship.Relationships.CREATES,
+            'carbonblack_parents': EntityRelationship.Relationships.CREATED_BY,
+            'compressed_parents': EntityRelationship.Relationships.BUNDLED_IN,
+            'contacted_domains': EntityRelationship.Relationships.COMMUNICATES_WITH,
+            'contacted_ips': EntityRelationship.Relationships.COMMUNICATES_WITH,
+            'contacted_urls': EntityRelationship.Relationships.COMMUNICATES_WITH,
+            'dropped_files': EntityRelationship.Relationships.DROPPED_BY,
+            'email_attachments': EntityRelationship.Relationships.ATTACHES,
+            'email_parents': EntityRelationship.Relationships.ATTACHMENT_OF,
+            'embedded_domains': EntityRelationship.Relationships.EMBEDDED_IN,
+            'embedded_ips': EntityRelationship.Relationships.EMBEDDED_IN,
+            'embedded_urls': EntityRelationship.Relationships.EMBEDDED_IN,
+            'execution_parents': EntityRelationship.Relationships.EXECUTED_BY,
+            'itw_domains': EntityRelationship.Relationships.DOWNLOADS_FROM,
+            'itw_ips': EntityRelationship.Relationships.DOWNLOADS_FROM,
+            'overlay_children': EntityRelationship.Relationships.BUNDLES,
+            'overlay_parents': EntityRelationship.Relationships.BUNDLED_IN,
+            'pcap_children': EntityRelationship.Relationships.BUNDLES,
+            'pcap_parents': EntityRelationship.Relationships.BUNDLED_IN,
+            'pe_resource_children': EntityRelationship.Relationships.EXECUTED,
+            'pe_resource_parents': EntityRelationship.Relationships.EXECUTED_BY,
+            'similar_files': EntityRelationship.Relationships.SIMILAR_TO,
+        },
+        'domain': {
+            'cname_records': EntityRelationship.Relationships.IS_ALSO,
+            'caa_records': EntityRelationship.Relationships.RELATED_TO,
+            'communicating_files': EntityRelationship.Relationships.DROPS,
+            'downloaded_files': EntityRelationship.Relationships.DROPS,
+            'immediate_parent': EntityRelationship.Relationships.SUB_DOMAIN_OF,
+            'mx_records': EntityRelationship.Relationships.RELATED_TO,
+            'ns_records': EntityRelationship.Relationships.DROPS,
+            'parent': EntityRelationship.Relationships.SUB_DOMAIN_OF,
+            'referrer_files': EntityRelationship.Relationships.RELATED_TO,
+            'resolutions': EntityRelationship.Relationships.RESOLVED_FROM,
+            'siblings': EntityRelationship.Relationships.SUPRA_DOMAIN_OF,
+            'soa_records': EntityRelationship.Relationships.IS_ALSO,
+            'subdomains': EntityRelationship.Relationships.SUPRA_DOMAIN_OF,
+            'urls': EntityRelationship.Relationships.HOSTS,
+        }, 'ip': {
+            'communicating_files': EntityRelationship.Relationships.COMMUNICATES_WITH,
+            'downloaded_files': EntityRelationship.Relationships.DROPS,
+            'referrer_files': EntityRelationship.Relationships.RELATED_TO,
+            'resolutions': EntityRelationship.Relationships.RESOLVES_TO,
+            'urls': EntityRelationship.Relationships.RELATED_TO,
+        }, 'url': {
+            'contacted_domains': EntityRelationship.Relationships.RELATED_TO,
+            'contacted_ips': EntityRelationship.Relationships.RELATED_TO,
+            'downloaded_files': EntityRelationship.Relationships.DROPS,
+            'last_serving_ip_address': EntityRelationship.Relationships.RESOLVED_FROM,
+            'network_location': EntityRelationship.Relationships.RESOLVED_FROM,
+            'redirecting_urls': EntityRelationship.Relationships.DUPLICATE_OF,
+            'redirects_to': EntityRelationship.Relationships.DUPLICATE_OF,
+            'referrer_files': EntityRelationship.Relationships.EMBEDDED_IN,
+            'referrer_urls': EntityRelationship.Relationships.RELATED_TO,
+        }
+    }
+
+
+    class Client(BaseClient):
+        """
+        Attributes:
+            is_premium: Shall use the premium api (mostly for reputation commands)
+        """
+        is_premium: bool
+        reliability: DBotScoreReliability
+
+        def __init__(self, params: dict):
+            self.is_premium = argToBoolean(params['is_premium_api'])
+            self.reliability = DBotScoreReliability.get_dbot_score_reliability_from_str(params['feedReliability'])
+            super().__init__(
+                'https://www.virustotal.com/api/v3/',
+                verify=not argToBoolean(params.get('insecure')),
+                proxy=argToBoolean(params.get('proxy')),
+                headers={'x-apikey': params['credentials']['password']}
+            )
+
+        # region Reputation calls
+
+        def ip(self, ip: str, relationships: str = '') -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#ip-info
+            """
+            return self._http_request(
+                'GET',
+                f'ip_addresses/{ip}?relationships={relationships}'
+            )
+
+        def file(self, file: str, relationships: str = '') -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#file
+            """
+            return self._http_request(
+                'GET',
+                f'files/{file}?relationships={relationships}'
+            )
+
+        def url(self, url: str, relationships: str = ''):
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#url
+            """
+            return self._http_request(
+                'GET',
+                f'urls/{encode_url_to_base64(url)}?relationships={relationships}'
+            )
+
+        def domain(self, domain: str, relationships: str = '') -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#domain-info
+            """
+            return self._http_request(
+                'GET',
+                f'domains/{domain}?relationships={relationships}'
+            )
+
+        # endregion
+
+        # region Comments call
+        def delete_comment(self, id_: str):
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#comment-id-delete
+            """
+            self._http_request(
+                'DELETE',
+                f'comments/{id_}',
+                resp_type='response'
+            )
+
+        def get_ip_comments(self, ip: str, limit: int) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#ip-comments-get
+            """
+
+            return self._http_request(
+                'GET',
+                f'ip_addresses/{ip}/comments',
+                params={'limit': limit}
+            )
+
+        def get_url_comments(self, url: str, limit: int) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#urls-comments-get
+
+            """
+            return self._http_request(
+                'GET',
+                f'urls/{encode_url_to_base64(url)}/comments',
+                params={'limit': limit}
+            )
+
+        def get_hash_comments(self, file_hash: str, limit: int) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#files-comments-get
+            """
+            return self._http_request(
+                'GET',
+                f'files/{file_hash}/comments',
+                params={'limit': limit}
+            )
+
+        def get_domain_comments(self, domain: str, limit: int) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#domains-comments-get
+            """
+            return self._http_request(
+                'GET',
+                f'domains/{domain}/comments',
+                params={'limit': limit}
+            )
+
+        def get_comment_by_id(self, comment_id: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#get-comment
+            """
+            return self._http_request(
+                'GET',
+                f'comments/{comment_id}'
+            )
+
+        def add_comment(self, suffix: str, comment: str) -> dict:
+            """Sending POST HTTP request to comment
+
+            Args:
+                suffix: suffix of the comment
+                comment: the comment itself
+
+            Returns:
+                json of response
+            """
+            return self._http_request(
+                'POST',
+                suffix,
+                json_data={'data': {'type': 'comment', 'attributes': {'text': comment}}}
+            )
+
+        def add_comment_to_ip(self, ip: str, comment: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#ip-comments-post
+            """
+            return self.add_comment(f'ip_addresses/{ip}/comments', comment)
+
+        def add_comment_to_url(self, url: str, comment: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#urls-comments-post
+            """
+            return self.add_comment(f'urls/{encode_url_to_base64(url)}/comments', comment)
+
+        def add_comment_to_domain(self, domain: str, comment: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#domains-comments-post
+            """
+            return self.add_comment(f'domains/{domain}/comments', comment)
+
+        def add_comment_to_file(self, resource: str, comment: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#files-comments-post
+            """
+            return self.add_comment(f'files/{resource}/comments', comment)
+
+        # endregion
+
+        # region Scan calls
+        def file_rescan(self, file_hash: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#files-analyse
+            """
+            return self._http_request(
+                'POST',
+                f'/files/{file_hash}/analyse'
+            )
+
+        def file_scan(self, file_path: str, /, upload_url: Optional[str]) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#files-scan
+            """
+            response: requests.Response
+            with open(file_path, 'rb') as file:
+                if upload_url:
+                    response = self._http_request(
+                        'POST',
+                        full_url=upload_url,
+                        files={'file': file},
+                        resp_type='response'
+                    )
+                else:
+                    response = self._http_request(
+                        'POST',
+                        url_suffix='/files',
+                        files={'file': file},
+                        resp_type='response'
+                    )
+            demisto.debug(
+                f'scan_file response:\n'
+                f'{str(response.status_code)=}, {str(response.headers)=}, {str(response.content)}'
+            )
+            return response.json()
+
+        def get_upload_url(self) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#files-upload-url
+            """
+            return self._http_request(
+                'GET',
+                'files/upload_url'
+            )
+
+        def url_scan(self, url: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#urls
+            """
+            return self._http_request(
+                'POST',
+                'urls',
+                data={'url': url}
+            )
+
+        # endregion
+
+        def file_sandbox_report(self, file_hash: dict, limit: int) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#files-relationships
+            """
+            return self._http_request(
+                'GET',
+                f'files/{file_hash}/behaviours',
+                params={'limit': limit}
+            )
+
+        def passive_dns_data(self, ip: str, limit: int) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#ip-relationships
+            """
+            return self._http_request(
+                'GET',
+                f'ip_addresses/{ip}/resolutions',
+                params={'limit': limit}
+            )
+
+        def search(self, query: str, limit: int) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#search-1
+            """
+            return self._http_request(
+                'GET',
+                'search',
+                params={'query': query, 'limit': limit}
+            )
+
+        def get_analysis(self, analysis_id: str) -> dict:
+            """
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#analysis
+            """
+            return self._http_request(
+                'GET',
+                f'/analyses/{analysis_id}'
+            )
+
+        # region Premium commands
+        def get_relationship(self, indicator: str, indicator_type: str, relationship: str) -> dict:
+            """
+            Args:
+                indicator: a url encoded in base64 or domain.
+                indicator_type: urls or domains
+                relationship: a relationship to search for
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#urls-relationships
+                https://developers.virustotal.com/v3.0/reference#domains-relationships
+                https://developers.virustotal.com/v3.0/reference#ip-relationships
+            """
+
+            return self._http_request(
+                'GET',
+                urljoin(urljoin(indicator_type, indicator), relationship)
+            )
+
+        def get_domain_relationships(self, domain: str, relationship: str) -> dict:
+            """
+            Wrapper of get_relationship
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#domains-relationships
+            """
+            return self.get_relationship(domain, 'domains', relationship)
+
+        def get_domain_communicating_files(self, domain: str) -> dict:
+            """
+            Wrapper of get_domain_relationships
+
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#domains-relationships
+            """
+            return self.get_domain_relationships(
+                domain,
+                'communicating_files'
+            )
+
+        def get_domain_downloaded_files(self, domain: str) -> dict:
+            """
+            Wrapper of get_domain_relationships
+
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#domains-relationships
+            """
+            return self.get_domain_relationships(
+                domain,
+                'downloaded_files'
+            )
+
+        def get_domain_referrer_files(self, domain: str) -> dict:
+            """
+            Wrapper of get_domain_relationships
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#domains-relationships
+            """
+            return self.get_domain_relationships(
+                domain,
+                'referrer_files'
+            )
+
+        def get_url_relationships(self, url: str, relationship: str) -> dict:
+            """
+            Wrapper of get_relationship
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_relationship(encode_url_to_base64(url), 'urls', relationship)
+
+        def get_url_communicating_files(self, url: str) -> dict:
+            """
+            Wrapper of url_relationships
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_url_relationships(
+                url,
+                'communicating_files'
+            )
+
+        def get_url_downloaded_files(self, url: str) -> dict:
+            """
+            Wrapper of url_relationships
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_url_relationships(
+                url,
+                'downloaded_files'
+            )
+
+        def get_url_referrer_files(self, url: str) -> dict:
+            """
+            Wrapper of url_relationships
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_url_relationships(
+                url,
+                'referrer_files'
+            )
+
+        def get_ip_relationships(self, ip: str, relationship: str) -> dict:
+            """
+            Wrapper of get_relationship
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_relationship(ip, 'ip_addresses', relationship)
+
+        def get_ip_communicating_files(self, ip: str) -> dict:
+            """
+            Wrapper of get_ip_relationships
+
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_ip_relationships(
+                ip,
+                'communicating_files'
+            )
+
+        def get_ip_downloaded_files(self, ip: str) -> dict:
+            """
+            Wrapper of get_ip_relationships
+
+            See Also:
+                https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_ip_relationships(
+                ip,
+                'downloaded_files'
+            )
+
+        def get_ip_referrer_files(self, ip: str) -> dict:
+            """
+            Wrapper of get_ip_relationships
+
+            See Also:
+                    https://developers.virustotal.com/v3.0/reference#urls-relationships
+            """
+            return self.get_ip_relationships(
+                ip,
+                'referrer_files'
+            )
+        # endregion
+
+
+    class ScoreCalculator:
+        """
+        Calculating DBotScore of files, ip, etc.
+        """
+        logs: List[str]
+
+        # General
+        trusted_vendors_threshold: int
+        trusted_vendors: List[str]
+
+        # IP
+        ip_threshold: int
+        url_threshold: int
+
+        # Domain
+        domain_threshold: int
+        domain_popularity_ranking: int
+
+        # File
+        file_threshold: int
+        sigma_ids_threshold: int
+        crowdsourced_yara_rules_enabled: bool
+        crowdsourced_yara_rules_threshold: int
+        relationship_threshold: int
+
+        def __init__(self, params: dict):
+            self.trusted_vendors = argToList(params['preferredVendors'])
+            trusted_vendors_threshold = arg_to_number_must_int(
+                params['preferredVendorsThreshold'],
+                arg_name='Preferred Vendor Threshold',
+                required=True
+            )
+            assert isinstance(trusted_vendors_threshold, int)
+            self.trusted_vendors_threshold = arg_to_number_must_int(
+                params['preferredVendorsThreshold'],
+                arg_name='Preferred Vendor Threshold',
+                required=True
+            )
+            self.file_threshold = arg_to_number_must_int(
+                params['fileThreshold'],
+                arg_name='File Threshold',
+                required=True
+            )
+            self.ip_threshold = arg_to_number_must_int(
+                params['ipThreshold'],
+                arg_name='IP Threshold',
+                required=True
+            )
+            self.url_threshold = arg_to_number_must_int(
+                params['urlThreshold'],
+                arg_name='URL Threshold',
+                required=True
+            )
+            self.domain_threshold = arg_to_number_must_int(
+                params['domainThreshold'],
+                arg_name='Domain Threshold',
+                required=True
+            )
+            self.crowdsourced_yara_rules_enabled = argToBoolean(params['crowdsourced_yara_rules_enabled'])
+            self.crowdsourced_yara_rules_threshold = arg_to_number_must_int(params['yaraRulesThreshold'])
+            self.sigma_ids_threshold = arg_to_number_must_int(
+                params['SigmaIDSThreshold'],
+                arg_name='Sigma and Intrusion Detection Rules Threshold',
+                required=True
+            )
+            self.domain_popularity_ranking = arg_to_number_must_int(
+                params['domain_popularity_ranking'],
+                arg_name='Domain Popularity Ranking Threshold',
+                required=True
+            )
+            self.relationship_threshold = arg_to_number_must_int(
+                params['relationship_threshold'],
+                arg_name='Relationship Files Threshold',
+                required=True
+            )
+            self.logs = list()
+
+        def get_logs(self) -> str:
+            """Returns the log string
+            """
+            return '\n'.join(self.logs)
+
+        def is_suspicious_by_threshold(self, analysis_stats: dict, threshold: int) -> bool:
+            """Determines whatever the indicator suspicious by threshold.
+            if number of malicious >= threshold /2 ||
+            number of suspicious >= threshold -> Suspicious
+
+            Args:
+                analysis_stats: the analysis stats from the response
+                threshold: the threshold of the indicator type.
+
+            Returns:
+                Whatever the indicator is suspicious by threshold.
+            """
+            if analysis_stats.get('malicious', 0) >= threshold / 2:
+                self.logs.append(
+                    f'Found at least suspicious by {(analysis_stats.get("malicious", 0) >= threshold / 2)=}. '
+                )
+                return True
+            elif analysis_stats.get('suspicious', 0) >= threshold:
+                self.logs.append(
+                    f'Found at least suspicious by {(analysis_stats.get("suspicious", 0) >= threshold)=}. '
+                )
+                return True
+            return False
+
+        def is_good_by_popularity_ranks(self, popularity_ranks: dict) -> Optional[bool]:
+            """Analyzing popularity ranks.
+            if popularity ranks exist and average rank is < threshold -> Good
+            Args:
+                popularity_ranks: the popularity ranks object from response
+
+            Returns:
+                Whatever the indicator is good or not by popularity rank.
+            """
+            if popularity_ranks:
+                self.logs.append(
+                    'Found popularity ranks. Analyzing. '
+                )
+                average = sum(rank.get('rank', 0) for rank in popularity_ranks.values()) / len(popularity_ranks)
+                self.logs.append(
+                    f'The average of the ranks is {average} and the threshold is {self.domain_popularity_ranking}'
+                )
+                if average <= self.domain_popularity_ranking:
+                    self.logs.append('Indicator is good by popularity ranks.')
+                    return True
+                else:
+                    self.logs.append('Indicator might not be good by it\'s popularity ranks.')
+                    return False
+            self.logs.append('Could not determine rank by popularity, No popularity ranks data.')
+            return None
+
+        def is_suspicious_by_rules(self, file_response: dict) -> bool:
+            """Check if indicator is suspicious by rules analysis.
+
+            crowdsourced_yara_results >= yara_rules_threshold ||
+            sigma_analysis_stats.high + critical >= sigma_id_threshold ||
+             crowdsourced_ids_stats.high + critical >= sigma_id_threshold -> suspicious
+
+            Args:
+                file_response: the file response
+
+            Returns:
+                Whatever the file is suspicious by rules analysis.
+            """
+            data = file_response.get('data', {})
+            if self.crowdsourced_yara_rules_enabled:
+                self.logs.append(
+                    'Crowdsourced Yara Rules analyzing enabled. '
+                )
+                if (total_yara_rules := len(
+                        data.get('crowdsourced_yara_results', []))) >= self.crowdsourced_yara_rules_threshold:
+                    self.logs.append(
+                        'Found malicious by finding more Crowdsourced Yara Rules than threshold. \n'
+                        f'{total_yara_rules=} >= {self.crowdsourced_yara_rules_threshold=}'
+                    )
+                    return True
+                if sigma_rules := data.get('sigma_analysis_stats'):
+                    self.logs.append(
+                        'Found sigma rules, analyzing. '
+                    )
+                    sigma_high, sigma_critical = sigma_rules.get('high', 0), sigma_rules.get('critical', 0)
+                    if (sigma_high + sigma_critical) >= self.sigma_ids_threshold:
+                        self.logs.append(
+                            f'Found malicious, {(sigma_high + sigma_critical)=} >= {self.sigma_ids_threshold=}. '
+                        )
+                        return True
+                    else:
+                        self.logs.append(
+                            'Not found malicious by sigma. '
+                        )
+                else:
+                    self.logs.append(
+                        'Not found sigma analysis. Skipping. '
+                    )
+                if crowdsourced_ids_stats := data.get('crowdsourced_ids_stats'):
+                    self.logs.append(
+                        'Found crowdsourced IDS analysis, analyzing. '
+                    )
+                    ids_high, ids_critical = crowdsourced_ids_stats.get('high'), crowdsourced_ids_stats.get('critical')
+                    if (ids_high + ids_critical) >= self.sigma_ids_threshold:
+                        self.logs.append(
+                            f'Found malicious, {((ids_high + ids_critical) >= self.sigma_ids_threshold)=}. '
+                        )
+                        return True
+                    else:
+                        self.logs.append(
+                            'Not found malicious by sigma. '
+                        )
+                else:
+                    self.logs.append(
+                        'Not found crowdsourced IDS analysis. Skipping. '
+                    )
+            else:
+                self.logs.append(
+                    'Crowdsourced Yara Rules analyzing is not enabled. Skipping. '
+                )
+            return False
+
+        def is_preferred_vendors_pass_malicious(self, analysis_results: dict) -> bool:
+            """Is the indicator counts as malicious by predefined malicious vendors.
+            trusted_vendors.malicious >= trusted_vendors_threshold -> Malicious
+            The function takes only the latest 20 results.
+
+            Args:
+                analysis_results: The results of the analysis.
+
+            Returns:
+                Whatever the indicator is malicious or not by preferred vendors.
+            """
+            recent = {key: analysis_results[key] for key in list(analysis_results.keys())[:20]}
+            preferred_vendor_scores = {
+                vendor: recent[vendor] for vendor in self.trusted_vendors if vendor in recent
+            }
+            malicious_trusted_vendors = [
+                item for item in preferred_vendor_scores.values() if item.get('category') == 'malicious'
+            ]
+            if len(malicious_trusted_vendors) >= self.trusted_vendors_threshold:
+                self.logs.append(
+                    f'{len(malicious_trusted_vendors)} trusted vendors found the hash malicious. \n'
+                    f'The trusted vendors threshold is {self.trusted_vendors_threshold}. \n'
+                    f'Malicious check: {(len(malicious_trusted_vendors) >= self.trusted_vendors_threshold)=}. '
+                )
+                return True
+            else:
+                self.logs.append(
+                    f'Those preferred vendors found the hash malicious: {malicious_trusted_vendors}. '
+                    f'They do not pass the threshold {self.trusted_vendors_threshold}. '
+                )
+                return False
+
+        def is_malicious_by_threshold(self, analysis_stats: dict, threshold: int) -> bool:
+            """Determines whatever the indicator malicious by threshold.
+            if number of malicious >= threshold -< Malicious
+
+            Args:
+                analysis_stats: the analysis stats from the response
+                threshold: the threshold of the indicator type.
+
+            Returns:
+                Whatever the indicator is malicious by threshold.
+            """
+            total_malicious = analysis_stats.get('malicious', 0)
+            self.logs.append(
+                f'{total_malicious} vendors found malicious. \n'
+                f'The malicious threshold is {threshold}. '
+            )
+            if total_malicious >= threshold:
+                self.logs.append(f'Found as malicious: {total_malicious=} >= {threshold=}. ')
+                return True
+            self.logs.append(f'Not found malicious by threshold: {total_malicious=} >= {threshold=}. ')
+            return False
+
+        def score_by_threshold(self, analysis_stats: dict, threshold: int) -> int:
+            """Determines the DBOTSCORE of the indicator by threshold only.
+
+            Returns:
+                DBotScore of the indicator. Can by Common.DBotScore.BAD, Common.DBotScore.SUSPICIOUS or
+                Common.DBotScore.GOOD
+            """
+            if self.is_malicious_by_threshold(analysis_stats, threshold):
+                return Common.DBotScore.BAD
+            if self.is_suspicious_by_threshold(analysis_stats, threshold):
+                return Common.DBotScore.SUSPICIOUS
+            return Common.DBotScore.GOOD
+
+        def score_by_results_and_stats(self, indicator: str, raw_response: dict, threshold: int) -> int:
+            """Determines indicator score by popularity preferred vendors and threshold.
+
+            Args:
+                indicator: The indicator we analyzing.
+                raw_response: The raw response from API.
+                threshold: Threshold of the indicator.
+
+            Returns:
+                DBotScore of the indicator. Can by Common.DBotScore.BAD, Common.DBotScore.SUSPICIOUS or
+                Common.DBotScore.GOOD
+            """
+            self.logs.append(f'Basic analyzing of "{indicator}"')
+            data = raw_response.get('data', {})
+            attributes = data['attributes']
+            popularity_ranks = attributes.get('popularity_ranks')
+            last_analysis_results = attributes['last_analysis_results']
+            last_analysis_stats = attributes['last_analysis_stats']
+            if self.is_good_by_popularity_ranks(popularity_ranks):
+                return Common.DBotScore.GOOD
+            if self.is_preferred_vendors_pass_malicious(last_analysis_results):
+                return Common.DBotScore.BAD
+            return self.score_by_threshold(last_analysis_stats, threshold)
+
+        def file_score(self, given_hash: str, raw_response: dict) -> int:
+            """Analyzing file score.
+            The next parameters are analyzed:
+                Preferred vendors
+                Score by threshold
+                Score by rules analysis (YARA, IDS and Sigma, if presents)
+
+            Args:
+                given_hash: The hash we're analyzing
+                raw_response: The response from the API
+
+            Returns:
+                DBotScore of the indicator. Can by Common.DBotScore.BAD, Common.DBotScore.SUSPICIOUS or
+                Common.DBotScore.GOOD
+            """
+            self.logs.append(f'Analysing file hash {given_hash}. ')
+            data = raw_response.get('data', {})
+            attributes = data.get('attributes', {})
+            analysis_results = attributes.get('last_analysis_results', {})
+            analysis_stats = attributes.get('last_analysis_stats', {})
+
+            # Trusted vendors
+            if self.is_preferred_vendors_pass_malicious(analysis_results):
+                return Common.DBotScore.BAD
+
+            score = self.score_by_threshold(analysis_stats, self.file_threshold)
+            if score == Common.DBotScore.BAD:
+                return Common.DBotScore.BAD
+
+            suspicious_by_rules = self.is_suspicious_by_rules(raw_response)
+            if score == Common.DBotScore.SUSPICIOUS and suspicious_by_rules:
+                self.logs.append(
+                    f'Hash: "{given_hash}" was found malicious as the hash is suspicious both by threshold and rules '
+                    f'analysis.'
+                )
+                return Common.DBotScore.BAD
+            elif suspicious_by_rules:
+                self.logs.append(
+                    f'Hash: "{given_hash}" was found suspicious by rules analysis.'
+                )
+                return Common.DBotScore.SUSPICIOUS
+            elif score == Common.DBotScore.SUSPICIOUS:
+                self.logs.append(
+                    f'Hash: "{given_hash}" was found suspicious by passing the threshold analysis.'
+                )
+                return Common.DBotScore.SUSPICIOUS
+            self.logs.append(
+                f'Hash: "{given_hash}" was found good'
+            )
+            return Common.DBotScore.GOOD  # Nothing caught
+
+        def ip_score(self, ip: str, raw_response: dict) -> int:
+            """Analyzing IP score.
+            The next parameters are analyzed:
+                Preferred vendors
+                Score by threshold
+                Score by rules analysis (YARA, IDS and Sigma, if presents)
+
+            Args:
+                ip: The hash we're analyzing
+                raw_response: The response from the API
+
+            Returns:
+                DBotScore of the indicator. Can by Common.DBotScore.BAD, Common.DBotScore.SUSPICIOUS or
+                Common.DBotScore.GOOD
+            """
+            return self.score_by_results_and_stats(
+                ip, raw_response, self.ip_threshold
+            )
+
+        def url_score(self, indicator: str, raw_response: dict) -> int:
+            """Determines indicator score by popularity preferred vendors and threshold.
+
+            Args:
+                indicator: The indicator we analyzing.
+                raw_response: The raw response from API.
+
+            Returns:
+                DBotScore of the indicator. Can by Common.DBotScore.BAD, Common.DBotScore.SUSPICIOUS or
+                Common.DBotScore.GOOD
+            """
+            return self.score_by_results_and_stats(indicator, raw_response, self.url_threshold)
+
+        def domain_score(self, indicator: str, raw_response: dict) -> int:
+            """Determines indicator score by popularity preferred vendors and threshold.
+
+            Args:
+                indicator: The indicator we analyzing.
+                raw_response: The raw response from API.
+
+            Returns:
+                DBotScore of the indicator. Can by Common.DBotScore.BAD, Common.DBotScore.SUSPICIOUS or
+                Common.DBotScore.GOOD
+            """
+            return self.score_by_results_and_stats(indicator, raw_response, self.domain_threshold)
+
+        # region Premium analysis
+        def is_malicious_or_suspicious_by_relationship_files(self, relationship_files_response: dict, lookback=20) -> int:
+            """Checks maliciousness of indicator on relationship files. Look on the recent 20 results returned.
+                if (number of relationship files that are malicious > threshold) -> Bad
+                if (number of relationship files that are malicious > threshold / 2) -> suspicious
+                else good
+            Args:
+                relationship_files_response: The raw_response of the relationship call
+                lookback: analysing only the latest results. Defualt is 20
+
+            Returns:
+                DBotScore of the indicator. Can by Common.DBotScore.BAD, Common.DBotScore.SUSPICIOUS or
+                Common.DBotScore.GOOD
+            """
+            files = relationship_files_response.get('data', [])[:lookback]  # lookback on recent 20 results. By design
+            total_malicious = 0
+            for file in files:
+                if file_hash := file.get('sha256', file.get('sha1', file.get('md5', file.get('ssdeep')))):
+                    if self.file_score(file_hash, files) == Common.DBotScore.BAD:
+                        total_malicious += 1
+
+            if total_malicious >= self.url_threshold:
+                self.logs.append(
+                    f'Found malicious by relationship files. {total_malicious=} >= {self.relationship_threshold}'
+                )
+                return Common.DBotScore.BAD
+            if total_malicious >= self.url_threshold / 2:
+                self.logs.append(
+                    f'Found suspicious by relationship files. {total_malicious=} >= {self.relationship_threshold}'
+                )
+                return Common.DBotScore.SUSPICIOUS
+            self.logs.append(
+                f'Found safe by relationship files. {total_malicious=} >= {self.relationship_threshold}'
+            )
+            return Common.DBotScore.GOOD
+
+        def analyze_premium_scores(
+                self,
+                indicator: str,
+                base_score: int,
+                relationship_functions: List[Callable[[str], dict]]
+        ) -> int:
+            """Analyzing with premium subscription.
+
+            Args:
+                indicator: The indicator to check
+                base_score: DBotScore got by base check
+                relationship_functions: function to get relationship from (found in client)
+
+            Returns:
+                DBOT Score:
+                If one of the relationship files is Bad, returns Bad
+                if one of the relationship files is suspicious and the base_score is suspicious, returns BAD
+                If one of the relationship files is suspicious and base_score is not, returns Suspicious
+                else return GOOD
+            """
+            is_suspicious = False
+            for func in relationship_functions:
+                self.logs.append(f'Analyzing by {func.__name__}')
+                premium_score = self.is_malicious_or_suspicious_by_relationship_files(
+                    func(indicator)
+                )
+                if premium_score == Common.DBotScore.BAD:
+                    return premium_score
+                if premium_score == Common.DBotScore.SUSPICIOUS and base_score == Common.DBotScore.SUSPICIOUS:
+                    self.logs.append('Found malicious!')
+                    return premium_score
+                if premium_score == Common.DBotScore.SUSPICIOUS:
+                    self.logs.append('Found Suspicious entry, keep searching for malicious')
+                    is_suspicious = True
+            if is_suspicious or base_score == Common.DBotScore.SUSPICIOUS:
+                self.logs.append('Found Suspicious')
+                return Common.DBotScore.SUSPICIOUS
+            return Common.DBotScore.GOOD
+
+        def analyze_premium_url_score(self, client: Client, url: str, base_score: int) -> int:
+            """Analyzing premium subscription.
+
+            Args:
+                client: a client with relationship commands.
+                url: the url to check
+                base_score: the base score from basic analysis
+
+            Returns:
+                score calculated by relationship.
+
+            """
+            return self.analyze_premium_scores(
+                url,
+                base_score,
+                [
+                    client.get_url_communicating_files,
+                    client.get_url_downloaded_files,
+                    client.get_url_referrer_files
+                ]
+            )
+
+        def analyze_premium_domain_score(self, client: Client, domain: str, base_score: int) -> int:
+            """Analyzing premium subscription.
+
+            Args:
+                client: a client with relationship commands.
+                domain: the domain to check
+                base_score: the base score from basic analysis
+
+            Returns:
+                score calculated by relationship.
+
+            """
+            return self.analyze_premium_scores(
+                domain,
+                base_score,
+                [
+                    client.get_domain_communicating_files,
+                    client.get_url_downloaded_files,
+                    client.get_url_referrer_files
+                ]
+            )
+
+        def analyze_premium_ip_score(self, client: Client, ip: str, base_score: int) -> int:
+            """Analyzing premium subscription.
+
+            Args:
+                client: a client with relationship commands.
+                ip: the ip to check
+                base_score: the base score from basic analysis
+
+            Returns:
+                score calculated by relationship.
+
+            """
+            return self.analyze_premium_scores(
+                ip,
+                base_score,
+                [
+                    client.get_ip_communicating_files,
+                    client.get_ip_downloaded_files,
+                    client.get_ip_referrer_files
+                ]
+            )
+        # endregion
+
+
+    # region Helper functions
+
+    def create_relationships(entity_a: str, entity_a_type: str, relationships_response: dict, reliability):
+        """
+        Create a list of entityRelationship object from the api result
+        entity_a: (str) - source of the relationship
+        entity_a_type: (str) - type of the source of the relationship
+        relationships_response: (dict) - the relationship response from the api
+        reliability: The reliability of the source.
+
+        Returns a list of EntityRelationship objects.
+        """
+        relationships_list: List[EntityRelationship] = []
+        for relationship_type, relationship_type_raw in relationships_response.items():
+
+            relationships_data = relationship_type_raw.get('data', [])
+            if relationships_data:
+                if isinstance(relationships_data, dict):
+                    relationships_data = [relationships_data]
+
+                for relation in relationships_data:
+                    name = RELATIONSHIP_TYPE.get(entity_a_type.lower(), {}).get(relationship_type)
+                    entity_b = relation.get('id', '')
+                    entity_b_type = INDICATOR_TYPE.get(relation.get('type', '').lower())
+                    if entity_b and entity_b_type and name:
+                        if entity_b_type == FeedIndicatorType.URL:
+                            entity_b = dict_safe_get(relation, ['context_attributes', 'url'])
+                        relationships_list.append(
+                            EntityRelationship(entity_a=entity_a, entity_a_type=entity_a_type, name=name,
+                                               entity_b=entity_b, entity_b_type=entity_b_type, source_reliability=reliability,
+                                               brand=INTEGRATION_NAME))
+                    else:
+                        demisto.info(
+                            f"WARNING: Relationships will not be created to entity A {entity_a} with relationship name {name}")
+        return relationships_list
+
+
+    def arg_to_number_must_int(arg: Any, arg_name: Optional[str] = None, required: bool = False):
+        """Wrapper of arg_to_number that must return int
+        For mypy fixes.
+        """
+        arg_num = arg_to_number(arg, arg_name, required)
+        assert isinstance(arg_num, int)
+        return arg_num
+
+
+    def epoch_to_timestamp(epoch: Union[int, str]) -> Optional[str]:
+        """Converts epoch timestamp to a string.
+
+        Args:
+            epoch: Time to convert
+
+        Returns:
+            A formatted string if succeeded. if not, returns None.
+        """
+        try:
+            return datetime.utcfromtimestamp(int(epoch)).strftime("%Y-%m-%d %H:%M:%SZ")
+        except (TypeError, OSError, ValueError):
+            return None
+
+
+    def decrease_data_size(data: Union[dict, list]) -> Union[dict, list]:
+        """ Minifying data size.
+
+        Args:
+            data: the data object from raw response
+
+        Returns:
+            the same data without:
+                data['attributes']['last_analysis_results']
+                data['attributes']['pe_info']
+                data['attributes']['crowdsourced_ids_results']
+                data['attributes']['autostart_locations']
+                data['attributes']['sandbox_verdicts']
+                data['attributes']['sigma_analysis_summary']
+        """
+        attributes_to_remove = [
+            'last_analysis_results', 'pe_info', 'crowdsourced_ids_results', 'autostart_locations', 'sandbox_verdicts',
+            'sigma_analysis_summary'
+        ]
+        if isinstance(data, list):
+            data = [decrease_data_size(item) for item in data]
+        else:
+            for attribute in attributes_to_remove:
+                try:
+                    del data['attributes'][attribute]
+                except KeyError:
+                    pass
+        return data
+
+
+    def build_domain_output(
+            client: Client,
+            score_calculator: ScoreCalculator,
+            domain: str,
+            raw_response: dict,
+            extended_data: bool):
+        data = raw_response.get('data', {})
+        attributes = data.get('attributes', {})
+        relationships_response = data.get('relationships', {})
+        whois: defaultdict = get_whois(attributes.get('whois', ''))
+        score = score_calculator.domain_score(domain, raw_response)
+        if score != Common.DBotScore.BAD and client.is_premium:
+            score = score_calculator.analyze_premium_domain_score(client, domain, score)
+        logs = score_calculator.get_logs()
+        demisto.debug(logs)
+        relationships_list = create_relationships(entity_a=domain, entity_a_type=FeedIndicatorType.Domain,
+                                                  relationships_response=relationships_response,
+                                                  reliability=client.reliability)
+        domain_indicator = Common.Domain(
+            domain=domain,
+            name_servers=whois['Name Server'],
+            creation_date=whois['Creation Date'],
+            updated_date=whois['Updated Date'],
+            expiration_date=whois['Registry Expiry Date'],
+            admin_name=whois['Admin Organization'],
+            admin_email=whois['Admin Email'],
+            admin_country=whois['Admin Country'],
+            registrant_email=whois['Registrant Email'],
+            registrant_country=whois['Registrant Country'],
+            registrar_name=whois['Registrar'],
+            registrar_abuse_email=whois['Registrar Abuse Contact Email'],
+            registrar_abuse_phone=whois['Registrar Abuse Contact Phone'],
+            dbot_score=Common.DBotScore(
+                domain,
+                DBotScoreType.DOMAIN,
+                INTEGRATION_NAME,
+                score=score,
+                malicious_description=logs,
+                reliability=client.reliability
+            ),
+            relationships=relationships_list
+        )
+        if not extended_data:
+            data = decrease_data_size(data)
+
+        attributes = data.get('attributes', {})
+        return CommandResults(
+            outputs_prefix=f'{INTEGRATION_ENTRY_CONTEXT}.Domain',
+            outputs_key_field='id',
+            indicator=domain_indicator,
+            readable_output=tableToMarkdown(
+                f'Domain data of {domain}',
+                {
+                    'last_modified': epoch_to_timestamp(attributes.get('last_modification_date')),
+                    **data,
+                    **whois,
+                    **attributes
+                },
+                headers=[
+                    'id',
+                    'Registrant Country',
+                    'last_modified',
+                    'last_analysis_stats'
+                ],
+                removeNull=True,
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=data,
+            raw_response=raw_response,
+            relationships=relationships_list
+        )
+
+
+    def build_url_output(
+            client: Client,
+            score_calculator: ScoreCalculator,
+            url: str,
+            raw_response: dict,
+            extended_data: bool
+    ) -> CommandResults:
+        data = raw_response.get('data', {})
+        score = score_calculator.url_score(url, raw_response)
+        if score != Common.DBotScore.BAD and client.is_premium:
+            score = score_calculator.analyze_premium_url_score(client, url, score)
+        logs = score_calculator.get_logs()
+        demisto.debug(logs)
+        # creating readable output
+        attributes = data.get('attributes', {})
+        last_analysis_stats = attributes.get('last_analysis_stats', {})
+        relationships_response = data.get('relationships', {})
+        positive_detections = last_analysis_stats.get('malicious', 0)
+        detection_engines = sum(last_analysis_stats.values())
+        relationships_list = create_relationships(entity_a=url, entity_a_type=FeedIndicatorType.URL,
+                                                  relationships_response=relationships_response,
+                                                  reliability=client.reliability)
+        url_indicator = Common.URL(
+            url,
+            category=attributes.get('categories'),
+            detection_engines=detection_engines,
+            positive_detections=positive_detections,
+            relationships=relationships_list,
+            dbot_score=Common.DBotScore(
+                url,
+                DBotScoreType.URL,
+                INTEGRATION_NAME,
+                score=score,
+                reliability=client.reliability,
+                malicious_description=logs
+            )
+        )
+        if not extended_data:
+            data = decrease_data_size(data)
+        return CommandResults(
+            outputs_prefix=f'{INTEGRATION_ENTRY_CONTEXT}.URL',
+            outputs_key_field='id',
+            indicator=url_indicator,
+            readable_output=tableToMarkdown(
+                f'URL data of "{url}"',
+                {
+                    **data,
+                    **data.get('attributes', {}),
+                    'url': url,
+                    'positives': f'{positive_detections}/{detection_engines}',
+                    'last_modified': epoch_to_timestamp(attributes.get('last_modification_date'))
+                },
+                headers=[
+                    'url',
+                    'title',
+                    'last_modified',
+                    'has_content',
+                    'last_http_response_content_sha256',
+                    'positives',
+                    'reputation'
+                ],
+                removeNull=True,
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=data,
+            raw_response=raw_response,
+            relationships=relationships_list
+        )
+
+
+    def build_ip_output(client: Client, score_calculator: ScoreCalculator, ip: str, raw_response: dict,
+                        extended_data: bool) -> CommandResults:
+        score = score_calculator.ip_score(ip, raw_response)
+        if score != Common.DBotScore.BAD and client.is_premium:
+            score = score_calculator.analyze_premium_ip_score(client, ip, score)
+        logs = score_calculator.get_logs()
+        demisto.debug(logs)
+        data = raw_response.get('data', {})
+        attributes = data.get('attributes', {})
+        relationships_response = data.get('relationships', {})
+        last_analysis_stats = attributes.get('last_analysis_stats')
+        positive_engines = last_analysis_stats.get('malicious', 0)
+        detection_engines = sum(last_analysis_stats.values())
+        relationships_list = create_relationships(entity_a=ip, entity_a_type=FeedIndicatorType.IP,
+                                                  relationships_response=relationships_response,
+                                                  reliability=client.reliability)
+        ip_indicator = Common.IP(
+            ip,
+            asn=attributes.get('asn'),
+            geo_country=attributes.get('country'),
+            detection_engines=detection_engines,
+            positive_engines=positive_engines,
+            relationships=relationships_list,
+            dbot_score=Common.DBotScore(
+                ip,
+                DBotScoreType.IP,
+                INTEGRATION_NAME,
+                score=score,
+                malicious_description=logs,
+                reliability=client.reliability
+            )
+        )
+        if not extended_data:
+            data = decrease_data_size(data)
+        return CommandResults(
+            outputs_prefix=f'{INTEGRATION_ENTRY_CONTEXT}.IP',
+            outputs_key_field='id',
+            indicator=ip_indicator,
+            readable_output=tableToMarkdown(
+                f'IP reputation of {ip}:',
+                {
+                    **data,
+                    **attributes,
+                    'last_modified': epoch_to_timestamp(attributes.get('last_modification_date')),
+                    'positives': f'{positive_engines}/{detection_engines}'
+                },
+                headers=['id', 'network', 'country', 'last_modified', 'reputation', 'positives'],
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=data,
+            raw_response=raw_response,
+            relationships=relationships_list
+        )
+
+
+    def build_file_output(
+            client: Client,
+            score_calculator: ScoreCalculator,
+            file_hash: str,
+            raw_response: dict,
+            extended_data: bool
+    ) -> CommandResults:
+        data = raw_response.get('data', {})
+        attributes = data.get('attributes')
+        relationships_response = data.get('relationships', {})
+        score = score_calculator.file_score(file_hash, raw_response)
+        logs = score_calculator.get_logs()
+        demisto.debug(logs)
+        signature_info = attributes.get('signature_info', {})
+        exiftool = attributes.get('exiftool', {})
+        relationships_list = create_relationships(entity_a=file_hash, entity_a_type=FeedIndicatorType.File,
+                                                  relationships_response=relationships_response,
+                                                  reliability=client.reliability)
+        file_indicator = Common.File(
+            dbot_score=Common.DBotScore(
+                file_hash,
+                DBotScoreType.FILE,
+                integration_name=INTEGRATION_NAME,
+                score=score,
+                malicious_description=logs,
+                reliability=client.reliability
+            ),
+            name=exiftool.get('OriginalFileName'),
+            size=attributes.get('size'),
+            sha1=attributes.get('sha1'),
+            sha256=attributes.get('sha256'),
+            file_type=exiftool.get('MIMEType'),
+            md5=attributes.get('md5'),
+            ssdeep=attributes.get('ssdeep'),
+            extension=exiftool.get('FileTypeExtension'),
+            company=exiftool.get('CompanyName'),
+            product_name=exiftool.get('ProductName'),
+            tags=attributes.get('tags'),
+            signature=Common.FileSignature(
+                authentihash=attributes.get('authentihash'),
+                copyright=signature_info.get('copyright'),
+                file_version=signature_info.get('file version'),
+                description=signature_info.get('description'),
+                internal_name=signature_info.get('internal name'),
+                original_name=signature_info.get('original name')
+            ),
+            relationships=relationships_list
+        )
+        if not extended_data:
+            data = decrease_data_size(data)
+        last_analysis_stats = attributes.get("last_analysis_stats", {})
+        malicious = last_analysis_stats.get('malicious', 0)
+        total = sum(last_analysis_stats.values())
+        return CommandResults(
+            outputs_prefix=f'{INTEGRATION_ENTRY_CONTEXT}.File',
+            outputs_key_field='id',
+            indicator=file_indicator,
+            readable_output=tableToMarkdown(
+                f'Results of file hash {file_hash}',
+                {
+                    **data,
+                    **attributes,
+                    'positives': f'{malicious}/{total}',
+                    'creation date': epoch_to_timestamp(attributes.get('creation_date')),
+                    'last modified': epoch_to_timestamp(attributes.get('last_modification_date', 0))
+                },
+                headers=[
+                    'sha1', 'sha256', 'md5',
+                    'meaningful_name', 'type_extension', 'creation date',
+                    'last modified', 'reputation', 'positives'
+                ],
+                removeNull=True,
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=data,
+            raw_response=raw_response,
+            relationships=relationships_list
+        )
+
+
+    def get_whois(whois_string: str) -> defaultdict:
+        """Gets a WHOIS string and returns a parsed dict of the WHOIS String.
+
+        Args:
+            whois_string: whois from domain api call
+
+        Returns:
+            A parsed whois
+
+        Examples:
+            >>> get_whois('key1:value\\nkey2:value2')
+            defaultdict({'key1': 'value', 'key2': 'value2'})
+        """
+        whois: defaultdict = defaultdict(lambda: None)
+        for line in whois_string.splitlines():
+            key: str
+            value: str
+            try:
+                key, value = line.split(sep=':', maxsplit=1)
+            except ValueError:
+                demisto.debug(f'Could not unpack Whois string: {line}. Skipping')
+                continue
+            key = key.strip()
+            value = value.strip()
+            if key in whois:
+                if not isinstance(whois[key], list):
+                    whois[key] = [whois[key]]
+                whois[key].append(value)
+            else:
+                whois[key] = value
+        return whois
+
+
+    def get_file_context(entry_id: str) -> dict:
+        """Gets a File object from context.
+
+        Args:
+            entry_id: The entry ID of the file
+
+        Returns:
+            File object contains Name, Hashes and more information
+        """
+        context = demisto.dt(demisto.context(), f'File(val.EntryID === "{entry_id}")')
+        if not context:
+            return {}
+        if isinstance(context, list):
+            return context[0]
+        return context
+
+
+    def raise_if_ip_not_valid(ip: str):
+        """Raises an error if ip is not valid
+
+        Args:
+            ip: ip address
+
+        Raises:
+            ValueError: If IP is not valid
+
+        Examples:
+            >>> raise_if_ip_not_valid('not ip at all')
+            Traceback (most recent call last):
+             ...
+            ValueError: IP "not ip at all" is not valid
+            >>> raise_if_ip_not_valid('8.8.8.8')
+        """
+        if not is_ip_valid(ip, accept_v6_ips=True):
+            raise ValueError(f'IP "{ip}" is not valid')
+
+
+    def raise_if_hash_not_valid(file_hash: str):
+        """Raises an error if file_hash is not valid
+
+        Args:
+            file_hash: file hash
+
+        Raises:
+            ValueError: if hash is not of type SHA-256, SHA-1 or MD5
+
+        Examples:
+            >>> raise_if_hash_not_valid('not a hash')
+            Traceback (most recent call last):
+             ...
+            ValueError: Hash "not a hash" is not of type SHA-256, SHA-1 or MD5
+            >>> raise_if_hash_not_valid('7e641f6b9706d860baf09fe418b6cc87')
+        """
+        if get_hash_type(file_hash) not in ('sha256', 'sha1', 'md5'):
+            raise ValueError(f'Hash "{file_hash}" is not of type SHA-256, SHA-1 or MD5')
+
+
+    def encode_url_to_base64(url: str) -> str:
+        """Gets a string (in this case, url but it can not be) and return it as base64 without padding ('=')
+
+        Args:
+             url: A string to encode
+
+        Returns:
+             Base64 encoded string with no padding
+
+        Examples:
+            >>> encode_url_to_base64('https://example.com')
+            'aHR0cHM6Ly9leGFtcGxlLmNvbQ'
+        """
+        return base64.urlsafe_b64encode(url.encode()).decode().strip('=')
+
+
+    # endregion
+
+    # region Reputation commands
+
+
+    def ip_command(client: Client, score_calculator: ScoreCalculator, args: dict, relationships: str) -> List[CommandResults]:
+        """
+        1 API Call for regular
+        1-4 API Calls for premium subscriptions
+        """
+        ips = argToList(args['ip'])
+        results: List[CommandResults] = list()
+        for ip in ips:
+            raise_if_ip_not_valid(ip)
+            try:
+                raw_response = client.ip(ip, relationships)
+            except Exception as exception:
+                # If anything happens, just keep going
+                demisto.debug(f'Could not process IP: "{ip}"\n {str(exception)}')
+                continue
+            results.append(
+                build_ip_output(client, score_calculator, ip, raw_response, argToBoolean(args.get('extended_data')))
+            )
+        return results
+
+
+    def file_command(client: Client, score_calculator: ScoreCalculator, args: dict, relationships: str) -> List[CommandResults]:
+        """
+        1 API Call
+        """
+        files = argToList(args['file'])
+        extended_data = argToBoolean(args.get('extended_data'))
+        results: List[CommandResults] = list()
+        for file in files:
+            raise_if_hash_not_valid(file)
+            try:
+                raw_response = client.file(file, relationships)
+                results.append(build_file_output(client, score_calculator, file, raw_response, extended_data))
+            except Exception as exc:
+                # If anything happens, just keep going
+                results.append(CommandResults(readable_output=f'Could not process file: "{file}"\n {str(exc)}'))
+
+        return results
+
+
+    def url_command(client: Client, score_calculator: ScoreCalculator, args: dict, relationships: str) -> List[CommandResults]:
+        """
+        1 API Call for regular
+        1-4 API Calls for premium subscriptions
+        """
+        urls = argToList(args['url'])
+        extended_data = argToBoolean(args.get('extended_data'))
+        results: List[CommandResults] = list()
+        for url in urls:
+            try:
+                raw_response = client.url(
+                    url, relationships
+                )
+            except Exception as exception:
+                # If anything happens, just keep going
+                demisto.debug(f'Could not process URL: "{url}".\n {str(exception)}')
+                continue
+            results.append(build_url_output(client, score_calculator, url, raw_response, extended_data))
+        return results
+
+
+    def domain_command(client: Client, score_calculator: ScoreCalculator, args: dict, relationships: str) -> List[CommandResults]:
+        """
+        1 API Call for regular
+        1-4 API Calls for premium subscriptions
+        """
+        domains = argToList(args['domain'])
+        results: List[CommandResults] = list()
+        for domain in domains:
+            try:
+                raw_response = client.domain(domain, relationships)
+            except Exception as exception:
+                # If anything happens, just keep going
+                demisto.debug(f'Could not process domain: "{domain}"\n {str(exception)}')
+                continue
+            results.append(
+                build_domain_output(client, score_calculator, domain, raw_response, argToBoolean(args.get('extended_data')))
+            )
+        return results
+
+
+    # endregion
+
+    # region Scan commands
+    def file_rescan_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        file_hash = args['file']
+        raise_if_hash_not_valid(file_hash)
+        raw_response = client.file_rescan(file_hash)
+        data = raw_response['data']
+        data['hash'] = file_hash
+        context = {
+            f'{INTEGRATION_ENTRY_CONTEXT}.Submission(val.id && val.id === obj.id)': data,
+            'vtScanID': data.get('id')  # BC preservation
+        }
+        return CommandResults(
+            readable_output=tableToMarkdown(
+                f'File "{file_hash}" resubmitted.',
+                data,
+                removeNull=True,
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=context,
+            raw_response=raw_response
+        )
+
+
+    def get_md5_by_entry_id(entry_id: str) -> str:
+        """Gets an MD5 from context using entry ID"""
+        md5 = demisto.dt(demisto.context(), f'File(val.EntryID === "{entry_id}").MD5')
+        if not md5:
+            raise DemistoException('Could not find MD5')
+        return md5
+
+
+    def encode_to_base64(md5: str, id_: Union[str, int]) -> str:
+        """Sometime the API returns the id as number only. Need to join the id with md5 in base64.
+
+        Args:
+            md5: The MD5 of the file sent to scan
+            id_: The id returned from the file scan
+
+        Returns:
+            base64 encoded of md5:id_
+        """
+        return base64.b64encode(f'{md5}:{id_}'.encode('utf-8')).decode('utf-8')
+
+
+    def get_working_id(id_: str, entry_id: str) -> str:
+        """Sometimes new scanned files ID will be only a number. Should connect them with base64(MD5:_id).
+        Fixes bug in VirusTotal API.
+
+        Args:
+            entry_id: the entry id connected to the file
+            id_: id given from the API
+
+        Returns:
+            A working ID that we can use in other commands.
+        """
+        if isinstance(id_, str) and id_.isnumeric() or (isinstance(id_, int)):
+            demisto.debug(f'Got an integer id from file-scan. {id_=}, {entry_id=}\n')
+            raise DemistoException(
+                f'Got an int {id_=} as analysis report. This is a bug in VirusTotal v3 API.\n'
+                f'While VirusTotal team is fixing the problem, try to resend the file.'
+            )
+        return id_
+
+
+    def file_scan(client: Client, args: dict) -> List[CommandResults]:
+        """
+        1 API Call
+        """
+        entry_ids = argToList(args['entryID'])
+        upload_url = args.get('uploadURL')
+        if len(entry_ids) > 1 and upload_url:
+            raise DemistoException('You can supply only one entry ID with an upload URL.')
+        results = list()
+        for entry_id in entry_ids:
+            try:
+                file_obj = demisto.getFilePath(entry_id)
+                file_path = file_obj['path']
+                raw_response = client.file_scan(file_path, upload_url=upload_url)
+                data = raw_response.get('data', {})
+                # add current file as identifiers
+                data.update(
+                    get_file_context(entry_id)
+                )
+                id_ = data.get('id')
+                demisto.debug(f'Result from vt-scan-file {entry_id=} {id_=} {data.get("type")=}')
+                id_ = get_working_id(id_, entry_id)
+                data['id'] = id_
+                context = {
+                    f'{INTEGRATION_ENTRY_CONTEXT}.Submission(val.id && val.id === obj.id)': data,
+                    'vtScanID': id_  # BC preservation
+                }
+                results.append(CommandResults(
+                    readable_output=tableToMarkdown(
+                        f'The file has been submitted "{file_obj["name"]}"',
+                        data,
+                        headers=['id', 'EntryID', 'MD5', 'SHA1', 'SHA256'],
+                    ),
+                    outputs=context,
+                    raw_response=raw_response
+                ))
+            except Exception as exc:
+                err = f'Could not process {entry_id=}.\n{str(exc)}'
+                demisto.debug(err)
+                demisto.results({
+                    'Type': entryTypes['error'],
+                    'ContentsFormat': formats['text'],
+                    'Contents': err
+                })
+        return results
+
+
+    def get_upload_url(client: Client) -> CommandResults:
+        """
+        1 API Call
+        """
+        raw_response = client.get_upload_url()
+        upload_url = raw_response['data']
+        context = {
+            f'{INTEGRATION_ENTRY_CONTEXT}.FileUploadURL': upload_url,
+            'vtUploadURL': upload_url  # BC preservation
+
+        }
+        return CommandResults(
+            readable_output=tableToMarkdown(
+                'New upload url acquired!',
+                {'Upload url': upload_url}
+            ),
+            outputs=context,
+            raw_response=raw_response
+        )
+
+
+    def scan_url_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        url = args['url']
+        raw_response = client.url_scan(url)
+        data = raw_response['data']
+        data['url'] = url
+        context = {
+            f'{INTEGRATION_ENTRY_CONTEXT}.Submission(val.id && val.id === obj.id)': data,
+            'vtScanID': data.get('id')  # BC preservation
+        }
+        return CommandResults(
+            readable_output=tableToMarkdown(
+                'New url submission:',
+                data,
+                headers=['id', 'url']
+            ),
+            outputs=context,
+            raw_response=raw_response
+        )
+
+
+    # endregion
+
+    # region Comments commands
+    def get_comments_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+
+        BC Break - No NotBefore argument
+        added limit
+        """
+        limit = arg_to_number_must_int(
+            args.get('limit'),
+            arg_name='limit',
+            required=True
+        )
+        resource = args['resource']
+        if before := args.get('before'):
+            before = parse(before)
+            assert before is not None, f'Could not parse the before date "{before}"'
+            before = before.replace(tzinfo=None)
+
+        resource_type = args.get('resource_type')
+        if not resource_type:
+            try:
+                raise_if_hash_not_valid(resource)
+                resource_type = 'file'
+            except ValueError:
+                resource_type = 'url'
+        resource_type = resource_type.lower()
+        # Will find if there's one and only one True in the list.
+        if resource_type == 'ip':
+            raise_if_ip_not_valid(resource)
+            raw_response = client.get_ip_comments(resource, limit)
+        elif resource_type == 'url':
+            raw_response = client.get_url_comments(resource, limit)
+        elif resource_type == 'hash':
+            raise_if_hash_not_valid(resource)
+            raw_response = client.get_hash_comments(resource, limit)
+        elif resource_type == 'domain':
+            raw_response = client.get_domain_comments(resource, limit)
+        else:
+            raise DemistoException(f'Could not find resource type of "{resource_type}"')
+
+        data = raw_response.get('data', {})
+        context = {
+            'indicator': resource,
+            'comments': data
+        }
+        comments = []
+        for comment in data:
+            attributes = comment.get('attributes', {})
+            votes = attributes.get('votes', {})
+
+            if date := parse(str(attributes.get('date'))):
+                date = date.replace(tzinfo=None)
+
+            if date and before and date > before:
+                continue
+            comments.append({
+                'Date': epoch_to_timestamp(attributes.get('date')),
+                'Text': attributes.get('text'),
+                'Positive Votes': votes.get('positive'),
+                'Abuse Votes': votes.get('abuse'),
+                'Negative Votes': votes.get('negative')
+            })
+
+        return CommandResults(
+            f'{INTEGRATION_ENTRY_CONTEXT}.Comments',
+            'id',
+            readable_output=tableToMarkdown(
+                f'Virus Total comments of {resource_type}: "{resource}"',
+                comments,
+                headers=['Date', 'Text', 'Positive Votes', 'Abuse Votes', 'Negative Votes']
+            ),
+            outputs=context,
+            raw_response=raw_response
+        )
+
+
+    def add_comments_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        resource = args['resource']
+        comment = args['comment']
+        resource_type = args.get('resource_type')
+        if not resource_type:
+            try:
+                raise_if_hash_not_valid(resource)
+                resource_type = 'file'
+            except ValueError:
+                resource_type = 'url'
+        resource_type = resource_type.lower()
+        if resource_type == 'ip':
+            raise_if_ip_not_valid(resource)
+            raw_response = client.add_comment_to_ip(resource, comment)
+        elif resource_type == 'url':
+            raw_response = client.add_comment_to_url(resource, comment)
+        elif resource_type == 'domain':
+            raw_response = client.add_comment_to_domain(resource, comment)
+        elif resource_type == 'file':
+            raise_if_hash_not_valid(resource)
+            raw_response = client.add_comment_to_file(resource, comment)
+        else:
+            raise DemistoException(f'Could not find resource type of "{resource_type}"')
+        data = raw_response['data']
+        attributes = data.get('attributes', {})
+        votes = attributes.get('votes', {})
+        return CommandResults(
+            f'{INTEGRATION_ENTRY_CONTEXT}.Comments.comments',
+            'id',
+            readable_output=tableToMarkdown(
+                'Comment has been added!',
+                {
+                    'Date': epoch_to_timestamp(attributes.get('date')),
+                    'Text': attributes.get('text'),
+                    'Positive Votes': votes.get('positive'),
+                    'Abuse Votes': votes.get('abuse'),
+                    'Negative Votes': votes.get('negative')
+                },
+                headers=['Date', 'Text', 'Positive Votes', 'Abuse Votes', 'Negative Votes']
+            ),
+            outputs=data,
+            raw_response=raw_response
+        )
+
+
+    def get_comments_by_id_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        comment_id = args['id']
+        raw_response = client.get_comment_by_id(comment_id)
+        data = raw_response['data']
+        attributes = data.get('attributes', {})
+        votes = attributes.get('votes', {})
+        return CommandResults(
+            f'{INTEGRATION_ENTRY_CONTEXT}.Comments.comments',
+            'id',
+            readable_output=tableToMarkdown(
+                f'Comment of ID {comment_id}',
+                {
+                    'Date': epoch_to_timestamp(attributes.get('date')),
+                    'Text': attributes.get('text'),
+                    'Positive Votes': votes.get('positive'),
+                    'Abuse Votes': votes.get('abuse'),
+                    'Negative Votes': votes.get('negative')
+                },
+                headers=['Date', 'Text', 'Positive Votes', 'Abuse Votes', 'Negative Votes']
+            ),
+            outputs=data,
+            raw_response=raw_response
+        )
+
+
+    # endregion
+
+    def file_sandbox_report_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        file_hash = args['file']
+        limit = arg_to_number(
+            args['limit'],
+            'limit',
+            required=True
+        )
+        assert isinstance(limit, int)  # mypy fix
+        raise_if_hash_not_valid(file_hash)
+        raw_response = client.file_sandbox_report(file_hash, limit)
+        data = raw_response['data']
+        return CommandResults(
+            f'{INTEGRATION_ENTRY_CONTEXT}.SandboxReport',
+            'id',
+            readable_output=tableToMarkdown(
+                f'Sandbox Reports for file hash: {file_hash}',
+                [
+                    {
+                        'id': item['id'],
+                        **item['attributes'],
+                        'link': item['links']['self']
+                    } for item in data
+                ],
+                headers=['analysis_date', 'last_modification_date', 'sandbox_name', 'link'],
+                removeNull=True,
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=data,
+            raw_response=raw_response
+        )
+
+
+    def passive_dns_data(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        ip = args['ip']
+        limit = arg_to_number_must_int(
+            args['limit'],
+            arg_name='limit',
+            required=True
+        )
+        raw_response = client.passive_dns_data(ip, limit)
+        data = raw_response['data']
+        return CommandResults(
+            f'{INTEGRATION_ENTRY_CONTEXT}.PassiveDNS',
+            'id',
+            readable_output=tableToMarkdown(
+                f'Passive DNS data for IP {ip}',
+                [
+                    {
+                        'id': item['id'],
+                        **item['attributes']
+                    } for item in data
+                ],
+                headers=['id', 'date', 'host_name', 'ip_address', 'resolver'],
+                removeNull=True,
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=data,
+            raw_response=raw_response
+        )
+
+
+    def search_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        query = args['query']
+        limit = arg_to_number_must_int(args.get('limit'), 'limit', required=True)
+        raw_response = client.search(query, limit)
+        data = raw_response.get('data', [])
+        if not argToBoolean(args.get('extended_data')):
+            data = decrease_data_size(data)
+        return CommandResults(
+            f'{INTEGRATION_ENTRY_CONTEXT}.SearchResults',
+            'id',
+            readable_output=tableToMarkdown(
+                f'Search result of query {query}',
+                [item.get('attributes') for item in data],
+                removeNull=True,
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs=data,
+            raw_response=raw_response
+        )
+
+
+    def get_analysis_command(client: Client, args: dict) -> CommandResults:
+        """
+        1 API Call
+        """
+        analysis_id = args['id']
+        raw_response = client.get_analysis(analysis_id)
+        data = raw_response.get('data', {})
+        if not argToBoolean(args.get('extended_data', False)):
+            data = decrease_data_size(data)
+        return CommandResults(
+            f'{INTEGRATION_ENTRY_CONTEXT}.Analysis',
+            'id',
+            readable_output=tableToMarkdown(
+                'Analysis results:',
+                {
+                    **data.get('attributes', {}),
+                    'id': analysis_id
+
+                },
+                headers=['id', 'stats', 'status'],
+                headerTransform=underscoreToCamelCase
+            ),
+            outputs={
+                **raw_response,
+                'id': analysis_id
+            },
+            raw_response=raw_response
+        )
+
+
+    def check_module(client: Client) -> str:
+        """
+        1 API Call
+        """
+        client.get_ip_comments('8.8.8.8', 1)
+        return 'ok'
+
+
+    def delete_comment(client: Client, args: dict) -> CommandResults:
+        """Delete a comments"""
+        id_ = args['id']
+        client.delete_comment(id_)
+        return CommandResults(readable_output=f'Comment {id_} has been deleted!')
+
+
+    def main(params: dict, args: dict, command: str):
+        results: Union[CommandResults, str, List[CommandResults]]
+        handle_proxy()
+        client = Client(params)
+        score_calculator = ScoreCalculator(params)
+
+        ip_relationships = (','.join(argToList(params.get('ip_relationships')))).replace('* ', '').replace(" ", "_")
+        url_relationships = (','.join(argToList(params.get('url_relationships')))).replace('* ', '').replace(" ", "_")
+        domain_relationships = (','.join(argToList(params.get('domain_relationships')))).replace('* ', '').replace(" ", "_")
+        file_relationships = (','.join(argToList(params.get('file_relationships')))).replace('* ', '').replace(" ", "_")
+
+        demisto.debug(f'Command called {command}')
+        if command == 'test-module':
+            results = check_module(client)
+        elif command == 'file':
+            results = file_command(client, score_calculator, args, file_relationships)
+        elif command == 'ip':
+            results = ip_command(client, score_calculator, args, ip_relationships)
+        elif command == 'url':
+            results = url_command(client, score_calculator, args, url_relationships)
+        elif command == 'domain':
+            results = domain_command(client, score_calculator, args, domain_relationships)
+        elif command == f'{COMMAND_PREFIX}-file-sandbox-report':
+            results = file_sandbox_report_command(client, args)
+        elif command == f'{COMMAND_PREFIX}-passive-dns-data':
+            results = passive_dns_data(client, args)
+        elif command == f'{COMMAND_PREFIX}-comments-get':
+            results = get_comments_command(client, args)
+        elif command == f'{COMMAND_PREFIX}-comments-add':
+            results = add_comments_command(client, args)
+        elif command == f'{COMMAND_PREFIX}-comments-get-by-id':
+            results = get_comments_by_id_command(client, args)
+        elif command == f'{COMMAND_PREFIX}-comments-delete':
+            results = delete_comment(client, args)
+        elif command == 'url-scan':
+            results = scan_url_command(client, args)
+        elif command == 'file-scan':
+            results = file_scan(client, args)
+        elif command == 'file-rescan':
+            results = file_rescan_command(client, args)
+        elif command == f'{COMMAND_PREFIX}-file-scan-upload-url':
+            results = get_upload_url(client)
+        elif command == f'{COMMAND_PREFIX}-search':
+            results = search_command(client, args)
+        elif command == f'{COMMAND_PREFIX}-analysis-get':
+            results = get_analysis_command(client, args)
+        else:
+            raise NotImplementedError(f'Command {command} not implemented')
+        return_results(results)
+
+
+    if __name__ in ('builtins', '__builtin__', '__main__'):
+        try:
+            main(demisto.params(), demisto.args(), demisto.command())
+        except Exception as exception:
+            return_error(exception)
+  subtype: python3
+  type: python
+system: true

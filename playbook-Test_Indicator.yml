@@ -1,0 +1,107 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: d39fd20a-72b8-4998-8a67-2cc0c5c309a2
+inputs:
+- description: ""
+  key: ""
+  playbookInputQuery:
+    daterange:
+      fromdate: "0001-01-01T00:00:00Z"
+      fromdatelicenseval: "0001-01-01T00:00:00Z"
+      period:
+        by: ""
+        byfrom: ""
+        byto: ""
+        field: ""
+        fromvalue: null
+        tovalue: null
+      todate: "0001-01-01T00:00:00Z"
+    query: type:URL value:https://980y987t8yahoo.weebly.com/
+    queryEntity: indicators
+    results: null
+    runFromLastJobTime: false
+  required: false
+  value: {}
+name: Test Indicator
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f93e3308-8896-456e-8551-bfad0010ca30
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: f93e3308-8896-456e-8551-bfad0010ca30
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 610,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${playbookQuery.value}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: addf1f5b-f8f8-4c65-844b-1910fb56db96
+      iscommand: false
+      name: Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: addf1f5b-f8f8-4c65-844b-1910fb56db96
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 610,
+          "y": 160
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 205,
+        "width": 380,
+        "x": 610,
+        "y": 50
+      }
+    }
+  }

@@ -1,7 +1,11 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": true,
 	"associatedTypes": null,
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": true,
 	"cliName": "detectionsla",
 	"closeForm": false,
@@ -17,7 +21,7 @@
 	"hidden": false,
 	"id": "incident_detectionsla",
 	"isReadOnly": true,
-	"itemVersion": "3.1.33",
+	"itemVersion": "3.2.26",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Detection SLA",
@@ -46,5 +50,6 @@
 	"useAsKpi": true,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

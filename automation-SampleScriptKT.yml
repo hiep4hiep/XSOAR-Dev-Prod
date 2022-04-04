@@ -1,0 +1,43 @@
+args:
+- name: a_value
+  required: true
+- name: b_value
+  required: true
+commonfields:
+  id: b166ff2a-e978-46c9-8e93-69213b73c3bf
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.26972
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SampleScriptKT
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  a = demisto.args().get('a_value')
+  b = demisto.args().get('b_value')
+  sum_value = int(a) + int(b)
+
+  results = CommandResults(
+      outputs_prefix='Calculation',
+      outputs={
+          'Result': sum_value,
+          'Hello': 'World'
+      }
+  )
+
+  return_results(results)
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

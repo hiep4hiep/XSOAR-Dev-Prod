@@ -1,10 +1,14 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": false,
 	"associatedTypes": [
 		"Qradar Generic",
 		"Carbon Black EDR"
 	],
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": true,
 	"cliName": "eventdescriptions",
 	"closeForm": false,
@@ -20,7 +24,7 @@
 	"hidden": false,
 	"id": "incident_eventdescriptions",
 	"isReadOnly": false,
-	"itemVersion": "3.1.33",
+	"itemVersion": "3.2.26",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Event Descriptions",
@@ -51,5 +55,6 @@
 	"useAsKpi": false,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

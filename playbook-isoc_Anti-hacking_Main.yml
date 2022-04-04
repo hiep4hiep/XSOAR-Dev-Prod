@@ -1,0 +1,597 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: e1243157-85ef-4e42-8867-f9e3a0171c33
+inputs: []
+name: isoc_Anti-hacking_Main
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "24"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7e2aea21-e194-4eeb-8393-83e524de45ba
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 7e2aea21-e194-4eeb-8393-83e524de45ba
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 1980,
+          "y": 60
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemruleid
+          operator: inList
+          right:
+            value:
+              simple: 100151,100184,100185,100190,100191,100192,100209
+      label: RemoteAccess
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemruleid
+          operator: inList
+          right:
+            value:
+              simple: 100161,100162,100163,100164,100165,100166,100167,100169,100171,100172,100173,100179,100213
+      label: AD
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemruleid
+          operator: inList
+          right:
+            value:
+              simple: 100206,100207,100210,100211,100215,100237
+      label: MDR
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemruleid
+          operator: inList
+          right:
+            value:
+              simple: 100121,100122
+      label: Proxy
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemruleid
+          operator: inList
+          right:
+            value:
+              simple: 100149,100150
+      label: Fab IPS & GateKeeper
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemruleid
+          operator: isEqualNumber
+          right:
+            value:
+              simple: "100216"
+      label: WAF
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemruleid
+          operator: isEqualString
+          right:
+            value:
+              simple: "100127"
+      label: NGFW
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "14"
+      AD:
+      - "11"
+      Fab IPS & GateKeeper:
+      - "12"
+      MDR:
+      - "9"
+      NGFW:
+      - "18"
+      Proxy:
+      - "10"
+      RemoteAccess:
+      - "21"
+      WAF:
+      - "15"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 24a60513-d788-4c5c-8dd8-8222eb640a3e
+      iscommand: false
+      name: Check Rule ID
+      type: condition
+      version: -1
+    taskid: 24a60513-d788-4c5c-8dd8-8222eb640a3e
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 895
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: e232073a-07c9-4905-8191-4a1dbc8dce6c
+      iscommand: false
+      name: isoc_Anti-hacking_MDR
+      playbookName: isoc_Anti-hacking_MDR
+      type: playbook
+      version: -1
+    taskid: e232073a-07c9-4905-8191-4a1dbc8dce6c
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1070
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ef24630c-df8d-49ce-8e84-750ca7ccc047
+      iscommand: false
+      name: isoc_Anti-hacking_Proxy
+      playbookName: isoc_Anti-hacking_Proxy
+      type: playbook
+      version: -1
+    taskid: ef24630c-df8d-49ce-8e84-750ca7ccc047
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1070
+        }
+      }
+  "11":
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2f06245a-46ba-429f-8366-8cd747d8717b
+      iscommand: false
+      name: isoc_Anti-hacking_AD
+      playbookName: isoc_Anti-hacking_AD
+      type: playbook
+      version: -1
+    taskid: 2f06245a-46ba-429f-8366-8cd747d8717b
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 1070
+        }
+      }
+  "12":
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 31545757-7be1-468d-8e65-5d9bd1279b36
+      iscommand: false
+      name: isoc_Anti-hacking_FabIPS&GateKeeper
+      playbookName: isoc_Anti-hacking_FabIPS&GateKeeper
+      type: playbook
+      version: -1
+    taskid: 31545757-7be1-468d-8e65-5d9bd1279b36
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 1070
+        }
+      }
+  "14":
+    continueonerror: true
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      closeReason:
+        simple: Resolved
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: fc55d243-1261-44b2-82b6-d60391156f41
+      iscommand: true
+      name: Close incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: fc55d243-1261-44b2-82b6-d60391156f41
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1980,
+          "y": 1480
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1bb17a46-739c-4196-8901-946d0611e6dd
+      iscommand: false
+      name: isoc_Anti-hacking_WAF
+      playbookName: isoc_Anti-hacking_WAF
+      type: playbook
+      version: -1
+    taskid: 1bb17a46-739c-4196-8901-946d0611e6dd
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 1070
+        }
+      }
+  "17":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.circpentest
+          operator: isEqualString
+          right:
+            value:
+              simple: "Y"
+        - left:
+            iscontext: true
+            value:
+              simple: incident.circpentestscheduled
+          operator: isEqualString
+          right:
+            value:
+              simple: "Y"
+      label: CIRC Pentest
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "1"
+      CIRC Pentest:
+      - "14"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7b9f488c-40af-4013-870e-80e4328bfb62
+      iscommand: false
+      name: Check Verodin Endpoint if Test?
+      type: condition
+      version: -1
+    taskid: 7b9f488c-40af-4013-870e-80e4328bfb62
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1980,
+          "y": 710
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3e808c2c-8f1f-4cb6-8674-548565d04273
+      iscommand: false
+      name: isoc_Anti-hacking_NGFW
+      playbookName: isoc_Anti-hacking_NGFW
+      type: playbook
+      version: -1
+    taskid: 3e808c2c-8f1f-4cb6-8674-548565d04273
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 2200,
+          "y": 1070
+        }
+      }
+  "19":
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d6e7099a-666a-4a16-82c3-0921f348a610
+      iscommand: false
+      name: isoc_Verodin_Scheduled
+      playbookName: isoc_Verodin_Scheduled
+      type: playbook
+      version: -1
+    taskid: d6e7099a-666a-4a16-82c3-0921f348a610
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1980,
+          "y": 370
+        }
+      }
+  "21":
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2112a316-75e9-45a4-800e-c16e57e8f241
+      iscommand: false
+      name: isoc_Anti-hacking_RemoteAccess
+      playbookName: isoc_Anti-hacking_RemoteAccess
+      type: playbook
+      version: -1
+    taskid: 2112a316-75e9-45a4-800e-c16e57e8f241
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 2630,
+          "y": 1070
+        }
+      }
+  "22":
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "14"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1f2fe7c2-5c96-4561-8c86-85578f87da7d
+      iscommand: false
+      name: isoc_Get_EventLog_IpHost
+      playbookName: isoc_Get_EventLog_IpHost
+      type: playbook
+      version: -1
+    taskid: 1f2fe7c2-5c96-4561-8c86-85578f87da7d
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 1245
+        }
+      }
+  "23":
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c49dd977-1b35-40cc-8f40-4aa2fbf79e46
+      iscommand: false
+      name: isoc_Check_While List
+      playbookName: isoc_Check_While List
+      type: playbook
+      version: -1
+    taskid: c49dd977-1b35-40cc-8f40-4aa2fbf79e46
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1980,
+          "y": 545
+        }
+      }
+  "24":
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "19"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      all:
+        simple: "yes"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Delete field from context
+      id: b296440c-3138-4b90-8f63-af36c87caa70
+      iscommand: false
+      name: DeleteContext
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: b296440c-3138-4b90-8f63-af36c87caa70
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1980,
+          "y": 195
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "17_1_#default#": 0.27,
+      "1_12_Fab IPS \u0026 GateKeeper": 0.88,
+      "1_15_WAF": 0.9,
+      "1_18_NGFW": 0.9,
+      "1_21_RemoteAccess": 0.9
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1515,
+        "width": 2960,
+        "x": 50,
+        "y": 60
+      }
+    }
+  }

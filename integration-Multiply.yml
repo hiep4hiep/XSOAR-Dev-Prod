@@ -1,0 +1,200 @@
+category: Utilities
+commonfields:
+  id: Multiply
+  version: -1
+configuration:
+- defaultvalue: https://soar.monstersofhack.com
+  display: Server URL (e.g. https://soar.monstersofhack.com)
+  name: url
+  required: true
+  type: 0
+- display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+- defaultvalue: "10"
+  display: Maximum number of incidents per fetch
+  name: max_fetch
+  required: false
+  type: 0
+- display: API Key
+  name: apikey
+  required: true
+  type: 4
+- additionalinfo: Set this to determine the HelloWorld score that will determine if
+    an IP is malicious (0-100)
+  defaultvalue: "65"
+  display: Score threshold for IP reputation command
+  name: threshold_ip
+  required: false
+  type: 0
+- additionalinfo: Set this to determine the HelloWorld score that will determine if
+    a domain is malicious (0-100)
+  defaultvalue: "65"
+  display: Score threshold for domain reputation command
+  name: threshold_domain
+  required: false
+  type: 0
+- defaultvalue: ACTIVE
+  display: Fetch alerts with status (ACTIVE, CLOSED)
+  name: alert_status
+  options:
+  - ACTIVE
+  - CLOSED
+  required: false
+  type: 15
+- additionalinfo: Comma-separated list of types of alerts to fetch. Types might change
+    over time. Some examples are 'Bug' and 'Vulnerability'
+  display: Fetch alerts with type
+  name: alert_type
+  required: false
+  type: 0
+- defaultvalue: Low
+  display: Minimum severity of alerts to fetch
+  name: min_severity
+  options:
+  - Low
+  - Medium
+  - High
+  - Critical
+  required: true
+  type: 15
+- defaultvalue: 3 days
+  display: First fetch time
+  name: first_fetch
+  required: false
+  type: 0
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: "1"
+  display: Incidents Fetch Interval
+  name: incidentFetchInterval
+  required: false
+  type: 19
+- display: ""
+  name: baseUrl
+  required: false
+  type: 0
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels: []
+    toServerVersion: ""
+description: This is the Hello World integration for getting started.
+detaileddescription: |-
+  ### Community Contributed Integration
+   #### Integration Author: Cortex XSOAR
+   No support or maintenance is provided by the author. Customers are encouraged to engage with the user community for questions and guidance at the [Cortex XSOAR Live Discussions](https://live.paloaltonetworks.com/t5/cortex-xsoar-discussions/bd-p/Cortex_XSOAR_Discussions).
+  ***
+  ## Hello World
+  - This section explains how to configure the instance of HelloWorld in Cortex XSOAR.
+  - You can use the following API Key: `43ea9b2d-4998-43a6-ae91-aba62a26868c`
+
+  ---
+  [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/hello-world)
+display: Multiply
+name: Multiply
+script:
+  commands:
+  - arguments:
+    - name: value
+    - name: multiplier
+    name: multiply
+  dockerimage: demisto/python3:3.9.7.24076
+  isfetch: true
+  runonce: false
+  script: |
+    register_module_line('Demo1', 'start', __line__())
+
+
+    class Client(BaseClient):
+
+        def __init__(self, base_url):
+            super().__init__(base_url=base_url)
+
+        def lorem(self):
+            return self.get('lorem')
+
+        def multiply(self, value, multiplier):
+            return self.post('multiply', {'value': value, 'multiplier': multiplier})
+
+        def get(self, url_suffix):
+            return self._http_request(
+                method='GET',
+                url_suffix = url_suffix,
+                headers={
+                    'Accept': 'Application/json'
+                },
+                timeout=20)
+
+        def post(self, url_suffix, body):
+            return self._http_request(
+                method='POST',
+                json_data = body,
+                url_suffix = url_suffix,
+                headers={
+                    'Accept': 'Application/json'
+                },
+                timeout=20)
+
+
+
+    def lorem(client):
+        demisto.log('got to 1')
+        res = client.lorem()
+        return res['text']
+
+
+    def multiply(client, value, multiplier):
+        res = client.multiply(value, multiplier)
+        return res['value']
+
+
+    def main():
+
+        base_url = demisto.params()['baseUrl']
+
+        command = demisto.command()
+
+        try:
+            client = Client(base_url=base_url)
+
+            if command == 'test-module':
+                return_results('ok')
+
+            elif command == 'lorem':
+                res = lorem(client)
+                return_results(res)
+
+            elif command == 'multiply':
+                value =  arg_to_number( demisto.args()['value'] )
+                multiplier =  arg_to_number( demisto.args()['multiplier'] )
+                res = multiply(client, value, multiplier)
+                return_results(res)
+
+
+        # Log exceptions and return errors
+        except Exception as e:
+            demisto.error(traceback.format_exc())  # print the traceback
+            return_error(f'Failed to execute {demisto.command()} command.\nError:\n{str(e)}')
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+
+    register_module_line('Demo1', 'end', __line__())
+  subtype: python3
+  type: python

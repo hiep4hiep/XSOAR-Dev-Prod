@@ -72,6 +72,7 @@ contentitemexportablefields:
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: Manage Palo Alto Networks Firewall and Panorama. For more information
   see Panorama documentation.

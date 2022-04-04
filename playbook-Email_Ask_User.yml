@@ -1,0 +1,218 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 53b7b448-74bc-4099-84c7-d64cdad1e09e
+inputs: []
+name: Email Ask User
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 5e7ee93b-f03a-4761-8a28-41269fe57474
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 5e7ee93b-f03a-4761-8a28-41269fe57474
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": -10
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      email:
+        simple: hnguyen@paloaltonetworks.com
+      message:
+        simple: Hello pls check this
+      option1:
+        simple: "yes"
+      option2:
+        simple: "no"
+      subject:
+        simple: Hello abc
+      task:
+        simple: await
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Ask a user a question via email and process the reply directly
+        into the investigation.
+      id: e5a813ec-196f-4a74-8288-3be154bdd131
+      iscommand: false
+      name: Email Ask User
+      script: EmailAskUser
+      type: regular
+      version: -1
+    taskid: e5a813ec-196f-4a74-8288-3be154bdd131
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": 120
+        }
+      }
+  "2":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: "yes"
+          operator: isEqualString
+          right:
+            value:
+              simple: "yes"
+      label: "yes"
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: "no"
+          operator: isEqualString
+          right:
+            value:
+              simple: "no"
+      label: "no"
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "no":
+      - "4"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 54ebba73-2b83-44af-8ef1-cfc053eec477
+      iscommand: false
+      name: Wait for response
+      type: condition
+      version: -1
+    taskid: 54ebba73-2b83-44af-8ef1-cfc053eec477
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 730,
+          "y": 280
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: "No"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: eaa8fbdc-67e5-4b5c-808d-433e2f2c73f2
+      iscommand: false
+      name: Do that
+      script: Print
+      type: regular
+      version: -1
+    taskid: eaa8fbdc-67e5-4b5c-808d-433e2f2c73f2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 530,
+          "y": 480
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      responseEntryId:
+        simple: ${lastCompletedTaskEntries}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Extract user's response from EmailAskUser reply. Returns the first
+        textual response line of the provided entry that contains the reply body.
+        Use ${lastCompletedTaskEntries} to analyze the previous playbook task containing
+        the user's reply.
+      id: dc9e0a6b-0458-4697-8086-0872b63869a6
+      iscommand: false
+      name: Untitled Task
+      script: EmailAskUserResponse
+      type: condition
+      version: -1
+    taskid: dc9e0a6b-0458-4697-8086-0872b63869a6
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 970,
+          "y": 480
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 585,
+        "width": 820,
+        "x": 530,
+        "y": -10
+      }
+    }
+  }

@@ -3,14 +3,17 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 dockerimage: demisto/python3:3.7.3.286
 engineinfo: {}
+mainengineinfo: {}
 name: TestIndicator
 pswd: ""
 runas: DBotWeakRole

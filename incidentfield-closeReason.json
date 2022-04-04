@@ -1,7 +1,11 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": true,
 	"associatedTypes": null,
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": false,
 	"cliName": "closereason",
 	"closeForm": true,
@@ -45,5 +49,6 @@
 	"useAsKpi": true,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

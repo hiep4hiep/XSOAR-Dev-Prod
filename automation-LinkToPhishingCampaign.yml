@@ -1,0 +1,67 @@
+comment: Links a Phishing incident to its related Phishing Campaign incident.
+commonfields:
+  id: LinkToPhishingCampaign
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 6.0.0
+    itemVersion: 3.1.6
+    packID: Phishing
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+dockerimage: demisto/python3:3.9.7.24076
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: LinkToPhishingCampaign
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  register_module_line('LinkToPhishingCampaign', 'start', __line__())
+
+
+
+  BLACK_COLOR = "color:rgb(64,65,66)"
+
+  server_url = ""
+  html = ""
+
+
+  try:
+      incident = demisto.incidents()
+      incident_id = incident[0].get('id', {})
+      campaign_incident_id = str(incident[0].get('CustomFields', {}).get('partofcampaign', ''))
+      urls = demisto.demistoUrls()
+      server_url = urls.get('server', '')
+      if campaign_incident_id and campaign_incident_id != "None":
+          html = f"""<div style='text-align:center; padding: 40px; font-size:15px; {BLACK_COLOR};'
+          >This incident is part of a <a href="{server_url}/#/Custom/vvoh19d1ue/{campaign_incident_id}"
+          >Phishing Campaign #{campaign_incident_id}</a></div>"""
+      else:
+          html = f"""<div style='text-align:center; padding: 40px; font-size:15px; {BLACK_COLOR};'
+          >This incident is not part of a phishing campaign.</div>"""
+
+  except Exception:
+      html = f"""<div style='text-align:center; padding: 40px; font-size:15px; {BLACK_COLOR};'
+      >This incident is part of a phishing campaign (incident #{campaign_incident_id}).</div>"""
+
+
+  demisto.results({
+      'ContentsFormat': formats['html'],
+      'Type': entryTypes['note'],
+      'Contents': html
+  })
+
+  register_module_line('LinkToPhishingCampaign', 'end', __line__())
+scripttarget: 0
+subtype: python3
+system: true
+tags:
+- dynamic-section
+- phishing
+- campaign
+type: python

@@ -1,6 +1,8 @@
 {
 	"brands": null,
+	"cacheVersn": 0,
 	"defaultIncidentType": "Qradar Generic",
+	"definitionId": "",
 	"description": "Classifies QRadar events.",
 	"feed": false,
 	"fromServerVersion": "6.0.0",
@@ -10,12 +12,14 @@
 	"instanceIds": null,
 	"itemVersion": "2.1.4",
 	"keyTypeMap": {
+		"P3 - Execution - Endpoint Malware Detection - 0011 - SOC(Xsoar): SEP Detection For Virus": "Malware",
+		"P3 - Execution - Endpoint Malware Detection - 0011 - SOC: SEP Detection For Virus (Xsoar)": "Malware",
 		"SIM User Authentication": "Access",
 		"SOC: Log Source Monitoring - HIGHLY IMPORTANT SERVERS - UNIX (If not able to receive events more than 24H)": "QRadar Log Source Event",
 		"User Login Failure": "Access"
 	},
 	"locked": false,
-	"logicalVersion": 2,
+	"logicalVersion": 7,
 	"mapping": null,
 	"name": "GEL - QRadar Classifier",
 	"nameRaw": "GEL - QRadar Classifier",
@@ -27,13 +31,7 @@
 	"system": false,
 	"toServerVersion": "",
 	"transformer": {
-		"complex": {
-			"accessor": "name",
-			"filters": [],
-			"root": "rules.[0]",
-			"transformers": []
-		},
-		"simple": ""
+		"simple": "rules.[0].name"
 	},
 	"type": "classification",
 	"unclassifiedCases": null,

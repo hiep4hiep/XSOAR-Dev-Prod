@@ -1,0 +1,48 @@
+commonfields:
+  id: 7c2a738d-1d59-4a31-88fa-886a92cfe3ae
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.26972
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: TextWidget
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  class Client(BaseClient):
+      def get_app_status(self):
+          data = self._http_request(
+              method='GET'
+          )
+          return data[0]['cpuUsagePercent']
+
+  def main():
+      api_key = "51135EE0F9490220DBC34F2AF99CCAF0"
+      base_url = "https://xsoar-kt.southeastasia.cloudapp.azure.com/health/appservers"
+      headers = {
+          'Authorization': api_key
+      }
+      client = Client(
+          base_url=base_url,
+          verify=False,
+          headers=headers
+          )
+      return_results(int(client.get_app_status()))
+
+  if __name__ in ('__main__', '__builtin__', 'builtins'):
+      main()
+scripttarget: 0
+subtype: python3
+tags:
+- widget
+type: python

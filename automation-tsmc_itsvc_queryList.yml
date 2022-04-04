@@ -1,0 +1,74 @@
+args:
+- name: listName
+  required: true
+- name: target_key
+- name: target_key_value
+- auto: PREDEFINED
+  name: fuzzy
+  predefined:
+  - "YES"
+  - "NO"
+comment: Gets a list of indicator objects and the associated indicator outputs that
+  match the specified query and filters. The results are returned in a structured
+  data file.
+commonfields:
+  id: d5ff014d-88bc-4565-811c-428377267ef0
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: tsmc_itsvc_queryList
+outputs:
+- contextPath: search_result
+  type: unknown
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  var limit = 1
+  var listName = args.listName ? args.listName : null
+  var target_key = args.target_key ? args.target_key : null
+  var target_key_value = args.target_key_value ? args.target_key_value : null
+  var fuzzy = args.fuzzy ? args.fuzzy : 'NO'
+
+  var res = executeCommand("getList", {"listName": listName})
+  var result = []
+
+  if(res[0].Contents.indexOf('Item not found') == -1){
+      var list = JSON.parse(res[0].Contents)['result']
+      if(target_key){
+          for(i=0; i<list.length; i++){
+              if(fuzzy == 'YES'){
+                  if(list[i][target_key].indexOf(target_key_value) !== -1)
+                      result.push(list[i])
+              }
+              else{
+                  if(list[i][target_key] == target_key_value)
+                      result.push(list[i])
+              }
+          }
+          log('For loop end')
+      }
+      else
+          result = list
+  }
+  return {
+      'Type': entryTypes.note,
+      'Contents': result,
+      'ContentsFormat': formats.json,
+      'EntryContext': {'search_result': result}
+  }
+scripttarget: 0
+tags:
+- tsmc
+- itsvc
+type: javascript

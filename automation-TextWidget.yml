@@ -27,8 +27,8 @@ script: |
           return data[0]['cpuUsagePercent']
 
   def main():
-      api_key = "51135EE0F9490220DBC34F2AF99CCAF0"
-      base_url = "https://xsoar-kt.southeastasia.cloudapp.azure.com/health/appservers"
+      api_key = ""
+      base_url = "https://xsoar/health/appservers"
       headers = {
           'Authorization': api_key
       }

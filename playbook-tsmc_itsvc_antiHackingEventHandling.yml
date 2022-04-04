@@ -1,0 +1,782 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 024863db-ce14-4fb1-8428-7f97b7447b11
+inputs: []
+name: tsmc_itsvc_antiHackingEventHandling
+outputs: []
+sourceplaybookid: beeb2016-3b51-44a1-8c2a-0afeea4a0490
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "58"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7d2d9442-ec8d-40df-8c88-abfbfdb8ce1a
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 7d2d9442-ec8d-40df-8c88-abfbfdb8ce1a
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 50
+        }
+      }
+  "40":
+    id: "40"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7193535d-b289-46cf-802a-473802f96afe
+      iscommand: false
+      name: End
+      type: title
+      version: -1
+    taskid: 7193535d-b289-46cf-802a-473802f96afe
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 2295
+        }
+      }
+  "48":
+    continueonerror: true
+    id: "48"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "66"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#ruleName#": "${incident.siemrulename}",
+              "#ticketNo#": "${Jira.AntiHacking.ticketNo}",
+              "#sms_content#": "${incident.siemsmscontent}"
+          }
+      message:
+        simple: '(#ticketNo#) #ruleName# #sms_content#'
+      phone:
+        simple: "7524009"
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: e0144891-8931-45bf-8bcd-d762c9bb5638
+      iscommand: false
+      name: Send Notification SMS to G_CIRC
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: e0144891-8931-45bf-8bcd-d762c9bb5638
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1945
+        }
+      }
+  "58":
+    continueonerror: true
+    id: "58"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "70"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      all:
+        simple: "yes"
+      subplaybook:
+        simple: auto
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Delete field from context
+      id: 6d7968b9-5bfd-4dc0-8683-18ca9f06ecd8
+      iscommand: false
+      name: Delete Context All
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: 6d7968b9-5bfd-4dc0-8683-18ca9f06ecd8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 195
+        }
+      }
+  "59":
+    id: "59"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "67"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Assignee:
+        simple: ${incident.siemjiraassignee}
+      DHOST:
+        simple: ${incident.siemdestinationhost}
+      DST:
+        simple: ${incident.siemdestinationip}
+      DST_IPSM:
+        complex:
+          accessor: dst
+          root: ipsm
+          transformers:
+          - operator: FirstArrayElement
+      Description:
+        complex:
+          accessor: siemeventdescription
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \\
+              toReplace:
+                value:
+                  simple: \
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \"
+              toReplace:
+                value:
+                  simple: '"'
+            operator: replace
+      Event ID:
+        simple: ${incident.siemeventid}
+      Event Time:
+        simple: ${incident.siemstartdate}
+      EventCategory:
+        simple: ${incident.siemjiraeventcategory}
+      EventType:
+        simple: ${incident.siemeventtype}
+      Host Score:
+        simple: ${incident.siemhostscore}
+      IP score:
+        simple: ${incident.siemipscore}
+      Notified Users:
+        simple: ${incident.siemjiranotificationuser}
+      Reviewer:
+        simple: ${incident.siemjirareviewer}
+      Risk Level:
+        simple: ${incident.siemseverity}
+      Rule Defination:
+        simple: ${incident.siemruledefination}
+      Rule ID:
+        simple: ${incident.siemruleid}
+      Rule Name:
+        simple: ${incident.siemrulename}
+      Rule Owner:
+        simple: ${incident.siemruleowner}
+      SHOST:
+        simple: ${incident.siemhostname}
+      SRC:
+        simple: ${incident.siemblockip}
+      SRC_IPSM:
+        complex:
+          accessor: src
+          root: ipsm
+          transformers:
+          - operator: FirstArrayElement
+      Subject:
+        simple: ${incident.siemjirasubject}
+      Suser:
+        simple: ${incident.siemsourceuser}
+      UUID:
+        simple: ${incident.siemuuid}
+      User Score:
+        simple: ${incident.siemuserscore}
+      create_Jira_Switch:
+        simple: ${siemPlaybookConfig.Create_Jira}
+      cs1:
+        complex:
+          accessor: siemcs1
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \\
+              toReplace:
+                value:
+                  simple: \
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \"
+              toReplace:
+                value:
+                  simple: '"'
+            operator: replace
+      cs2:
+        complex:
+          accessor: siemcs2
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \\
+              toReplace:
+                value:
+                  simple: \
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \"
+              toReplace:
+                value:
+                  simple: '"'
+            operator: replace
+      cs3:
+        complex:
+          accessor: siemcs3
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \\
+              toReplace:
+                value:
+                  simple: \
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \"
+              toReplace:
+                value:
+                  simple: '"'
+            operator: replace
+      cs4:
+        complex:
+          accessor: siemcs4
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \\
+              toReplace:
+                value:
+                  simple: \
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: \"
+              toReplace:
+                value:
+                  simple: '"'
+            operator: replace
+      is_KPI:
+        simple: ${incident.siemiskpi}
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6840060d-d5f1-49a1-82b0-cf2231ba4152
+      iscommand: false
+      name: Create Anti-Hacking Jira Ticket
+      playbookName: tsmc_itsvc_createAntihackingJiraTicket
+      type: playbook
+      version: -1
+    taskid: 6840060d-d5f1-49a1-82b0-cf2231ba4152
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 1245
+        }
+      }
+  "60":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemjiraissuetype
+          operator: containsGeneral
+          right:
+            value:
+              simple: anti
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemjiraissuetype
+          operator: containsGeneral
+          right:
+            value:
+              simple: hacking
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemsentsms
+          operator: isEqualString
+          right:
+            value:
+              simple: "1"
+      label: Send_kpi
+    id: "60"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "66"
+      Send_kpi:
+      - "48"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c79bc906-dac2-4e0b-8483-3100fca46cbd
+      iscommand: false
+      name: Check If Send SMS
+      type: condition
+      version: -1
+    taskid: c79bc906-dac2-4e0b-8483-3100fca46cbd
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 1770
+        }
+      }
+  "61":
+    continueonerror: true
+    id: "61"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "64"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      incidentType:
+        simple: antihacking
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d65c9ef4-1576-4d9c-8754-084045764f4b
+      iscommand: false
+      name: Get Configuration
+      script: tsmc_itsvc_getSiemPlaybookConfig
+      type: regular
+      version: -1
+    taskid: d65c9ef4-1576-4d9c-8754-084045764f4b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 720
+        }
+      }
+  "64":
+    id: "64"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "65"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      HOSTNAME:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: incident.siemhostname
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: "0"
+          root: incident.siemhostname
+      IP:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: incident.siemblockip
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: "0"
+          root: incident.siemblockip
+      index:
+        simple: src
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 37d82417-6ce1-4734-8041-3b5f7ba7dc52
+      iscommand: false
+      name: Get SRC IPSM
+      playbookName: tsmc_cmn_getIpsmInfoByIpHostname
+      type: playbook
+      version: -1
+    taskid: 37d82417-6ce1-4734-8041-3b5f7ba7dc52
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 895
+        }
+      }
+  "65":
+    id: "65"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "59"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      HOSTNAME:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: incident.siemdestinationhost
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: "0"
+          root: incident.siemdestinationhost
+      IP:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: incident.siemdestinationip
+              operator: isNotEqualString
+              right:
+                value:
+                  simple: "0"
+          root: incident.siemdestinationip
+      index:
+        simple: dst
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: faa5441a-c3bf-4866-857c-0bf81141b3c8
+      iscommand: false
+      name: Get DST IPSM
+      playbookName: tsmc_cmn_getIpsmInfoByIpHostname
+      type: playbook
+      version: -1
+    taskid: faa5441a-c3bf-4866-857c-0bf81141b3c8
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 1070
+        }
+      }
+  "66":
+    id: "66"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "40"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 20eccd61-6360-4c46-893b-dbba8571fedb
+      iscommand: false
+      name: isoc_Anti-hacking_Main
+      playbookId: e1243157-85ef-4e42-8867-f9e3a0171c33
+      type: playbook
+      version: -1
+    taskid: 20eccd61-6360-4c46-893b-dbba8571fedb
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 2120
+        }
+      }
+  "67":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Jira.AntiHacking.result
+          operator: isTrue
+      label: Success
+    id: "67"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "68"
+      Success:
+      - "60"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: fb6c1389-7ff2-43f4-85db-ca8d199fbc66
+      iscommand: false
+      name: Check if create Jira successfully
+      type: condition
+      version: -1
+    taskid: fb6c1389-7ff2-43f4-85db-ca8d199fbc66
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 1420
+        }
+      }
+  "68":
+    continueonerror: true
+    id: "68"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "60"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "Create Jira Ticket Failed: {<br>&emsp;status: ${out.AntiHackingjiraStatus}<br>&emsp;error message: { ${out.AntiHackingjiraErrorMsg} }<br>}<br>Remark:&emsp;收到此通知信後，請協助手動開單",
+              "#AlertType#":  "Antihacking",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receivers:
+        simple: G_CIRC
+      subject:
+        simple: '[CIRC Antihacking]: Create Jira Ticket Failed'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 256e4c15-47bf-40aa-8b32-d02ca68653e8
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 256e4c15-47bf-40aa-8b32-d02ca68653e8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 275,
+          "y": 1595
+        }
+      }
+  "69":
+    continueonerror: true
+    id: "69"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "61"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      parmName:
+        simple: xsoarServerUrl
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 239360c1-f412-48f6-84e6-2877f0d795b5
+      iscommand: false
+      name: Get Parameters
+      script: tsmc_itsvc_getMultiParmFromList
+      type: regular
+      version: -1
+    taskid: 239360c1-f412-48f6-84e6-2877f0d795b5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 545
+        }
+      }
+  "70":
+    continueonerror: true
+    id: "70"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "69"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ca470fc7-7765-4f87-8486-3cfb4879a5be
+      iscommand: false
+      name: Set Incident Created Time
+      script: tsmc_itsvc_setIncidentCreatedTime
+      type: regular
+      version: -1
+    taskid: ca470fc7-7765-4f87-8486-3cfb4879a5be
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 370
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "67_68_#default#": 0.55
+    },
+    "paper": {
+      "dimensions": {
+        "height": 2310,
+        "width": 605,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

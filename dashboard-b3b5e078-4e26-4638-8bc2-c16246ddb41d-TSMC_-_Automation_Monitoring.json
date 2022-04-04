@@ -1,0 +1,438 @@
+{
+	"cacheVersn": 0,
+	"definitionId": "",
+	"fromDate": "0001-01-01T00:00:00Z",
+	"fromDateLicense": "0001-01-01T00:00:00Z",
+	"fromServerVersion": "",
+	"hidePivot": false,
+	"hideSearch": false,
+	"id": "b3b5e078-4e26-4638-8bc2-c16246ddb41d",
+	"isCommon": true,
+	"itemVersion": "",
+	"layout": [
+		{
+			"forceRange": false,
+			"h": 4,
+			"i": "090ab550-95c7-11ec-b882-a9a89d8e43f7",
+			"id": "090ab550-95c7-11ec-b882-a9a89d8e43f7",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "3a43cc86-5ec4-4f3d-84bb-994fd2754925",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:56:50.472819507Z",
+				"name": "TSMC - Top Automation Count Per Incident Type",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"incidentType"
+					],
+					"keys": [
+						"avg|executionCount"
+					]
+				},
+				"prevName": "TSMC - Top Automation Count Per Incident Type",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:automation",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 0
+		},
+		{
+			"forceRange": false,
+			"h": 4,
+			"i": "09713f50-95c7-11ec-b882-a9a89d8e43f7",
+			"id": "09713f50-95c7-11ec-b882-a9a89d8e43f7",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "ba1e21de-2956-4797-8394-31fb35f8b1f2",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:37:32.364848813Z",
+				"name": "TSMC - Top Automation Error",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"sum|errorCount"
+					]
+				},
+				"prevName": "TSMC - Top Automation Error",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:automation",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 4
+		},
+		{
+			"forceRange": false,
+			"h": 4,
+			"i": "09f2cb60-95c7-11ec-b882-a9a89d8e43f7",
+			"id": "09f2cb60-95c7-11ec-b882-a9a89d8e43f7",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "345fc09a-cc9c-45bc-8e6b-d47d9d8fbccc",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:58:18.251328338Z",
+				"name": "TSMC - Top Automation Error Per Incident Type",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"incidentType"
+					],
+					"keys": [
+						"avg|errorCount"
+					]
+				},
+				"prevName": "TSMC - Top Automation Error Per Incident Type",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:automation",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 2,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 8
+		},
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "0a69a910-95c7-11ec-b882-a9a89d8e43f7",
+			"id": "0a69a910-95c7-11ec-b882-a9a89d8e43f7",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "6978f23d-5b47-4ed9-8997-18eb30680d70",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:36:24.791795636Z",
+				"name": "TSMC - Top Automation Execution Count",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"sum|executionCount"
+					]
+				},
+				"prevName": "TSMC - Top Automation Execution",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:automation",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 12
+		},
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "0ae87600-95c7-11ec-b882-a9a89d8e43f7",
+			"id": "0ae87600-95c7-11ec-b882-a9a89d8e43f7",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "e1b500fc-f13d-41f5-8ced-97a98aa92bc0",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:37:05.544351945Z",
+				"name": "TSMC - Top Automation Runtime Average Duration",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"avg|duration"
+					]
+				},
+				"prevName": "TSMC - Top Automation Runtime Duration",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:automation",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 17
+		},
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "0c40da10-95c7-11ec-b882-a9a89d8e43f7",
+			"id": "0c40da10-95c7-11ec-b882-a9a89d8e43f7",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "408488c1-5bdc-4771-8472-4bf6a0524342",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:50:32.553301093Z",
+				"name": "TSMC - Top Integration Command Execution",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"command"
+					],
+					"keys": [
+						"sum|executionCount"
+					]
+				},
+				"prevName": "TSMC - Top Integration Command Execution",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:integration",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 27
+		},
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "4ab69400-95c8-11ec-b882-a9a89d8e43f7",
+			"id": "4ab69400-95c8-11ec-b882-a9a89d8e43f7",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "11ca3765-047a-496d-88fb-87d87f4b8a90",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T23:13:07.141170245Z",
+				"name": "TSMC - Top Automation Total Runtime Duration",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"sum|duration"
+					]
+				},
+				"prevName": "TSMC - Top Automation Total Runtime Duration",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:automation",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 22
+		}
+	],
+	"locked": false,
+	"modulePage": false,
+	"name": "TSMC - Automation Monitoring",
+	"owner": "",
+	"packID": "",
+	"period": {
+		"by": "",
+		"byFrom": "days",
+		"byTo": "",
+		"field": "",
+		"fromValue": 180,
+		"toValue": null
+	},
+	"propagationLabels": [],
+	"system": false,
+	"toDate": "0001-01-01T00:00:00Z",
+	"toServerVersion": "",
+	"version": -1
+}

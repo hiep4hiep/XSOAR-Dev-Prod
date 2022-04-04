@@ -36,12 +36,14 @@ configuration:
   type: 0
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 1.1.9
     packID: XForceExchange
     packPropagationLabels:
     - all
     propagationLabels: []
+    remote: true
     toServerVersion: ""
 deprecated: true
 description: Deprecated. Use the IBM X-Force Exchange v2 integration instead.

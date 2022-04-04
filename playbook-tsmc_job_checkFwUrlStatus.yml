@@ -1,0 +1,1167 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 53a584a0-e619-48a4-8b8b-2b51368b57f1
+inputs: []
+name: tsmc_job_checkFwUrlStatus
+outputs: []
+sourceplaybookid: 4dc78615-9336-479a-89ba-5bfaca59ea0a
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f2e6fc9e-4509-416b-8921-7be51f556869
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: f2e6fc9e-4509-416b-8921-7be51f556869
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 50
+        }
+      }
+  "3":
+    continueonerror: true
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      all:
+        simple: "yes"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Delete field from context
+      id: c54d8b88-83b6-482c-8374-95a2f1d30b84
+      iscommand: false
+      name: Delete Context
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: c54d8b88-83b6-482c-8374-95a2f1d30b84
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 195
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Get LDAP firewall list from indicator
+      id: caf050ff-6f48-44e7-86f2-7a6d924ef05e
+      iscommand: false
+      name: Get all fw list
+      script: tsmc_itsvc_getFwList
+      type: regular
+      version: -1
+    taskid: caf050ff-6f48-44e7-86f2-7a6d924ef05e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 370
+        }
+      }
+  "5":
+    continueonerror: true
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "23"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: checkStatus
+      fwList:
+        simple: ${returnFwList}
+      parallelFilter:
+        simple: 0,5
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 28fa925b-09e1-4d3f-8887-0d4f30c48223
+      iscommand: false
+      name: Prepare Object 0
+      script: tsmc_itsvc_prepareBlockIpObj
+      type: regular
+      version: -1
+    taskid: 28fa925b-09e1-4d3f-8887-0d4f30c48223
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "7":
+    continueonerror: true
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      invalidList:
+        complex:
+          accessor: name
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: BlockIpResult.checkStatus.status
+              operator: notStartWith
+              right:
+                value:
+                  simple: "2"
+          root: BlockIpResult.checkStatus
+      send_mail_switch:
+        simple: "on"
+      statusList:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: BlockIpResult.checkStatus.status
+              operator: notContainsGeneral
+              right:
+                value:
+                  simple: "200"
+          root: BlockIpResult.checkStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: e0150864-b33f-4124-8708-2e2159861cbe
+      iscommand: false
+      name: Send mail to invalid url owner
+      script: tsmc_itsvc_notiInvalidApiOwner
+      type: regular
+      version: -1
+    taskid: e0150864-b33f-4124-8708-2e2159861cbe
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1390
+        }
+      }
+  "8":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: checkStatus
+                root: BlockIpResult
+                transformers:
+                - operator: count
+          operator: isNotEqualNumber
+          right:
+            iscontext: true
+            value:
+              complex:
+                accessor: fwList
+                root: returnFwList
+                transformers:
+                - operator: count
+      label: Exist
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "11"
+      Exist:
+      - "12"
+    note: false
+    quietmode: 2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1747a8e5-fadc-4246-8aa0-2be5eee0fb1b
+      iscommand: false
+      name: Check if time out case exist
+      type: condition
+      version: -1
+    taskid: 1747a8e5-fadc-4246-8aa0-2be5eee0fb1b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1565
+        }
+      }
+  "9":
+    continueonerror: true
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      fwList:
+        simple: ${returnFwList.fwList}
+      index:
+        simple: checkStatus
+      resultNameList:
+        simple: ${incident.siemtempfield1}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2cf0ccb8-606a-4750-8a84-672dfae50d8f
+      iscommand: false
+      name: Get Timeout FW Name
+      script: tsmc_itsvc_getBlockTimeoutFw
+      type: regular
+      version: -1
+    taskid: 2cf0ccb8-606a-4750-8a84-672dfae50d8f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 1915
+        }
+      }
+  "10":
+    continueonerror: true
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "34"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      invalidList:
+        simple: ${timeoutList.checkStatus}
+      send_mail_switch:
+        simple: "on"
+      statusList:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: BlockIpResult.checkStatus.status
+              operator: notContainsGeneral
+              right:
+                value:
+                  simple: "200"
+          root: BlockIpResult.checkStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 15295a64-8b11-4c5d-8e62-64f669131fdc
+      iscommand: false
+      name: Send mail to invalid FW owner
+      script: tsmc_itsvc_notiInvalidApiOwner
+      type: regular
+      version: -1
+    taskid: 15295a64-8b11-4c5d-8e62-64f669131fdc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 2090
+        }
+      }
+  "11":
+    continueonerror: true
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "31"
+    note: false
+    quietmode: 2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: e0a98de7-8568-4fe8-8b93-16893f94e0fc
+      iscommand: false
+      name: Clear Temporary Field
+      script: tsmc_itsvc_clearTempField
+      type: regular
+      version: -1
+    taskid: e0a98de7-8568-4fe8-8b93-16893f94e0fc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 2440
+        }
+      }
+  "12":
+    continueonerror: true
+    id: "12"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      append_value:
+        simple: ${BlockIpResult.checkStatus.name}
+      field:
+        simple: siemtempfield1
+      type:
+        simple: string
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: cb220ab9-8653-42e1-85be-620e9a9c94bc
+      iscommand: false
+      name: Set Temp Block Result
+      script: tsmc_cmn_appendIncidentField
+      type: regular
+      version: -1
+    taskid: cb220ab9-8653-42e1-85be-620e9a9c94bc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 1740
+        }
+      }
+  "13":
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 2
+    scriptarguments:
+      closeReason:
+        simple: Resolved
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: 46d3f175-5ab7-43bb-8014-18ee45bf1da3
+      iscommand: true
+      name: Job Done
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 46d3f175-5ab7-43bb-8014-18ee45bf1da3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 2965
+        }
+      }
+  "14":
+    continueonerror: true
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "24"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: checkStatus
+      fwList:
+        simple: ${returnFwList}
+      parallelFilter:
+        simple: 1,5
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: c03a912f-7f43-4583-8445-63513669da3f
+      iscommand: false
+      name: Prepare Object 1
+      script: tsmc_itsvc_prepareBlockIpObj
+      type: regular
+      version: -1
+    taskid: c03a912f-7f43-4583-8445-63513669da3f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "15":
+    continueonerror: true
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "25"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: checkStatus
+      fwList:
+        simple: ${returnFwList}
+      parallelFilter:
+        simple: 2,5
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 821e56cf-11d2-45dd-89bb-fd84702757cc
+      iscommand: false
+      name: Prepare Object 2
+      script: tsmc_itsvc_prepareBlockIpObj
+      type: regular
+      version: -1
+    taskid: 821e56cf-11d2-45dd-89bb-fd84702757cc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 720
+        }
+      }
+  "16":
+    continueonerror: true
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "26"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: checkStatus
+      fwList:
+        simple: ${returnFwList}
+      parallelFilter:
+        simple: 3,5
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 1e8515b1-b3b3-44f3-8ccd-03a5ca55dbbc
+      iscommand: false
+      name: Prepare Object 3
+      script: tsmc_itsvc_prepareBlockIpObj
+      type: regular
+      version: -1
+    taskid: 1e8515b1-b3b3-44f3-8ccd-03a5ca55dbbc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 720
+        }
+      }
+  "17":
+    continueonerror: true
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "27"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: checkStatus
+      fwList:
+        simple: ${returnFwList}
+      parallelFilter:
+        simple: 4,5
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 7e24051c-d142-45ad-83a9-ce2ba6776665
+      iscommand: false
+      name: Prepare Object 4
+      script: tsmc_itsvc_prepareBlockIpObj
+      type: regular
+      version: -1
+    taskid: 7e24051c-d142-45ad-83a9-ce2ba6776665
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 720
+        }
+      }
+  "22":
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+      - "14"
+      - "15"
+      - "16"
+      - "17"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      value:
+        complex:
+          accessor: fwList
+          root: returnFwList
+          transformers:
+          - operator: Stringify
+          - args:
+              error_if_no_match: {}
+              ignore_case: {}
+              multi_line: {}
+              period_matches_newline: {}
+              regex:
+                value:
+                  simple: (?<=name\"\:\")\X+(?=\"\,\"owner)
+            operator: RegexExtractAll
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 0586813a-565e-4132-8f05-3ea56ea00492
+      iscommand: false
+      name: Print FW Name
+      script: Print
+      type: regular
+      version: -1
+    taskid: 0586813a-565e-4132-8f05-3ea56ea00492
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "23":
+    continueonerror: true
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: ${blockIpObjList.checkStatus0.blockType}
+      fwObj:
+        simple: ${blockIpObjList.checkStatus0.fwObj}
+      is_check_status:
+        simple: "YES"
+      is_timeout:
+        simple: "NO"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 1df28bb7-2e35-497d-8c9a-f6987b278a50
+      iscommand: false
+      name: Check Url Status
+      script: tsmc_itsvc_blockIpService
+      type: regular
+      version: -1
+    taskid: 1df28bb7-2e35-497d-8c9a-f6987b278a50
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "24":
+    continueonerror: true
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: ${blockIpObjList.checkStatus1.blockType}
+      fwObj:
+        simple: ${blockIpObjList.checkStatus1.fwObj}
+      is_check_status:
+        simple: "YES"
+      is_timeout:
+        simple: "NO"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 6ec3ab68-19a9-48db-84b9-621b8dd7c92b
+      iscommand: false
+      name: Check Url Status
+      script: tsmc_itsvc_blockIpService
+      type: regular
+      version: -1
+    taskid: 6ec3ab68-19a9-48db-84b9-621b8dd7c92b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 895
+        }
+      }
+  "25":
+    continueonerror: true
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: ${blockIpObjList.checkStatus2.blockType}
+      fwObj:
+        simple: ${blockIpObjList.checkStatus2.fwObj}
+      is_check_status:
+        simple: "YES"
+      is_timeout:
+        simple: "NO"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: fae7a5cc-d30a-4b0d-8d91-7a4378f687ae
+      iscommand: false
+      name: Check Url Status
+      script: tsmc_itsvc_blockIpService
+      type: regular
+      version: -1
+    taskid: fae7a5cc-d30a-4b0d-8d91-7a4378f687ae
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 895
+        }
+      }
+  "26":
+    continueonerror: true
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: ${blockIpObjList.checkStatus3.blockType}
+      fwObj:
+        simple: ${blockIpObjList.checkStatus3.fwObj}
+      is_check_status:
+        simple: "YES"
+      is_timeout:
+        simple: "NO"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 1233717f-3d40-4b70-8832-6fab979b1d81
+      iscommand: false
+      name: Check Url Status
+      script: tsmc_itsvc_blockIpService
+      type: regular
+      version: -1
+    taskid: 1233717f-3d40-4b70-8832-6fab979b1d81
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 895
+        }
+      }
+  "27":
+    continueonerror: true
+    id: "27"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      blockType:
+        simple: ${blockIpObjList.checkStatus4.blockType}
+      fwObj:
+        simple: ${blockIpObjList.checkStatus4.fwObj}
+      is_check_status:
+        simple: "YES"
+      is_timeout:
+        simple: "NO"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: fc4619fc-7044-4b78-8016-86a6d1095c45
+      iscommand: false
+      name: Check Url Status
+      script: tsmc_itsvc_blockIpService
+      type: regular
+      version: -1
+    taskid: fc4619fc-7044-4b78-8016-86a6d1095c45
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1770,
+          "y": 895
+        }
+      }
+  "28":
+    continueonerror: true
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 2
+    scriptarguments:
+      value:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: BlockIpResult.checkStatus.status
+              operator: startWith
+              right:
+                value:
+                  simple: "2"
+          root: BlockIpResult.checkStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 51de0516-bd38-4654-8dbe-a96f5cec09f3
+      iscommand: false
+      name: Print Valid FW Name
+      script: Print
+      type: regular
+      version: -1
+    taskid: 51de0516-bd38-4654-8dbe-a96f5cec09f3
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 1215
+        }
+      }
+  "29":
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+      - "30"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 66afdfc2-44fc-49de-881d-19d5e1298a92
+      iscommand: false
+      name: Merge
+      type: title
+      version: -1
+    taskid: 66afdfc2-44fc-49de-881d-19d5e1298a92
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 1070
+        }
+      }
+  "30":
+    continueonerror: true
+    id: "30"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      value:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: BlockIpResult.checkStatus.status
+              operator: notStartWith
+              right:
+                value:
+                  simple: "2"
+          root: BlockIpResult.checkStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: d4d70e2a-9da9-457e-8ff5-e18af5e41844
+      iscommand: false
+      name: Print Invalid FW Name
+      script: Print
+      type: regular
+      version: -1
+    taskid: d4d70e2a-9da9-457e-8ff5-e18af5e41844
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 1215
+        }
+      }
+  "31":
+    continueonerror: true
+    id: "31"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "32"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      blockResult:
+        simple: ${BlockIpResult}
+      blockTypeList:
+        simple: checkStatus
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: ca25419b-61d1-4bc7-830c-7190033154dc
+      iscommand: false
+      name: Prepare Check Result For Grid
+      script: tsmc_itsvc_blockResultForGrid
+      type: regular
+      version: -1
+    taskid: ca25419b-61d1-4bc7-830c-7190033154dc
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 2615
+        }
+      }
+  "32":
+    continueonerror: true
+    id: "32"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "13"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      differentcount:
+        complex:
+          accessor: name
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: BlockIpResult.checkStatus.status
+              operator: notStartWith
+              right:
+                value:
+                  simple: "2"
+          root: BlockIpResult.checkStatus
+          transformers:
+          - operator: count
+      siemblockipresult:
+        complex:
+          accessor: name
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: BlockIpResult.checkStatus.status
+              operator: notStartWith
+              right:
+                value:
+                  simple: "2"
+          root: BlockIpResult.checkStatus
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              prefix:
+                value:
+                  simple: One or more API has error
+              suffix: {}
+            operator: concat
+          - operator: FirstArrayElement
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: All API are functional
+              toReplace:
+                value:
+                  simple: None
+            operator: replace
+      siemblockipresultsgrid:
+        simple: ${blockResultForGrid}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.set.incident
+      id: 221a2890-558f-46dc-80b1-a351f1c84f98
+      iscommand: true
+      name: Set Check Result to Grid
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 221a2890-558f-46dc-80b1-a351f1c84f98
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1125,
+          "y": 2800
+        }
+      }
+  "34":
+    continueonerror: true
+    id: "34"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    quietmode: 2
+    scriptarguments:
+      blockType:
+        simple: checkStatus
+      fwObj:
+        simple: ${timeoutList.checkStatus}
+      is_check_status:
+        simple: "YES"
+      is_timeout:
+        simple: "YES"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Call this automation with BlockIpApiEndpoint and IpInfo as arguments,  then
+        call block ip API
+      id: 39549988-7bca-484e-8c5d-6686b4ac4492
+      iscommand: false
+      name: Add Timeout Block Result
+      script: tsmc_itsvc_blockIpService
+      type: regular
+      version: -1
+    taskid: 39549988-7bca-484e-8c5d-6686b4ac4492
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1237.5,
+          "y": 2265
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "8_11_#default#": 0.3
+    },
+    "paper": {
+      "dimensions": {
+        "height": 3010,
+        "width": 2100,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

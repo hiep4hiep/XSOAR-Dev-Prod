@@ -1,0 +1,451 @@
+category: Database
+commonfields:
+  id: Generic SQL
+  version: -1
+configuration:
+- defaultvalue: MySQL
+  display: SQL DB
+  name: dialect
+  options:
+  - MySQL
+  - PostgreSQL
+  - Microsoft SQL Server
+  - Microsoft SQL Server - MS ODBC Driver
+  - Oracle
+  required: true
+  type: 15
+- display: Database host
+  name: host
+  required: true
+  type: 0
+- display: Port
+  name: port
+  required: false
+  type: 0
+- display: Database Name
+  name: dbname
+  required: false
+  type: 0
+- display: Username
+  name: credentials
+  required: true
+  type: 9
+- display: 'Connection Arguments (ex: arg1=val1&arg2=val2)'
+  name: connect_parameters
+  required: false
+  type: 0
+- display: Use an SSL connection
+  name: ssl_connect
+  required: false
+  type: 8
+- display: Use Connection Pooling
+  name: use_pool
+  required: false
+  type: 8
+- additionalinfo: After this time the connection pool will be refreshed
+  defaultvalue: "600"
+  display: Connection Pool Time to Live (seconds)
+  name: pool_ttl
+  required: false
+  type: 0
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 5.0.0
+    itemVersion: 1.0.11
+    packID: GenericSQL
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+description: 'Use the Generic SQL integration to run SQL queries on the following
+  databases: MySQL, PostgreSQL, Microsoft SQL Server, and Oracle.'
+detaileddescription: "## Default ports\nIf the port value is empty, a default port
+  will be selected according to the database type.\n- MySQL: 3306\n- PostgreSQL: 5432\n-
+  Microsoft SQL Server: 1433\n- Oracle: 1521\n\n\n## Connection Arguments\nSpecify
+  arguments for the configuration of an instance name-value pairs, for example:\n```\ncharset=utf8\n```\nSeparate
+  pairs using __&amp;__ character, for example:\n```\ncharset=utf8&read_timeout=10\n```\n\n##
+  Connection Pooling\nBy default, the integration does not pool database connections.
+  Thus, a connection is created and closed for each command run by the integration.
+  When connection pooling is enabled, each Docker container will maintain a single
+  connection open for time specified in the the _Connection Pool Time to Live_ parameter
+  (default: 600 seconds). After the time to live expires, and upon execution of a
+  new command, the database connection will close and a new connection will be created.
+  \n\n**Note**: when pooling is enabled, the number of active open database connections
+  will equal the number of active running **demisto/genericsql** Docker containers.
+  \ \n\n## Bind Variables \nThere are two options to use to bind variables:\n1. Use
+  both bind variable names and values, for example:\n    SELECT * from Table Where
+  ID=:x\" bind_variables_names=x bind_variables_values=123\n2. Use only bind variable
+  values, for example:\n    INSERT into Table(ID, Name) VALUES (%s, %s)\" bind_variables_values=
+  \"123, Ben”\n\n\n---\n[View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/generic-sql)"
+display: Generic SQL
+image: data:image/png;base64,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
+name: Generic SQL
+script:
+  commands:
+  - arguments:
+    - description: The SQL query to run.
+      name: query
+      required: true
+    - defaultValue: "50"
+      description: The maximum number of results to return.
+      name: limit
+    - defaultValue: "0"
+      description: The offset at which to start the results. The default is 0.
+      name: skip
+    - description: 'A comma-separated list of names, for example: "foo","bar","alpha".'
+      isArray: true
+      name: bind_variables_names
+    - description: 'A comma-separated list of value, for example: 7,"foo",3.'
+      isArray: true
+      name: bind_variables_values
+    deprecated: true
+    description: Runs a SQL query. Deprecated. Use the generic sql-command instead.
+    name: pgsql-query
+  - arguments:
+    - description: The SQL query to run.
+      name: query
+      required: true
+    - defaultValue: "50"
+      description: The maximum number of results to return. The default is 50.
+      name: limit
+    - defaultValue: "0"
+      description: The offset at which to start the results. The default is 0.
+      name: skip
+    - description: 'A comma-separated list of names, for example: "foo","bar","alpha".'
+      isArray: true
+      name: bind_variables_names
+    - description: 'A comma-separated list of value, for example: 7,"foo",3.'
+      isArray: true
+      name: bind_variables_values
+    deprecated: true
+    description: Runs a SQL query. Deprecated. Use the generic sql-command instead.
+    name: query
+  - arguments:
+    - description: The SQL query to run.
+      name: query
+      required: true
+    - defaultValue: "50"
+      description: The maximum number of results to return.
+      name: limit
+    - defaultValue: "0"
+      description: The offset at which to start the results. The default is 0.
+      name: skip
+    - description: 'A comma-separated list of names, for example: "foo","bar","alpha".'
+      isArray: true
+      name: bind_variables_names
+    - description: 'A comma-separated list of value, for example: 7,"foo",3.'
+      isArray: true
+      name: bind_variables_values
+    description: Running a sql query
+    name: sql-command
+  dockerimage: demisto/genericsql:1.1.0.26235
+  runonce: false
+  script: |
+    register_module_line('Generic SQL', 'start', __line__())
+
+
+
+
+    from typing import Any, Tuple, Dict, List, Callable, Optional
+    import sqlalchemy
+    import pymysql
+    import traceback
+    import hashlib
+    import logging
+    from sqlalchemy.sql import text
+    from sqlalchemy.engine.url import URL
+    from urllib.parse import parse_qsl
+
+    try:
+        # if integration is using an older image (4.5 Server) we don't have expiringdict
+        from expiringdict import ExpiringDict  # pylint: disable=E0401
+    except Exception:
+        pass
+
+
+    # In order to use and convert from pymysql to MySQL this line is necessary
+    pymysql.install_as_MySQLdb()
+
+    GLOBAL_CACHE_ATTR = '_generic_sql_engine_cache'
+    DEFAULT_POOL_TTL = 600
+
+
+    class Client:
+        """
+        Client to use in the SQL databases integration. Overrides BaseClient
+        makes the connection to the DB server
+        """
+
+        def __init__(self, dialect: str, host: str, username: str, password: str, port: str,
+                     database: str, connect_parameters: str, ssl_connect: bool, use_pool=False, pool_ttl=DEFAULT_POOL_TTL):
+            self.dialect = dialect
+            self.host = host
+            self.username = username
+            self.password = password
+            self.port = port
+            self.dbname = database
+            self.connect_parameters = self.parse_connect_parameters(connect_parameters, dialect)
+            self.ssl_connect = ssl_connect
+            self.use_pool = use_pool
+            self.pool_ttl = pool_ttl
+            self.connection = self._create_engine_and_connect()
+
+        @staticmethod
+        def parse_connect_parameters(connect_parameters: str, dialect: str) -> dict:
+            """
+            Parses a string of the form key1=value1&key2=value2 etc. into a dict with matching keys and values.
+            In addition adds a driver key in accordance to the given 'dialect'
+            Args:
+                connect_parameters: The string with query parameters
+                dialect: Should be one of MySQL, PostgreSQL, Microsoft SQL Server, Oracle, Microsoft SQL Server - MS ODBC Driver
+
+            Returns:
+                A dict with the keys and values.
+            """
+            connect_parameters_tuple_list = parse_qsl(connect_parameters, keep_blank_values=True)
+            connect_parameters_dict = dict()
+            for key, value in connect_parameters_tuple_list:
+                connect_parameters_dict[key] = value
+            if dialect == "Microsoft SQL Server":
+                connect_parameters_dict['driver'] = 'FreeTDS'
+            elif dialect == 'Microsoft SQL Server - MS ODBC Driver':
+                connect_parameters_dict['driver'] = 'ODBC Driver 17 for SQL Server'
+            return connect_parameters_dict
+
+        @staticmethod
+        def _convert_dialect_to_module(dialect: str) -> str:
+            """
+            Converting a dialect to the correct string needed in order to connect the wanted dialect
+            :param dialect: the SQL db
+            :return: a key string needed for the connection
+            """
+            if dialect == "MySQL":
+                module = "mysql"
+            elif dialect == "PostgreSQL":
+                module = "postgresql"
+            elif dialect == "Oracle":
+                module = "oracle"
+            elif dialect in {"Microsoft SQL Server", 'Microsoft SQL Server - MS ODBC Driver'}:
+                module = "mssql+pyodbc"
+            else:
+                module = str(dialect)
+            return module
+
+        @staticmethod
+        def _get_cache_string(url: str, connect_args: dict) -> str:
+            to_hash = url + repr(connect_args)
+            return hashlib.sha256(to_hash.encode('utf-8')).hexdigest()
+
+        def _get_global_cache(self) -> dict:
+            cache = getattr(sqlalchemy, GLOBAL_CACHE_ATTR, None)
+            if cache is None:
+                cache = ExpiringDict(100, max_age_seconds=self.pool_ttl)
+                setattr(sqlalchemy, GLOBAL_CACHE_ATTR, cache)
+            return cache
+
+        def _create_engine_and_connect(self) -> sqlalchemy.engine.base.Connection:
+            """
+            Creating and engine according to the instance preferences and connecting
+            :return: a connection object that will be used in order to execute SQL queries
+            """
+            ssl_connection = {}
+            module = self._convert_dialect_to_module(self.dialect)
+            db_url = URL(drivername=module,
+                         username=self.username,
+                         password=self.password,
+                         host=self.host,
+                         port=self.port,
+                         database=self.dbname,
+                         query=self.connect_parameters)
+            if self.ssl_connect:
+                ssl_connection = {'ssl': {'ssl-mode': 'preferred'}}
+            engine: sqlalchemy.engine.Engine = None
+            if self.use_pool:
+                if 'expiringdict' not in sys.modules:
+                    raise ValueError('Usage of connection pool is not support in this docker image')
+                cache = self._get_global_cache()
+                cache_key = self._get_cache_string(str(db_url), ssl_connection)
+                engine = cache.get(cache_key, None)
+                if engine is None:  # (first time or expired) need to initialize
+                    engine = sqlalchemy.create_engine(db_url, connect_args=ssl_connection)
+                    cache[cache_key] = engine
+            else:
+                demisto.debug('Initializing engine with no pool (NullPool)')
+                engine = sqlalchemy.create_engine(db_url, connect_args=ssl_connection,
+                                                  poolclass=sqlalchemy.pool.NullPool)
+            return engine.connect()
+
+        def sql_query_execute_request(self, sql_query: str, bind_vars: Any) -> Tuple[Dict, List]:
+            """Execute query in DB via engine
+            :param bind_vars: in case there are names and values - a bind_var dict, in case there are only values - list
+            :param sql_query: the SQL query
+            :return: results of query, table headers
+            """
+            if type(bind_vars) is dict:
+                sql_query = text(sql_query)
+
+            result = self.connection.execute(sql_query, bind_vars)
+            results = result.fetchall()
+            headers = []
+            if results:
+                # if the table isn't empty
+                headers = list(results[0].keys() if results[0].keys() else '')
+            return results, headers
+
+
+    def generate_default_port_by_dialect(dialect: str) -> Optional[str]:
+        """
+        In case no port was chosen, a default port will be chosen according to the SQL db type. Only return a port for
+        Microsoft SQL Server and ODBC Driver 17 for SQL Server where it seems to be required.
+        For the other drivers a None port is supported
+        :param dialect: sql db type
+        :return: default port needed for connection
+        """
+        if dialect in {'Microsoft SQL Server', 'ODBC Driver 17 for SQL Server'}:
+            return "1433"
+        return None
+
+
+    def generate_bind_vars(bind_variables_names: str, bind_variables_values: str) -> Any:
+        """
+        The bind variables can be given in 2 legal ways: as 2 lists - names and values, or only values
+        any way defines a different executing way, therefore there are 2 legal return types
+        :param bind_variables_names: the names of the bind variables, must be in the length of the values list
+        :param bind_variables_values: the values of the bind variables, can be in the length of the names list
+                or in case there is no name lists - at any length
+        :return: a dict or lists of the bind variables
+        """
+        bind_variables_names_list = argToList(bind_variables_names)
+        bind_variables_values_list = argToList(bind_variables_values)
+
+        if bind_variables_values and not bind_variables_names:
+            return [var for var in argToList(bind_variables_values)]
+        elif len(bind_variables_names_list) is len(bind_variables_values_list):
+            return dict(zip(bind_variables_names_list, bind_variables_values_list))
+        else:
+            raise Exception("The bind variables lists are not is the same length")
+
+
+    def test_module(client: Client, *_) -> Tuple[str, Dict[Any, Any], List[Any]]:
+        """
+        If the connection in the client was successful the test will return OK
+        if it wasn't an exception will be raised
+        """
+        return 'ok', {}, []
+
+
+    def sql_query_execute(client: Client, args: dict, *_) -> Tuple[str, Dict[str, Any], List[Dict[str, Any]]]:
+        """
+        Executes the sql query with the connection that was configured in the client
+        :param client: the client object with the db connection
+        :param args: demisto.args() including the sql query
+        :return: Demisto outputs
+        """
+        try:
+            sql_query = str(args.get('query'))
+            limit = int(args.get('limit', 50))
+            skip = int(args.get('skip', 0))
+            bind_variables_names = args.get('bind_variables_names', "")
+            bind_variables_values = args.get('bind_variables_values', "")
+            bind_variables = generate_bind_vars(bind_variables_names, bind_variables_values)
+
+            result, headers = client.sql_query_execute_request(sql_query, bind_variables)
+            # converting an sqlalchemy object to a table
+            converted_table = [dict(row) for row in result]
+            # converting b'' and datetime objects to readable ones
+            table = [{str(key): str(value) for key, value in dictionary.items()} for dictionary in converted_table]
+            table = table[skip:skip + limit]
+            human_readable = tableToMarkdown(name="Query result:", t=table, headers=headers,
+                                             removeNull=True)
+            context = {
+                "Result": table,
+                "Headers": headers,
+                "Query": sql_query,
+                "InstanceName": f"{client.dialect}_{client.dbname}",
+            }
+            entry_context: Dict = {'GenericSQL(val.Query && val.Query === obj.Query)': {'GenericSQL': context}}
+            return human_readable, entry_context, table
+
+        except Exception as err:
+            # In case there is no query executed and only an action e.g - insert, delete, update
+            # the result will raise an exception when we try to read the data from it
+            if str(err) == "This result object does not return rows. It has been closed automatically.":
+                human_readable = "Command executed"
+                return human_readable, {}, []
+            raise err
+
+
+    # list of loggers we should set to debug when running in debug_mode
+    # taken from: https://docs.sqlalchemy.org/en/13/core/engines.html#configuring-logging
+    SQL_LOGGERS = [
+        'sqlalchemy.engine',
+        'sqlalchemy.pool',
+        'sqlalchemy.dialects',
+        'py.warnings',  # SQLAlchemy issues many warnings such as from Oracle Dialect
+    ]
+
+
+    def main():
+        sql_loggers: list = []  # saves the debug loggers
+        try:
+            logging.captureWarnings(True)
+            for lgr_name in SQL_LOGGERS:
+                lgr = logging.getLogger(lgr_name)
+                level = logging.ERROR
+                if is_debug_mode():
+                    level = logging.DEBUG
+                    sql_loggers.append(lgr)  # in debug mode we save the logger to revert back
+                    demisto.debug(f'setting {logging.getLevelName(level)} for logger: {repr(lgr)}')
+                lgr.setLevel(level)
+            params = demisto.params()
+            dialect = params.get('dialect')
+            port = params.get('port')
+            if not port:
+                port = generate_default_port_by_dialect(dialect)
+            user = params.get("credentials").get("identifier")
+            password = params.get("credentials").get("password")
+            host = params.get('host')
+            database = params.get('dbname') or ''  # Use or to make sure we don't have "None" as a database
+            ssl_connect = params.get('ssl_connect')
+            connect_parameters = params.get('connect_parameters')
+            use_pool = params.get('use_pool', False)
+            pool_ttl = int(params.get('pool_ttl') or DEFAULT_POOL_TTL)
+            if pool_ttl <= 0:
+                pool_ttl = DEFAULT_POOL_TTL
+            command = demisto.command()
+            LOG(f'Command being called in SQL is: {command}')
+            client = Client(dialect=dialect, host=host, username=user, password=password,
+                            port=port, database=database, connect_parameters=connect_parameters,
+                            ssl_connect=ssl_connect, use_pool=use_pool, pool_ttl=pool_ttl)
+            commands: Dict[str, Callable[[Client, Dict[str, str], str], Tuple[str, Dict[Any, Any], List[Any]]]] = {
+                'test-module': test_module,
+                'query': sql_query_execute,
+                'pgsql-query': sql_query_execute,
+                'sql-command': sql_query_execute
+            }
+            if command in commands:
+                return_outputs(*commands[command](client, demisto.args(), command))
+            else:
+                raise NotImplementedError(f'{command} is not an existing Generic SQL command')
+        except Exception as err:
+            return_error(f'Unexpected error: {str(err)} \nquery: {demisto.args().get("query")} \n{traceback.format_exc()}')
+        finally:
+            try:
+                if client.connection:
+                    client.connection.close()
+            except Exception as ex:
+                demisto.error(f'Failed closing connection: {str(ex)}')
+            if sql_loggers:
+                for lgr in sql_loggers:
+                    demisto.debug(f'setting back ERROR for logger: {repr(lgr)}')
+                    lgr.setLevel(logging.ERROR)
+
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+
+    register_module_line('Generic SQL', 'end', __line__())
+  subtype: python3
+  type: python
+system: true

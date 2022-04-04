@@ -5,12 +5,19 @@ args:
 - description: Server IP Address to search
   name: ip
   required: true
+- auto: PREDEFINED
+  name: search_by
+  predefined:
+  - IP Address
+  - Qradar Logsource ID
+  required: true
 comment: Search for related information of the server using IP address
 commonfields:
   id: SearchDataFromList
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
@@ -18,7 +25,9 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 dockerimage: demisto/python3:3.9.7.24076
+enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: SearchDataFromList
 outputs:
 - contextPath: ITSM.Search
@@ -39,28 +48,57 @@ script: |2
   ''' STANDALONE FUNCTION '''
 
   ''' COMMAND FUNCTION '''
-  def search_list(data: list, ip: str):
-      for row in data:
-          if row['IP address'] == ip:
-              server_info = {
-                  "IP address": row["IP address"],
-                  "Remarks QIP": row["Remarks QIP"],
-                  "Qradar Logsource ID": row["Qradar Logsource ID"],
-                  "Remarks QName": row["Remarks QName"],
-                  "IT equipment type": row["IT equipment type"],
-                  "Owner Entity": row["Owner Entity"],
-                  "Status(Portfolio.Asset)": row["Status(Portfolio.Asset)"],
-                  "User(Portfolio)": row["User(Portfolio)"],
-                  "User name(Portfolio.User)": row["User name(Portfolio.User)"],
-                  "Name": row["Name"],
-                  "Last scan": row["Last scan"]
-              }
-              result = CommandResults(
-                  outputs = server_info,
-                  outputs_prefix = "ITSM.Search",
-                  outputs_key_field = "Name"
-                  )
-              return(result)
+  def search_list(data: list, ip: str, list_name: str, search_by: str):
+      if list_name == "ITSM":
+          for row in data:
+              if row[search_by] == ip:
+                  user_name = row["User"]
+                  if "," in user_name:
+                      user_name_strip = user_name.replace(",","")
+                      user_name = user_name_strip
+                  server_info = {
+                      "IP_Address": row["IP Address"],
+                      "Remarks_QIP": row["Remarks QIP"],
+                      "Qradar_Logsource_ID": row["Qradar Logsource ID"],
+                      "Remarks_QName": row["Remarks QName"],
+                      "IT_Equipment_Type": row["IT Equipment Type"],
+                      "Owner_Entity": row["Owner Entity"],
+                      "User": user_name,
+                      "IP_Name": row["IP Name"],
+                      "Last_scan": row["Last scan"],
+                      "Platform": row["Platform"]
+                  }
+                  result = CommandResults(
+                      outputs = server_info,
+                      outputs_prefix = "ITSM.Search",
+                      outputs_key_field = "IP Name"
+                      )
+                  result_md = tableToMarkdown("Inventory", server_info)
+                  demisto.executeCommand("setIncident", {"inventoryinformation": result_md})
+                  return(result)
+      elif list_name == "ITSM_Endpoint":
+          for row in data:
+              if row[search_by] == ip:
+                  user_name = row["User"]
+                  if "," in user_name:
+                      user_name_strip = user_name.replace(",","")
+                      user_name = user_name_strip
+                  endpoint_info = {
+                      "IP Address": row["IP Address"],
+                      "IP Domain": row["IP Domain"],
+                      "IT Equipment Type": row["IT Equipment Type"],
+                      "User": user_name,
+                      "IP Name": row["IP Name"],
+                      "Status": row["Status"]
+                  }
+                  result = CommandResults(
+                      outputs = endpoint_info,
+                      outputs_prefix = "ITSM.Search",
+                      outputs_key_field = "IP Name"
+                      )
+                  result_md = tableToMarkdown("Inventory", endpoint_info)
+                  demisto.executeCommand("setIncident", {"inventoryinformation": result_md})
+                  return(result)
       return(None)
 
   ''' MAIN FUNCTION '''
@@ -69,10 +107,11 @@ script: |2
       try:
           list_name = demisto.args().get('list_name')
           search_ip = demisto.args().get('ip')
+          search_by = demisto.args().get('search_by')
 
           get_list = demisto.executeCommand("getList", {"listName": list_name})
           data = json.loads(get_list[0]['Contents'])
-          return_results(search_list(data, search_ip))
+          return_results(search_list(data, search_ip, list_name, search_by))
       except Exception as ex:
           demisto.error(traceback.format_exc())  # print the traceback
           return_error(f'Failed to execute SearchDataFromList. Error: {str(ex)}')

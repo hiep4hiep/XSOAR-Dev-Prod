@@ -26,13 +26,13 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.23
+    itemVersion: 1.6.48
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/office-utils:2.0.0.5456
+dockerimage: demisto/office-utils:2.0.0.23094
 enabled: true
 engineinfo: {}
 mainengineinfo: {}

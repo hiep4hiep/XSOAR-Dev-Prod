@@ -1,0 +1,165 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 463738f3-08f2-4b4e-807a-97b92a868efc
+inputs: []
+name: Admin - Custom Phishing Playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7c92dfac-e5cc-4614-8c9b-0f82b7706ceb
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 7c92dfac-e5cc-4614-8c9b-0f82b7706ceb
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: File.Extension
+          operator: isEqualString
+          right:
+            value:
+              simple: zip
+        - left:
+            iscontext: true
+            value:
+              simple: File.Extension
+          operator: isEqualString
+          right:
+            value:
+              simple: ZIP
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c56c47fb-33b1-48f0-8799-d51b58f72448
+      iscommand: false
+      name: Is there a zip file attached?
+      type: condition
+      version: -1
+    taskid: c56c47fb-33b1-48f0-8799-d51b58f72448
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "2":
+    continueonerror: true
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryID:
+        simple: ${File.EntryID}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Unzip a file using fileName or entryID to specify a file. Unzipped
+        files will be loaded to the War Room and names will be put into the context.
+      id: 66b3ef60-f478-4b42-8f69-5208d5ad06bd
+      iscommand: false
+      name: UnzipFile
+      script: UnzipFile
+      type: regular
+      version: -1
+    taskid: 66b3ef60-f478-4b42-8f69-5208d5ad06bd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3f8b49e0-2964-45bd-8cf5-21bdd41a354b
+      iscommand: false
+      name: End game
+      type: title
+      version: -1
+    taskid: 3f8b49e0-2964-45bd-8cf5-21bdd41a354b
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 385
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 415,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

@@ -1,0 +1,73 @@
+args:
+- name: targetIP
+- name: port
+commonfields:
+  id: 322e5ca9-de80-4139-86e3-c1bf29428af9
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: tsmc_itsvc_checkWhitelistRule
+outputs:
+- contextPath: CheckWhitelistRuleResult
+  description: ""
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  var context = {}
+  var rule = {}
+  var whitelist = executeCommand('tsmc_itsvc_queryList', {
+      'listName': 'circWhitelist'
+  })
+  for(i=0; i<whitelist[0].Contents.length; i++){
+      var startDt = whitelist[0].Contents[i].StartDt
+      var EndDt = whitelist[0].Contents[i].EndDt
+      var IsDelete = whitelist[0].Contents[i].IsDelete
+      var now = new Date().getTime() + 28800000
+
+      if( 'Y' != IsDelete
+          && (!startDt || new Date(startDt.replace(' ', 'T').substring(0, 19)).getTime() <= now)
+          && (!EndDt || new Date(EndDt.replace(' ', 'T').substring(0, 19)).getTime() >= now) )
+      {
+          var portArr = whitelist[0].Contents[i].EventPort
+          if(!portArr || portArr == '*' || (portArr && portArr.lastIndexOf(args.port) !== -1)){
+              var netClassC = args.targetIP.substring(0, args.targetIP.lastIndexOf(".") + 1)
+              if(whitelist[0].Contents[i].IP && whitelist[0].Contents[i].IP.lastIndexOf(args.targetIP) !== -1){
+                  rule = whitelist[0].Contents[i]
+                  break;
+              }
+              else if(whitelist[0].Contents[i].ClassC && whitelist[0].Contents[i].ClassC == netClassC){
+                  rule = whitelist[0].Contents[i]
+                  break;
+              }
+          }
+      }
+  }
+  var setRes = ''
+  if(rule.IP){
+      setRes = executeCommand("setIncident", {'siemwhitelist': rule})
+      context = { 'CheckWhitelistRuleResult': { 'whitelistRule': rule, 'SetIncident': setRes[0].Contents } }
+  }
+
+
+  return {
+      Type : entryTypes.note,
+      Contents : context,
+      ContentsFormat : formats.json,
+      EntryContext : context
+  }
+scripttarget: 0
+tags:
+- tsmc
+- itsvc
+type: javascript

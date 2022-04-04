@@ -1,0 +1,2723 @@
+category: Endpoint
+commonfields:
+  id: VMware Carbon Black EDR v2
+  version: -1
+configuration:
+- display: Server URL
+  name: url
+  required: true
+  type: 0
+- display: ""
+  displaypassword: API Token
+  hiddenusername: true
+  name: credentials
+  required: false
+  type: 9
+- display: Fetch incidents
+  name: isFetch
+  required: false
+  type: 8
+- display: Incident type
+  name: incidentType
+  required: false
+  type: 13
+- additionalinfo: |-
+    Advanced query string. Accepts the same data as the search box on the Alert Search page.
+    For more information on the query syntax see https://developer.carbonblack.com/resources/query_overview.pdf.
+    If provided, other search filters are not allowed.
+  display: Filter alerts by query
+  name: alert_query
+  required: false
+  type: 0
+- defaultvalue: Unresolved
+  display: Filter alerts by status
+  name: alert_status
+  options:
+  - Resolved
+  - Unresolved
+  - In Progress
+  - False Positive
+  required: false
+  type: 16
+- display: Filter alerts by feed name
+  name: alert_feed_name
+  required: false
+  type: 0
+- defaultvalue: "50"
+  display: Maximum Number Of Incidents To Fetch
+  name: max_fetch
+  required: false
+  type: 0
+- defaultvalue: 7 days
+  display: First fetch timestamp (<number> <time unit>, e.g., 12 hours, 7 days)
+  name: first_fetch
+  required: false
+  type: 0
+- display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+- defaultvalue: "1"
+  display: Incidents Fetch Interval
+  name: incidentFetchInterval
+  required: false
+  type: 19
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 5.5.0
+    itemVersion: 2.1.13
+    packID: Carbon_Black_Enterprise_Response
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+description: VMware Carbon Black EDR (formerly known as Carbon Black Response)
+detaileddescription: "Query and response with Carbon Black endpoint detection and
+  response.\n\n#### Create a new instance\n1. Go to your Carbon Black console. This
+  should be the URL in *Server URL*.\n2. In the console, go to **My Profile** > **API
+  Token** .\n3. If there is no API token displayed, click the **Reset** button to
+  create a new one.\n4. Insert the API token in the *password* field. *username* is
+  not required.\n5. If Fetch incidents is checked, make sure to enter at least one
+  search field.\n6. Click **Save**\n \n\n\n---\n[View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/v-mware-carbon-black-edr-v2)"
+display: VMware Carbon Black EDR v2
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAyCAYAAACXpx/YAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAA7eSURBVHgB7ZwLlFZVFcf3DAzKACZChoY4PtKiNF+k5gtMsXzk26DUhlw+0BIRZLXScmz5iDeJ+ShrVFQENV8laoBDpVhqahpWPpgBQiQYcFAchJlx/zjn8J0537n3+z4cxZn1/dfa65t7z77n3nv24+y9z7kjUkSHRknC+f2UJivtrXSX0iildZKOXkqXKB2ntJvSaqVZSrcovWB5tlEarvRtpS8rrVdaYPl+pbTG8g1U+o7SkUo7Kq1UmqM0TanGu+c3lI5X+rXSq5KMbZV+rLRU6XpJx2lKX1OaoLTcnuumdKzSl5Q+q9RZ6QOlt5SeUvpLQl+MxbeUblD6tz1XrjRU6Su2/7FKzd412yudobSHUg+ld5T+qzRDzDj4OFjMWHdVukcy45cTTyu1eHRZDv7dlV4LrnGEYiDUE5QWJfBAr4gR+s32hWM8TUo/8+77uD1/d47n+4nXx0EpfFsprbB8F9lzFyitSnluaJ7SVyP9zbftY+3xiUoLg2sPsG2dlK5QejfhHhjMKK/v7kqXKo1QqlT6oRSA/wed/8c+QAylYjQ4bQAQzPocPE4ZWvKgc+29r7HHjUo9JRn/8K69LoVviMe3rz33gD1GOW9VulqpSmmKGM/k+N8WY+E+XDu83wvGYJlStRilYmyneW1PKo1ROk/pcqXnvbYJtu/+SicrTVe6VoyHyhvXS/agnp3Ae7bkJ5S2pNfFTC/7eOdGJDzffgnXxnCn5fmbdw6X3D/lmpOU3rfXPRi0OQH/3uP5oxhF8Psba9s2iLHGEBjRGO8dhtvrsWA8Egp/mhQAtDd0k39I4K0J+HjII5QelmzBoOVo3efFzK9vSFyA9yntqbSrmOkhxuMsbJ49fiTh+dzgPWefjb+PifAx3zXa9kukMFwqGU+1k3feCdiNJZYWKgpzqLPsXFb4O8vHdIjVd1HaX2kH2QzcJa0HtNl25mOAZCvCHbbtZskWyneD64+N8NSKCWJ8TIvwfdO2XWKPGaSdJBtv2nbcnXO3UyN850pGQT8nhWFH77l8S/Jd+KMS9wK/sO3/k+z3DuF7o1MkD5SmtFUHxzzcsODceZL90DdIMp4Njp+K8HBuQ3DuDUnG/WIsh8EZErQdrrSLmLmdKPNRex4vEsYUx9lfXOjbkfsQiR8lxoXiIplTByn1FhOdN1i+7SQO5u6WyPmB9pfn2yDpIJZ4xf69v+SBNI2Zbeko79yZYiI9IjrSonBeJqr9e0qf4Qs2RXg+kMKwWMzcd6rSYKXxXpvTciy3wf5ivUwRJ0hmziQ1Od7+Hc6jB4oJbL4ucYPgnRaKSX8kgadWTGYSw172t0Lyi4RdutonD96cLoHclFzTWelnxGjvdfZhuni8vOhk2TJAcAiYeZ2AiNx6a8lY9AP2lxToXjGKSi7uhIk1YtGkQ9O9fn8gJsemDSvFA7xk+yE3RlEImMhpS1Ke7+mUNqcYp0iebtcir5w3l4AJXF6UTEADmEdvEvPyPphvnpAtA56zXox7RNAIGPfJXEpx4CGPl2ARAWOxCGmtZAYWd99o/2Y+R8ER7pNiouWGhPtjtUslee5eIckg7yWnRbEelvyA55uVD2MuAdMRKZM/H6OtaHW/gBc31iJbBgw8lnm+GMEx351u20hR/CoccyzKQPqDFRNdH2Lb7vP4EDpegOCtUpKFCwg00yw4bVxeFlORYtq7R9oYpXnwzBQzx/g4PTh+w/JtSTjtJ7I/TDJWGc6pWIwTJMpASRTh1Cn9yeNzcxzlyEWSjt6WNgdzvGfZVtoY+QgYF5arfjtR4gHTJwmEgyIirBvFxAukHo9HeF00zaCeYf+m3OnXhN+3vwSTSZGx2PtRQsxnLGPAalE6pgQqc2lelTbSsOOljYE7C8uXjtDw8sg1sTx494Cne4SnOtJXlSTnwT6uC3gmShyUB5dK6xx/n4CHOdwVIChRdov0w3tfKCbyb7K8F3jtfqkyDaPtM9AHgWqs7IpHmWT5lsnHgJ9KXMBJCxFTJLtQsn3Aw0B/EPD9JtJXrJp1SITvIMkUXpoTeBx+6fX1YgLPTR7PXDGBJbk1mQXZxHx7HxRgmWy+gMlGSN9cpY0gcbK9H7UGYp7Vto3oeYR8DMBV+UVviMLF1gn8R0tr4c1L4LvX48FiYqkCy5YNHh+LH2UJ/bmFD4KXtMDnMMlY6IUJPJQvUezVElduhIr1EWm7iplfbJkjmRJlLuB+ie6JBWKraTwrCnWEFIASKQwVSmeJEV6NGC1blcLP8hiDh0Yyv8TSBeYeol+sj5Ikpc5Y1EmOe7GYqYLyXlJ1C2Wg4PGovW8amM9wfVhIWoGFZUwKHhQ7UHSCLqyewM6t0TImuHniFRe1U1pEke6U7LXcJJBqMRZUqiiCMD+jrBgXRpKr2lVEEUUUUUQRRbQjEK4TnZL8U/ggeiYw2kraDgslfePcJwmi5yfFRK0+sZR5u2RWgBxIpwg227oSVSnZkXlByFV9YbceCwi/FRMR8jeVoQoxhQwK972k44GiBpFsWPygosUSKcIfIO0AuRYbqsWE//yS2Lvwn9x3rP0Nw39yQrfdsyVH/2WS2UURgipRk+Tersu91kp+pVK27ZJ2NEt+qBGz7dWBd2MT3FVK50j2BoYYXJVvbQ4+3oN3LXQ9fLPBizH4SSscYQ5Nko5m48YZwCViBsMH+Sub3tjzS8GfF3L7o5yLJpFn5wICY1AohFQE/TDQVWJWhbjXe2K2GO0c8LF2y2oSubhTOHLYXC6vj32P2JLcFyR7XEIXzfWUSd+0z0eR4hkx+bQPxpC6wmseH7n1nra9UrJdNEZFjk9uHO7iLAj3284PzJOfDe7M05QV2d80115/lsdzm5iXIGln68nPJSMUBMxWGSyMwj8VIpb2eHFexg1eiT1P37Pt/SgVso77LzGL8A4MeoPtl3theVSK8Bhp+6N9AZd4xJR2g733mR5/KGBKsix0UEA5z973LXtvv6btyrnM72y4o9Zcb9+fe1VKawHjcefYZztaPiIY8AbJv9rlSoduMFjNoaTob+G5TcwD/1Wyp4eFts3ftkI/blek27A3VOLlPypdKM8d3jkGHS/hW7bb6HeTJMMJuME+l6OV9tqrA/5YkOWPBxgSvMcx9pi4xo+F9vKOKyUjYM45hf++5IlcS1OulpwPeKGh9gEZHEp5uMP9Irxoa2zexQpv9I65N4sCROxsikOzK8WUPK8KrsVjPGb5sCD32ck/xViOg9t1ks9WU97/Ge+YRQEW59niwzag51OuZeWMXSCsxNWKKbHyzrvZduZwhDVCWscELyf0R6CLcjJ2t0ueSBMw8wJLZhX2AdPAgOKeeSnmPTR/iD1+J+BtSukPoYQBEAV9iv1OIOwkYa6OBV+4QSLdbSQj4FCRCqnlEkQNDc5ViHlXpoV9E65DIXHlTDcoGErBvMp4u92c7PnGI9RJbowU870UXuIhKQBpaZLboXGR5AbbaQk+2AKDxQ4UE0jdFeFN8wixdWVSNYRWb4+x3h3s+RAU6rG6tAWQj4paMVMMixoxA8GTMbfiwZgaCBoRMJ6t0eNDcZmPt5fcQLjERNQdmNd7SJ5IEzC76HEXBAkESv5czN+4H7dtFu3EamcFPDtLYWDby3FBH5ViXqjGnuNFcXNnSutnQqFYpyWSz3flplBwP5QQgbk15xAoI5EuY+Hv40Ip/cLQTNuXW2506C7ZS7DEFWyTYkswq1MFfWiWhl3EhPq4Vea3iyyRerhUiEKH+3SDKJDQnch7uuXxrek2MYFQ38i9CGLQcFw6kTH7sa+1fSAw56IZJAI33B+pCNHkj8RYBAO6h9cn954fuRfP+qAkwwVZTFNVHl0rmWDQ36DnB1k8H96G6YK917hiDKTWvkuVvQbh4m6b7PXsUMFgcNkYF96hUlpH0VxDisT0dLC0EZjzCG7esw/o8jXywB0tD1r3iNcOzbDX1Xt9VYtxoTEBo0is3zJ/veP1w7exYdUIz/Cg7cvxkSKFn3By79ieZPgfkGQg4LXB+zhiHFjz9feE32jv5aJoIuRl3jXEEMNtn1XedfBPkdZji1K5jw0q7Tk/D0YeBK8oWtoXlRtRyII/7vOLYjTqVWktOAe0ta9tJ2pE8LgfF2hxjGaujlzLy6I471m+ve11CyR53sbD8MIrEvhI1RigNSn3isFV40LQV2z7LPFAWdCGJVPqJKh7yT6b+8CtMbieeZhpbq3ldYEgSlRun3O9x9/N3i88X0QRRRRRRPtBoZvuPpWYPHmyNDU1Zb1Ljx49Wnr27CmLFi3a1FZeXi6NjY0tI0eOlJISc7q6ulpWrly5iae0tFT0upZhw4ZJe0cn6QAYPHhwlZiI8ySf1q9fv2DVqlVlKkiqSifp74mqCANQhm7dutX16dOnpaamRg499NCB2lblXXuYKkHjoEGD6mbPni3tGZv7ucWnDUeogFqU5vu0bt26lZ07d+6lFnmyHs/W33ktLS2N+nvL3LlzZ/Tu3XtjpKzHFfqzv3ftOuWb0alTp8v0V9ozci34txuoIJ7o16/fpm97FyxYIFVVVTJp0qQ+2rZu1KhRd7q2cePGTVGh3q1GOm7mzJnDFy/mG3JZrDy3OJ7x48ffozyPTZ061d/n3O7QYQSsVtejrq5u0/e5Xbt2dct9WRgzZswaFfxIFfyztbW1V6mlbjyv5zb+qgtHYchVS+vr69v1NNZhBKyYokLe9O8bVGgs8x2TxNzQ0PB69+7dSzZs2LANAtZreykdqcLtpJbbSwV8pdIs9QK5ttp8qtGRXPQ5o0ePnp4vv0bYO+k1ZSrcd+31/Zqbm69UIVM5OoCga82aNddIO0dHsuBNLtahb9++smTJko1/kwqB5cuXS5cuXUpUmJerpT6iSrF04sSNX5m+oHPwsWqx5WrZf9a2tf3792/33wF1pDmYum+rdeAVK1a4/1i3taZLh2tUXVpWVrarCrdSLXY7dc9Z3xjjkidMmHCqtj+j8zMflb8o7RgdQsAqDIQwQH9brTpp8eJ8dcFNarHPaVuVChdFYBnvVrXWaaRW9vrV+vdL7jq16jr1BleoFbPh/2Ipoogiitgi+BCU9wCnEYhxDAAAAABJRU5ErkJggg==
+name: VMware Carbon Black EDR v2
+script:
+  commands:
+  - arguments:
+    - description: The name of the process
+      name: process_name
+    - description: The CB Host group this sensor is assigned to
+      name: group
+    - description: The hostname of the computer for this process
+      name: hostname
+    - description: The parent process name
+      name: parent_name
+    - description: The process path
+      name: process_path
+    - description: The md5 of the binary image backing the process
+      name: md5
+    - description: Advanced query string. Accepts the same data as the search box
+        on the Process Search page. For more information on the query syntax see https://developer.carbonblack.com/resources/query_overview.pdf.
+        If not provided, at least one other search field must be provided.
+      name: query
+    - description: group by a field name. For example, if parameter group=id, search
+        will return one result per process. Note that results will still honor sorting
+        specified by the search. Even within group, it will return result that is
+        first in the sort order. Grouping will be slower (sometimes much slower) than
+        regular results.
+      name: group_by
+    - description: Sort rows by this field and order. last_update desc by default.
+      name: sort
+    - auto: PREDEFINED
+      description: Return facet results. ‘false’ by default, set to ‘true’ for facets.
+      name: facet
+      predefined:
+      - "true"
+      - "false"
+    - auto: PREDEFINED
+      description: facet field name to return. Multiple facet.field parameters can
+        be specified in a query.
+      name: facet_field
+      predefined:
+      - process_md5
+      - hostname
+      - group
+      - path_full
+      - parent_name
+      - process_name
+      - host_type
+      - hour_of_day
+      - day_of_week
+      - start
+      - username_full
+    - description: Return this many rows, 10 by default.
+      name: limit
+    - description: Start at this row, 0 by default.
+      name: start
+    description: Process search
+    name: cb-edr-processes-search
+    outputs:
+    - contextPath: CarbonBlackEDR.ProcessSearch.Terms
+      description: A list of strings, each representing a token as parsed by the query
+        parser.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.process_md5
+      description: The md5 of the binary image backing the process.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.sensor_id
+      description: The internal CB id for the sensor on which the process executed.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.filtering_known_dlls
+      description: Whether known dlls are filtered.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.modload_count
+      description: The count of modules loaded in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.parent_unique_id
+      description: Internal CB process id of the process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.emet_count
+      description: Number of EMET associated with the event.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.cmdline
+      description: The command line of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.filemod_count
+      description: The count of file modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.id
+      description: The internal CB process id for this process (processes are identified
+        by this id and their segment id).
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.parent_name
+      description: The name of the process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.parent_md5
+      description: The md5 of the process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.group
+      description: The CB Host group this sensor is assigned to.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.parent_id
+      description: The id of the process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.hostname
+      description: The hostname of the computer for this process.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.last_update
+      description: The time of the most recently received event for this process in
+        remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.start
+      description: The start time of the process in remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.comms_ip
+      description: |-
+        IP address that the Cb server received the events on. If the endpoint is behind a NAT,
+        for example, this will be the external IP of the network the endpoint lives on.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.regmod_count
+      description: The count of registry modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.interface_ip
+      description: The IP address of the network interface(s) on the endpoint that
+        generated the message.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.process_pid
+      description: The pid of the process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.username
+      description: The user assosicated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.terminated
+      description: Whether the process is terminated.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.process_name
+      description: The name of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.emet_config
+      description: The configuration of the EMET.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.last_server_update
+      description: When the process was last updated in the server.
+      type: Date
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.path
+      description: The full path of the executable backing this process, e.g., c:\windows\system32\svchost.exe.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.netconn_count
+      description: The count of network connections in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.parent_pid
+      description: The pid of the process's parent.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.crossproc_count
+      description: The count of cross process events launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.segment_id
+      description: The process segment id (processes are identified by this segment
+        id and their id)
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.watchlists.segments_hit
+      description: Number of segment hits associated with the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.watchlists.wid
+      description: The id of the watchlist associated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.watchlists.value
+      description: The value of the watchlist associated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.host_type
+      description: The type of the process's host.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.processblock_count
+      description: The number of processblock associated with the process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.os_type
+      description: The operating system type of the computer for this process; one
+        of windows, linux, osx.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.childproc_count
+      description: The count of child processes launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSearch.Results.unique_id
+      description: An internal CB process id combining of the process id and segment
+        id.
+      type: String
+  - arguments:
+    - description: The internal CB process id; this is the id field in search results.
+      name: process_id
+      required: true
+    - description: The process segment id, the segment_id field in search results.
+      name: segment_id
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether to get sibling data for process.
+      name: get_related
+      predefined:
+      - "true"
+      - "false"
+    description: Gets basic process information for segment  of process.
+    name: cb-edr-process-get
+    outputs:
+    - contextPath: CarbonBlackEDR.Process.process.process_md5
+      description: The md5 of the binary image backing the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.sensor_id
+      description: The internal CB id for the sensor on which the process executed.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.uid
+      description: The uid of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.filtering_known_dlls
+      description: Whether known dlls are filtered.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Process.process.modload_count
+      description: The count of modules loaded in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.parent_unique_id
+      description: Internal CB process id of the process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.cmdline
+      description: The command line of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.max_last_update
+      description: The maximum last update of the process.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.min_last_update
+      description: The minimum last update of the process.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.last_update
+      description: The time of the most recently received event for this process in
+        remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.id
+      description: The id of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.terminated
+      description: Whether the process is terminated.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Process.process.crossproc_count
+      description: The count of cross process events launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.group
+      description: The CB Host group this sensor is assigned to.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.max_last_server_update
+      description: When the process was last updated in the server.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.parent_id
+      description: The id of the process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.hostname
+      description: The hostname of the computer for this process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.filemod_count
+      description: The count of file modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.start
+      description: The start time of the process in remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.comms_ip
+      description: |-
+        IP address that the Cb server received the events on. If the endpoint is behind a NAT,
+        for example, this will be the external IP of the network the endpoint lives on.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.regmod_count
+      description: The count of registry modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.interface_ip
+      description: The IP address of the network interface(s) on the endpoint that
+        generated the message.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.process_pid
+      description: The pid of the process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.username
+      description: The user assosicated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.process_name
+      description: The name of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.emet_count
+      description: Number of EMET associated with the process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.last_server_update
+      description: When the process was last updated in the server.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.path
+      description: The full path of the executable backing this process, e.g., c:\windows\system32\svchost.exe.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.netconn_count
+      description: The count of network connections in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.parent_pid
+      description: The pid of the process's parent.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.segment_id
+      description: The process segment id (processes are identified by this segment
+        id and their id)
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.min_last_server_update
+      description: When the process was last updated in the server.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.process.host_type
+      description: The Type of the process's host.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.processblock_count
+      description: The number of processblock associated with the process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.os_type
+      description: The operating system type of the computer for this process; one
+        of windows, linux, osx.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.process.childproc_count
+      description: The count of child processes launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.process.unique_id
+      description: An internal CB process id combining of the process id and segment
+        id
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.process_md5
+      description: The md5 of the binary image backing the sibling process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.sensor_id
+      description: The internal CB id for the sensor on which the sibling process
+        executed.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.siblings.uid
+      description: The uid of the sibling process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.parent_unique_id
+      description: Internal CB process id of the sibling process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.cmdline
+      description: The command line of the sibling process
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.id
+      description: The id of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.terminated
+      description: Whether the sibling process is terminated.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Process.siblings.group
+      description: The CB Host group this sensor is assigned to.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.parent_id
+      description: The id of the sibling process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.hostname
+      description: The hostname of the computer for the sibling process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.last_update
+      description: The time of the most recently received event for the sibling process
+        in remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.siblings.start
+      description: The start time of the sibling process in remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.siblings.process_pid
+      description: The pid of the sibling process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.siblings.username
+      description: The user assosicated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.process_name
+      description: The name of the sibling process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.path
+      description: The path of the sibling process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.parent_pid
+      description: The pid of the sibling process's parent.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.siblings.segment_id
+      description: The sibling process segment id (processes are identified by this
+        segment id and their id)
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.siblings.host_type
+      description: The type of the host associated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.os_type
+      description: The operating system type of the computer for the sibling process;
+        one of windows, linux, osx.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.child_proc_type
+      description: The type of the child process associated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.siblings.unique_id
+      description: An internal CB process id combining of the sibling process id and
+        segment id
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.process_md5
+      description: The md5 of the binary image backing the children process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.sensor_id
+      description: The internal CB id for the sensor on which the children process
+        executed.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.children.uid
+      description: The uid of the child process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.parent_unique_id
+      description: Internal CB process id of the child process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.cmdline
+      description: The command line of the child process
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.id
+      description: The id of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.terminated
+      description: Whether the process is terminated.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Process.children.group
+      description: The CB Host group this sensor is assigned to.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.parent_id
+      description: The id of the child process's parent.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.hostname
+      description: The hostname of the computer for the child process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.last_update
+      description: The time of the most recently received event for the child process
+        in remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.children.start
+      description: The start time of the child process in remote computer GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.children.process_pid
+      description: The pid of the child process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.children.username
+      description: The user assosicated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.process_name
+      description: The name of the child process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.path
+      description: The path of the child process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.parent_pid
+      description: The pid of the child process's parent.
+      type: Number
+    - contextPath: CarbonBlackEDR.Process.children.segment_id
+      description: The child process segment id (processes are identified by this
+        segment id and their id)
+      type: Date
+    - contextPath: CarbonBlackEDR.Process.children.host_type
+      description: The host type of the children process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.os_type
+      description: The operating system type of the computer for the child process;
+        one of windows, linux, osx.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.child_proc_type
+      description: The type of the host associated with the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Process.children.unique_id
+      description: An internal CB process id combining of the child process id and
+        segment id
+      type: String
+  - arguments:
+    - description: The internal CB process id; this is the id field in search results.
+      name: process_id
+      required: true
+    - description: The maximum amount of segments to be returned. Default is 50.
+      name: limit
+    description: Gets segment data for a given process.
+    name: cb-edr-process-segments-get
+    outputs:
+    - contextPath: CarbonBlackEDR.ProcessSegments.last_server_update
+      description: The last date/time when the server pushed events into this segment.
+      type: Date
+    - contextPath: CarbonBlackEDR.ProcessSegments.event_counts.filemod
+      description: The number of events for filemod event type stored in this segment.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSegments.event_counts.netconn
+      description: The number of events for netconn event type stored in this segment.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSegments.event_counts.crossproc
+      description: The number of events for crossproc event type stored in this segment.
+      type: Number
+    - contextPath: CarbonBlackEDR.ProcessSegments.unique_id
+      description: The full process ID + segment number associated with this event
+        segment.
+      type: String
+    - contextPath: CarbonBlackEDR.ProcessSegments.last_update
+      description: The last event (represented in sensor date/time) stored in this
+        segment.
+      type: Date
+  - arguments:
+    - auto: PREDEFINED
+      description: |-
+        Download a zip archive including a sensor installer for Windows, Mac OS X or Linux.
+
+        For Windows- A ZIP archive which includes a signed Windows EXE or MSI sensor installer and settings file
+        For Mac OS X- A ZIP archive which includes a signed OSX PKG sensor installer and settings file
+        For Linux- A compressed tarball (tar.gz) archive which includes a Linux sensor installer and settings file
+      name: os_type
+      predefined:
+      - windows_exe
+      - windows_msi
+      - osx
+      - linux
+      required: true
+    - description: An ID of a group related to sensors.
+      name: group_id
+      required: true
+    description: Download a zip archive including a sensor installer for Windows,
+      Mac OS X or Linux.
+    name: cb-edr-sensor-installer-download
+  - arguments:
+    - default: true
+      description: The internal CB process id; this is the id field in search results
+      name: process_id
+      required: true
+    - description: |-
+        The process segment id. This is the segment_id field in search results.
+        If this is set to 0, the API will merge all segments in results
+      name: segment_id
+      required: true
+    - description: |-
+        Return events starting with this offset.
+        If not provided, offset will be 0 (returns events starting from the beginning)
+      name: start
+    - description: How many events to fetch.
+      name: count
+    description: Gets the events for the process with CB process id (process_id) and
+      segment id (segment_id).
+    name: cb-edr-process-events-list
+    outputs:
+    - contextPath: CarbonBlackEDR.Events.process_md5
+      description: The MD5 of the executable backing this process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.sensor_id
+      description: The sensor id of the host this process executed on.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.uid
+      description: The uid of the event.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.filtering_known_dlls
+      description: Whether known dlls are filtered.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Events.modload_count
+      description: The count of modules loaded in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.parent_unique_id
+      description: The id of the parent process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.cmdline
+      description: The command line of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.max_last_update
+      description: The time of last update.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.min_last_update
+      description: The time of last update.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.last_update
+      description: The time of the last event received from this process, as recorded
+        by the remote host.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.id
+      description: The internal CB process id of this process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.terminated
+      description: Whether the event is terminated.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Events.crossproc_count
+      description: The count of cross process events launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.group
+      description: The sensor group the sensor was assigned to.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.max_last_server_update
+      description: Time of server last update.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.parent_id
+      description: The Carbon Black process id of the parent process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.hostname
+      description: The hostname of the computer this process executed on.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.filemod_count
+      description: The count of file modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.start
+      description: The start time of this process, as recorded by the remote host.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.comms_ip
+      description: |-
+        IP address that the Cb server received the events on. If the endpoint is behind a NAT,
+        for example, this will be the external IP of the network the endpoint lives on.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.regmod_count
+      description: The count of registry modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.interface_ip
+      description: The IP address of the network interface(s) on the endpoint that
+        generated the message.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.process_pid
+      description: The pid of the process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.username
+      description: The user assosicated with the event.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.process_name
+      description: The name of this process, e.g., svchost.exe.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.emet_count
+      description: Number of EMET associated with the event.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.last_server_update
+      description: When the event was last updated in the server.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.path
+      description: The full path of the executable backing this process, e.g., c:\windows\system32\svchost.exe
+        .
+      type: String
+    - contextPath: CarbonBlackEDR.Events.netconn_count
+      description: The count of network connections in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.parent_pid
+      description: The pid of the process's parent.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.segment_id
+      description: The segment id of this process.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.min_last_server_update
+      description: When the event was last updated in the server.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.host_type
+      description: The host type associated with the event.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.processblock_count
+      description: The number of processblock associated with the process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.filemod_complete.operation_type
+      description: |-
+        The operation type.
+        One of Created the file, First wrote to the file, Deleted the file, Last wrote to the file.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.filemod_complete.event_time
+      description: The event time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.filemod_complete.file_path
+      description: The file path.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.filemod_complete.md5_after_last_write
+      description: The md5 of the file after the last write.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.filemod_complete.file_type
+      description: |-
+        The file type, if known. One of: PE, Elf, UniversalBin, EICAR, OfficeLegacy, OfficeOpenXml,
+        Pdf, ArchivePkzip, ArchiveLzh, ArchiveLzw, ArchiveRar, ArchiveTar, Archive7zip.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.filemod_complete.flagged_as_potential_tamper_attempt
+      description: Whether event is flagged as potential tamper attempt.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.modload_complete.event_time
+      description: The event time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.modload_complete.loaded_module_md5
+      description: MD5 of the loaded module.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.modload_complete.loaded_module_full_path
+      description: Full path of the loaded module.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.regmod_complete.operation_type
+      description: |-
+        The operation type.
+        One of Created the file, First wrote to the file, Deleted the file, Last wrote to the file.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.regmod_complete.event_time
+      description: The event time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.regmod_complete.registry_key_path
+      description: The registry key path.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.cross-process_access_type
+      description: |-
+        The type of cross-process access:
+        RemoteThread if remote thread creation; ProcessOpen if process handle open with access privileges.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.event_time
+      description: The event time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.targeted_process_unique_id
+      description: The unique_id of the targeted process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.targeted_process_md5
+      description: The md5 of the targeted process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.targeted_process_path
+      description: The path of the targeted process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.ProcessOpen_sub-type
+      description: The sub-type for ProcessOpen.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.requested_access_priviledges
+      description: The requested access priviledges.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.crossproc_complete.flagged_as_potential_tamper_attempt
+      description: Whether event is flagged as potential tamper attempt.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.os_type
+      description: The operating system type of the computer for this process.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.binaries
+      description: The binaries associated with the event.
+      type: String
+    - contextPath: CarbonBlackEDR.Events.childproc_count
+      description: The count of child processes launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Events.unique_id
+      description: The unique_id of the Event.
+      type: String
+  - arguments:
+    - default: true
+      description: The sensor ID to quarantine
+      name: sensor_id
+      required: true
+    description: Unquarantine the endpoint
+    name: cb-edr-unquarantine-device
+  - arguments:
+    - default: true
+      description: The sensor ID to quarantine
+      name: sensor_id
+      required: true
+    description: Isolate the endpoint from the network
+    name: cb-edr-quarantine-device
+  - arguments:
+    - description: The sensor ID
+      name: id
+    - description: Returns the sensor registration(s) with specified IP address
+      name: ip
+      predefined:
+      - ""
+    - description: Retruns the sensor registration(s) in the specified sensor group
+        id
+      name: group_id
+    - description: ' only returns sensors that have been inactive for less than the
+        specified number of days'
+      name: inactive_filter_days
+    - description: Returns the sensor registration(s) with matching hostname
+      name: hostname
+    - description: The maximum amount of sensors to be returned.
+      name: limit
+    description: List the CarbonBlack sensors
+    name: cb-edr-sensors-list
+    outputs:
+    - contextPath: CarbonBlackEDR.Sensor.systemvolume_total_size
+      description: The size, in bytes, of system volume of endpoint on which sensor
+        in installed.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.emet_telemetry_path
+      description: The path of emet telemtry associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.os_environment_display_string
+      description: Human-readable string of the installed OS.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.emet_version
+      description: The emet version associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.emet_dump_flags
+      description: The flags of emet dump associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.clock_delta
+      description: The clock delta associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.supports_cblr
+      description: Whether the sensor supports cblr.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.sensor_uptime
+      description: The uptime of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.last_update
+      description: When the sensor last updated.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.physical_memory_size
+      description: The size in bytes of physical memory.
+      type: Date
+    - contextPath: CarbonBlackEDR.Sensor.build_id
+      description: The sensor version installed on this endpoint. From the /api/builds/
+        endpoint.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.uptime
+      description: Endpoint uptime in seconds.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.is_isolating
+      description: Boolean representing sensor-reported isolation status.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.event_log_flush_time
+      description: |-
+        If event_log_flush_time is set, the server will instruct the sensor to immediately
+        send all data before this date, ignoring all other throttling mechansims.
+        To force a host current, set this value to a value far in the future.
+        When the sensor has finished sending it’s queued data, this value will be null.
+      type: Date
+    - contextPath: CarbonBlackEDR.Sensor.computer_dns_name
+      description: The DNS name of the endpoint on which the sensor is installed.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.emet_report_setting
+      description: The report setting of EMET associated with sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.id
+      description: The sensor id of this sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.emet_process_count
+      description: The number of EMET processes associated with the sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.emet_is_gpo
+      description: Whther the EMET is gpo.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.power_state
+      description: The sensor power state.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.network_isolation_enabled
+      description: Boolean representing network isolation request status.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.systemvolume_free_size
+      description: The bytes free on the system volume.
+      type: Date
+    - contextPath: CarbonBlackEDR.Sensor.status
+      description: The sensor status.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.num_eventlog_bytes
+      description: Number bytes of eventlog.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.sensor_health_message
+      description: Human-readable string indicating sensor’s self-reported status.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.build_version_string
+      description: Human-readable string of the sensor version.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.computer_sid
+      description: Machine SID of this host.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.next_checkin_time
+      description: Next expected communication from this computer in server-local
+        time and zone.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.node_id
+      description: The node ID associated with the sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.cookie
+      description: The cookie associated with the sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.emet_exploit_action
+      description: The EMET exploit action associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.computer_name
+      description: NetBIOS name of this computer.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.license_expiration
+      description: When the licene of the sensor expires.
+      type: Date
+    - contextPath: CarbonBlackEDR.Sensor.supports_isolation
+      description: Whther sensor supports isolation.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.parity_host_id
+      description: The ID of the parity host associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.supports_2nd_gen_modloads
+      description: Whether the sensor support modload of 2nd generation.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.network_adapters
+      description: A pipe-delimited list list of IP,MAC pairs for each network interface.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.sensor_health_status
+      description: self-reported health score, from 0 to 100. Higher numbers are better.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.registration_time
+      description: Time this sensor originally registered in server-local time and
+        zone.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.restart_queued
+      description: Whether a restart of the sensot is queued.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.notes
+      description: The notes associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.num_storefiles_bytes
+      description: Number of storefiles bytes associated with the sensor.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.os_environment_id
+      description: The ID of the os enviroment of the sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.shard_id
+      description: The ID of the shard associated with the sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.boot_id
+      description: A sequential counter of boots since the sensor was installed.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.last_checkin_time
+      description: Last communication with this computer in server-local time and
+        zone.
+      type: String
+    - contextPath: CarbonBlackEDR.Sensor.os_type
+      description: The operating system type of the computer.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.group_id
+      description: The sensor group id this sensor is assigned to.
+      type: Number
+    - contextPath: CarbonBlackEDR.Sensor.display
+      description: Deprecated.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Sensor.uninstall
+      description: when set, indicates sensor will be directed to uninstall on next
+        checkin.
+      type: Boolean
+  - arguments:
+    - default: true
+      description: Delete a watchlist in Carbon black Response.
+      name: id
+      required: true
+    description: Delete a Watchlist that is specified using ID.
+    name: cb-edr-watchlist-delete
+  - arguments:
+    - default: true
+      description: The watchlist ID
+      name: id
+      required: true
+    - description: The raw Carbon Black query that this watchlist matches
+      name: search_query
+    - description: A description of the update.
+      name: description
+    - description: Whether the watchlist is enabled or not.
+      name: enabled
+    description: Updates a Watchlist that is specified using ID.
+    name: cb-edr-watchlist-update
+  - arguments:
+    - description: Name of the watchlist
+      name: name
+      required: true
+    - description: The raw Carbon Black query that this watchlist matches
+      name: search_query
+      required: true
+    - description: A description of the update.
+      name: description
+    - description: the type of watchlist. Valid values are ‘modules’ and ‘events’
+        for binary and process watchlists, respectively. Deafult is 'events'.
+      name: index_type
+    description: Creates a new Watchlist within EDR,
+    name: cb-edr-watchlist-create
+    outputs:
+    - contextPath: CarbonBlackEDR.Watchlist.id
+      description: An ID for the new watchlist
+      type: Number
+  - arguments:
+    - default: true
+      description: The watchlist ID
+      name: id
+    - description: The maximum amount of watchlists to be returned.
+      name: limit
+    description: Retrieve watchlist in Carbon black Response.
+    name: cb-edr-watchlists-list
+    outputs:
+    - contextPath: CarbonBlackEDR.Watchlist.last_hit_count
+      description: A count of lifetime watchlist matches.
+      type: Number
+    - contextPath: CarbonBlackEDR.Watchlist.description
+      description: A description of the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.Watchlist.search_query
+      description: The raw Carbon Black query that this watchlist matches.
+      type: String
+    - contextPath: CarbonBlackEDR.Watchlist.enabled
+      description: Whether the watchlist is enabled.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Watchlist.search_timestamp
+      description: Time of the search associated with the watchlist.
+      type: Date
+    - contextPath: CarbonBlackEDR.Watchlist.index_type
+      description: |-
+        The type of watchlist.
+        Valid values are ‘modules’ and ‘events’ for binary and process watchlists, respectively.
+      type: String
+    - contextPath: CarbonBlackEDR.Watchlist.readonly
+      description: Whether the watchlist is readonly.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Watchlist.total_hits
+      description: The number of total hits associated with the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.Watchlist.date_added
+      description: The date this watchlist was created on this Enterprise Server.
+      type: String
+    - contextPath: CarbonBlackEDR.Watchlist.group_id
+      description: The sensor group id this watchlist is assigned to.
+      type: Number
+    - contextPath: CarbonBlackEDR.Watchlist.total_tags
+      description: The number of total tags associated with the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.Watchlist.id
+      description: The id of this watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.Watchlist.last_hit
+      description: A timestamp of the last time this watchlist triggered a match.
+      type: Date
+    - contextPath: CarbonBlackEDR.Watchlist.name
+      description: The name of this watchlist.
+      type: String
+  - arguments:
+    - description: The banned hash
+      name: md5
+      required: true
+    - description: Text description of block list
+      name: text
+      required: true
+    - description: The last time the hash was blocked or prevented from being executed
+      name: last_ban_time
+    - description: Total number of blocks on the banned list
+      name: ban_count
+    - description: Last hostname to block this hash
+      name: last_ban_host
+    description: Prevent execution of a specified md5 hash
+    name: cb-edr-binary-ban
+  - arguments:
+    - description: The maximum hashs of result to retrieve.
+      name: limit
+      required: true
+    description: Returns a list of banned hashes
+    name: cb-edr-binary-bans-list
+    outputs:
+    - contextPath: CarbonBlackEDR.BinaryBan.username
+      description: The username who banned the record.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryBan.audit.username
+      description: The user assosicated with the binary ban.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryBan.audit.timestamp
+      description: The time of the binary ban.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinaryBan.audit.text
+      description: The text assosicated with the binary ban.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryBan.audit.enabled
+      description: Whether the binary ban is enabled.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.BinaryBan.audit.user_id
+      description: The user ID assosiated with binary ban.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryBan.text
+      description: The text description of banned record.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryBan.md5hash
+      description: The banned hash.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryBan.block_count
+      description: The total number of blocks on the banned list.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryBan.user_id
+      description: The id of the user who banned the record.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryBan.last_block_sensor_id
+      description: The last sensor id which prevented the hash from executing.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryBan.enabled
+      description: Whether the ban is enabled.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.BinaryBan.last_block_time
+      description: The  last time the hash was blocked or prevented from being executed.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinaryBan.timestamp
+      description: The date and time the record was banned.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryBan.last_block_hostname
+      description: The last hostname to block this hash.
+      type: String
+  - arguments:
+    - description: Alert unique identifier
+      isArray: true
+      name: alert_ids
+      required: true
+    - auto: PREDEFINED
+      description: "The requested status to \n"
+      name: status
+      predefined:
+      - Resolved
+      - Unresolved
+      - In Progress
+      - False Positive
+    - auto: PREDEFINED
+      description: Setting is_ignored to True for an Alert carries through to the
+        threat report that generated the Alert. Any further hits on IOCs contained
+        within that report will no longer trigger an Alert.
+      name: set_ignored
+      predefined:
+      - "true"
+      - "false"
+    - description: Advanced query string. Accepts the same data as the search box
+        on the Process Search page. For more information on the query syntax see https://developer.carbonblack.com/resources/query_overview.pdf.
+        If not provided, at least one other search field must be provided.
+      name: query
+    description: |-
+      Alerts update and resolution.
+      Updating Alerts requires an API key with Global Administrator privileges.
+    name: cb-edr-alert-update
+  - arguments:
+    - auto: PREDEFINED
+      description: Alert status to filter by
+      name: status
+      predefined:
+      - Unresolved
+      - In Progress
+      - Resolved
+      - False Positive
+    - description: Alert username to filter by
+      name: username
+    - description: Alert feedname to filter by
+      name: feedname
+    - description: Alert hostname to filter by
+      name: hostname
+    - description: Alert report name (watchlist_id) to filter by
+      name: report
+    - description: Advanced query string. Accepts the same data as the search box.
+        For more information on the query syntax see https://developer.carbonblack.com/resources/query_overview.pdf.
+        If not provided, at least one other search field must be provided.
+      name: query
+    - description: Sort rows by this field and order. server_added_timestamp desc
+        by default.
+      name: sort
+    - description: Return facet results. 'false' by default, set to 'true' for facets.
+      name: facet
+    - description: Maximum number of alerts to show, 10 by default.
+      name: limit
+    description: Retrieve alerts from Carbon Black Response.
+    name: cb-edr-alert-search
+    outputs:
+    - contextPath: CarbonBlackEDR.Alert.Terms
+      description: A list of strings, each representing a token as parsed by the query
+        parser.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.username
+      description: The user assosicated with the alert.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.alert_type
+      description: The type of the alert.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.sensor_criticality
+      description: The criticality of the sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.modload_count
+      description: The count of modules loaded.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.report_score
+      description: The score of the report.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.watchlist_id
+      description: The id of the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.sensor_id
+      description: The id of the sensor.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.feed_name
+      description: The name of the source feed
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.created_time
+      description: The alert creation time.
+      type: Date
+    - contextPath: CarbonBlackEDR.Alert.Results.report_ignored
+      description: Whether the alert report should be ignored.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.Alert.Results.ioc_type
+      description: The type of the resource.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.watchlist_name
+      description: The name of the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.ioc_confidence
+      description: The confience of the resource.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.ioc_attr
+      description: The resource attributes.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.alert_severity
+      description: The severity of the alert.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.crossproc_count
+      description: The count of cross process events launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.group
+      description: The sensor group id this sensor is assigned to.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.hostname
+      description: The hostname assisicated with the alert.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.filemod_count
+      description: The count of file modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.comms_ip
+      description: |-
+        IP address that the Cb server received the alert on. If the endpoint is behind a NAT,
+        for example, this will be the external IP of the network the endpoint lives on.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.netconn_count
+      description: The count of network connections in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.interface_ip
+      description: The IP address of the network interface(s) on the endpoint that
+        generated the message.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.status
+      description: The status of the alert. One of Resolved, Unresolved, In Progress,
+        or False Positive.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.process_path
+      description: The path of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.description
+      description: The description of the alert.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.process_name
+      description: The name of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.process_unique_id
+      description: The unique_id of the targeted process.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.process_id
+      description: The id of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.link
+      description: A link to the report.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results._version_
+      description: The version of the alert.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.regmod_count
+      description: The count of registry modifications in this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.md5
+      description: The md5 of the process.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.segment_id
+      description: The segment id of the process.
+      type: Date
+    - contextPath: CarbonBlackEDR.Alert.Results.total_hosts
+      description: The number of total host.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.feed_id
+      description: The id of the source feed.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.ioc_value
+      description: The value of the resource.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.os_type
+      description: The operating system type of the computer for this process; one
+        of Windows, Linux, OSX.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.childproc_count
+      description: The count of processes launched by this process.
+      type: Number
+    - contextPath: CarbonBlackEDR.Alert.Results.unique_id
+      description: The unique_id of the alert.
+      type: String
+    - contextPath: CarbonBlackEDR.Alert.Results.feed_rating
+      description: The rating of the Source feed.
+      type: Number
+  - arguments:
+    - default: true
+      description: The md5 of the binary
+      name: md5
+      required: true
+    description: Returns the metadata for the binary with the provided md5
+    name: cb-edr-binary-summary
+    outputs:
+    - contextPath: CarbonBlackEDR.BinaryMetadata.host_count
+      description: The number of host for the targeted file.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryMetadata.digsig_result
+      description: |-
+        Digital signature status.
+        One of Signed, Unsigned, Expired, Bad Signature, Invalid Signature, Invalid Chain,
+        Untrusted Root, or Explicit Distrust.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.observed_filename
+      description: A list of strings, one per unique filename this binary has been
+        seen as.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.product_version
+      description: |-
+        If present, Product version from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.digsig_issuer
+      description: If signed and present, the issuer name.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.signed
+      description: |-
+        Digital signature status.
+        One of Signed, Unsigned, Expired, Bad Signature, Invalid Signature, Invalid Chain,
+        Untrusted Root, or Explicit Distrust.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.digsig_sign_time
+      description: If signed, the timestamp of the signature in GMT.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinaryMetadata.orig_mod_len
+      description: Filesize in bytes.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryMetadata.is_executable_image
+      description: Whether the file is an EXE.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.BinaryMetadata.is_64bit
+      description: Whether the file is x64.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.BinaryMetadata.digsig_subject
+      description: If signed and present, the subject.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.digsig_publisher
+      description: If signed and present, the publisher name.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.group
+      description: A list of 0 or more sensor groups (by name) in which this binary
+        was observed.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.event_partition_id
+      description: The ID of the event partition associated with the binary file.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryMetadata.file_version
+      description: |-
+        If present, File version from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.company_name
+      description: |-
+        If present, Company name from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.internal_name
+      description: |-
+        If present, Internal name from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.icon
+      description: The icon of the file.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.product_name
+      description: |-
+        If present, Product name from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.digsig_result_code
+      description: HRESULT_FROM_WIN32 for the result of the digital signature operation
+        via WinVerifyTrust.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.timestamp
+      description: The time of the file search.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinaryMetadata.copied_mod_len
+      description: Bytes copied from remote host, if file is > 25MB this will be less
+        than orig_mod_len.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryMetadata.server_added_timestamp
+      description: The first time this binary was received on the server in the server
+        GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinaryMetadata.facet_id
+      description: The id of the facet searched.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryMetadata.digsig_prog_name
+      description: If signed and present, the program name.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.md5
+      description: The md5 hash of this binary.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.endpoint
+      description: |-
+        A list of 0 or more hostname, sensorid tuples on which this binary was observed.
+        The | character serves as the delimiter between the hostname and the sensorid.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.watchlists.wid
+      description: The wid of the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.watchlists.value
+      description: The value of the watchlist.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinaryMetadata.legal_copyright
+      description: |-
+        If present, Legal copyright from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.original_filename
+      description: |-
+        If present, Original filename from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.cb_version
+      description: The version of Carbon Black.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinaryMetadata.os_type
+      description: The operating system type of the computer for this process; one
+        of Windows, Linux, OSX.
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.file_desc
+      description: |-
+        If present, File description from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinaryMetadata.last_seen
+      description: The last seen time of the file.
+      type: Date
+  - arguments:
+    - default: true
+      description: The md5 hash of the binary
+      name: md5
+      required: true
+    description: Download the binary with this md5 hash.
+    name: cb-edr-binary-download
+  - arguments:
+    - description: Gets the name of the product this file is distributed with.
+      name: product_name
+    - description: The md5 hash of this binary
+      name: md5
+    - auto: PREDEFINED
+      description: Digital signature status
+      name: digital_signature
+      predefined:
+      - Signed
+      - Unsigned
+      - Expired
+      - Bad Signature
+      - Invalid Signature
+      - Invalid Chain
+      - Untrusted Root
+      - Explicit Distrust
+    - description: If signed and present, the publisher name.
+      name: publisher
+    - description: The name of the company that produced the file.
+      name: company_name
+    - description: |-
+        Sensor group this sensor was
+        assigned to at the time of process
+        execution
+      name: group
+    - description: |-
+        Hostname of the computer on
+        which the process was executed
+      name: hostname
+    - description: Sort rows by this field and order. server_added_timestamp desc
+        by default.
+      name: sort
+    - description: |-
+        Full path of the binary at the time
+        of collection.
+      name: observed_filename
+    - description: Advanced query string. Accepts the same data as the search box.
+        For more information on the query syntax see https://developer.carbonblack.com/resources/query_overview.pdf.
+        If not provided, at least one other search field must be provided.
+      name: query
+    - description: Return facet results. ‘false’ by default, set to ‘true’ for facets.
+      name: facet
+    - description: facet field name to return. Multiple facet.field parameters can
+        be specified in a query.
+      name: facet_field
+    - description: Return this many rows, 10 by default.
+      name: limit
+    - description: Start at this row, 0 by default.
+      name: start
+    description: Binary search
+    name: cb-edr-binary-search
+    outputs:
+    - contextPath: CarbonBlackEDR.BinarySearch.terms
+      description: A list of strings, each representing a token as parsed by the query
+        parser.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.total_results
+      description: The number of matching binaries.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinarySearch.highlights
+      description: A list of highlight objects matching the query string. Format the
+        same as the process event object.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.host_count
+      description: The count of unique endpoints which have ever reported this binary.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.original_filename
+      description: |-
+        If present, Original filename from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.legal_copyright
+      description: |-
+        If present, Legal copyright from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.digsig_result
+      description: |-
+        Digital signature status.
+        One of Signed, Unsigned, Expired, Bad Signature, Invalid Signature, Invalid Chain,
+        Untrusted Root, or Explicit Distrust.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.observed_filename
+      description: A list of strings, one per unique filename this binary has been
+        seen as.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.product_version
+      description: |-
+        If present, Product version from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.watchlists.wid
+      description: The wid of the watchlist.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.watchlists.value
+      description: The value of the watchlist.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.facet_id
+      description: The id of the facet searched.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.digsig_issuer
+      description: If signed and present, the issuer name.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.copied_mod_len
+      description: Bytes copied from remote host, if file is > 25MB this will be less
+        than orig_mod_len.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.comments
+      description: Comments of the search.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.digsig_sign_time
+      description: If signed, the timestamp of the signature in GMT.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.digsig_prog_name
+      description: If signed and present, the program name.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.orig_mod_len
+      description: Filesize in bytes.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.is_executable_image
+      description: Whether the file is an EXE.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.is_64bit
+      description: Whether the file is x64.
+      type: Boolean
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.md5
+      description: The md5 hash of this binary.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.digsig_subject
+      description: If signed and present, the subject.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.digsig_publisher
+      description: If signed and present, the publisher name.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.endpoint
+      description: |-
+        A list of 0 or more hostname, sensorid tuples on which this binary was observed.
+        The | character serves as the delimiter between the hostname and the sensorid.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.group
+      description: A list of 0 or more sensor groups (by name) in which this binary
+        was observed.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.results.event_partition_id
+      description: The ID of the event partition associated with the binary file.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.digsig_result_code
+      description: HRESULT_FROM_WIN32 for the result of the digital signature operation
+        via WinVerifyTrust.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.file_version
+      description: |-
+        If present, File version from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.signed
+      description: |-
+        Digital signature status: One of Signed, Unsigned, Expired, Bad Signature, Invalid Signature,
+        Invalid Chain, Untrusted Root, or Explicit Distrust.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.last_seen
+      description: The last seen time of the file.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.company_name
+      description: |-
+        If present, Company name from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.internal_name
+      description: |-
+        If present, Internal name from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.timestamp
+      description: Search creation time.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.cb_version
+      description: The version of Carbon Black.
+      type: Number
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.os_type
+      description: The operating system type of this binary; one of windows, linux,
+        osx.
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.file_desc
+      description: |-
+        If present, File description from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.product_name
+      description: |-
+        If present, Product name from FileVersionInformation. For more information check
+        https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.server_added_timestamp
+      description: The first time this binary was received on the server in the server
+        GMT time.
+      type: Date
+    - contextPath: CarbonBlackEDR.BinarySearch.Results.private_build
+      description: If present, Private build from FileVersionInformation. For more
+        information check https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.fileversioninfo?redirectedfrom=MSDN&view=net-5.0
+      type: String
+  - arguments:
+    - description: The sensor ID
+      name: id
+    - default: true
+      description: Query sensors with specified IP address
+      isArray: true
+      name: ip
+    - description: Query sensors with matching hostname
+      name: hostname
+    description: List the CarbonBlack sensors
+    name: endpoint
+    outputs:
+    - contextPath: Endpoint.Hostname
+      description: The endpoint's hostname.
+      type: String
+    - contextPath: Endpoint.Relationships.EntityA
+      description: The source of the relationship.
+      type: string
+    - contextPath: Endpoint.Relationships.EntityB
+      description: The destination of the relationship.
+      type: string
+    - contextPath: Endpoint.Relationships.Relationship
+      description: The name of the relationship.
+      type: string
+    - contextPath: Endpoint.Relationships.EntityAType
+      description: The type of the source of the relationship.
+      type: string
+    - contextPath: Endpoint.Relationships.EntityBType
+      description: The type of the destination of the relationship.
+      type: string
+    - contextPath: Endpoint.OS
+      description: The endpoint's operation system.
+      type: String
+    - contextPath: Endpoint.IPAddress
+      description: The endpoint's IP address.
+      type: String
+    - contextPath: Endpoint.ID
+      description: The endpoint's ID.
+      type: String
+    - contextPath: Endpoint.Status
+      description: The endpoint's status.
+      type: String
+    - contextPath: Endpoint.IsIsolated
+      description: The endpoint's isolation status.
+      type: String
+    - contextPath: Endpoint.MACAddress
+      description: The endpoint's MAC address.
+      type: String
+    - contextPath: Endpoint.Vendor
+      description: The integration name of the endpoint vendor.
+      type: String
+    - contextPath: Endpoint.Domain
+      description: The endpoint's domain.
+      type: String
+    - contextPath: Endpoint.DHCPServer
+      description: The DHCP server of the endpoint.
+      type: String
+    - contextPath: Endpoint.OSVersion
+      description: The endpoint's operation system version.
+      type: String
+    - contextPath: Endpoint.BIOSVersion
+      description: The endpoint's BIOS version.
+      type: String
+    - contextPath: Endpoint.Model
+      description: The model of the machine or device.
+      type: String
+    - contextPath: Endpoint.Memory
+      description: Memory on this endpoint.
+      type: Int
+    - contextPath: Endpoint.Processors
+      description: The number of processors.
+      type: Int
+    - contextPath: Endpoint.Processor
+      description: The model of the processor.
+      type: String
+  dockerimage: demisto/python3:3.10.1.26972
+  isfetch: true
+  runonce: false
+  script: |
+    register_module_line('VMware Carbon Black EDR v2', 'start', __line__())
+    import dateparser
+
+
+
+    from typing import Callable, Dict, List, Any, Union, Tuple
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()  # pylint: disable=no-member
+
+    ''' CONSTANTS '''
+    INTEGRATION_NAME = 'Carbon Black EDR'
+    DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+
+    ''' PARSING PROCESS EVENT COMPLEX FIELDS CLASS'''
+
+
+    class ProcessEventDetail:
+        """
+        This class representing the Process Event Details as found here:
+        https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/#process-event-details
+        Each sub-class representing a different piped-versioned field, and support the format method.
+        """
+
+        def __init__(self, piped_version: Union[str, list], fields):
+            self.fields = []
+            if not isinstance(piped_version, list):
+                piped_version = [piped_version]
+            for entry in piped_version:
+                data = entry.split('|')
+
+                # zip works when number of values is not equal, which can result in incorrect data.
+                if len(data) != len(fields):
+                    demisto.debug(f'{INTEGRATION_NAME} - Missing details. Ignoring entry: {entry}.')
+
+                self.fields.append(dict(zip(fields, data)))
+
+        def format(self):
+            return self.fields
+
+
+    class filemod_complete(ProcessEventDetail):
+        FIELDS = ['operation_type', 'event_time', 'file_path', 'md5_after_last_write',
+                  'file_type', 'flagged_as_potential_tamper_attempt']
+        OPERATION_TYPE = {'1': 'Created the file',
+                          '2': 'First wrote to the file',
+                          '4': 'Deleted the file',
+                          '8': 'Last wrote to the file'}
+        FILE_TYPE = {'1': 'PE',
+                     '2': 'Elf',
+                     '3': 'UniversalBin',
+                     '8': 'EICAR',
+                     '16': 'OfficeLegacy',
+                     '17': 'OfficeOpenXml',
+                     '48': 'Pdf',
+                     '64': 'ArchivePkzip',
+                     '65': 'ArchiveLzh',
+                     '66': 'ArchiveLzw',
+                     '67': 'ArchiveRar',
+                     '68': 'ArchiveTar',
+                     '69': 'Archive7zip'}
+
+        def __init__(self, piped_version):
+            super().__init__(piped_version, self.FIELDS)
+
+        def format(self):
+            for entry in self.fields:
+                entry['operation_type'] = self.OPERATION_TYPE.get(entry.get('operation_type', ''), '')
+                entry['file_type'] = self.FILE_TYPE.get(entry.get('file_type', ''), '')
+            return self.fields
+
+
+    class modload_complete(ProcessEventDetail):
+        FIELDS = ['event_time', 'loaded_module_md5', 'loaded_module_full_path']
+
+        def __init__(self, piped_version):
+            super().__init__(piped_version, self.FIELDS)
+
+        def format(self):
+            return self.fields
+
+
+    class regmod_complete(ProcessEventDetail):
+        FIELDS = ['operation_type', 'event_time', 'registry_key_path']
+        OPERATION_TYPE = {'1': 'Created the file',
+                          '2': 'First wrote to the file',
+                          '4': 'Deleted the file',
+                          '8': 'Last wrote to the file'}
+
+        def __init__(self, piped_version):
+            super().__init__(piped_version, self.FIELDS)
+
+        def format(self):
+            for entry in self.fields:
+                entry['operation_type'] = self.OPERATION_TYPE.get(entry.get('operation_type', ''), '')
+            return self.fields
+
+
+    class crossproc_complete(ProcessEventDetail):
+        FIELDS = ['cross-process_access_type', 'event_time', 'targeted_process_unique_id',
+                  'targeted_process_md5', 'targeted_process_path', 'ProcessOpen_sub-type',
+                  'requested_access_priviledges', 'flagged_as_potential_tamper_attempt']
+        SUB_TYPES = {'1': 'handle open to process', '2': 'handle open to thread in process'}
+
+        def __init__(self, piped_version):
+            super().__init__(piped_version, self.FIELDS)
+
+        def format(self):
+            for entry in self.fields:
+                entry['ProcessOpen_sub-type'] = self.SUB_TYPES.get(entry.get('ProcessOpen_sub-type', ''), '')
+            return self.fields
+
+
+    ''' CLIENT CLASS '''
+
+
+    class Client(BaseClient):
+        def __init__(self, base_url: str, apitoken: str, use_ssl: bool, use_proxy: bool):
+            headers = {'X-Auth-Token': apitoken, 'Accept': 'application/json', 'Content-Type': 'application/json'}
+            super().__init__(base_url, headers=headers, verify=use_ssl, proxy=use_proxy)
+
+        def http_request(self, url: str, method: str, params: dict = None, json_data: dict = None,
+                         ok_codes: tuple = (200, 204), resp_type: str = 'json') -> dict:
+            """
+            initiates a http request to openphish
+            """
+            data = self._http_request(
+                method=method,
+                ok_codes=ok_codes,
+                url_suffix=url,
+                params=params,
+                resp_type=resp_type,
+                return_empty_response=True,
+                json_data=json_data,
+                timeout=30,
+            )
+            return data
+
+        def get_sensors(self, id: str = None, hostname: str = None, ipaddr: str = None,  # noqa: F841
+                        groupid: str = None, inactive_filter_days: str = None,  # noqa: F841
+                        limit: Union[int, str] = None) -> Tuple[int, List[dict]]:
+            url = f'/v1/sensor/{id}' if id else '/v1/sensor'
+            query_params = assign_params(
+                ip=ipaddr,
+                hostname=hostname,
+                groupid=groupid,
+                inactive_filter_days=inactive_filter_days
+            )
+            res = self.http_request(url=url, method='GET', params=query_params, ok_codes=(200, 204))
+
+            # When querying specific sensor without filters, the api returns dictionary instead of list.
+            return len(res), res[:arg_to_number(limit, 'limit')] if isinstance(res, list) else [res]
+
+        def get_alerts(self, status: str = None, username: str = None, feedname: str = None,
+                       hostname: str = None, report: str = None, sort: str = None, query: str = None,
+                       facet: str = None, limit: Union[str, int] = None, start: str = None,
+                       allow_empty_params: bool = False) -> dict:
+
+            query_params = assign_params(
+                status=status,
+                username=username,
+                feedname=feedname,
+                hostname=hostname,
+                report=report,
+                query=query
+            )
+            query_string = _create_query_string(query_params, allow_empty_params=allow_empty_params)
+            params = assign_params(q=query_string,
+                                   rows=arg_to_number(limit, 'limit'),
+                                   start=start,
+                                   sort=sort,
+                                   facet=facet,
+                                   )
+
+            return self.http_request(url='/v2/alert', method='GET', params=params)
+
+        def get_binaries(self, md5: str = None, product_name: str = None, signed: str = None,  # noqa: F841
+                         group: str = None, hostname: str = None, digsig_publisher: str = None,  # noqa: F841
+                         company_name: str = None, sort: str = None,
+                         observed_filename: str = None, query: str = None, facet: str = None,
+                         limit: str = None, start: str = None) -> dict:
+
+            query_params = assign_params(
+                md5=md5,
+                product_name=product_name,
+                signed=signed,
+                group=group,
+                hostname=hostname,
+                digsig_publisher=digsig_publisher,
+                company_name=company_name,
+                observed_filename=observed_filename,
+                query=query
+            )
+            query_string = _create_query_string(query_params)
+            params = assign_params(q=query_string,
+                                   rows=arg_to_number(limit, 'limit'),
+                                   start=start,
+                                   sort=sort,
+                                   facet=facet,
+                                   )
+            return self.http_request(url='/v1/binary', method='GET', params=params)
+
+        def get_processes(self, process_name: str = None, group: str = None, hostname: str = None,
+                          parent_name: str = None, process_path: str = None, md5: str = None,
+                          query: str = None, group_by: str = None, sort: str = None, facet: str = None,
+                          facet_field: str = None, limit: str = None, start: str = None, allow_empty: bool = False):
+            query_fields = ['process_name', 'group', 'hostname', 'parent_name', 'process_path', 'md5', 'query']
+            local_params = locals()
+            query_params = assign_params(
+                process_name=process_name,
+                parent_name=parent_name,
+                process_path=process_path,
+                group=group,
+                hostname=hostname,
+                md5=md5,
+                query=query
+            )
+            query_string = _create_query_string(query_params, allow_empty)
+            params = assign_params(q=query_string,
+                                   rows=arg_to_number(limit, 'limit'),
+                                   start=start,
+                                   sort=sort,
+                                   facet=facet,
+                                   )
+            if facet_field:
+                params['facet.field'] = facet_field
+            if group_by:
+                params['cb.group'] = group_by
+            return self.http_request(url='/v1/process', method='GET', params=params)
+
+        def get_formatted_ProcessEventDetail(self, process_json: dict):
+            complex_fields = {'filemod_complete': filemod_complete, 'modload_complete': modload_complete,
+                              'regmod_complete': regmod_complete, 'crossproc_complete': crossproc_complete}
+            formatted_json = {}
+            for field in process_json:
+                if field in complex_fields:
+                    # creating the relevant field object and formatting it.
+                    field_object: ProcessEventDetail = complex_fields[field](process_json.get(field))
+                    formatted_json[field] = field_object.format()
+                else:
+                    formatted_json[field] = process_json.get(field)
+
+            return formatted_json
+
+
+    ''' HELPER FUNCTIONS '''
+
+
+    def _create_query_string(params: dict, allow_empty_params: bool = False) -> str:
+        """
+        Creating a cb query from params according to https://developer.carbonblack.com/resources/query_overview.pdf.
+        if 'query' in params, it overrides the other params.
+        allow_empty_params is used for testing and not production as it would overload the context.
+        """
+        # If user provided both params and query, it means he is not experienced, and might expect different results,
+        # therefore we decided to prohibit the use of both in search commands.
+        if 'query' in params and len(params) > 1:
+            raise DemistoException(f'{INTEGRATION_NAME} - Searching with both query and other filters is not allowed. '
+                                   f'Please provide either a search query or one of the possible filters.')
+        elif 'query' in params:
+            return params['query']
+
+        current_query = [f"{query_field}:{params[query_field]}" for query_field in params]
+        current_query = ' AND '.join(current_query)
+
+        if not current_query and not allow_empty_params:
+            raise DemistoException(f'{INTEGRATION_NAME} - Search without any filter is not permitted.')
+
+        return current_query
+
+
+    def _add_to_current_query(current_query: str = '', params: dict = None) -> str:
+        new_query = ''
+        if not params:
+            return current_query
+        if current_query:
+            new_query += f'({current_query}) AND '
+        current_query_params = [f"{query_field}:{params[query_field]}" for query_field in params]
+        new_query += ' AND '.join(current_query_params)
+        return new_query
+
+
+    def _get_sensor_isolation_change_body(client: Client, sensor_id: str, new_isolation: bool) -> dict:
+        sensor_data = client.get_sensors(sensor_id)[1][0]  # returns (length, [sensor_data])
+        new_sensor_data = {
+            'network_isolation_enabled': new_isolation,
+            'group_id': sensor_data.get('group_id')
+        }
+
+        return new_sensor_data
+
+
+    def _parse_field(raw_field: str, sep: str = ',', index_after_split: int = 0, chars_to_remove: str = '') -> str:
+        '''
+        This function allows getting a specific complex sub-string. "example,example2|" -> 'example2'
+        '''
+        if not raw_field:
+            demisto.debug(f'{INTEGRATION_NAME} - Got empty raw field to parse.')
+            return ''
+        try:
+            new_field = raw_field.split(sep)[index_after_split]
+        except IndexError:
+            demisto.error(f'{INTEGRATION_NAME} - raw: {raw_field}, split by {sep} has no index {index_after_split}')
+            return ''
+        chars_to_remove = set(chars_to_remove)
+        for char in chars_to_remove:
+            new_field = new_field.replace(char, '')
+        return new_field
+
+
+    def _get_isolation_status_field(isolation_activated: bool, is_isolated: bool) -> str:
+        # Logic for isolation can be found in:
+        # https://developer.carbonblack.com/reference/enterprise-response/6.3/rest-api/#sensorsendpoints
+        if isolation_activated:
+            sensor_isolation_status = 'Yes' if is_isolated else 'Pending isolation'
+        else:
+            sensor_isolation_status = 'Pending unisolation' if is_isolated else 'No'
+
+        return sensor_isolation_status
+
+
+    ''' COMMAND FUNCTIONS '''
+
+
+    def unquarantine_device_command(client: Client, sensor_id: str) -> CommandResults:
+        url = f'/v1/sensor/{sensor_id}'
+        res = client.http_request(url=url, method='PUT',
+                                  json_data=_get_sensor_isolation_change_body(client, sensor_id, False))
+        if not res:
+            raise Exception(f'{INTEGRATION_NAME} - could not un-isolate sensor {sensor_id}')
+        return CommandResults(readable_output='Sensor was un-isolated successfully.')
+
+
+    def quarantine_device_command(client: Client, sensor_id: str) -> CommandResults:
+        url = f'/v1/sensor/{sensor_id}'
+        res = client.http_request(url=url, method='PUT',
+                                  json_data=_get_sensor_isolation_change_body(client, sensor_id, True))
+        if not res:
+            raise Exception(f'{INTEGRATION_NAME} - could not isolate sensor {sensor_id}')
+        return CommandResults(readable_output='Sensor was isolated successfully.')
+
+
+    def sensors_list_command(client: Client, id: str = None, hostname: str = None, ip: str = None,
+                             group_id: str = None, inactive_filter_days: str = None, limit: int = None) -> CommandResults:
+        try:
+            total_num_of_sensors, res = client.get_sensors(id, hostname, ip, group_id, inactive_filter_days, limit)
+
+            human_readable_data = []
+            for sensor_data in res:
+                human_readable_data.append({
+                    'Computer Name': sensor_data.get('computer_name'),
+                    'Status': sensor_data.get('status'),
+                    'OS Version': sensor_data.get('os_type'),
+                    'Node Id': sensor_data.get('node_id'),
+                    'Sensor Version': sensor_data.get('build_version_string'),
+                    'Sensor Id': sensor_data.get('id'),
+                    'IP Address/MAC Info': _parse_field(sensor_data.get('network_adapters', ''), index_after_split=1,
+                                                        chars_to_remove='|'),
+                    'Group ID': sensor_data.get('group_id'),
+                    'Power State': sensor_data.get('power_state'),
+                    'Health Score': sensor_data.get('sensor_health_status'),
+                    'Is Isolating': sensor_data.get('is_isolating')
+
+                })
+
+            md = tableToMarkdown(f'{INTEGRATION_NAME} - Sensors', human_readable_data, removeNull=True, headers=[
+                'Sensor Id', 'Computer Name', 'Status', 'Power State', 'Group ID', 'OS Version', 'Health Score',
+                'Is Isolating', 'Node Id', 'Sensor Version', 'IP Address/MAC Info'])
+            md += f"\nShowing {len(res)} out of {total_num_of_sensors} results."
+            return CommandResults(outputs=res, outputs_prefix='CarbonBlackEDR.Sensor', outputs_key_field='id',
+                                  readable_output=md, raw_response=res)
+        except DemistoException as e:
+            if '404' in e.message:
+                raise Exception(f'{INTEGRATION_NAME} - The sensor {id} could not be found. '
+                                f'Please try using a different sensor.')
+            else:
+                raise Exception(f'{INTEGRATION_NAME} - Error connecting to API. Error: {e.message}')
+
+
+    def watchlist_delete_command(client: Client, id: str) -> CommandResults:
+        res = client.http_request(url=f'/v1/watchlist/{id}', method='DELETE')
+        # res contains whether the task successful.
+        return CommandResults(readable_output=res.get('result'))
+
+
+    def watchlist_update_command(client: Client, id: str, search_query: str, description: str,
+                                 enabled: bool = None) -> CommandResults:
+        params = assign_params(enabled=enabled, search_query=search_query, description=description)
+        res = client.http_request(url=f'/v1/watchlist/{id}', method='PUT', json_data=params)
+
+        # res contains whether the task successful.
+        return CommandResults(readable_output=res.get('result'))
+
+
+    def watchlist_create_command(client: Client, name: str, search_query: str, index_type: str = 'events',
+                                 description: str = '') -> CommandResults:
+        params = assign_params(name=name, search_query=search_query, description=description, index_type=index_type)
+        res = client.http_request(url='/v1/watchlist', method='POST', json_data=params)
+        watchlist_id = res.get('id')
+        if id:
+            output = {'id': watchlist_id}
+            return CommandResults(outputs=output, outputs_prefix='CarbonBlackEDR.Watchlist', outputs_key_field='id',
+                                  readable_output=f"Successfully created new watchlist with id {watchlist_id}")
+        return CommandResults(readable_output="Could not create new watchlist.")
+
+
+    def get_watchlist_list_command(client: Client, id: str = None, limit: str = None) -> CommandResults:
+        url = f'/v1/watchlist/{id}' if id else '/v1/watchlist'
+        res: Union[dict, list] = client.http_request(url=url, method='GET')
+
+        human_readable_data = []
+        # Handling case of only one record.
+        if id:
+            res = [res]
+        total_num_of_watchlists = len(res)
+        res = res[:arg_to_number(limit, 'limit')]
+        for watchlist in res:
+            human_readable_data.append({
+                'Name': watchlist.get('name'),
+                'ID': watchlist.get('id'),
+                'Group ID': watchlist.get('group_id'),
+                'Description': watchlist.get('description'),
+                'Total Hits': watchlist.get('total_hits'),
+                'Query': watchlist.get('search_query'),
+            })
+
+        md = f'{INTEGRATION_NAME} - Watchlists'
+        md += tableToMarkdown(f"\nShowing {len(res)} out of {total_num_of_watchlists} results.", human_readable_data,
+                              removeNull=True)
+        return CommandResults(outputs=res, outputs_prefix='CarbonBlackEDR.Watchlist', outputs_key_field='name',
+                              readable_output=md)
+
+
+    def binary_ban_command(client: Client, md5: str, text: str, last_ban_time: str = None, ban_count: str = None,
+                           last_ban_host: str = None) -> CommandResults:
+        body = assign_params(md5hash=md5,
+                             text=text, last_ban_time=last_ban_time, ban_count=ban_count,
+                             last_ban_host=last_ban_host)
+        try:
+            client.http_request(url='/v1/banning/blacklist', method='POST', json_data=body)
+        except DemistoException as e:
+            if '409' in e.message:
+                return CommandResults(readable_output=f'Ban for md5 {md5} already exists')
+            else:
+                raise Exception(f'{INTEGRATION_NAME} - Error connecting to API. Error: {e.message}')
+        return CommandResults(readable_output='hash banned successfully')
+
+
+    def binary_bans_list_command(client: Client, limit: str = None) -> CommandResults:
+        res = client.http_request(url='/v1/banning/blacklist', method='GET')
+        res = res[:arg_to_number(limit, 'limit')] if limit else res
+        human_readable_data = []
+        for banned in res:
+            human_readable_data.append({
+                'md5': banned.get('md5hash'),
+                'Text': banned.get('text'),
+                'Timestamp': banned.get('timestamp'),
+                'User ID': banned.get('user_id'),
+                'Username': banned.get('username'),
+            })
+
+        return CommandResults(outputs=res, outputs_prefix='CarbonBlackEDR.BinaryBan', outputs_key_field='md5',
+                              readable_output=tableToMarkdown(f'{INTEGRATION_NAME} -Banned Hashes', human_readable_data))
+
+
+    def alert_update_command(client: Client, alert_ids: str, status: str = None, set_ignored: bool = None,
+                             query: str = None) -> CommandResults:
+        url = '/v1/alerts'
+        body = assign_params(alert_ids=argToList(alert_ids),
+                             requested_status=status,
+                             set_ignored=set_ignored,
+                             query=query
+                             )
+        res = client.http_request(url=url, method='POST', json_data=body)
+        if not res:
+            raise Exception(f"{INTEGRATION_NAME} - Could not find alerts: {', '.join(alert_ids)}.")
+        return CommandResults(readable_output='Alert was updated successfully.')
+
+
+    def alert_search_command(client: Client, status: str = None, username: str = None, feedname: str = None,
+                             hostname: str = None, report: str = None, sort: str = None, query: str = None,
+                             facet: str = None, limit: str = None, start: str = '0') -> CommandResults:
+        res = client.get_alerts(status, username, feedname, hostname, report, sort, query, facet, limit, start)
+        if not res:
+            raise Exception(f'{INTEGRATION_NAME} - Request cannot be processed.')
+
+        alerts = res.get('results', [])
+        human_readable_data = []
+        for alert in alerts:
+            human_readable_data.append({
+                'Alert ID': alert.get('unique_id'),
+                'File Name': alert.get('process_name'),
+                'File Path': alert.get('process_path'),
+                'Hostname': alert.get('hostname'),
+                'Source md5': alert.get('md5'),
+                'Segment ID': alert.get('segment_id'),
+                'Severity': alert.get('alert_severity'),
+                'Created Time': alert.get('created_time'),
+                'Status': alert.get('status'),
+            })
+
+        outputs = assign_params(Results=alerts, Facets=res.get('facets'), Terms=res.get('terms'),
+                                total_results=res.get('total_results'))
+
+        md = f'{INTEGRATION_NAME} - Alert Search Results'
+        md += tableToMarkdown(
+            f"\nShowing {start} - {len(res.get('results', []))} out of {res.get('total_results', '0')} results.",
+            human_readable_data)
+
+        return CommandResults(outputs=outputs, outputs_prefix='CarbonBlackEDR.Alert',
+                              outputs_key_field='Terms',
+                              readable_output=md)
+
+
+    def binary_summary_command(client: Client, md5: str) -> CommandResults:
+        url = f'/v1/binary/{md5}/summary'
+        try:
+            res = client.http_request(url=url, method='GET')
+            if not res:
+                return CommandResults(
+                    readable_output=f'Could not find data for file {md5}.')
+
+            human_readable_data = {
+                'Host Count': res.get('host_count'),
+                'Group': res.get('group'),
+                'OS Type': res.get('os_type'),
+                'Timestamp': res.get('timestamp'),
+                'md5': res.get('md5'),
+                'Last Seen': res.get('last_seen'),
+                'Is Executable Image': res.get('is_executable_image')
+            }
+
+            return CommandResults(outputs=res, outputs_prefix='CarbonBlackEDR.BinaryMetadata', outputs_key_field='md5',
+                                  readable_output=tableToMarkdown(f'{INTEGRATION_NAME} -Summary For File {md5}',
+                                                                  human_readable_data, removeNull=True))
+        except DemistoException as e:
+            if '404' in e.message:
+                return CommandResults(readable_output=f'File {md5} could not be found')
+            else:
+                raise Exception(f'{INTEGRATION_NAME} - Error connecting to API. Error: {e.message}')
+
+
+    def binary_download_command(client: Client, md5: str) -> CommandResults:
+        url = f'/v1/binary/{md5}'
+        try:
+            res = client.http_request(url=url, method='GET', ok_codes=(200, 204, 404), resp_type='content')
+            if not res:
+                return CommandResults(
+                    readable_output=f'Could not find data for file {md5}.')
+            return fileResult(f'binary_{md5}.zip', res, file_type=9)
+
+        except DemistoException as e:
+            if '404' in e.message:
+                return CommandResults(readable_output=f'File {md5} could not be found')
+            else:
+                raise Exception(f'{INTEGRATION_NAME} - Error connecting to API. Error: {e.message}')
+
+
+    def binary_search_command(client: Client, md5: str = None, product_name: str = None, digital_signature: str = None,
+                              group: str = None, hostname: str = None, publisher: str = None, company_name: str = None,
+                              sort: str = None, observed_filename: str = None, query: str = None, facet: str = None,
+                              limit: str = '50', start: str = '0') -> CommandResults:
+        res = client.get_binaries(md5, product_name, digital_signature, group, hostname, publisher, company_name, sort,
+                                  observed_filename, query, facet, limit, start)
+
+        if not res:
+            raise Exception(f'{INTEGRATION_NAME} - Request cannot be processed.')
+
+        outputs = assign_params(Results=res.get('results'), Facets=res.get('facets'), Terms=res.get('terms'),
+                                total_results=res.get('total_results'))
+        human_readable_data = []
+        for binary_file in res.get('results', []):
+            human_readable_data.append({
+                'Host Count': binary_file.get('host_count'),
+                'Group': binary_file.get('group'),
+                'OS Type': binary_file.get('os_type'),
+                'Timestamp': binary_file.get('timestamp'),
+                'md5': binary_file.get('md5'),
+                'Last Seen': binary_file.get('last_seen'),
+                'Is Executable Image': binary_file.get('is_executable_image')
+            })
+
+        md = f'{INTEGRATION_NAME} - Binary Search Results'
+        md += tableToMarkdown(f"\nShowing {start} - {len(res.get('results', []))} out of {res.get('total_results', '0')} "
+                              f"results.", human_readable_data, headers=['md5', 'Group', 'OS Type', 'Host Count',
+                                                                         'Last Seen', 'Is Executable Image', 'Timestamp'])
+        return CommandResults(outputs=outputs, outputs_prefix='CarbonBlackEDR.BinarySearch',
+                              outputs_key_field='md5',
+                              readable_output=md)
+
+
+    def process_events_list_command(client: Client, process_id: str, segment_id: str, start: str = None, count: str = None):
+        if not process_id or not segment_id:
+            raise Exception(f'{INTEGRATION_NAME} - Please provide both process id and segment id to run this command.')
+        url = f'/v3/process/{process_id}/{segment_id}/event'
+        start = int(start) if start else None
+        count = int(count) if count else None
+        params = {}
+        if start:
+            params['cb.event_start'] = start
+        if count:
+            params['cb.event_count'] = count
+        res = client.http_request(url=url, method='GET', params=params)
+        process = client.get_formatted_ProcessEventDetail(res.get('process', {}))
+
+        return CommandResults(outputs=process, outputs_prefix='CarbonBlackEDR.Events',
+                              outputs_key_field='id',
+                              readable_output=process, raw_response=res)
+
+
+    def process_segments_get_command(client: Client, process_id: str, limit: str = '50') -> CommandResults:
+        url = f'/v1/process/{process_id}/segment'
+        res = client.http_request(url=url, method='GET')
+        if not res:
+            return CommandResults(
+                readable_output=f'Could not find segment data for process id {process_id}.')
+        res = res.get('process', {}).get('segments')
+        res = res[:arg_to_number(limit, 'limit')] if limit else res
+        # Human readable is depending on request therefore is not prettified.
+        return CommandResults(outputs=res, outputs_prefix='CarbonBlackEDR.ProcessSegments',
+                              outputs_key_field='unique_id',
+                              readable_output=res)
+
+
+    def process_get_command(client: Client, process_id: str, segment_id: str,
+                            get_related: bool = False) -> CommandResults:
+        get_related = argToBoolean(get_related)
+        url = f"/{'v1' if get_related else 'v2'}/process/{process_id}/{segment_id}"
+        try:
+            res = client.http_request(url=url, method='GET')
+        except DemistoException as e:
+            if "404" in e.message:
+                raise Exception(f'{INTEGRATION_NAME} - Could not find result for '
+                                f'process id {process_id} with segment id {segment_id}.')
+            else:
+                raise Exception(f'{INTEGRATION_NAME} - Error connecting to API. Error: {e.message}')
+
+        data = res.get('process', {}) if get_related else res
+        human_readable_data = {
+            'Process Path': data.get('path'),
+            'Process md5': data.get('process_md5'),
+            'Process Name': data.get('process_name'),
+            'Process PID': data.get('process_pid'),
+            'Process ID': data.get('id'),
+            'Hostname': data.get('hostname'),
+            'Segment ID': data.get('segment_id'),
+            'Username': data.get('username'),
+            'Last Update': data.get('last_update'),
+            'Is Terminated': data.get('terminated')
+        }
+
+        return CommandResults(outputs=res, outputs_prefix='CarbonBlackEDR.Process', outputs_key_field='id',
+                              readable_output=tableToMarkdown(f'{INTEGRATION_NAME} - Process', human_readable_data))
+
+
+    def processes_search_command(client: Client, process_name: str = None, group: str = None, hostname: str = None,
+                                 parent_name: str = None, process_path: str = None, md5: str = None,
+                                 query: str = None, group_by: str = None, sort: str = None, facet: str = None,
+                                 facet_field: str = None, limit: str = '50', start: str = '0'):
+        res = client.get_processes(process_name, group, hostname, parent_name, process_path, md5, query, group_by, sort,
+                                   facet, facet_field, limit, start)
+
+        if not res:
+            raise Exception(f'{INTEGRATION_NAME} - Request cannot be processed.')
+
+        outputs = assign_params(Results=res.get('results'), Facets=res.get('facets'), Terms=res.get('terms'),
+                                total_results=res.get('total_results'))
+
+        human_readable_data = []
+        for process in res.get('results'):
+            human_readable_data.append(
+                {
+                    'Process Path': process.get('path'),
+                    'Process md5': process.get('process_md5'),
+                    'Process Name': process.get('process_name'),
+                    'Segment ID': process.get('segment_id'),
+                    'Process PID': process.get('process_pid'),
+                    'Process ID': process.get('id'),
+                    'Hostname': process.get('hostname'),
+                    'Username': process.get('username'),
+                    'Last Update': process.get('last_update'),
+                    'Is Terminated': process.get('terminated')
+                })
+        md = f'#### {INTEGRATION_NAME} - Process Search Results'
+        md += tableToMarkdown(
+            f"\nShowing {start} - {len(res.get('results', []))} out of {res.get('total_results', '0')} results.",
+            human_readable_data,
+            headers=['Process Path', 'Process ID', 'Segment ID', 'Process md5', 'Process Name', 'Hostname',
+                     'Process PID', 'Username', 'Last Update', 'Is Terminated'],
+            removeNull=True)
+
+        return CommandResults(outputs=outputs, outputs_prefix='CarbonBlackEDR.ProcessSearch', outputs_key_field='Terms',
+                              readable_output=md)
+
+
+    def sensor_installer_download_command(client: Client, os_type: str, group_id: str):
+        url = f"/v1/group/{group_id}/installer/{os_type.replace('_', '/')}"
+        res = client.http_request(url=url, method='GET', resp_type='content')
+        if not res:
+            return CommandResults(
+                readable_output=f'Could not find installer for group id {group_id} which compatible with {os_type}.')
+        return fileResult(f'sensor_installer_{group_id}_{os_type}.zip', res, file_type=9)
+
+
+    def endpoint_command(client: Client, id: str = None, ip: str = None, hostname: str = None):
+        if not id and not ip and not hostname:
+            raise Exception(f'{INTEGRATION_NAME} - In order to run this command, please provide valid id, ip or hostname')
+
+        # If multiple filters were given, we want to retrieve all results that match any filter ('OR', not 'AND')
+        # issue https://github.com/demisto/etc/issues/46353. Therefore, we make an API query for every filter separately.
+        ips = argToList(ip)
+        hostnames = argToList(hostname)
+        ids = argToList(id)
+        exceptions = []
+        res = []
+        if ips:
+            for current_ip in ips:
+                # Carbon Black returns an error in various scenarios (no results matching the query, etc.), wrapping with
+                # `try-except` to handle these exceptions here.
+                try:
+                    res += client.get_sensors(ipaddr=current_ip)[1]
+                except Exception as e:
+                    exceptions.append({'Query': f'ip: {current_ip}', 'Exception': str(e)})
+        if hostnames:
+            for current_hostname in hostnames:
+                try:
+                    res += client.get_sensors(hostname=current_hostname)[1]
+                except Exception as e:
+                    exceptions.append({'Query': f'hostname: {current_hostname}', 'Exception': str(e)})
+        if ids:
+            for current_id in ids:
+                try:
+                    res += client.get_sensors(id=current_id)[1]
+                except Exception as e:
+                    exceptions.append({'Query': f'id: {current_id}', 'Exception': str(e)})
+
+        # Remove duplicates by taking entries with unique `id`:
+        if res:
+            res = list({v['id']: v for v in res}.values())
+
+        endpoints = []
+        command_results = []
+        for sensor in res:
+            is_isolated = _get_isolation_status_field(sensor['network_isolation_enabled'],
+                                                      sensor['is_isolating'])
+            endpoint = Common.Endpoint(
+                id=sensor.get('id'),
+                hostname=sensor.get('computer_name'),
+                ip_address=_parse_field(sensor.get('network_adapters', ''), index_after_split=0, chars_to_remove='|'),
+                mac_address=_parse_field(sensor.get('network_adapters', ''), index_after_split=1, chars_to_remove='|'),
+                os_version=sensor.get('os_environment_display_string'),
+                memory=sensor.get('physical_memory_size'),
+                status='Online' if sensor.get('status') else 'Offline',
+                is_isolated=is_isolated,
+                vendor='Carbon Black Response')
+            endpoints.append(endpoint)
+
+            endpoint_context = endpoint.to_context().get(Common.Endpoint.CONTEXT_PATH)
+            md = tableToMarkdown(f'{INTEGRATION_NAME} -  Endpoint: {sensor.get("id")}', endpoint_context)
+
+            command_results.append(CommandResults(
+                readable_output=md,
+                raw_response=res,
+                indicator=endpoint
+            ))
+        if exceptions:
+            md = tableToMarkdown('The following queries resulted in an error: ', exceptions, headers=['Query', 'Exception'])
+            command_results.append(CommandResults(readable_output=md))
+        return command_results
+
+
+    def fetch_incidents(client: Client, max_results: int, last_run: dict, first_fetch_time: str, status: str = None,
+                        feedname: str = None, query: str = ''):
+        if (status or feedname) and query:
+            raise Exception(f'{INTEGRATION_NAME} - Search is not permitted with both query and filter parameters.')
+
+        max_results = arg_to_number(arg=max_results, arg_name='max_fetch', required=False) if max_results else 50
+
+        # How much time before the first fetch to retrieve incidents
+        first_fetch_time = dateparser.parse(first_fetch_time)
+        last_fetch = last_run.get('last_fetch', None)  # {last_fetch: timestamp}
+        demisto.debug(f'{INTEGRATION_NAME} - last fetch: {last_fetch}')
+
+        # Handle first fetch time
+        if last_fetch is None:
+            last_fetch = first_fetch_time
+        else:
+            last_fetch = datetime.fromtimestamp(last_fetch)
+
+        latest_created_time = last_fetch.timestamp()
+
+        date_range = f'[{last_fetch.strftime("%Y-%m-%dT%H:%M:%S")} TO *]'
+
+        incidents: List[Dict[str, Any]] = []
+
+        alerts = []
+
+        # multiple statuses are not supported by api. If multiple statuses provided, gets the incidents for each status.
+        # Otherwise will run without status.
+        query_params = {'created_time': date_range}
+        if feedname:
+            query_params['feedname'] = feedname
+
+        if status:
+            for current_status in argToList(status):
+                demisto.debug(f'{INTEGRATION_NAME} - Fetching incident from Server with status: {current_status}')
+                query_params['status'] = current_status
+                # we create a new query containing params since we do not allow both query and params.
+                res = client.get_alerts(query=_create_query_string(query_params), limit=max_results)
+                alerts += res.get('results', [])
+                demisto.debug(f'{INTEGRATION_NAME} - fetched {len(alerts)} so far.')
+        else:
+            query = _add_to_current_query(query, query_params)
+            demisto.debug(f'{INTEGRATION_NAME} - Fetching incident from Server with status: {status}')
+            res = client.get_alerts(query=query, limit=max_results)
+            alerts += res.get('results', [])
+
+        demisto.debug(f'{INTEGRATION_NAME} - Got total of {len(alerts)} alerts from CB server.')
+        for alert in alerts:
+            incident_created_time = dateparser.parse(alert.get('created_time'))
+            incident_created_time_ms = incident_created_time.timestamp()
+
+            # to prevent duplicates, adding incidents with creation_time > last fetched incident
+            if last_fetch:
+                if incident_created_time_ms <= last_fetch.timestamp():
+                    demisto.debug(f'{INTEGRATION_NAME} - alert {str(alert)} was created at {incident_created_time_ms}.'
+                                  f' Skipping.')
+                    continue
+
+            alert_id = alert.get('unique_id', '')
+            alert_name = alert.get('process_name', '')
+            incident_name = f'{INTEGRATION_NAME}: {alert_id} {alert_name}'
+            if not alert_id or not alert_name:
+                demisto.debug(f'{INTEGRATION_NAME} - Alert details are missing. {str(alert)}')
+
+            incident = {
+                'name': incident_name,
+                'occurred': timestamp_to_datestring(incident_created_time_ms),
+                'rawJSON': json.dumps(alert),
+            }
+
+            incidents.append(incident)
+
+            # Update last run and add incident if the incident is newer than last fetch
+            if incident_created_time_ms > latest_created_time:
+                latest_created_time = incident_created_time_ms
+
+        demisto.debug(f'Fetched {len(alerts)} alerts. Saving {len(incidents)} as incidents.')
+        # Save the next_run as a dict with the last_fetch key to be stored
+        next_run = {'last_fetch': latest_created_time}
+        return next_run, incidents
+
+
+    def test_module(client: Client, params: dict) -> str:
+        try:
+            client.get_processes(limit='5', allow_empty=True)
+            if params['isFetch']:
+                client.get_alerts(status=params.get('alert_status', None), feedname=params.get('alert_feed_name', None),
+                                  query=params.get('alert_query', None), allow_empty_params=False, limit='3')
+            return 'ok'
+        except DemistoException as e:
+            if 'Forbidden' in str(e) or 'UNAUTHORIZED' in str(e):
+                raise Exception('Authorization Error: make sure API Key is correctly set')
+            else:
+                raise e
+
+
+    ''' MAIN FUNCTION '''
+
+
+    def main() -> None:
+        try:
+            params = demisto.params()
+            base_url = urljoin(params['url'], '/api')
+            if not params.get('credentials') or not (api_token := params.get('credentials', {}).get('password')):
+                raise DemistoException('Missing API Key. Fill in a valid key in the integration configuration.')
+            verify_certificate = not params.get('insecure', False)
+            proxy = params.get('proxy', False)
+            command = demisto.command()
+            args = demisto.args() if demisto.args() else {}
+            demisto.debug(f'Command being called is {command}')
+
+            client = Client(
+                base_url=base_url,
+                use_ssl=verify_certificate,
+                use_proxy=proxy,
+                apitoken=api_token
+            )
+            commands: Dict[str, Callable] = {'cb-edr-processes-search': processes_search_command,
+                                             'cb-edr-process-get': process_get_command,
+                                             'cb-edr-process-segments-get': process_segments_get_command,
+                                             'cb-edr-process-events-list': process_events_list_command,
+                                             'cb-edr-binary-search': binary_search_command,
+                                             'cb-edr-binary-download': binary_download_command,
+                                             'cb-edr-binary-summary': binary_summary_command,
+                                             'cb-edr-alert-search': alert_search_command,
+                                             'cb-edr-alert-update': alert_update_command,
+                                             'cb-edr-binary-bans-list': binary_bans_list_command,
+                                             'cb-edr-binary-ban': binary_ban_command,
+                                             'cb-edr-watchlists-list': get_watchlist_list_command,
+                                             'cb-edr-watchlist-create': watchlist_create_command,
+                                             'cb-edr-watchlist-update': watchlist_update_command,
+                                             'cb-edr-watchlist-delete': watchlist_delete_command,
+                                             'cb-edr-sensors-list': sensors_list_command,
+                                             'cb-edr-quarantine-device': quarantine_device_command,
+                                             'cb-edr-unquarantine-device': unquarantine_device_command,
+                                             'cb-edr-sensor-installer-download': sensor_installer_download_command,
+                                             'endpoint': endpoint_command
+                                             }
+
+            if command == 'test-module':
+                result = test_module(client, params)
+                return_results(result)
+
+            elif command == 'fetch-incidents':
+
+                next_run, incidents = fetch_incidents(
+                    client=client,
+                    max_results=params.get('max_fetch'),
+                    last_run=demisto.getLastRun(),
+                    first_fetch_time=params.get('first_fetch', '3 days'),
+                    status=params.get('alert_status', None),
+                    feedname=params.get('alert_feed_name', None),
+                    query=params.get('alert_query', None))
+                demisto.setLastRun(next_run)
+                demisto.incidents(incidents)
+
+            elif command in commands:
+                return_results(commands[command](client, **args))
+            else:
+                raise NotImplementedError(f'command {command} was not implemented in this integration.')
+        # Log exceptions and return errors
+        except Exception as e:
+            demisto.error(traceback.format_exc())  # print the traceback
+            return_error(f'Failed to execute {demisto.command()} command.\nError:\n{str(e)}')
+
+
+    ''' ENTRY POINT '''
+
+    if __name__ in ('__main__', '__builtin__', 'builtins'):
+        main()
+
+    register_module_line('VMware Carbon Black EDR v2', 'end', __line__())
+  subtype: python3
+  type: python
+system: true

@@ -1,0 +1,3950 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 51197328-7f01-45f8-8beb-f156e31a914e
+inputs: []
+name: tsmc_itsvc_socEventHandling
+outputs: []
+sourceplaybookid: beeb2016-3b51-44a1-8c2a-0afeea4a0490
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "28"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a99b6c44-5a79-4079-80a9-174393c061dd
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a99b6c44-5a79-4079-80a9-174393c061dd
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": -110
+        }
+      }
+  "2":
+    continueonerror: true
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "94"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "Missing IPSM info for ip: ${incident.siemblockip}<br>Remark:&emsp;事件單開單成功，但缺少 IPSM 資料<br><br>事件單: <a href=\"${Jira.soc.ticketUrl}\">${Jira.soc.ticketUrl}</a><br><br>收到此通知信後，請協助手動判斷<br>",
+              "#AlertType#":  "Suspicious Outbound Connection",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receiver_from_parm:
+        simple: notifyCircAdmin
+      subject:
+        simple: '[CIRC Suspicious Outbound Connection]: Jira Ticket Created Without
+          IPSM info'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 9b6905df-c2c1-42fa-81f7-48ace52cf5c2
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 9b6905df-c2c1-42fa-81f7-48ace52cf5c2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1462.5,
+          "y": 6145
+        }
+      }
+  "4":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ipsm
+          operator: isEmpty
+      label: All IPSM is null
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ipsm.LEGACY_NETWORK_SITE
+          operator: isEmpty
+      label: Null N/W Site
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "51"
+      All IPSM is null:
+      - "95"
+      Null N/W Site:
+      - "96"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: "Gets a value and return it. This is to be used in playbook conditional
+        tasks - get a value from incident field, label or context, and act accordingly.
+        \nIf an array is returned. the first value will be the decision making value."
+      id: f784ac84-6642-4960-84f5-8669d9ba54ff
+      iscommand: false
+      name: Check if IPSM get network site is null
+      type: condition
+      version: -1
+    taskid: f784ac84-6642-4960-84f5-8669d9ba54ff
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 920,
+          "y": 1425
+        }
+      }
+  "5":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+          operator: isNotEmpty
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+          operator: isNotEqualString
+          right:
+            value:
+              simple: PortSweep
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+          operator: isNotEqualString
+          right:
+            value:
+              simple: PortSweep_DMZ
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+          operator: isNotEqualString
+          right:
+            value:
+              simple: PortSweep_Internet
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+          operator: isNotEqualString
+          right:
+            value:
+              simple: PortSweep_Intranet
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+          operator: isNotEqualString
+          right:
+            value:
+              simple: '[TEST]_PortSweep_Internet'
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+          operator: isNotEqualString
+          right:
+            value:
+              simple: '[TEST]_PortSweep_Intranet'
+      label: Not portsweep
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "6"
+      Not portsweep:
+      - "75"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: "Gets a value and return it. This is to be used in playbook conditional
+        tasks - get a value from incident field, label or context, and act accordingly.
+        \nIf an array is returned. the first value will be the decision making value."
+      id: 8a88456b-b697-4102-850c-9139774633d5
+      iscommand: false
+      name: 'Check if event tpye is Portsweep '
+      type: condition
+      version: -1
+    taskid: 8a88456b-b697-4102-850c-9139774633d5
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 725
+        }
+      }
+  "6":
+    continueonerror: true
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "75"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      networkSite:
+        simple: ${ipsm.LEGACY_NETWORK_SITE}
+      port:
+        simple: ${incident.siemeventport}
+      targetIP:
+        simple: ${incident.siemblockip}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3e276c04-aa2c-4578-8a59-884ebeba78b7
+      iscommand: false
+      name: Check & Set white list rule
+      script: 322e5ca9-de80-4139-86e3-c1bf29428af9
+      type: regular
+      version: -1
+    taskid: 3e276c04-aa2c-4578-8a59-884ebeba78b7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 900
+        }
+      }
+  "11":
+    continueonerror: true
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "29"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      limit:
+        simple: "1"
+      query:
+        simple: SELECT * FROM [circ].[CIRC_NETOWNER] where NetworkSite = '${ipsm.LEGACY_NETWORK_SITE}'
+      using:
+        simple: CIRC Platform
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Generic SQL
+      description: Running a sql query
+      id: 9d3a6cef-df7e-41d9-87a0-93f96f7d3cee
+      iscommand: true
+      name: Get Net Owner Info by Network Site
+      script: Generic SQL|||sql-command
+      type: regular
+      version: -1
+    taskid: 9d3a6cef-df7e-41d9-87a0-93f96f7d3cee
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1775
+        }
+      }
+  "14":
+    continueonerror: true
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "104"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "Get null netowner contact list for n/w site: ${incident.siemnetworksite}",
+              "#AlertType#":  "Suspicious Outbound Connection",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receivers:
+        simple: G_CIRC
+      subject:
+        simple: '[CIRC Suspicious Outbound Connection]${incident.siemnetworksite}:
+          Netowner List is null'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 03e196fa-4b9a-4ff4-8f11-4ad4d934507a
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 03e196fa-4b9a-4ff4-8f11-4ad4d934507a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 2125
+        }
+      }
+  "23":
+    id: "23"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      HOSTNAME:
+        simple: ${incident.siemhostname}
+      IP:
+        simple: ${incident.siemblockip}
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 98ec2c24-a207-44ea-89fc-14676bdf19f7
+      iscommand: false
+      name: Get IPSM  Info by IP & hostname
+      playbookName: tsmc_cmn_getIpsmInfoByIpHostname
+      type: playbook
+      version: -1
+    taskid: 98ec2c24-a207-44ea-89fc-14676bdf19f7
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 920,
+          "y": 1250
+        }
+      }
+  "25":
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "32"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Event Site:
+        complex:
+          accessor: EventSite
+          root: sqlResult.netowner
+          transformers:
+          - operator: FirstArrayElement
+      IP:
+        simple: ${incident.siemblockip}
+      eventType:
+        simple: ${incident.siemeventtype}
+      networkSite:
+        simple: ${ipsm.LEGACY_NETWORK_SITE}
+      severity:
+        simple: ${incident.siemseverity}
+      virusName:
+        simple: ${incident.siemvirusname}
+      virusType:
+        simple: ${incident.siemvirustype}
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6e0463fa-3537-4e49-81e0-0fd316ddb961
+      iscommand: false
+      name: Calculate Impact Count & War Level
+      playbookName: tsmc_itsvc_calculateAntivirusAndSocWarLevel
+      type: playbook
+      version: -1
+    taskid: 6e0463fa-3537-4e49-81e0-0fd316ddb961
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 2995
+        }
+      }
+  "26":
+    continueonerror: true
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      incidentType:
+        simple: soc
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 55af70f8-d0dd-464d-85f4-7fe127001b44
+      iscommand: false
+      name: Get Configuration
+      script: tsmc_itsvc_getSiemPlaybookConfig
+      type: regular
+      version: -1
+    taskid: 55af70f8-d0dd-464d-85f4-7fe127001b44
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 550
+        }
+      }
+  "28":
+    continueonerror: true
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "77"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      all:
+        simple: "yes"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Delete field from context
+      id: e44f9827-63ed-46b9-8337-081e3526298e
+      iscommand: false
+      name: Delete Context All
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: e44f9827-63ed-46b9-8337-081e3526298e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 25
+        }
+      }
+  "29":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ${GenericSQL.GenericSQL.Result}
+          operator: isEmpty
+      label: is null
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "30"
+      is null:
+      - "14"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d058251c-30c2-44b7-8a91-5078e988784d
+      iscommand: false
+      name: Check if Net Owner is null
+      type: condition
+      version: -1
+    taskid: d058251c-30c2-44b7-8a91-5078e988784d
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1950
+        }
+      }
+  "30":
+    continueonerror: true
+    id: "30"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "85"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      database:
+        simple: netowner
+      sql_result:
+        simple: ${GenericSQL.GenericSQL.Result}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 9b4fa0e2-d8d5-4996-864c-82af6ffc96b0
+      iscommand: false
+      name: Parse Net Owner Result
+      script: tsmc_cmn_parseSqlResult
+      type: regular
+      version: -1
+    taskid: 9b4fa0e2-d8d5-4996-864c-82af6ffc96b0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 152.5,
+          "y": 2295
+        }
+      }
+  "32":
+    id: "32"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "60"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Block_IP:
+        simple: ${incident.siemblockip}
+      Destination Class C:
+        complex:
+          accessor: siemdestinationipclassc
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '["'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: ', '
+              toReplace:
+                value:
+                  simple: '","'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '"]'
+            operator: replace
+      Destination IPs:
+        complex:
+          accessor: siemdestinationip
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '["'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: ', '
+              toReplace:
+                value:
+                  simple: '","'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '"]'
+            operator: replace
+      Event Port:
+        simple: ${incident.siemeventport}
+      Target IP Count:
+        simple: ${incident.siemtargetipcount}
+      UUID:
+        simple: ${incident.siemuuid}
+      create_Jira_Switch:
+        simple: ${siemPlaybookConfig.Create_Jira}
+      endDate:
+        complex:
+          accessor: siemenddate
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: T
+              toReplace:
+                value:
+                  simple: ' '
+            operator: replace
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "19"
+            operator: substring
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: .000+0800
+            operator: concat
+      eventType:
+        simple: ${incident.siemeventtype}
+      hostname:
+        simple: ${ipsm.HOSTNAME}
+      netsegObj:
+        complex:
+          accessor: netowner
+          root: sqlResult
+          transformers:
+          - operator: FirstArrayElement
+      networksite:
+        simple: ${ipsm.LEGACY_NETWORK_SITE}
+      serverity:
+        simple: ${incident.siemseverity}
+      startDate:
+        complex:
+          accessor: siemstartdate
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: T
+              toReplace:
+                value:
+                  simple: ' '
+            operator: replace
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "19"
+            operator: substring
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: .000+0800
+            operator: concat
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2fe52bd2-27f9-466c-8d80-c40192b98153
+      iscommand: false
+      name: Create Suspicious Network Behavior Jira
+      playbookName: tsmc_itsvc_createSuspiciousJiraTicket
+      type: playbook
+      version: -1
+    taskid: 2fe52bd2-27f9-466c-8d80-c40192b98153
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 3170
+        }
+      }
+  "34":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemimpactlevel
+          operator: isEqualString
+          right:
+            value:
+              simple: "3"
+      label: L3
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemimpactlevel
+          operator: isEqualString
+          right:
+            value:
+              simple: "4"
+      label: L4
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemimpactlevel
+          operator: isEqualString
+          right:
+            value:
+              simple: "5"
+      label: L5
+    id: "34"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      L3:
+      - "35"
+      L4:
+      - "81"
+      L5:
+      - "82"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 086a20a8-02a1-4643-889c-fbe41905c712
+      iscommand: false
+      name: Determine Send Mail To Which Level
+      type: condition
+      version: -1
+    taskid: 086a20a8-02a1-4643-889c-fbe41905c712
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 3695
+        }
+      }
+  "35":
+    continueonerror: true
+    id: "35"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "83"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircMailCc
+      content_from_parm:
+        simple: notifyCircContent
+      content_variables:
+        simple: |-
+          {
+              "#IP#": "${incident.siemblockip}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#Severity#": "${incident.siemseverity}",
+              "#Time#": "${incident.siemstartdate} to ${incident.siemenddate}",
+              "#VirusContent#": "",
+              "#Url#": "${Jira.soc.ticketUrl}"
+          }
+      receiver_from_parm:
+        simple: notifyCircMailTo
+      receivers:
+        simple: ${ipsm.OWNER}, ${sqlResult.[1].ownerfab.L3Account}, ${sqlResult.netowner.L3Account},
+          ${sqlResult.netowner.EventOwner}, ${sqlResult.netowner.EventHandlers}, ${parmList.SpecialLv3MailList}
+      subject:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: lhs==rhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      subject_from_parm:
+        simple: notifyCircSubj
+      subject_variables:
+        simple: |-
+          {
+              "#Severity#": "${incident.siemseverity}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#IP#": "${incident.siemblockip}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#ScanType#": "",
+              "#Time#": "${incident.siemstartdate}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 28ee4415-c6ca-4207-882e-8d4239f035cd
+      iscommand: false
+      name: Send 1st Mail (L3)
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 28ee4415-c6ca-4207-882e-8d4239f035cd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 152.5,
+          "y": 3870
+        }
+      }
+  "41":
+    continueonerror: true
+    id: "41"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "42"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#Severity#": "${incident.siemseverity}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#IP#": "${incident.siemblockip}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#ScanType#": "",
+              "#Time#": "${incident.siemstartdate}"
+          }
+      message:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      message_from_parm:
+        simple: notifyCircSubj
+      phone:
+        simple: ${ipsm.OWNERTEL}, ${sqlResult.[1].ownerfab.L5SMS}, ${sqlResult.netowner.L5SMS}
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b0f7de7c-752e-41bb-866b-d895aa833391
+      iscommand: false
+      name: Send 1st SMS (L5)
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: b0f7de7c-752e-41bb-866b-d895aa833391
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 4045
+        }
+      }
+  "42":
+    continueonerror: true
+    id: "42"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "45"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      calculateFromOccurred:
+        simple: "YES"
+      hoursAgo:
+        simple: "1"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |
+        Retrieves the current date and time.
+      id: 9b124e9c-599b-418d-8ba6-f515fe561653
+      iscommand: false
+      name: Get ISO timestamp of 1 hour ago
+      script: tsmc_cmn_getTime
+      type: regular
+      version: -1
+    taskid: 9b124e9c-599b-418d-8ba6-f515fe561653
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 4220
+        }
+      }
+  "43":
+    continueonerror: true
+    id: "43"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "26"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      parmName:
+        simple: xsoarServerUrl, AutoDisconEventCategoryList, SpecialLv3MailList, SpecialLv4MailList,
+          SpecialLv3SMSList, SpecialLv4SMSList, circAntiNotiUsers
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2b59b698-b2a9-4b94-8ff6-3d7fa035e50d
+      iscommand: false
+      name: Get Parameters
+      script: e920a750-fafd-43ae-8247-f240df575be8
+      type: regular
+      version: -1
+    taskid: 2b59b698-b2a9-4b94-8ff6-3d7fa035e50d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 375
+        }
+      }
+  "45":
+    continueonerror: true
+    id: "45"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "46"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      event_type:
+        simple: ${incident.siemeventtype}
+      fromDate:
+        simple: ${time.targetTimeString}
+      impactArea:
+        simple: ${incident.siemimpactarea}
+      ip:
+        simple: ${incident.siemblockip}
+      network_site:
+        simple: ${incident.siemnetworksite}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Lookup incidents with specified indicator. Use currentIncidentId
+        to omit the existing incident from output
+      id: 49a09f35-d304-4974-81e0-8a72f8a3773b
+      iscommand: false
+      name: Get Previous Level
+      script: tsmc_itsvc_getAntivirusAndSocPreviousLevel
+      type: regular
+      version: -1
+    taskid: 49a09f35-d304-4974-81e0-8a72f8a3773b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 4395
+        }
+      }
+  "46":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemimpactlevel
+          operator: lessThan
+          right:
+            iscontext: true
+            value:
+              simple: Pervious_Level
+      label: Level up
+    id: "46"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "50"
+      Level up:
+      - "64"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 44f00776-6122-433d-8cfd-a49d9f6063bc
+      iscommand: false
+      name: Check if impact level up
+      type: condition
+      version: -1
+    taskid: 44f00776-6122-433d-8cfd-a49d9f6063bc
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 4570
+        }
+      }
+  "47":
+    id: "47"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "66"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Block_IP:
+        simple: ${incident.siemblockip}
+      Event_Type:
+        simple: ${incident.siemeventtype}
+      Impact_Count:
+        simple: ${incident.siemimpactcount}
+      Impact_Level:
+        simple: ${incident.siemimpactlevel}
+      Networksite:
+        simple: ${ipsm.LEGACY_NETWORK_SITE}
+      Past_Cases_Jira:
+        simple: ${jiraTickets},${incident.siemeventjiraticketno}
+      Previous_Level:
+        simple: ${Pervious_Level}
+      Serverity:
+        simple: ${incident.siemseverity}
+      Virus_Name:
+        simple: ${incident.siemvirusname}
+      Virus_Type:
+        simple: ${incident.siemvirustype}
+      create_Jira_Switch:
+        simple: ${siemPlaybookConfig.Create_Jira}
+      create_confluence_switch:
+        simple: ${siemPlaybookConfig.Create_Confluence}
+      eventCategory:
+        simple: ${eventcategory}
+      netsegObj:
+        complex:
+          accessor: netowner
+          root: sqlResult
+          transformers:
+          - operator: FirstArrayElement
+      ticket_eventType:
+        simple: Antivirus
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b75daa95-64de-4a37-8a6e-4381075ca7ad
+      iscommand: false
+      name: Create Antivirus War Jira Ticket (CIRC Information)
+      playbookName: tsmc_itsvc_createCIRCInfoJiraTicket
+      type: playbook
+      version: -1
+    taskid: b75daa95-64de-4a37-8a6e-4381075ca7ad
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 4920
+        }
+      }
+  "48":
+    continueonerror: true
+    id: "48"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "49"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: notifyCircContent2nd
+      content_variables:
+        simple: |-
+          {
+              "#Level#": "Level ${incident.siemimpactlevel}",
+              "#Site#":  "${incident.siemnetworksite}",
+              "#NetClassC#": "${incident.siemnetclassc}",
+              "#Event#": "${incident.siemeventtype}",
+              "#Area#": "${incident.siemimpactarea}",
+              "#InfectNumber#": "${incident.siemimpactcount}",
+              "#VirusName#": "${incident.siemvirusname}",
+              "#Time#": "${incident.siemstartdate}",
+              "#Url#": "${Jira.CIRCInformation.ticketUrl}",
+              "#IncidentUrl#": "${parmList.xsoarServerUrl}#/WorkPlan/${incident.id}"
+          }
+      receivers:
+        simple: ${sqlResult.[1].ownerfab.L3Account}, ${sqlResult.netowner.L3Account},
+          ${sqlResult.netowner.EventOwner}, ${sqlResult.netowner.EventHandlers}, ${parmList.SpecialLv3MailList}
+      subject:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      subject_from_parm:
+        simple: notifyCircSubj2nd
+      subject_variables:
+        simple: |-
+          {
+              "#Level#": "Level ${incident.siemimpactlevel}",
+              "#Site#":  "${incident.siemnetworksite}",
+              "#Time#": "${incident.siemstartdate}",
+              "#InfectNumber#": "${incident.siemimpactcount}",
+              "#Event#": "${incident.siemvirusname}",
+              "#ScanType#": "${incident.siemscantype}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4d1dc7d7-48b3-484c-85b7-5f2c31c1766d
+      iscommand: false
+      name: Send 2nd Mail (L3)
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 4d1dc7d7-48b3-484c-85b7-5f2c31c1766d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 6145
+        }
+      }
+  "49":
+    continueonerror: true
+    id: "49"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "50"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#Level#": "Level ${incident.siemimpactlevel}",
+              "#Site#":  "${incident.siemnetworksite}",
+              "#Time#": "${incident.siemstartdate}",
+              "#InfectNumber#": "${incident.siemimpactcount}",
+              "#Event#": "${incident.siemvirusname}",
+              "#ScanType#": "${incident.siemscantype}"
+          }
+      message:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      message_from_parm:
+        simple: notifyCircSubj2nd
+      phone:
+        simple: ${sqlResult.[1].ownerfab.L3SMS}, ${sqlResult.netowner.L3SMS}, ${parmList.SpecialLv3SMSList}
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 833dfcd0-644f-4bff-8d72-9e00e6f34d3d
+      iscommand: false
+      name: Send 2nd SMS (L3)
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: 833dfcd0-644f-4bff-8d72-9e00e6f34d3d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 6320
+        }
+      }
+  "50":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: parmList.AutoDisconEventCategoryList
+          operator: containsGeneral
+          right:
+            iscontext: true
+            value:
+              simple: incident.siemeventtype
+      - - left:
+            iscontext: true
+            value:
+              simple: whitelistRule
+          operator: isEmpty
+      label: In Block Category List
+    id: "50"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "59"
+      In Block Category List:
+      - "78"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7052fc27-8763-4528-81bd-5a75b31a81cf
+      iscommand: false
+      name: Check if need to Block IP
+      type: condition
+      version: -1
+    taskid: 7052fc27-8763-4528-81bd-5a75b31a81cf
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 820,
+          "y": 6490
+        }
+      }
+  "51":
+    continueonerror: true
+    id: "51"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "11"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      siemnetworksite:
+        simple: ${ipsm.LEGACY_NETWORK_SITE}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.set.incident
+      id: c065b578-fa28-46d7-8173-8f0f50b1ac5a
+      iscommand: true
+      name: Set Network Site
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: c065b578-fa28-46d7-8173-8f0f50b1ac5a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1600
+        }
+      }
+  "53":
+    id: "53"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "97"
+    note: false
+    quietmode: 1
+    scriptarguments:
+      IP:
+        simple: ${incident.siemblockip}
+      blockIP_Service_Switch:
+        simple: ${siemPlaybookConfig.Block_IP_Service}
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 5e1772e2-4027-4889-8848-ac98d681fb31
+      iscommand: false
+      name: Execute SOC Block IP Service
+      playbookName: tsmc_itsvc_socBlockIpService
+      type: playbook
+      version: -1
+    taskid: 5e1772e2-4027-4889-8848-ac98d681fb31
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 745,
+          "y": 7020
+        }
+      }
+  "59":
+    id: "59"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "103"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      closeReason:
+        simple: Resolved
+      id:
+        complex:
+          accessor: id
+          root: incident
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: e1606cab-2e27-4b3c-8d26-6a18c5a25163
+      iscommand: true
+      name: Close Incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: e1606cab-2e27-4b3c-8d26-6a18c5a25163
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 7895
+        }
+      }
+  "60":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Jira.soc.result
+          operator: isTrue
+      label: Success
+    id: "60"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "61"
+      Success:
+      - "34"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3b3201d2-d35f-47f1-89d6-2b6c049ef919
+      iscommand: false
+      name: Check if create Jira successfully
+      type: condition
+      version: -1
+    taskid: 3b3201d2-d35f-47f1-89d6-2b6c049ef919
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 3345
+        }
+      }
+  "61":
+    continueonerror: true
+    id: "61"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "34"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "Create Jira Ticket Failed: {<br>&emsp;status: ${out.socjiraStatus.[0]}<br>&emsp;error message: { ${out.socjiraErrorMsg.[0]} }<br>}<br>Remark:&emsp;收到此通知信後，請協助手動開單",
+              "#AlertType#":  "Suspicious Outbound Connection",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receivers:
+        simple: G_CIRC
+      subject:
+        simple: '[CIRC Suspicious Outbound Connection]: Create Jira Ticket Failed'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 9fecbc96-0a49-40d2-8664-fd1dd177277e
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 9fecbc96-0a49-40d2-8664-fd1dd177277e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 632.5,
+          "y": 3520
+        }
+      }
+  "63":
+    id: "63"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "90"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      TicketNo:
+        simple: ${Jira.CIRCInformation.ticketNo}
+      linkedTicketNo:
+        simple: ${Jira.portsweep.ticketNo}
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c3d1aaac-4190-4fbc-87c5-ad88059b6e40
+      iscommand: false
+      name: Ticket add Issue Links
+      playbookName: tsmc_itsvc_updateJiraTicket
+      type: playbook
+      version: -1
+    taskid: c3d1aaac-4190-4fbc-87c5-ad88059b6e40
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 5795
+        }
+      }
+  "64":
+    continueonerror: true
+    id: "64"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "47"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      eventType:
+        simple: ${incident.siemeventtype}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 71ddc82f-6ec5-4105-800b-68c83b90e87a
+      iscommand: false
+      name: Get Jira Event Category
+      script: tsmc_itsvc_getSocJiraEventCategory
+      type: regular
+      version: -1
+    taskid: 71ddc82f-6ec5-4105-800b-68c83b90e87a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 4745
+        }
+      }
+  "66":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Jira.CIRCInformation.result
+          operator: isTrue
+      label: Success
+    id: "66"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "67"
+      Success:
+      - "68"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c323db8c-158e-4af6-869f-24bda5fb5f74
+      iscommand: false
+      name: Check if create Jira successfully
+      type: condition
+      version: -1
+    taskid: c323db8c-158e-4af6-869f-24bda5fb5f74
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 5095
+        }
+      }
+  "67":
+    continueonerror: true
+    id: "67"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "68"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "戰情單開單失敗: {<br>&emsp;status: ${out.CIRCInformationjiraStatus}<br>&emsp;error message: {  ${out.CIRCInformationjiraErrorMsg} }<br>}<br>Remark:&emsp;收到此通知信後，請協助手動開單",
+              "#AlertType#":  "Suspicious Outbound Connection",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receivers:
+        simple: G_CIRC
+      subject:
+        simple: '[CIRC Suspicious Outbound Connection]: 戰情單開單失敗'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ac07c832-7c91-44c1-80ef-9e6337c61cf8
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: ac07c832-7c91-44c1-80ef-9e6337c61cf8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 5270
+        }
+      }
+  "68":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: out.createConfluence.result
+          operator: isTrue
+      label: Success
+    id: "68"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "69"
+      Success:
+      - "63"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: e6792bd2-b597-4faa-85f0-12147dd242d1
+      iscommand: false
+      name: Check if create Confluence successfully
+      type: condition
+      version: -1
+    taskid: e6792bd2-b597-4faa-85f0-12147dd242d1
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 5445
+        }
+      }
+  "69":
+    continueonerror: true
+    id: "69"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "63"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "Create confluence page failed: {<br>&emsp;status: ${out.createConfluence.status}<br>&emsp;error message: { ${out.createConfluence.errorMsg} }<br>}",
+              "#AlertType#":  "Suspicious Outbound Connection",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receivers:
+        simple: G_CIRC
+      subject:
+        simple: '[CIRC Suspicious Outbound Connection]: Create Confluence Page Failed'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 77f26a9a-3164-455e-896b-f199a4c6682b
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 77f26a9a-3164-455e-896b-f199a4c6682b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 5620
+        }
+      }
+  "72":
+    id: "72"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 8f42545c-b3d6-45e1-8b98-61be40df6781
+      iscommand: false
+      name: End
+      type: title
+      version: -1
+    taskid: 8f42545c-b3d6-45e1-8b98-61be40df6781
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1440
+        }
+      }
+  "75":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: CheckWhitelistRuleResult.whitelistRule
+          operator: isEmpty
+      label: Not in Whitelist
+    id: "75"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "76"
+      Not in Whitelist:
+      - "23"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: caddb322-1e8e-409b-89d1-285e95e72672
+      iscommand: false
+      name: Check if in whitelist
+      type: condition
+      version: -1
+    taskid: caddb322-1e8e-409b-89d1-285e95e72672
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 1075
+        }
+      }
+  "76":
+    continueonerror: true
+    id: "76"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "72"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      closeNotes:
+        simple: IP in Whitelist
+      closeReason:
+        simple: Resolved
+      id:
+        complex:
+          accessor: id
+          root: incident
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: 1d237bd6-230a-42cc-856f-455a882e3c81
+      iscommand: true
+      name: Close Incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 1d237bd6-230a-42cc-856f-455a882e3c81
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 1250
+        }
+      }
+  "77":
+    continueonerror: true
+    id: "77"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "43"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: edec6471-d032-45fb-80d0-8c3561387b3a
+      iscommand: false
+      name: Set Incident Created Time
+      script: tsmc_itsvc_setIncidentCreatedTime
+      type: regular
+      version: -1
+    taskid: edec6471-d032-45fb-80d0-8c3561387b3a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 200
+        }
+      }
+  "78":
+    continueonerror: true
+    id: "78"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "79"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      ip:
+        simple: ${incident.siemblockip}
+      ipRanges:
+        simple: 10.65.0.0/16,10.64.0.0/16
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Returns yes if the IP is in one of the ranges provided, returns
+        no otherwise.
+      id: e76db805-850d-400f-8849-1a24bf3cfaae
+      iscommand: false
+      name: Check if in WFH segment
+      script: IsIPInRanges
+      type: regular
+      version: -1
+    taskid: e76db805-850d-400f-8849-1a24bf3cfaae
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 970,
+          "y": 6670
+        }
+      }
+  "79":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: IP.InRange
+          operator: isEqualString
+          right:
+            value:
+              simple: "yes"
+      label: WFH
+    id: "79"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "53"
+      WFH:
+      - "80"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6cd12616-f992-4b43-80c7-de8cfd75fd43
+      iscommand: false
+      name: Check if is WFH IP
+      type: condition
+      version: -1
+    taskid: 6cd12616-f992-4b43-80c7-de8cfd75fd43
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 970,
+          "y": 6845
+        }
+      }
+  "80":
+    id: "80"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 0
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "97"
+    note: false
+    quietmode: 1
+    scriptarguments:
+      IP:
+        simple: ${incident.siemblockip}
+      blockIP_Service_Switch:
+        simple: ${siemPlaybookConfig.Block_IP_Service}
+      owner:
+        simple: ${ipsm.OWNER}
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d840addf-0315-4072-85d7-e976bf0324f6
+      iscommand: false
+      name: Execute WFH Block IP Service
+      playbookName: tsmc_itsvc_wfhBlockIpService
+      type: playbook
+      version: -1
+    taskid: d840addf-0315-4072-85d7-e976bf0324f6
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1190,
+          "y": 7020
+        }
+      }
+  "81":
+    continueonerror: true
+    id: "81"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "84"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircMailCc
+      content_from_parm:
+        simple: notifyCircContent
+      content_variables:
+        simple: |-
+          {
+              "#IP#": "${incident.siemblockip}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#Severity#": "${incident.siemseverity}",
+              "#Time#": "${incident.siemstartdate} to ${incident.siemenddate}",
+              "#VirusContent#": "",
+              "#Url#": "${Jira.soc.ticketUrl}"
+          }
+      receiver_from_parm:
+        simple: notifyCircMailTo
+      receivers:
+        simple: ${ipsm.OWNER}, ${sqlResult.[1].ownerfab.L4Account}, ${sqlResult.netowner.L4Account},
+          ${sqlResult.netowner.EventOwner}, ${sqlResult.netowner.EventHandlers}, ${parmList.SpecialLv4MailList}
+      subject:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: lhs==rhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      subject_from_parm:
+        simple: notifyCircSubj
+      subject_variables:
+        simple: |-
+          {
+              "#Severity#": "${incident.siemseverity}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#IP#": "${incident.siemblockip}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#ScanType#": "",
+              "#Time#": "${incident.siemstartdate}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6eb63dac-d594-404e-8fcb-85aecc71cfb0
+      iscommand: false
+      name: Send 1st Mail (L4)
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 6eb63dac-d594-404e-8fcb-85aecc71cfb0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 582.5,
+          "y": 3870
+        }
+      }
+  "82":
+    continueonerror: true
+    id: "82"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "41"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircMailCc
+      content_from_parm:
+        simple: notifyCircContent
+      content_variables:
+        simple: |-
+          {
+              "#IP#": "${incident.siemblockip}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#Severity#": "${incident.siemseverity}",
+              "#Time#": "${incident.siemstartdate} to ${incident.siemenddate}",
+              "#VirusContent#": "",
+              "#Url#": "${Jira.soc.ticketUrl}"
+          }
+      receiver_from_parm:
+        simple: notifyCircMailTo
+      receivers:
+        simple: ${ipsm.OWNER}, ${sqlResult.[1].ownerfab.L5Account}, ${sqlResult.netowner.L5Account},
+          ${sqlResult.netowner.EventOwner}, ${sqlResult.netowner.EventHandlers}
+      subject:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: lhs==rhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      subject_from_parm:
+        simple: notifyCircSubj
+      subject_variables:
+        simple: |-
+          {
+              "#Severity#": "${incident.siemseverity}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#IP#": "${incident.siemblockip}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#ScanType#": "",
+              "#Time#": "${incident.siemstartdate}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: fa2ba321-1731-4e20-8f6a-bfbd874cc791
+      iscommand: false
+      name: Send 1st Mail (L5)
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: fa2ba321-1731-4e20-8f6a-bfbd874cc791
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1022.5,
+          "y": 3870
+        }
+      }
+  "83":
+    continueonerror: true
+    id: "83"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "42"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#Severity#": "${incident.siemseverity}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#IP#": "${incident.siemblockip}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#ScanType#": "",
+              "#Time#": "${incident.siemstartdate}"
+          }
+      message:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      message_from_parm:
+        simple: notifyCircSubj
+      phone:
+        simple: ${ipsm.OWNERTEL}, ${sqlResult.[1].ownerfab.L3SMS}, ${sqlResult.netowner.L3SMS},
+          ${parmList.SpecialLv3SMSList}
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: bdf7a664-5f3d-47e8-85c8-e1c254f788cf
+      iscommand: false
+      name: Send 1st SMS (L3)
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: bdf7a664-5f3d-47e8-85c8-e1c254f788cf
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 152.5,
+          "y": 4045
+        }
+      }
+  "84":
+    continueonerror: true
+    id: "84"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "42"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#Severity#": "${incident.siemseverity}",
+              "#Site#": "${ipsm.LEGACY_NETWORK_SITE}",
+              "#IP#": "${incident.siemblockip}",
+              "#ToolID#": "${ipsm.DEVICE_ID}",
+              "#HostName#": "${incident.siemhostname}",
+              "#Event#": "${incident.siemeventtype}",
+              "#ScanType#": "",
+              "#Time#": "${incident.siemstartdate}"
+          }
+      message:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      message_from_parm:
+        simple: notifyCircSubj
+      phone:
+        simple: ${ipsm.OWNERTEL}, ${sqlResult.[1].ownerfab.L4SMS}, ${sqlResult.netowner.L4SMS},
+          ${parmList.SpecialLv4SMSList}
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ad503ec2-01b8-4530-8d22-e82c37786047
+      iscommand: false
+      name: Send 1st SMS (L4)
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: ad503ec2-01b8-4530-8d22-e82c37786047
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 582.5,
+          "y": 4045
+        }
+      }
+  "85":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ipsm.LEGACY_NETWORK_SITE
+          operator: isEqualString
+          right:
+            value:
+              simple: FAB12 Clean Room
+      label: "Yes"
+    id: "85"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "25"
+      "Yes":
+      - "86"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d8c989a3-a1f4-4eac-888b-ce398ed29980
+      iscommand: false
+      name: Check if network site = Fab 12 Clean Room
+      type: condition
+      version: -1
+    taskid: d8c989a3-a1f4-4eac-888b-ce398ed29980
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 377.5,
+          "y": 2470
+        }
+      }
+  "86":
+    continueonerror: true
+    id: "86"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "87"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      limit:
+        simple: "1"
+      query:
+        simple: SELECT * FROM [circ].[CIRC_NETOWNER] where Fab = '${ipsm.OWNERFAB}'
+      using:
+        simple: CIRC Platform
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Generic SQL
+      description: Running a sql query
+      id: 68e8dbf2-c2e4-4a32-89b1-b5d3f2b1d251
+      iscommand: true
+      name: 'Get Net Owner Info by Fab '
+      script: Generic SQL|||sql-command
+      type: regular
+      version: -1
+    taskid: 68e8dbf2-c2e4-4a32-89b1-b5d3f2b1d251
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 632.5,
+          "y": 2645
+        }
+      }
+  "87":
+    continueonerror: true
+    id: "87"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "25"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      database:
+        simple: ownerfab
+      sql_result:
+        simple: ${GenericSQL.[1].GenericSQL.Result}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a7a3863e-f8f6-4277-8f17-2df6a090bb3e
+      iscommand: false
+      name: Parse Net Owner Result
+      script: tsmc_cmn_parseSqlResult
+      type: regular
+      version: -1
+    taskid: a7a3863e-f8f6-4277-8f17-2df6a090bb3e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 632.5,
+          "y": 2820
+        }
+      }
+  "88":
+    continueonerror: true
+    id: "88"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "89"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: notifyCircContent2nd
+      content_variables:
+        simple: |-
+          {
+              "#Level#": "Level ${incident.siemimpactlevel}",
+              "#Site#":  "${incident.siemnetworksite}",
+              "#NetClassC#": "${incident.siemnetclassc}",
+              "#Event#": "${incident.siemeventtype}",
+              "#Area#": "${incident.siemimpactarea}",
+              "#InfectNumber#": "${incident.siemimpactcount}",
+              "#VirusName#": "${incident.siemvirusname}",
+              "#Time#": "${incident.siemstartdate}",
+              "#Url#": "${Jira.CIRCInformation.ticketUrl}",
+              "#IncidentUrl#": "${parmList.xsoarServerUrl}#/WorkPlan/${incident.id}"
+          }
+      receivers:
+        simple: ${sqlResult.[1].ownerfab.L4Account}, ${sqlResult.netowner.L4Account},
+          ${sqlResult.netowner.EventOwner}, ${sqlResult.netowner.EventHandlers}, ${parmList.SpecialLv4MailList}
+      subject:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      subject_from_parm:
+        simple: notifyCircSubj2nd
+      subject_variables:
+        simple: |-
+          {
+              "#Level#": "Level ${incident.siemimpactlevel}",
+              "#Site#":  "${incident.siemnetworksite}",
+              "#Time#": "${incident.siemstartdate}",
+              "#InfectNumber#": "${incident.siemimpactcount}",
+              "#Event#": "${incident.siemvirusname}",
+              "#ScanType#": "${incident.siemscantype}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 07fab48a-36e8-4162-8f02-427ac84ade8e
+      iscommand: false
+      name: Send 2nd Mail (L4)
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 07fab48a-36e8-4162-8f02-427ac84ade8e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 6145
+        }
+      }
+  "89":
+    continueonerror: true
+    id: "89"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "50"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#Level#": "Level ${incident.siemimpactlevel}",
+              "#Site#":  "${incident.siemnetworksite}",
+              "#Time#": "${incident.siemstartdate}",
+              "#InfectNumber#": "${incident.siemimpactcount}",
+              "#Event#": "${incident.siemvirusname}",
+              "#ScanType#": "${incident.siemscantype}"
+          }
+      message:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      message_from_parm:
+        simple: notifyCircSubj2nd
+      phone:
+        simple: ${sqlResult.[1].ownerfab.L4SMS}, ${sqlResult.netowner.L4SMS}, ${parmList.SpecialLv4SMSList}
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 90f90afd-38b1-468b-8a25-ee4f4bca33b6
+      iscommand: false
+      name: Send 2nd SMS (L4)
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: 90f90afd-38b1-468b-8a25-ee4f4bca33b6
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 6320
+        }
+      }
+  "90":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemimpactlevel
+          operator: isEqualString
+          right:
+            value:
+              simple: "3"
+      label: L3
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: incident.siemimpactlevel
+          operator: isEqualString
+          right:
+            value:
+              simple: "4"
+      label: L4
+    id: "90"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "50"
+      L3:
+      - "48"
+      L4:
+      - "88"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c651b712-9d6e-47b9-8b48-a23122dd536a
+      iscommand: false
+      name: Determine Send Mail To Which Level
+      type: condition
+      version: -1
+    taskid: c651b712-9d6e-47b9-8b48-a23122dd536a
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 5970
+        }
+      }
+  "91":
+    id: "91"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "92"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Block_IP:
+        simple: ${incident.siemblockip}
+      Destination Class C:
+        complex:
+          accessor: siemdestinationipclassc
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '["'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: ', '
+              toReplace:
+                value:
+                  simple: '","'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '"]'
+            operator: replace
+      Destination IPs:
+        complex:
+          accessor: siemdestinationip
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '["'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: ', '
+              toReplace:
+                value:
+                  simple: '","'
+            operator: replace
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '"]'
+            operator: replace
+      Event Port:
+        simple: ${incident.siemeventport}
+      Target IP Count:
+        simple: ${incident.siemtargetipcount}
+      UUID:
+        simple: ${incident.siemuuid}
+      create_Jira_Switch:
+        simple: ${siemPlaybookConfig.Create_Jira}
+      endDate:
+        complex:
+          accessor: siemenddate
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: T
+              toReplace:
+                value:
+                  simple: ' '
+            operator: replace
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "19"
+            operator: substring
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: .000+0800
+            operator: concat
+      eventType:
+        simple: ${incident.siemeventtype}
+      hostname:
+        simple: ${ipsm.HOSTNAME}
+      netsegObj:
+        simple: ${out.netseg}
+      networksite:
+        simple: ${ipsm.LEGACY_NETWORK_SITE}
+      serverity:
+        simple: ${incident.siemseverity}
+      startDate:
+        complex:
+          accessor: siemstartdate
+          root: incident
+          transformers:
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: T
+              toReplace:
+                value:
+                  simple: ' '
+            operator: replace
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "19"
+            operator: substring
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: .000+0800
+            operator: concat
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 20e861c1-7af0-4c7e-8323-8512f2fb1cfc
+      iscommand: false
+      name: Create Suspicious Network Behavior Jira
+      playbookName: tsmc_itsvc_createSuspiciousJiraTicket
+      type: playbook
+      version: -1
+    taskid: 20e861c1-7af0-4c7e-8323-8512f2fb1cfc
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 5795
+        }
+      }
+  "92":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: Jira.soc.result
+          operator: isTrue
+      label: Success
+    id: "92"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "93"
+      Success:
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ec6a8a0b-e2b0-4cb8-8627-b89af54220ce
+      iscommand: false
+      name: Check if create Jira successfully
+      type: condition
+      version: -1
+    taskid: ec6a8a0b-e2b0-4cb8-8627-b89af54220ce
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 5970
+        }
+      }
+  "93":
+    continueonerror: true
+    id: "93"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "94"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "Missing IPSM info & Create Jira Ticket Failed: {<br>&emsp;status: ${out.socjiraStatus.[0]}<br>&emsp;error message: { ${out.socjiraErrorMsg.[0]} }<br>}<br>Remark:&emsp;缺少 IPSM 資料且開單失敗。收到此通知信後，請協助手動開單",
+              "#AlertType#":  "Suspicious Outbound Connection",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receiver_from_parm:
+        simple: notifyCircAdmin
+      subject:
+        simple: '[CIRC Suspicious Outbound Connection]: Missing IPSM info & Create
+          Jira Ticket Failed'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: aeb56dda-b03f-4f04-83cd-4f34551bcc8a
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: aeb56dda-b03f-4f04-83cd-4f34551bcc8a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1032.5,
+          "y": 6145
+        }
+      }
+  "94":
+    id: "94"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "50"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 50ff1923-fccd-4850-85e7-e2d8cdd4c8b1
+      iscommand: false
+      name: Merge
+      type: title
+      version: -1
+    taskid: 50ff1923-fccd-4850-85e7-e2d8cdd4c8b1
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 6335
+        }
+      }
+  "95":
+    continueonerror: true
+    id: "95"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "96"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      content_from_parm:
+        simple: exceptionNotiMail
+      content_variables:
+        simple: |-
+          {
+              "#IncidentId#":  "${incident.id}",
+              "#Problem#":  "Call IPSM and get null return for ip: ${incident.siemblockip}<br>Remark:&emsp;Please check if IPSM service is failed",
+              "#AlertType#":  "Suspicious Outbound Connection",
+              "#Url#":  "${parmList.xsoarServerUrl}/#/incident/${incident.id}"
+          }
+      receiver_from_parm:
+        simple: notifyCircAdmin
+      subject:
+        simple: '[CIRC Suspicious Outbound Connection]${incident.siemblockip}: Get
+          NULL from IPSM'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 24688644-622a-4cba-8aef-170bbd59065b
+      iscommand: false
+      name: Send Exception Notify Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 24688644-622a-4cba-8aef-170bbd59065b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1550,
+          "y": 5445
+        }
+      }
+  "96":
+    continueonerror: true
+    id: "96"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "91"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      in:
+        simple: |-
+          {
+          "EventOwner": "tlyuc",
+          "EventHandlers": "${parmList.circAntiNotiUsers}"
+          }
+      index:
+        simple: netseg
+      stringToJson:
+        simple: "YES"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 28afe217-38f2-4072-81bf-58a61a8ad9f5
+      iscommand: false
+      name: Create Netseg Object
+      script: tsmc_cmn_dummyInAndOut
+      type: regular
+      version: -1
+    taskid: 28afe217-38f2-4072-81bf-58a61a8ad9f5
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1250,
+          "y": 5620
+        }
+      }
+  "97":
+    continueonerror: true
+    id: "97"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "98"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      csvArray:
+        simple: ${incident.siemblockipresultsgrid}
+      fileName:
+        simple: IP_disconnection_result.csv
+      headers:
+        simple: name,owner,restorecontact,remark,result,starttime,endtime
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Export given array to csv file
+      id: 7687de7c-0fdf-4b54-8b29-8980350e9df2
+      iscommand: false
+      name: Export Block Result To CSV
+      script: ExportToCSV
+      type: regular
+      version: -1
+    taskid: 7687de7c-0fdf-4b54-8b29-8980350e9df2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 970,
+          "y": 7195
+        }
+      }
+  "98":
+    conditions:
+    - condition:
+      - - ignorecase: true
+          left:
+            iscontext: true
+            value:
+              simple: incident.siemblockipresult
+          operator: isEqualString
+          right:
+            value:
+              simple: Success
+      label: Success
+    id: "98"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "99"
+      Success:
+      - "102"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7900ac96-44a4-46da-89ba-fa6c5e62c880
+      iscommand: false
+      name: Check If Block IP Success
+      type: condition
+      version: -1
+    taskid: 7900ac96-44a4-46da-89ba-fa6c5e62c880
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 970,
+          "y": 7370
+        }
+      }
+  "99":
+    continueonerror: true
+    id: "99"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "100"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      attachIDs:
+        complex:
+          accessor: EntryID
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Name
+              operator: isEqualString
+              right:
+                value:
+                  simple: IP_disconnection_result.csv
+          root: File
+      attachNames:
+        simple: ${incident.siemblockip}_disconnection_status.csv
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: blockIpFailedMailContent
+      content_variables:
+        simple: |-
+          {
+              "#EventType#": "${incident.siemeventtype}",
+              "#Level#": "${incident.siemimpactlevel}",
+              "#IP#": "${incident.siemblockip}",
+              "#Info_1#": "Hostname",
+              "#Info_1_val#": "${incident.siemhostname}",
+              "#Info_2#": "NetworkSite",
+              "#Info_2_val#": "${ipsm.LEGACY_NETWORK_SITE}"
+          }
+      receivers:
+        simple: ${ipsm.OWNER}, G_CIRC
+      subject:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      subject_from_parm:
+        simple: blockIpFailedMailSubject
+      subject_variables:
+        simple: |-
+          {
+              "#EventType#": "${incident.siemeventtype}",
+              "#Level#": "${incident.siemimpactlevel}",
+              "#IP#": "${incident.siemblockip}",
+              "#Info_1#": "Hostname",
+              "#Info_1_val#": "${incident.siemhostname}",
+              "#Info_2#": "NetworkSite",
+              "#Info_2_val#": "${ipsm.LEGACY_NETWORK_SITE}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 818e637e-d5c4-4ba0-8c45-38cbc366da31
+      iscommand: false
+      name: Send Block Failed Notification Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 818e637e-d5c4-4ba0-8c45-38cbc366da31
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 757.5,
+          "y": 7545
+        }
+      }
+  "100":
+    continueonerror: true
+    id: "100"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "59"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#EventType#": "${incident.siemeventtype}",
+              "#Level#": "${incident.siemimpactlevel}",
+              "#IP#": "${incident.siemblockip}",
+              "#Info_1#": "Hostname",
+              "#Info_1_val#": "${incident.siemhostname}",
+              "#Info_2#": "NetworkSite",
+              "#Info_2_val#": "${ipsm.LEGACY_NETWORK_SITE}"
+          }
+      message:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      message_from_parm:
+        simple: blockIpFailedMailContent
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 2767fa4b-e063-4bf1-8c5d-f40d89532874
+      iscommand: false
+      name: Send Block Failed SMS
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: 2767fa4b-e063-4bf1-8c5d-f40d89532874
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 757.5,
+          "y": 7720
+        }
+      }
+  "101":
+    continueonerror: true
+    id: "101"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "59"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: ${siemPlaybookConfig.Send_SMS}
+      content_variables:
+        simple: |-
+          {
+              "#EventType#": "${incident.siemeventtype}",
+              "#Level#": "${incident.siemimpactlevel}",
+              "#IP#": "${incident.siemblockip}",
+              "#Info_1#": "Hostname",
+              "#Info_1_val#": "${incident.siemhostname}",
+              "#Info_2#": "NetworkSite",
+              "#Info_2_val#": "${ipsm.LEGACY_NETWORK_SITE}"
+          }
+      message:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      message_from_parm:
+        simple: blockIpSuccessMailSubject
+      phone_from_parm:
+        simple: notifyCircPhone
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: c2fa7f17-6759-4c40-85cd-baa9c35d3fdd
+      iscommand: false
+      name: Send Block Success SMS
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: c2fa7f17-6759-4c40-85cd-baa9c35d3fdd
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1190,
+          "y": 7720
+        }
+      }
+  "102":
+    continueonerror: true
+    id: "102"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "101"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_Mail_Switch:
+        simple: ${siemPlaybookConfig.Send_Mail}
+      attachIDs:
+        complex:
+          accessor: EntryID
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: File.Name
+              operator: isEqualString
+              right:
+                value:
+                  simple: IP_disconnection_result.csv
+          root: File
+      attachNames:
+        simple: ${incident.siemblockip}_disconnection_status.csv
+      ccList_from_parm:
+        simple: notifyCircAdmin
+      content_from_parm:
+        simple: blockIpSuccessMailContent
+      content_variables:
+        simple: |-
+          {
+              "#EventType#": "${incident.siemeventtype}",
+              "#Level#": "${incident.siemimpactlevel}",
+              "#IP#": "${incident.siemblockip}",
+              "#Info_1#": "Hostname",
+              "#Info_1_val#": "${incident.siemhostname}",
+              "#Info_2#": "NetworkSite",
+              "#Info_2_val#": "${ipsm.LEGACY_NETWORK_SITE}"
+          }
+      receivers:
+        simple: ${ipsm.OWNER}, G_CIRC
+      subject:
+        complex:
+          accessor: type
+          root: incident
+          transformers:
+          - args:
+              from:
+                value:
+                  simple: "0"
+              to:
+                value:
+                  simple: "0"
+            operator: substring
+          - args:
+              condition:
+                value:
+                  simple: rhs==lhs
+              else: {}
+              equals: {}
+              lhs:
+                iscontext: true
+                value:
+                  simple: incident.siemistest
+              options: {}
+              rhs:
+                value:
+                  simple: "Y"
+              then:
+                value:
+                  simple: '[TEST]'
+            operator: If-Then-Else
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: No result returned
+            operator: replace
+      subject_from_parm:
+        simple: blockIpSuccessMailSubject
+      subject_variables:
+        simple: |-
+          {
+              "#EventType#": "${incident.siemeventtype}",
+              "#Level#": "${incident.siemimpactlevel}",
+              "#IP#": "${incident.siemblockip}",
+              "#Info_1#": "Hostname",
+              "#Info_1_val#": "${incident.siemhostname}",
+              "#Info_2#": "NetworkSite",
+              "#Info_2_val#": "${ipsm.LEGACY_NETWORK_SITE}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 54eb19e3-4fe0-4f01-87ca-49360e3c8671
+      iscommand: false
+      name: Send Block Success Notification Mail
+      script: tsmc_noti_sendMail
+      type: regular
+      version: -1
+    taskid: 54eb19e3-4fe0-4f01-87ca-49360e3c8671
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1190,
+          "y": 7545
+        }
+      }
+  "103":
+    id: "103"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 1f49df15-08f2-40c0-81f4-6d3b9eaa7766
+      iscommand: false
+      name: End
+      type: title
+      version: -1
+    taskid: 1f49df15-08f2-40c0-81f4-6d3b9eaa7766
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 8070
+        }
+      }
+  "104":
+    id: "104"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "85"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      append:
+        simple: "true"
+      key:
+        simple: sqlResult.netowner
+      stringify:
+        simple: "false"
+      value:
+        simple: |-
+          {
+          "EventOwner": "tlyuc",
+          "EventHandlers": "${parmList.circAntiNotiUsers}"
+          }
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 1d57243a-9dbe-4dc6-8730-1dd3503b8275
+      iscommand: false
+      name: Set netowner object
+      script: Set
+      type: regular
+      version: -1
+    taskid: 1d57243a-9dbe-4dc6-8730-1dd3503b8275
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 592.5,
+          "y": 2295
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "29_14_is null": 0.5,
+      "29_30_#default#": 0.57,
+      "46_64_Level up": 0.53,
+      "4_95_All IPSM is null": 0.9,
+      "4_96_Null N/W Site": 0.87,
+      "50_59_#default#": 0.8,
+      "5_6_#default#": 0.77,
+      "60_34_Success": 0.51,
+      "66_68_Success": 0.53,
+      "68_63_Success": 0.53,
+      "79_53_#default#": 0.35,
+      "85_25_#default#": 0.5,
+      "90_50_#default#": 0.62
+    },
+    "paper": {
+      "dimensions": {
+        "height": 8245,
+        "width": 1880,
+        "x": 50,
+        "y": -110
+      }
+    }
+  }

@@ -1,0 +1,2427 @@
+category: Data Enrichment & Threat Intelligence
+commonfields:
+  id: Anomali ThreatStream v2
+  version: -1
+configuration:
+- defaultvalue: https://api.threatstream.com
+  display: Server URL (e.g., https://www.test.com)
+  name: url
+  required: true
+  type: 0
+- display: Username
+  name: username
+  required: true
+  type: 0
+- display: API Key
+  name: apikey
+  required: true
+  type: 4
+- defaultvalue: high
+  display: Threshold of the indicator.
+  name: default_threshold
+  options:
+  - low
+  - medium
+  - high
+  - very-high
+  required: true
+  type: 15
+- additionalinfo: Reliability of the source providing the intelligence data.
+  defaultvalue: B - Usually reliable
+  display: Source Reliability
+  name: integrationReliability
+  options:
+  - A+ - 3rd party enrichment
+  - A - Completely reliable
+  - B - Usually reliable
+  - C - Fairly reliable
+  - D - Not usually reliable
+  - E - Unreliable
+  - F - Reliability cannot be judged
+  required: true
+  type: 15
+- defaultvalue: "false"
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+- display: Use system proxy settings
+  name: proxy
+  required: false
+  type: 8
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 5.0.0
+    itemVersion: 2.0.7
+    packID: Anomali_ThreatStream
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+defaultclassifier: "null"
+description: Use Anomali ThreatStream to query and submit threats.
+detaileddescription: "To access ThreatStream using the API, you need a user ID and
+  API key. To get these credentials, register at [http://ui.threatstream.com](http://ui.threatstream.com).
+  \n\n\n---\n[View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/anomali-threat-stream-v2)"
+display: Anomali ThreatStream v2
+image: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAyCAYAAACXpx/YAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAjdSURBVHgB7VrdbhvHFZ6ZpdQATlHmCbq6CxwHkVAUCNzapZ6gtN1eh3oCUZLtNlckr1z/SFw+geXr2hb1BKKtwAhaBGZQOchd1k8QBshFK+3O9Ptmd+WVxJ+lbclJMB+w2uXu/Jw953xnzpyVEA4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODm8AOeqBX6mWz8WqhiafCCkH8X7U+fbLbigK4MLlq02ejRGD+EB3J/X7sFL1S1rVdOR1v3n2z74YI9OvY1ExUs0bI3975CFkNEZ/rQ90b9J8H126WpdSlLUR4Te7jzdFAWT6YD9pZP8/u4+6RfpxrkyHUkfbe190e5P6nL90taak8EtKB/1edyCmBPvDsOUXu4+D0rAGVPiMVjtGSj+5Y0Rp1qudv/jXxXEGyPoKLRu8hjLYr02D7z193BrVh8ZF64Yqxfw5dHyM0ZBa1g0UnI19FAb3pFCznrhw6VovOoiXRhka7do8Q4ni40vXBkWM9X7sbYEOFV5rITZxmtgHY29B3momn1BeHQZfoeLH9VNCfoZTJYpKPZx7YkooKe+nl4Ea1sAzXgPq8nHZifbjOaiExil7Jb0lCgKvE+J4gEt4oGzSQOI18fHlq22OgfGo3I40ZglOtHj8MMasGGFCGmJm1tuZB+smjQ0D3P/wUzjlGFjZU+MWBVlE41IPVoeUEbqAczWKyPW2cILBZKDUokbBXjx9VE9vN8GKP0HgCgUvEtYkwt/e7iOyfl6V9A4NBO/9YZL3DpPHgLm81pGaFEF6OALIukNZI63YrzlUPuuAEg5oGnQGGHlxGOMTx7TOFcKBWjl2jIUnRYMOiaiTRZIQY3UYqcbJ9bZxgsFkL898mSMPjGUxBJdTMZEGgbGXeE3vpcGn6e/FqprIIzYnLQ/HZZVJqBuJvacPmzh1YAgfS8mJ6HThj9UKjWvHgqGU0aEoAMteIX2Esd7eFw972X2uqSKJaMuTosbbwhEDW/aahL3HWWoFhcBUBl9ATIF0jYP3JmF+mhAlpfGTK/N10T6ZUinrxLZJlKLjzH9kl4IEVhdKWbYioVvJG2oSyF57kTpahiRhMokeZrzXXrKmwREDj2RvhtdkMWEVmTrIgVaF+6N9OT1PnU0WRaTiK1y7wfg6Q/Jhkimkz/zjxe7DwstKxl5GnGFOkbEY+WDtLFh8aOCh7L3zr3lx66umuPXvCn++CYuJyIsZqgdUZLJ9mAy0Da2g0hQO7TaTT1DIKb7tdcNY6UWRJoQz2ttJQ2w3DeOFkbE3PogTktx67ovbX9Whxxp/5lgsRrJYvT1nPjTwUPbGpbogW5V3GLrehMVUJLLJK7wuvB5r1bPthfpz0dCObZdde+GIT0RB5GWjA9PRf0wcsjDy7D1M2JSuQmdtweSs+dzKP5HFRr+0J6mnyleGwRp49NqLBMPEi9mLE2/K4iRsvdp2JUpRvxnbPp0v1t5zJj7+CENTWdmWir9NpJpiStmgB7yracX78WI4ZZHhBHuJv/0usDpU0YJoLtjxJrJYe3aPbUkA/Zy/WJ3nuw07/AlOb7dJI9fezxdC/A1P9CKLpamkLN4UU4Jh78Llv8BuppFsO8zY9gztHtZEvLKPaLLzvube+BqVdGiAdN+ejYSqlmwVzrpzSBPCQlWqPIayN8Pnv+8db08WR9pbTlncyveho124fI0OsGz1U/KEGjHvOS22caqOeJz0g9cyFPSLlu0sqySVgI7HPOg9rmNknJRjlUsjY1+7wHWO7XnEZngfhs8XTx/PaRY4jFV+n4a0Ck2OsmSBwz6TrR9VPDc2McJc2kxfIdJ6ZsB5kNm/PPEQOQKfHWHvGJDFdEL2UTOqcvw5k1JGE1ssSvUz7ECOMkxnfTGiIujg4ODg4OBwNvDEO8Jq/Xr9D59efO/Zl89C4XBqKIlTwvX69YpJa7l5IOPtbWzcXkKdd1knnxN74hSwunqj5mnRvxvctdlkvV4ve97MFrZ4tniA7HMz0v9rBUEwoLN5kCtr+0uCEqeESETYypgWD5HUk+1vbDG2xRkA+8flWInDSpCnftXGtsQXOl6SWl/JV4ngbI18218SpDgDrK3e/I77uY2NO838PUzfA6crIikNNvG8lWvfgXD8ptphv9XVm238Zv06TO8FYKUPVt4HKzmGyMZYW7uxk97Dntz019t3FzEm2GvKvD4i24i2GKuP+Wq4F9p7KzeWUVqi/Nhzy+Dexu0VGxXgOJiZhQY4sdxcR3RK3yEZAwUhjs8+hp8bkzEGSpsrZxExTo3BhcDigNYoXhgas0mFpU98HMtkm9b7wfXVm6yYVWO9/wHbo207bTuQRj7B/bn8GDJOK3LGPIiNWLHXOn4A5VboPHCWBp0jmUp3TrSVpsyxGHFi4y1xuUHfgMyPtZrD/dra2s0qw7sRmvMvxNosYJBanW3TMfC3ZmWBbOhD55xDOzpYOcYSJc4A79TAKOtt3wvuof5rbGnQ887la9Kd9WC9SyUizlTRJlRqtq6Vqgj71ac0z2eR1r2Sml3Gm3ySjcEx7fhS9IOUJRyLxgHNn9B4nprdoZHjeKZ/vG0im9ze2Li7GQT/CGMp7b/ecG6lNFjN/+5IQrrWB13I9ZnnJR9flFK5UC97+fcTarZt58B7S6N9cQZ4twwei1yd2SD8Scnac8gDbADTSqFNpJTa0kK/RJsHk0aksdbbd2rW0GARDFMb2ViK74fIFNr5pelobbp2iVCz38GAH8TxYR2/0Bevs8JP2MCvgBo0E7N5sKVHVvFMY0m7djIrvxegbnv8ixS/7fpZ2EeYb9MhktAc4aAhaLD/po4kRxrGAwPBep9ZeTJ/wnalZip8HpuDpviJ4mdhYJMosE+2YA393vNmk+/TJuYHjyru8dvDXL6PTJM09klv/cB/eONvsB5fpkQ3CcHBIF2/2xx72Pw2zArR0ko+t/MrifD+d5/hmf9pgjEhk6BMoXB4fZCNr5KjI/fKY9qXj93zh7UfdX/S/Flf4eDg4ODg4ODg4ODg4ODg4ODg4ODgMAr/B9RX4PEFdlR5AAAAAElFTkSuQmCC
+name: Anomali ThreatStream v2
+script:
+  commands:
+  - arguments:
+    - default: true
+      description: The IP to check.
+      isArray: true
+      name: ip
+      required: true
+    - auto: PREDEFINED
+      description: If severity is greater than or equal to the threshold, then the
+        IP address will be considered malicious. This argument will override the default
+        threshold defined as a parameter. Can be "low", "medium", "high", or "very-high".
+      name: threshold
+      predefined:
+      - low
+      - medium
+      - high
+      - very-high
+    - auto: PREDEFINED
+      defaultValue: "False"
+      description: Whether to include results with an inactive status. Default is
+        "False".
+      name: include_inactive
+      predefined:
+      - "True"
+      - "False"
+    description: Checks the reputation of the given IP address.
+    name: ip
+    outputs:
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+      type: String
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+      type: String
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+      type: String
+    - contextPath: IP.ASN
+      description: The Autonomous System (AS) number associated with the indicator.
+      type: String
+    - contextPath: IP.Address
+      description: The IP address of the indicator.
+      type: String
+    - contextPath: IP.Geo.Country
+      description: The country associated with the indicator.
+      type: String
+    - contextPath: IP.Geo.Location
+      description: The longitude and latitude of the IP address.
+      type: String
+    - contextPath: ThreatStream.IP.ASN
+      description: The Autonomous System (AS) number associated with the indicator.
+      type: String
+    - contextPath: ThreatStream.IP.Address
+      description: The IP address of the indicator.
+      type: String
+    - contextPath: ThreatStream.IP.Country
+      description: The country associated with the indicator.
+      type: String
+    - contextPath: ThreatStream.IP.Type
+      description: The indicator type.
+      type: String
+    - contextPath: ThreatStream.IP.Modified
+      description: 'The time when the indicator was last updated. The date format
+        is: YYYYMMDDThhmmss, where "T" denotes the start of the value for time, in
+        UTC time.'
+      type: String
+    - contextPath: ThreatStream.IP.Severity
+      description: The indicator severity ("very-high", "high", "medium", or "low").
+      type: String
+    - contextPath: ThreatStream.IP.Confidence
+      description: The observable certainty level of a reported indicator type. Confidence
+        score can range from 0-100, in increasing order of confidence.
+      type: String
+    - contextPath: ThreatStream.IP.Status
+      description: The status assigned to the indicator.
+      type: String
+    - contextPath: ThreatStream.IP.Organization
+      description: The name of the business that owns the IP address associated with
+        the indicator.
+      type: String
+    - contextPath: ThreatStream.IP.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: Number
+    - contextPath: IP.Malicious.Vendor
+      description: The vendor that reported the indicator as malicious.
+      type: String
+    - contextPath: ThreatStream.IP.Tags
+      description: Tags assigned to the IP.
+      type: Unknown
+    - contextPath: IP.Tags
+      description: (List) Tags of the IP.
+      type: Unknown
+  - arguments:
+    - default: true
+      description: The domain name to check.
+      isArray: true
+      name: domain
+      required: true
+    - auto: PREDEFINED
+      description: If the severity is greater than or equal to the threshold, the
+        IP address is considered as malicious. This argument will override the default
+        threshold defined as a parameter. Can be "low", "medium", "high", or "very-high".
+      name: threshold
+      predefined:
+      - low
+      - medium
+      - high
+      - very-high
+    - auto: PREDEFINED
+      defaultValue: "False"
+      description: Whether to include results with an inactive status. Default is
+        "False".
+      name: include_inactive
+      predefined:
+      - "True"
+      - "False"
+    description: Checks the reputation of the given domain name.
+    name: domain
+    outputs:
+    - contextPath: Domain.Name
+      description: The domain name.
+      type: String
+    - contextPath: Domain.DNS
+      description: 'The IP addresses resolved by DNS. '
+      type: String
+    - contextPath: Domain.WHOIS.CreationDate
+      description: |-
+        The date when the domain was created. The date format is: YYYYMMDDThhmmss.
+        Where T denotes the start of the value
+        for time, in UTC time.
+      type: Date
+    - contextPath: Domain.WHOIS.UpdatedDate
+      description: |-
+        The date when the domain was last updated. The date format is: YYYYMMDDThhmmss.
+        Where T denotes the start of the value
+        for time, in UTC time.
+      type: Date
+    - contextPath: Domain.WHOIS.Registrant.Name
+      description: The name of the registrant.
+      type: String
+    - contextPath: Domain.WHOIS.Registrant.Email
+      description: The email address of the registrant.
+      type: String
+    - contextPath: Domain.WHOIS.Registrant.Phone
+      description: The phone number of the registrant.
+      type: String
+    - contextPath: ThreatStream.Domain.ASN
+      description: The Autonomous System (AS) number associated with the indicator.
+      type: String
+    - contextPath: ThreatStream.Domain.Address
+      description: The domain name of the indicator.
+      type: String
+    - contextPath: ThreatStream.Domain.Country
+      description: The country associated with the indicator.
+      type: String
+    - contextPath: ThreatStream.Domain.Type
+      description: The indicator type.
+      type: String
+    - contextPath: ThreatStream.Domain.Modified
+      description: |-
+        The date and time when the indicator was last updated. The date format is: YYYYMMDDThhmmss, where "T" denotes the start of the value
+        for time, in UTC time.
+      type: String
+    - contextPath: ThreatStream.Domain.Severity
+      description: The indicator severity ("very-high", "high", "medium", "low").
+      type: String
+    - contextPath: ThreatStream.Domain.Confidence
+      description: The observable certainty level of a reported indicator type. Confidence
+        score can range from 0-100, in increasing order of confidence.
+      type: String
+    - contextPath: ThreatStream.Domain.Status
+      description: The status assigned to the indicator.
+      type: String
+    - contextPath: ThreatStream.Domain.Organization
+      description: The name of the business that owns the IP address associated with
+        the indicator.
+      type: String
+    - contextPath: ThreatStream.Domain.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: Domain.Malicious.Vendor
+      description: Vendor that reported the indicator as malicious.
+      type: String
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+      type: String
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+      type: String
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+      type: String
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: Number
+    - contextPath: ThreatStream.Domain.Tags
+      description: Tags assigned to the domain.
+      type: Unknown
+    - contextPath: Domain.Tags
+      description: (List) Tags of the domain.
+      type: Unknown
+  - arguments:
+    - default: true
+      description: The hash of file to check.
+      isArray: true
+      name: file
+      required: true
+    - auto: PREDEFINED
+      description: If the severity is greater than or equal to the threshold, the
+        hash of file is considered as malicious. This argument will override the default
+        threshold defined as a parameter. Can be "low", "medium", "high", or "very-high".
+      name: threshold
+      predefined:
+      - low
+      - medium
+      - high
+      - very-high
+    - auto: PREDEFINED
+      defaultValue: "False"
+      description: Whether to include results with an inactive status. Default is
+        "False".
+      name: include_inactive
+      predefined:
+      - "True"
+      - "False"
+    description: Checks the reputation of the given hash of the file.
+    name: file
+    outputs:
+    - contextPath: File.MD5
+      description: The MD5 hash of the file.
+      type: String
+    - contextPath: File.SHA1
+      description: The SHA1 hash of the file.
+      type: String
+    - contextPath: File.SHA256
+      description: The SHA1 hash of the file.
+      type: String
+    - contextPath: File.SHA512
+      description: The SHA512 hash of the file.
+      type: String
+    - contextPath: File.Malicious.Vendor
+      description: The vendor that reported the indicator as malicious.
+      type: String
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+      type: String
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+      type: String
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+      type: String
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: Number
+    - contextPath: ThreatStream.File.Severity
+      description: The indicator severity ("very-high", "high", "medium", "low").
+      type: String
+    - contextPath: ThreatStream.File.Confidence
+      description: The observable certainty level of a reported indicator type. Confidence
+        score can range from 0-100, in increasing order of confidence.
+      type: String
+    - contextPath: ThreatStream.File.Status
+      description: The status assigned to the indicator.
+      type: String
+    - contextPath: ThreatStream.File.Type
+      description: The indicator type.
+      type: String
+    - contextPath: ThreatStream.File.MD5
+      description: The MD5 hash of the indicator.
+      type: String
+    - contextPath: ThreatStream.File.SHA1
+      description: The SHA1 hash of the indicator.
+      type: String
+    - contextPath: ThreatStream.File.SHA256
+      description: The SHA256 hash of the indicator.
+      type: String
+    - contextPath: ThreatStream.File.SHA512
+      description: The SHA512 hash of the indicator.
+      type: String
+    - contextPath: ThreatStream.File.Modified
+      description: |-
+        The date and time when the indicator was last updated. The date format is: YYYYMMDDThhmmss, where "T" denotes the start of the value
+        for time, in UTC time.
+      type: String
+    - contextPath: ThreatStream.File.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: ThreatStream.File.Tags
+      description: Tags assigned to the file.
+      type: Unknown
+    - contextPath: File.Tags
+      description: (List) Tags of the file.
+      type: Unknown
+  - arguments:
+    - description: The email address to check.
+      name: email
+      required: true
+    - auto: PREDEFINED
+      description: If the severity is greater or equal than the threshold, the IP
+        address is considered as malicious. This argument will override the default
+        threshold defined as a parameter. Can be "low", "medium", "high", "very-high".
+      name: threshold
+      predefined:
+      - low
+      - medium
+      - high
+      - very-high
+    - auto: PREDEFINED
+      defaultValue: "False"
+      description: Whether to include results with an inactive status. Default is
+        "False".
+      name: include_inactive
+      predefined:
+      - "True"
+      - "False"
+    description: Checks the reputation of the given email address.
+    name: threatstream-email-reputation
+    outputs:
+    - contextPath: DBotScore.Indicator
+      description: The tested indicator.
+      type: String
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+      type: String
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+      type: String
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: Number
+    - contextPath: ThreatStream.EmailReputation.Severity
+      description: The indicator severity ("very-high", "high", "medium", "low").
+      type: String
+    - contextPath: ThreatStream.EmailReputation.Confidence
+      description: The observable certainty level of a reported indicator type. Confidence
+        score can range from 0-100, in increasing order of confidence.
+      type: String
+    - contextPath: ThreatStream.EmailReputation.Status
+      description: The status assigned to the indicator.
+      type: String
+    - contextPath: ThreatStream.EmailReputation.Type
+      description: The indicator type.
+      type: String
+    - contextPath: ThreatStream.EmailReputation.Email
+      description: The email address of the indicator.
+      type: String
+    - contextPath: ThreatStream.EmailReputation.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: ThreatStream.EmailReputation.Modified
+      description: |-
+        The date and time when the indicator was last updated. The date format is: YYYYMMDDThhmmss, where "T" denotes the start of the value
+        for time, in UTC time.
+      type: String
+    - contextPath: ThreatStream.EmailReputation.Tags
+      description: Tags assigned to the email.
+      type: Unknown
+  - arguments:
+    - auto: PREDEFINED
+      defaultValue: ip
+      description: The type of passive DNS search ("ip", "domain").
+      name: type
+      predefined:
+      - ip
+      - domain
+      required: true
+    - description: Possible values are "IP" or "Domain".
+      name: value
+      required: true
+    - defaultValue: "50"
+      description: The maximum number of results to return. Default is 50.
+      name: limit
+    description: Returns enrichment data for Domain or IP for available observables.
+    name: threatstream-get-passive-dns
+    outputs:
+    - contextPath: ThreatStream.PassiveDNS.Domain
+      description: The domain value.
+      type: String
+    - contextPath: ThreatStream.PassiveDNS.Ip
+      description: The IP value.
+      type: String
+    - contextPath: ThreatStream.PassiveDNS.Rrtype
+      description: The Rrtype value.
+      type: String
+    - contextPath: ThreatStream.PassiveDNS.Source
+      description: The source value.
+      type: String
+    - contextPath: ThreatStream.PassiveDNS.FirstSeen
+      description: |-
+        The first seen date. The date format is: YYYYMMDDThhmmss, where "T" denotes the start of the value
+        for time, in UTC time.
+      type: String
+    - contextPath: ThreatStream.PassiveDNS.LastSeen
+      description: |-
+        The last seen date. The date format is: YYYYMMDDThhmmss, where "T" denotes the start of the value
+        for time, in UTC time.
+      type: String
+  - arguments:
+    - defaultValue: "50"
+      description: The observable certainty level of a reported indicator type. Default
+        is 50.
+      name: confidence
+    - auto: PREDEFINED
+      defaultValue: private
+      description: Whether the indicator data is public or private to the organization.
+        Default is "private".
+      name: classification
+      predefined:
+      - private
+      - public
+    - auto: PREDEFINED
+      defaultValue: exploit
+      description: Type of threat associated with the imported observables. Pre-defined
+        values, such as "adware", "bot", "malware", etc. Default is "exploit".
+      name: threat_type
+      predefined:
+      - adware
+      - anomalous
+      - anonymization
+      - apt
+      - bot
+      - brute
+      - c2
+      - compromised
+      - crypto
+      - data_leakage
+      - ddos
+      - dyn_dns
+      - exfil
+      - exploit
+      - hack_tool
+      - i2p
+      - informational
+      - malware
+      - p2p
+      - parked
+      - phish
+      - scan
+      - sinkhole
+      - spam
+      - suppress
+      - suspicious
+      - tor
+      - vps
+    - auto: PREDEFINED
+      defaultValue: low
+      description: The potential impact of the indicator type with which the observable
+        is believed to be associated. Can be "high", "medium", or "high", or "very-high".
+        Default is "low".
+      name: severity
+      predefined:
+      - low
+      - medium
+      - high
+      - very-high
+    - auto: PREDEFINED
+      description: The import type of the indicator. Can be "datatext", "file-id",
+        or "url".
+      name: import_type
+      predefined:
+      - datatext
+      - file-id
+      - url
+      required: true
+    - description: 'The source of imported data. Can be one of the following: url,
+        datatext of file-id of uploaded file to the War Room. Supported file types
+        for file-id are: CSV, HTML, IOC, JSON, PDF, TXT.'
+      name: import_value
+      required: true
+    - description: Indicator type to assign if a specific type is not associated with
+        an observable. This is a global setting that applies to any imported IP-type
+        observable when an explicit itype is not specified for it.
+      name: ip_mapping
+    - description: Indicator type to assign if a specific type is not associated with
+        an observable. This is a global setting that applies to any imported domain-type
+        observable when an explicit itype is not specified for it.
+      name: domain_mapping
+    - description: Indicator type to assign if a specific type is not associated with
+        an observable. This is a global setting that applies to any imported URL-type
+        observable when an explicit itype is not specified for it.
+      name: url_mapping
+    - description: Indicator type to assign if a specific type is not associated with
+        an observable. This is a global setting that applies to any imported email-type
+        observable when an explicit itype is not specified for it.
+      name: email_mapping
+    - description: Indicator type to assign if a specific type is not associated with
+        an observable. This is a global setting that applies to any imported MD5-type
+        observable when an explicit itype is not specified for it.
+      name: md5_mapping
+    description: 'Imports indicators (observables) into ThreatStream. Approval of
+      the imported data is required, using the ThreatStream UI. The data can be imported
+      using one of three methods: plain-text, file, or URL. Only one argument can
+      be used.'
+    name: threatstream-import-indicator-with-approval
+  - arguments:
+    - defaultValue: "50"
+      description: The observable certainty level of a reported indicator type. Default
+        is 50.
+      name: confidence
+    - description: To use your specified confidence entirely and not re-assess the
+        value using machine learning algorithms, set source_confidence_ weight to
+        100.
+      name: source_confidence_weight
+    - description: The time stamp of when intelligence will expire on ThreatStream,
+        in ISO format. For example, 2020-12-24T00:00:00.
+      name: expiration_ts
+    - description: The severity you want to assign to the observable when it is imported.
+        Can be "low", "medium", "high" , or "very-high".
+      name: severity
+      predefined:
+      - low
+      - medium
+      - high
+      - very-high
+    - description: A comma-separated list of tags. For example, tag1,tag2.
+      name: tags
+    - description: The ID of the trusted circle with which this threat data should
+        be shared. If you want to import the threat data to multiple trusted circles,
+        enter a list of comma-separated IDs.
+      name: trustedcircles
+    - auto: PREDEFINED
+      description: Denotes whether the indicator data is public or private to the
+        organization.
+      name: classification
+      predefined:
+      - private
+      - public
+      required: true
+    - auto: PREDEFINED
+      description: Whether domain observables that are included in the file and do
+        not resolve will be accepted as valid in ThreatStream and imported.
+      name: allow_unresolved
+      predefined:
+      - "yes"
+      - "no"
+    - description: The entry ID of an uploaded file to the War Room containing a json
+        with "objects" array and "meta" maps.
+      name: file_id
+      required: true
+    description: Imports indicators (observables) into ThreatStream. Approval is not
+      required for the imported data. You must have the Approve Intel user permission
+      to import without approval using the API.
+    name: threatstream-import-indicator-without-approval
+  - arguments:
+    - auto: PREDEFINED
+      description: The threat model of the returned list. Can be "actor", "campaign",
+        "incident", "signature", "ttp", "vulnerability", or "tipreport".
+      name: model
+      predefined:
+      - actor
+      - campaign
+      - incident
+      - signature
+      - ttp
+      - vulnerability
+      - tipreport
+      required: true
+    - defaultValue: "50"
+      description: Limits the list of models size. Specifying limit=0 returns up to
+        a maximum of 1000 models. In case of limit=0 the output won't be set in the
+        context.
+      name: limit
+    description: Returns a list of threat models.
+    name: threatstream-get-model-list
+    outputs:
+    - contextPath: ThreatStream.List.Type
+      description: The type of threat model.
+      type: String
+    - contextPath: ThreatStream.List.Name
+      description: The name of the threat model.
+      type: String
+    - contextPath: ThreatStream.List.ID
+      description: The ID of the threat model.
+      type: String
+    - contextPath: ThreatStream.List.CreatedTime
+      description: 'The date and time of threat model creation. The date format is:
+        YYYYMMDDThhmmss, where "T" denotes the start of the value for time, in UTC
+        time.'
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      description: The threat model. Can be "actor", "campaign", "incident", "signature",
+        "ttp", "vulnerability", or "tipreport".
+      name: model
+      predefined:
+      - actor
+      - campaign
+      - incident
+      - signature
+      - ttp
+      - vulnerability
+      - tipreport
+      required: true
+    - description: The ID of the threat model.
+      name: id
+      required: true
+    description: Returns an HTML file with a description of the threat model.
+    name: threatstream-get-model-description
+    outputs:
+    - contextPath: File.Name
+      description: The file name of the model description.
+      type: String
+    - contextPath: File.EntryID
+      description: The entry ID of the model description.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      description: The threat model. Can be "actor", "campaign", "incident", "signature",
+        "ttp", "vulnerability", or "tipreport".
+      name: model
+      predefined:
+      - actor
+      - campaign
+      - incident
+      - signature
+      - ttp
+      - vulnerability
+      - tipreport
+      required: true
+    - description: The ID of the model.
+      name: id
+      required: true
+    - defaultValue: "20"
+      description: The maximum number of results to return. Default is 20.
+      name: limit
+    description: Returns a list of indicators associated with the specified model
+      and ID of the model.
+    name: threatstream-get-indicators-by-model
+    outputs:
+    - contextPath: ThreatStream.Model.ModelType
+      description: The type of the threat model.
+      type: String
+    - contextPath: ThreatStream.Model.ModelID
+      description: The ID of the threat model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Value
+      description: The value of indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.ID
+      description: The ID of indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.IType
+      description: The iType of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Severity
+      description: The severity of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Confidence
+      description: The confidence of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Country
+      description: The country of the indicator associated with the specified model
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Organization
+      description: The organization of the indicator associated with the specified
+        model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.ASN
+      description: The ASN of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Status
+      description: The status of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Tags
+      description: The tags of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Modified
+      description: The date and time the indicator was last modified.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Type
+      description: The type of the indicator.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      defaultValue: private
+      description: Classification of the Sandbox submission. Can be "private" or "public".
+        Default is "private".
+      name: submission_classification
+      predefined:
+      - private
+      - public
+    - auto: PREDEFINED
+      defaultValue: WINDOWS7
+      description: The platform on which the submitted URL or file will be run. To
+        obtain a list supported platforms run the threatstream-supported-platforms
+        command. Can be "WINDOWS7", or "WINDOWSXP". Default is "WINDOWS7".
+      name: report_platform
+      predefined:
+      - WINDOWS7
+      - WINDOWSXP
+    - auto: PREDEFINED
+      defaultValue: file
+      description: The detonation type. Can be "file" or "url". Default is "file".
+      name: submission_type
+      predefined:
+      - file
+      - url
+      required: true
+    - description: The submission value. Possible values are a valid URL or a file
+        ID that was uploaded to the War Room to detonate.
+      name: submission_value
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether the premium sandbox should be used for detonation. Default
+        is "false".
+      name: premium_sandbox
+      predefined:
+      - "false"
+      - "true"
+    - description: A comma separated list of additional details for the indicator.
+        This information is displayed in the Tag column of the ThreatStream UI.
+      name: detail
+    description: Submits a file or URL to the ThreatStream-hosted Sandbox for detonation.
+    name: threatstream-submit-to-sandbox
+    outputs:
+    - contextPath: ThreatStream.Analysis.ReportID
+      description: The report ID that was submitted to the sandbox.
+      type: String
+    - contextPath: ThreatStream.Analysis.Status
+      description: The analysis status.
+      type: String
+    - contextPath: ThreatStream.Analysis.Platform
+      description: The platform of the submission submitted to the sandbox.
+      type: String
+  - arguments:
+    - description: The report ID for which to check the status.
+      name: report_id
+      required: true
+    description: Returns the current status of the report that was submitted to the
+      sandbox. The report ID is returned from the threatstream-submit-to-sandbox command.
+    name: threatstream-get-analysis-status
+    outputs:
+    - contextPath: ThreatStream.Analysis.ReportID
+      description: The report ID of the file or URL that was detonated to sandbox.
+      type: String
+    - contextPath: ThreatStream.Analysis.Status
+      description: The report status of the file or URL that was detonated in the
+        sandbox.
+      type: String
+    - contextPath: ThreatStream.Analysis.Platform
+      description: The platform that was used for detonation.
+      type: String
+    - contextPath: ThreatStream.Analysis.Verdict
+      description: The report verdict of the file or URL that was detonated in the
+        sandbox. The verdict will remain "benign" until detonation is complete.
+      type: String
+  - arguments:
+    - description: The report ID to return.
+      name: report_id
+      required: true
+    description: Returns the report of a file or URL that was submitted to the sandbox.
+    name: threatstream-analysis-report
+    outputs:
+    - contextPath: ThreatStream.Analysis.ReportID
+      description: The ID of the report submitted to the sandbox.
+      type: String
+    - contextPath: ThreatStream.Analysis.Category
+      description: The report category.
+      type: String
+    - contextPath: ThreatStream.Analysis.Started
+      description: The detonation start time.
+      type: String
+    - contextPath: ThreatStream.Analysis.Completed
+      description: The detonation completion time.
+      type: String
+    - contextPath: ThreatStream.Analysis.Duration
+      description: The duration of the detonation (in seconds).
+      type: Number
+    - contextPath: ThreatStream.Analysis.VmName
+      description: The name of the VM.
+      type: String
+    - contextPath: ThreatStream.Analysis.VmID
+      description: The ID of the VM.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.UdpSource
+      description: The source of UDP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.UdpDestination
+      description: The destination of UDP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.UdpPort
+      description: The port of the UDP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.IcmpSource
+      description: The ICMP source.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.IcmpDestination
+      description: The destination of ICMP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.IcmpPort
+      description: The port of the ICMP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.TcpSource
+      description: The source of TCP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.TcpDestination
+      description: The destination of TCP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.TcpPort
+      description: The port of TCP.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.HttpSource
+      description: The source of HTTP address.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.HttpDestinaton
+      description: The destination of the HTTP address.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.HttpPort
+      description: The port of the HTTP address.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.HttpsSource
+      description: The source of the HTTPS address.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.HttpsDestinaton
+      description: The destination of the HTTPS address.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.HttpsPort
+      description: The port of the HTTPS address.
+      type: String
+    - contextPath: ThreatStream.Analysis.Network.Hosts
+      description: The hosts of network analysis.
+      type: String
+    - contextPath: ThreatStream.Analysis.Verdict
+      description: The verdict of the sandbox detonation.
+      type: String
+  - arguments:
+    - description: The Anomali Observable Search Filter Language query to filter indicator
+        results. If a query is passed as an argument, it overrides all other arguments.
+      name: query
+    - description: The Autonomous System (AS) number associated with the indicator.
+      name: asn
+    - description: |-
+        The observable certainty level
+        of a reported indicator type. Confidence scores range from 0-100, in increasing order of confidence, and is assigned by ThreatStream based on several factors.
+      name: confidence
+    - description: The country associated with the indicator.
+      name: country
+    - description: |-
+        When the indicator was first seen on
+        the ThreatStream cloud platform. The date must be specified in this format:
+        YYYYMMDDThhmmss, where "T" denotes the start of the value for time, in UTC time.
+        For example, 2014-10-02T20:44:35.
+      name: created_ts
+    - description: The unique ID for the indicator.
+      name: id
+    - auto: PREDEFINED
+      description: Whether the classification of the indicator is public. Default
+        is "false".
+      name: is_public
+      predefined:
+      - "false"
+      - "true"
+    - description: The severity assigned to the indicator by ThreatStream.
+      name: indicator_severity
+    - description: The registered owner (organization) of the IP address associated
+        with the indicator.
+      name: org
+    - auto: PREDEFINED
+      description: The status assigned to the indicator. Can be "active", "inactive",
+        or "falsepos".
+      name: status
+      predefined:
+      - active
+      - inactive
+      - falsepos
+    - description: The tag assigned to the indicator.
+      name: tags_name
+    - auto: PREDEFINED
+      description: The type of indicator. Can be "domain", "email", "ip", "MD5", "string",
+        or "url".
+      name: type
+      predefined:
+      - domain
+      - email
+      - ip
+      - md5
+      - string
+      - url
+    - description: 'The value of the indicator. '
+      name: indicator_value
+    - defaultValue: "20"
+      description: The maximum number of results to return from ThreatStream. Default
+        is 20.
+      name: limit
+    description: Return filtered indicators from ThreatStream. If a query is defined,
+      it overrides all other arguments that were passed to the command.
+    name: threatstream-get-indicators
+    outputs:
+    - contextPath: ThreatStream.Indicators.IType
+      description: The indicator type.
+      type: String
+    - contextPath: ThreatStream.Indicators.Modified
+      description: |-
+        The date and time when the indicator was last updated on the ThreatStream. Format: YYYYMMDDThhmmss, where T denotes the start of the value
+        for time, in UTC time.
+      type: String
+    - contextPath: ThreatStream.Indicators.Confidence
+      description: The observable certainty level of a reported indicator type.
+      type: String
+    - contextPath: ThreatStream.Indicators.Value
+      description: The indicator value.
+      type: String
+    - contextPath: ThreatStream.Indicators.Status
+      description: The indicator status.
+      type: String
+    - contextPath: ThreatStream.Indicators.Organization
+      description: The registered owner (organization) of the IP address associated
+        with the indicator.
+      type: String
+    - contextPath: ThreatStream.Indicators.Country
+      description: The country associated with the indicator.
+      type: String
+    - contextPath: ThreatStream.Indicators.Tags
+      description: The tag assigned to the indicator.
+      type: String
+    - contextPath: ThreatStream.Indicators.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: ThreatStream.Indicators.ID
+      description: The ID of the indicator.
+      type: String
+    - contextPath: ThreatStream.Indicators.ASN
+      description: The Autonomous System (AS) number associated with the indicator.
+      type: String
+    - contextPath: ThreatStream.Indicators.Severity
+      description: The severity assigned to the indicator.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      defaultValue: intelligence
+      description: The type of threat model entity on which to add the tag. Can be
+        "actor", "campaign", "incident", "intelligence", "signature", "tipreport",
+        "ttp", or "vulnerability". Default is "intelligence" (indicator).
+      name: model
+      predefined:
+      - actor
+      - campaign
+      - incident
+      - intelligence
+      - signature
+      - tipreport
+      - ttp
+      - vulnerability
+    - description: 'A comma separated list of tags applied to the specified threat
+        model entities or observable. '
+      isArray: true
+      name: tags
+      required: true
+    - description: The ID of the model on which to add the tag.
+      name: model_id
+      required: true
+    description: Adds tags to intelligence for purposes of filtering for related entities.
+    name: threatstream-add-tag-to-model
+  - arguments:
+    - auto: PREDEFINED
+      description: The type of threat model to create. Can be "actor", "campaign",
+        "incident", "ttp", "vulnerability", or "tipreport".
+      name: model
+      predefined:
+      - actor
+      - campaign
+      - incident
+      - ttp
+      - vulnerability
+      - tipreport
+      required: true
+    - description: The name of the threat model to create.
+      name: name
+      required: true
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether the scope of threat model is visible. Default is false.
+      name: is_public
+      predefined:
+      - "true"
+      - "false"
+    - auto: PREDEFINED
+      defaultValue: red
+      description: The Traffic Light Protocol designation for the threat model. Can
+        be "red", "amber", "green", or "white".
+      name: tlp
+      predefined:
+      - red
+      - amber
+      - green
+      - white
+    - description: A comma separated list of tags.
+      name: tags
+    - description: A comma separated list of indicators IDs associated with the threat
+        model on the ThreatStream platform.
+      name: intelligence
+    - description: The description of the threat model.
+      name: description
+    description: Creates a threat model with the specified parameters.
+    name: threatstream-create-model
+    outputs:
+    - contextPath: ThreatStream.Model.ModelType
+      description: The type of the threat model.
+      type: String
+    - contextPath: ThreatStream.Model.ModelID
+      description: The ID of the threat model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Value
+      description: The value of indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.ID
+      description: The ID of indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.IType
+      description: The iType of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Severity
+      description: The severity of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Confidence
+      description: The confidence of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Country
+      description: The country of the indicator associated with the specified model
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Organization
+      description: The organization of the indicator associated with the specified
+        model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.ASN
+      description: The ASN of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Status
+      description: The status of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Tags
+      description: The tags of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Modified
+      description: The date and time the indicator was last modified.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Type
+      description: The type of the indicator.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      description: The type of threat model to update. Can be "actor", "campaign",
+        "incident", "ttp", "vulnerability", or "tipreport".
+      name: model
+      predefined:
+      - actor
+      - campaign
+      - incident
+      - ttp
+      - vulnerability
+      - tipreport
+      required: true
+    - description: The ID of the threat model to update.
+      name: model_id
+      required: true
+    - description: The name of the threat model to update.
+      name: name
+    - auto: PREDEFINED
+      defaultValue: "false"
+      description: Whether the scope of threat model is visible. Default is false.
+      name: is_public
+      predefined:
+      - "true"
+      - "false"
+    - auto: PREDEFINED
+      defaultValue: red
+      description: The Traffic Light Protocol designation for the threat model. Can
+        be "red", "amber", "green", or "white".
+      name: tlp
+      predefined:
+      - red
+      - amber
+      - green
+      - white
+    - description: A comma separated list of tags.
+      name: tags
+    - description: A comma separated list of indicators IDs associated with the threat
+        model on the ThreatStream platform.
+      name: intelligence
+    - description: The description of the threat model.
+      name: description
+    description: Updates a threat model with specific parameters. If one or more optional
+      parameters are defined, the command overrides previous data stored in ThreatStream.
+    name: threatstream-update-model
+    outputs:
+    - contextPath: ThreatStream.Model.ModelType
+      description: The type of the threat model.
+      type: String
+    - contextPath: ThreatStream.Model.ModelID
+      description: The ID of the threat model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Value
+      description: The value of indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.ID
+      description: The ID of indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.IType
+      description: The iType of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Severity
+      description: The severity of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Confidence
+      description: The confidence of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Country
+      description: The country of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Organization
+      description: The organization of the indicator associated with the specified
+        model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.ASN
+      description: The ASN of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Status
+      description: The status of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Tags
+      description: The tags of the indicator associated with the specified model.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Modified
+      description: The date and time the indicator was last modified.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: ThreatStream.Model.Indicators.Type
+      description: The type of the indicator.
+      type: String
+  - arguments:
+    - auto: PREDEFINED
+      defaultValue: default
+      description: The type of sandbox ("default" or "premium"). Default type is "default".
+      name: sandbox_type
+      predefined:
+      - default
+      - premium
+    description: Returns a list of supported platforms for default or premium sandbox.
+    name: threatstream-supported-platforms
+    outputs:
+    - contextPath: ThreatStream.PremiumPlatforms.Name
+      description: The name of the supported platform for premium sandbox.
+      type: String
+    - contextPath: ThreatStream.PremiumPlatforms.Types
+      description: The type of supported submissions for premium sandbox.
+      type: String
+    - contextPath: ThreatStream.PremiumPlatforms.Label
+      description: The display name of the supported platform of premium sandbox.
+      type: String
+    - contextPath: ThreatStream.DefaultPlatforms.Name
+      description: The name of the supported platform for standard sandbox.
+      type: String
+    - contextPath: ThreatStream.DefaultPlatforms.Types
+      description: The type of the supported submissions for standard sandbox.
+      type: String
+    - contextPath: ThreatStream.DefaultPlatforms.Label
+      description: The display name of the supported platform of standard sandbox.
+      type: String
+  - arguments:
+    - default: true
+      description: The URL to check.
+      isArray: true
+      name: url
+      required: true
+    - auto: PREDEFINED
+      description: If the severity is greater than or equal to the threshold, the
+        URL is considered as malicious. This argument will override the default threshold
+        defined as a parameter. Can be "low", "medium", "high", or "very-high".
+      name: threshold
+      predefined:
+      - low
+      - medium
+      - high
+      - very-high
+    - auto: PREDEFINED
+      defaultValue: "False"
+      description: Whether to include results with an inactive status. Default is
+        "False".
+      name: include_inactive
+      predefined:
+      - "True"
+      - "False"
+    description: Checks the reputation of the given URL.
+    name: url
+    outputs:
+    - contextPath: DBotScore.Indicator
+      description: The indicator that was tested.
+      type: String
+    - contextPath: DBotScore.Type
+      description: The indicator type.
+      type: String
+    - contextPath: DBotScore.Vendor
+      description: The vendor used to calculate the score.
+      type: String
+    - contextPath: DBotScore.Score
+      description: The actual score.
+      type: Number
+    - contextPath: URL.Data
+      description: The URL of the indicator.
+      type: String
+    - contextPath: URL.Malicious.Vendor
+      description: Vendor that reported the indicator as malicious.
+      type: String
+    - contextPath: ThreatStream.URL.Modified
+      description: |-
+        The date and time when the indicator was last updated. The date format is: YYYYMMDDThhmmss, where "T" denotes the start of the value
+        for time, in UTC time.
+      type: String
+    - contextPath: ThreatStream.URL.Confidence
+      description: The observable certainty level of a reported indicator type. Confidence
+        score can range from 0-100, in increasing order of confidence.
+      type: String
+    - contextPath: ThreatStream.URL.Status
+      description: The status of the indicator.
+      type: String
+    - contextPath: ThreatStream.URL.Organization
+      description: The name of the business that owns the IP address associated with
+        the indicator.
+      type: String
+    - contextPath: ThreatStream.URL.Address
+      description: The URL of the indicator.
+      type: String
+    - contextPath: ThreatStream.URL.Country
+      description: The country associated with the indicator.
+      type: String
+    - contextPath: ThreatStream.URL.Type
+      description: The indicator type.
+      type: String
+    - contextPath: ThreatStream.URL.Source
+      description: The source of the indicator.
+      type: String
+    - contextPath: ThreatStream.URL.Severity
+      description: The indicator severity ("very-high", "high", "medium", or "low").
+      type: String
+    - contextPath: ThreatStream.URL.Tags
+      description: Tags assigned to the URL.
+      type: Unknown
+    - contextPath: URL.Tags
+      description: (List) Tags of the URL.
+      type: Unknown
+  dockerimage: demisto/py3-tools:0.0.1.25751
+  runonce: false
+  script: |
+    register_module_line('Anomali ThreatStream v2', 'start', __line__())
+
+
+
+
+    ''' IMPORTS '''
+
+    import json
+    import requests
+    from requests.exceptions import MissingSchema, ConnectionError
+
+    # Disable insecure warnings
+    requests.packages.urllib3.disable_warnings()
+
+    ''' GLOBALS/PARAMS '''
+
+    VENDOR_NAME = 'ThreatStream'
+    HEADERS = {
+        'Content-Type': 'application/json'
+    }
+
+    CREDENTIALS: dict = {}
+
+    DBOT_SCORE = {
+        'low': 2,
+        'medium': 2,
+        'high': 3,
+        'very-high': 3
+    }
+
+    SEVERITY_SCORE = {
+        'low': 0,
+        'medium': 1,
+        'high': 2,
+        'very-high': 3
+    }
+
+    DBOT_MAPPING = {
+        'value': 'Indicator',
+        'type': 'Type',
+        'source': 'Vendor',
+    }
+
+    DEFAULT_INDICATOR_MAPPING = {
+        'asn': 'ASN',
+        'value': 'Address',
+        'country': 'Country',
+        'type': 'Type',
+        'modified_ts': 'Modified',
+        'confidence': 'Confidence',
+        'status': 'Status',
+        'org': 'Organization',
+        'source': 'Source',
+        'tags': 'Tags',
+    }
+
+    INDICATOR_EXTENDED_MAPPING = {
+        'value': 'Value',
+        'id': 'ID',
+        'itype': 'IType',
+        'meta': 'Meta',
+        'confidence': 'Confidence',
+        'country': 'Country',
+        'org': 'Organization',
+        'asn': 'ASN',
+        'status': 'Status',
+        'tags': 'Tags',
+        'modified_ts': 'Modified',
+        'source': 'Source',
+        'type': 'Type',
+    }
+
+    THREAT_MODEL_MAPPING = {
+        'name': 'Name',
+        'id': 'ID',
+        'created_ts': 'CreatedTime',
+    }
+
+    ''' HELPER FUNCTIONS '''
+
+
+    class Client:
+        def __init__(self, base_url, use_ssl, default_threshold, reliability):
+            self.base_url = base_url
+            self.use_ssl = use_ssl
+            self.default_threshold = default_threshold
+            self.reliability = reliability
+
+        def http_request(self, method, url_suffix, params=None, data=None, headers=None, files=None, json=None, text_response=None):
+            """
+                A wrapper for requests lib to send our requests and handle requests and responses better.
+            """
+            res = requests.request(
+                method,
+                self.base_url + url_suffix,
+                verify=self.use_ssl,
+                params=params,
+                data=data,
+                headers=headers,
+                files=files,
+                json=json
+            )
+            # Handle error responses gracefully
+            if res.status_code in {401}:
+                raise Exception(f"{VENDOR_NAME} - Got unauthorized from the server. Check the credentials.")
+            elif res.status_code in {404}:
+                command = demisto.command()
+                if command in ['threatstream-get-model-description', 'threatstream-get-indicators-by-model',
+                               'threatstream-get-analysis-status', 'threatstream-analysis-report']:
+                    # in order to prevent raising en error in case model/indicator/report was not found
+                    return {}
+                else:
+                    raise Exception(f"{VENDOR_NAME} - The resource not found. Check the endpoint.")
+            elif res.status_code not in {200, 201, 202}:
+                raise Exception(F"{VENDOR_NAME} - Error in API call to ThreatStream {res.status_code} - {res.text}")
+
+            if text_response:
+                return res.text
+            return res.json()
+
+        def get_dbot_context(self, indicator, threshold, mapping=None):
+            """
+                 Builds and returns dictionary with Indicator, Type, Vendor and Score keys
+                 and values from the indicator that will be returned to context.
+            """
+            if not mapping:
+                mapping = DBOT_MAPPING
+            dbot_context = {mapping[k]: v for (k, v) in indicator.items() if k in mapping.keys()}
+            indicator_score = DBOT_SCORE[indicator.get('meta', {}).get('severity', 'low')]
+            # the indicator will be considered as malicious in case it's score is greater or equal to threshold
+            dbot_context['Score'] = 3 if indicator_score >= DBOT_SCORE[threshold] else indicator_score
+            dbot_context['Vendor'] = VENDOR_NAME
+            dbot_context['Reliability'] = self.reliability
+
+            return dbot_context
+
+
+    def find_worst_indicator(indicators):
+        """
+            Sorts list of indicators by severity score and returns one indicator with the highest severity.
+            In case the indicator has no severity value, the indicator severity score is set to 0 (low).
+        """
+        indicators.sort(key=lambda ioc: SEVERITY_SCORE[ioc.get('meta', {}).get('severity', 'low')], reverse=True)
+        return indicators[0]
+
+
+    def prepare_args(args):
+        # removing empty keys that can be passed from playbook input
+        args = {k: v for (k, v) in args.items() if v}
+        if 'include_inactive' in args:
+            # special handling for ip, domain, file, url and threatstream-email-reputation commands
+            args['status'] = "active,inactive" if args.pop('include_inactive') == 'True' else "active"
+        if 'indicator_severity' in args:
+            # special handling for threatstream-get-indicators
+            args['meta.severity'] = args.pop('indicator_severity', None)
+        if 'tags_name' in args:
+            # special handling for threatstream-get-indicators
+            args['tags.name'] = args.pop('tags_name', None)
+        if 'indicator_value' in args:
+            # special handling for threatstream-get-indicators
+            args['value'] = args.pop('indicator_value', None)
+
+        return args
+
+
+    def build_params(**params):
+        """
+            Builds query string from key word arguments and appends to it username and api key.
+        """
+        params.update(CREDENTIALS)
+        return params
+
+
+    def mark_as_malicious(indicator, threshold, context):
+        """
+            Marks indicator as malicious if severity of indicator is greater/equals to threshold and
+            adds Malicious key to returned dictionary (context) in such case.
+        """
+        severity = indicator.get('meta', {}).get('severity', 'low')
+
+        if SEVERITY_SCORE[severity] >= SEVERITY_SCORE[threshold]:
+            context['Malicious'] = {
+                'Vendor': 'ThreatStream'
+            }
+
+
+    def search_indicator_by_params(client: Client, params, searchable_value):
+        """
+            Generic function that searches for indicators from ThreatStream by given query string.
+            Returns indicator with the highest severity score.
+        """
+        indicators_data = client.http_request("Get", "v2/intelligence/", params=params, headers=HEADERS)
+
+        if not indicators_data['objects']:
+            demisto.results(F"No intelligence has been found for {searchable_value}")
+            return None
+
+        return find_worst_indicator(indicators_data['objects'])
+
+
+    def get_ip_context(indicator, threshold):
+        """
+            Builds and returns dictionary that will be set to IP generic context.
+        """
+        ip_context = {}
+        ip_context['ASN'] = indicator.get('asn', '')
+        ip_context['Address'] = indicator.get('value', '')
+        ip_context['Geo'] = {
+            'Country': indicator.get('country', ''),
+            'Location': F"{indicator.get('latitude', '')},{indicator.get('longitude', '')}"
+        }
+        indicator_tags = indicator.get('tags', [])
+        if indicator_tags:
+            ip_context['Tags'] = [str(tag.get('name', '')) for tag in indicator_tags]
+
+        mark_as_malicious(indicator, threshold, ip_context)
+
+        return ip_context
+
+
+    def get_domain_context(indicator, threshold):
+        """
+            Builds and returns dictionary that will be set to Domain generic context.
+        """
+        domain_context = {}
+        whois_context = {}
+        domain_context['Name'] = indicator.get('value', '')
+        domain_context['DNS'] = indicator.get('ip', '')
+
+        whois_context['CreationDate'] = indicator.get('created_ts', '')
+        whois_context['UpdatedDate'] = indicator.get('modified_ts', '')
+        meta = indicator.get('meta', None)
+
+        if meta:
+            registrant = {}
+            registrant['Name'] = meta.get('registrant_name', '')
+            registrant['Email'] = meta.get('registrant_email', '')
+            registrant['Phone'] = meta.get('registrant_phone', '')
+        whois_context['Registrant'] = registrant
+        domain_context['WHOIS'] = whois_context
+        indicator_tags = indicator.get('tags', [])
+        if indicator_tags:
+            domain_context['Tags'] = [str(tag.get('name', '')) for tag in indicator_tags]
+
+        mark_as_malicious(indicator, threshold, domain_context)
+
+        return domain_context
+
+
+    def get_file_type(file_indicator):
+        """
+            The function gets a file indicator data and returns it's subtype.
+        """
+        indicator_type = file_indicator.get('subtype', '')
+        return indicator_type
+
+
+    def get_file_context(indicator, threshold):
+        """
+            Builds and returns dictionary that will be set to File generic context.
+        """
+        indicator_type = get_file_type(indicator)
+        indicator_value = indicator.get('value', '')
+        file_context = {}
+        if indicator_type:
+            file_context = {indicator_type: indicator_value}
+        indicator_tags = indicator.get('tags', [])
+        if indicator_tags:
+            file_context['Tags'] = [str(tag.get('name', '')) for tag in indicator_tags]
+
+        mark_as_malicious(indicator, threshold, file_context)
+
+        return file_context
+
+
+    def get_url_context(indicator, threshold):
+        """
+            Builds and returns dictionary that will be set to URL generic context.
+        """
+        url_context = {'Data': indicator.get('value', '')}
+        indicator_tags = indicator.get('tags', [])
+        if indicator_tags:
+            url_context['Tags'] = [str(tag.get('name', '')) for tag in indicator_tags]
+
+        mark_as_malicious(indicator, threshold, url_context)
+
+        return url_context
+
+
+    def get_threat_generic_context(indicator, indicator_mapping=None):
+        """
+            Receives indicator and builds new dictionary from values that were defined in
+            DEFAULT_INDICATOR_MAPPING keys and adds the Severity key with indicator severity value.
+        """
+        # True when the indicator isn't a file (file indicator has a modified indicator_mapping).
+        if not indicator_mapping:
+            indicator_mapping = DEFAULT_INDICATOR_MAPPING
+        threat_ip_context = {indicator_mapping[k]: v for (k, v) in indicator.items() if
+                             k in indicator_mapping.keys()}
+        try:
+            threat_ip_context['Severity'] = indicator['meta']['severity']
+        except KeyError:
+            threat_ip_context['Severity'] = 'low'
+        finally:
+            return threat_ip_context
+
+
+    def parse_network_elem(element_list, context_prefix):
+        """
+            Parses the network elements list and returns a new dictionary.
+        """
+        return list(map(lambda e: {
+            F'{context_prefix}Source': e.get('src', ''),
+            F'{context_prefix}Destination': e.get('dst', ''),
+            F'{context_prefix}Port': e.get('dport', ''),
+        }, element_list))
+
+
+    def parse_network_lists(network):
+        """
+            Parses the network part that was received from sandbox report json.
+            In each list, only sublist of 10 elements is taken.
+        """
+        hosts = [{'Hosts': h} for h in network.get('hosts', [])[:10]]
+
+        if 'packets' in network:
+            network = network['packets']
+
+        udp_list = parse_network_elem(network.get('udp', [])[:10], 'Udp')
+        icmp_list = parse_network_elem(network.get('icmp', [])[:10], 'Icmp')
+        tcp_list = parse_network_elem(network.get('tcp', [])[:10], 'Tcp')
+        http_list = parse_network_elem(network.get('http', [])[:10], 'Http')
+        https_list = parse_network_elem(network.get('https', [])[:10], 'Https')
+        network_result = udp_list + icmp_list + tcp_list + http_list + https_list + hosts
+
+        return network_result
+
+
+    def parse_info(info):
+        """
+            Parses the info part that was received from sandbox report json
+        """
+        info.update(info.pop('machine', {}))
+        parsed_info = {
+            'Category': info.get('category', '').title(),
+            'Started': info.get('started', ''),
+            'Completed': info.get('ended', ''),
+            'Duration': info.get('duration', ''),
+            'VmName': info.get('name', ''),
+            'VmID': info.get('id', '')
+
+        }
+        return parsed_info
+
+
+    def get_report_outputs(report, report_id):
+        """
+            Returns human readable and entry context of the sandbox report
+        """
+        info = parse_info(report.get('info', {}))
+        info['ReportID'] = report_id
+        _, info['Verdict'] = get_submission_status(report_id, False)
+        network = parse_network_lists(report.get('network', {}))
+
+        hm = tableToMarkdown(F"Report {report_id} analysis results", info)
+        ec = {
+            'ThreatStream.Analysis': info,
+            'ThreatStream.Analysis.Network': network
+        }
+
+        return hm, ec
+
+
+    def parse_indicators_list(iocs_list):
+        """
+            Parses the indicator list and returns dictionary that will be set to context.
+        """
+        for indicator in iocs_list:
+            if indicator.get('type', '') == 'md5':
+                indicator['type'] = indicator.get('subtype', '')
+
+        iocs_context = list(map(lambda i: {INDICATOR_EXTENDED_MAPPING[k]: v for (k, v) in i.items() if
+                                           k in INDICATOR_EXTENDED_MAPPING.keys()}, iocs_list))
+
+        for indicator in iocs_context:
+            meta = indicator.pop('Meta', None)
+            if meta:
+                indicator['Severity'] = meta.get('severity', 'low')
+            tags = indicator.get('Tags', [])
+            if isinstance(tags, list):
+                indicator['Tags'] = ",".join(list(map(lambda t: t.get('name', ''), tags)))
+
+        return iocs_context
+
+
+    def build_model_data(model, name, is_public, tlp, tags, intelligence, description):
+        """
+            Builds data dictionary that is used in Threat Model creation/update request.
+        """
+        if model == 'tipreport':
+            description_field_name = 'body'
+        else:
+            description_field_name = 'description'
+        data = {k: v for (k, v) in (('name', name), ('is_public', is_public), ('tlp', tlp),
+                                    (description_field_name, description)) if v}
+        if tags:
+            data['tags'] = tags if isinstance(tags, list) else [t.strip() for t in tags.split(',')]
+        if intelligence:
+            data['intelligence'] = intelligence if isinstance(intelligence, list) else [i.strip() for i in
+                                                                                        intelligence.split(',')]
+        return data
+
+
+    def get_file_mapping():
+        """
+        Returns the file indicator mapping after changing it's type field to subtype.
+        """
+        file_indicator_mapping = DEFAULT_INDICATOR_MAPPING.copy()
+        # The real type of the hash is in subtype field.
+        file_indicator_mapping.pop('type', '')
+        file_indicator_mapping['subtype'] = 'Type'
+        return file_indicator_mapping
+
+
+    ''' COMMANDS + REQUESTS FUNCTIONS '''
+
+
+    def test_module(client: Client):
+        """
+        Performs basic get request to get item samples
+        """
+        params = build_params(limit=1)
+        client.http_request('GET', 'v2/intelligence/', params=params)
+        demisto.results('ok')
+
+
+    def ips_reputation_command(client: Client, ip, threshold=None, status="active,inactive"):
+        ips = argToList(ip, ',')
+        for single_ip in ips:
+            get_ip_reputation(client, single_ip, threshold, status)
+
+
+    def get_ip_reputation(client: Client, ip, threshold=None, status="active,inactive"):
+        """
+            Checks the reputation of given ip from ThreatStream and
+            returns the indicator with highest severity score.
+        """
+        params = build_params(value=ip, type="ip", status=status, limit=0)
+        indicator = search_indicator_by_params(client, params, ip)
+        if not indicator:
+            return
+
+        threshold = threshold or client.default_threshold
+        dbot_context = client.get_dbot_context(indicator, threshold)
+        ip_context = get_ip_context(indicator, threshold)
+        threat_ip_context = get_threat_generic_context(indicator)
+        threat_ip_tags = threat_ip_context.pop('Tags', [])
+        if threat_ip_tags:
+            # Convert the tags objects into s string for the human readable and then override it with the original objects
+            # for the context.
+            threat_ip_context['Tags'] = ', '.join(str(tag.get('name', '')) for tag in threat_ip_tags)
+        human_readable = tableToMarkdown(F"IP reputation for: {ip}", threat_ip_context)
+        threat_ip_context['Tags'] = threat_ip_tags
+
+        ec = {
+            'DBotScore': dbot_context,
+            'IP(val.Address == obj.Address)': ip_context,
+            'ThreatStream.IP(val.Address == obj.Address)': threat_ip_context
+        }
+
+        return_outputs(human_readable, ec, indicator)
+
+
+    def domains_reputation_command(client: Client, domain, threshold=None, status="active,inactive"):
+        """
+            Wrapper function for get_domain_reputation.
+        """
+        domains = argToList(domain, ',')
+        for single_domain in domains:
+            get_domain_reputation(client, single_domain, threshold, status)
+
+
+    def get_domain_reputation(client: Client, domain, threshold=None, status="active,inactive"):
+        """
+            Checks the reputation of given domain from ThreatStream and
+            returns the indicator with highest severity score.
+        """
+        params = build_params(value=domain, type="domain", status=status, limit=0)
+        indicator = search_indicator_by_params(client, params, domain)
+        if not indicator:
+            return
+
+        threshold = threshold or client.default_threshold
+        dbot_context = client.get_dbot_context(indicator, threshold)
+        domain_context = get_domain_context(indicator, threshold)
+        threat_domain_context = get_threat_generic_context(indicator)
+        threat_domain_tags = threat_domain_context.pop('Tags', [])
+        if threat_domain_tags:
+            # Convert the tags objects into s string for the human readable and then override it with the original objects
+            # for the context.
+            threat_domain_context['Tags'] = ', '.join(str(tag.get('name', '')) for tag in threat_domain_tags)
+        human_readable = tableToMarkdown(F"Domain reputation for: {domain}", threat_domain_context)
+        threat_domain_context['Tags'] = threat_domain_tags
+
+        ec = {
+            'DBotScore': dbot_context,
+            'Domain(val.Name == obj.Name)': domain_context,
+            'ThreatStream.Domain(val.Address == obj.Address)': threat_domain_context
+        }
+
+        return_outputs(human_readable, ec, indicator)
+
+
+    def files_reputation_command(client: Client, file, threshold=None, status="active,inactive"):
+        """
+            Wrapper function for get_file_reputation.
+        """
+        files = argToList(file, ',')
+        for single_file in files:
+            get_file_reputation(client, single_file, threshold, status)
+
+
+    def get_file_reputation(client: Client, file, threshold=None, status="active,inactive"):
+        """
+            Checks the reputation of given hash of the file from ThreatStream and
+            returns the indicator with highest severity score.
+        """
+        params = build_params(value=file, type="md5", status=status, limit=0)
+        indicator = search_indicator_by_params(client, params, file)
+        if not indicator:
+            return
+
+        threshold = threshold or client.default_threshold
+        file_dbot_mapping = {
+            'value': 'Indicator',
+            'subtype': 'Type',
+            'source': 'Vendor',
+        }
+        dbot_context = client.get_dbot_context(indicator, threshold, file_dbot_mapping)
+        file_type = get_file_type(indicator)
+        file_context = get_file_context(indicator, threshold)
+        file_indicator_mapping = get_file_mapping()
+
+        threat_file_context = get_threat_generic_context(indicator, file_indicator_mapping)
+        threat_file_context[file_type] = threat_file_context.pop('Address')
+        threat_file_context.pop("ASN", None)
+        threat_file_context.pop("Organization", None)
+        threat_file_context.pop("Country", None)
+        threat_file_tags = threat_file_context.pop('Tags', [])
+        if threat_file_tags:
+            # Convert the tags objects into s string for the human readable and then override it with the original objects
+            # for the context.
+            threat_file_context['Tags'] = ', '.join(str(tag.get('name', '')) for tag in threat_file_tags)
+        human_readable = tableToMarkdown(F"{file_type} reputation for: {file}", threat_file_context)
+        threat_file_context['Tags'] = threat_file_tags
+
+        ec = {
+            'DBotScore': dbot_context,
+            Common.File.CONTEXT_PATH: file_context,
+            f'ThreatStream.{Common.File.CONTEXT_PATH}': threat_file_context
+        }
+
+        return_outputs(human_readable, ec, indicator)
+
+
+    def urls_reputation_command(client: Client, url, threshold=None, status="active,inactive"):
+        """
+            Wrapper function for get_url_reputation.
+        """
+        urls = argToList(url, ',')
+        for single_url in urls:
+            get_url_reputation(client, single_url, threshold, status)
+
+
+    def get_url_reputation(client: Client, url, threshold=None, status="active,inactive"):
+        """
+            Checks the reputation of given url address from ThreatStream and
+            returns the indicator with highest severity score.
+        """
+        params = build_params(value=url, type="url", status=status, limit=0)
+        indicator = search_indicator_by_params(client, params, url)
+        if not indicator:
+            return
+
+        threshold = threshold or client.default_threshold
+        dbot_context = client.get_dbot_context(indicator, threshold)
+        domain_context = get_url_context(indicator, threshold)
+        threat_url_context = get_threat_generic_context(indicator)
+        del threat_url_context['ASN']
+        threat_url_tags = threat_url_context.pop('Tags', [])
+        if threat_url_tags:
+            # Convert the tags objects into s string for the human readable and then override it with the original objects
+            # for the context.
+            threat_url_context['Tags'] = ', '.join(str(tag.get('name', '')) for tag in threat_url_tags)
+        human_readable = tableToMarkdown(F"URL reputation for: {url}", threat_url_context)
+        threat_url_context['Tags'] = threat_url_tags
+
+        ec = {
+            'DBotScore': dbot_context,
+            'URL(val.Data == obj.Data)': domain_context,
+            'ThreatStream.URL(val.Address == obj.Address)': threat_url_context
+        }
+
+        return_outputs(human_readable, ec, indicator)
+
+
+    def get_email_reputation(client: Client, email, threshold=None, status="active,inactive"):
+        """
+            Checks the reputation of given email address from ThreatStream and
+            returns the indicator with highest severity score.
+        """
+        params = build_params(value=email, type="email", status=status, limit=0)
+        indicator = search_indicator_by_params(client, params, email)
+        if not indicator:
+            return
+
+        threshold = threshold or client.default_threshold
+        dbot_context = client.get_dbot_context(indicator, threshold)
+        threat_email_context = get_threat_generic_context(indicator)
+        threat_email_context['Email'] = threat_email_context.pop('Address')
+        threat_email_context.pop("ASN", None)
+        threat_email_context.pop("Organization", None)
+        threat_email_context.pop("Country", None)
+        threat_email_tags = threat_email_context.pop('Tags', [])
+        if threat_email_tags:
+            # Convert the tags objects into s string for the human readable and then override it with the original objects
+            # for the context.
+            threat_email_context['Tags'] = ', '.join(str(tag.get('name', '')) for tag in threat_email_tags)
+        human_readable = tableToMarkdown(F"Email reputation for: {email}", threat_email_context)
+        threat_email_context['Tags'] = threat_email_tags
+
+        ec = {
+            'DBotScore': dbot_context,
+            'ThreatStream.EmailReputation(val.Email == obj.Email)': threat_email_context
+        }
+
+        return_outputs(human_readable, ec, indicator)
+
+
+    def get_passive_dns(client: Client, value, type="ip", limit=50):
+        """
+            Receives value and type of indicator and returns
+            enrichment data for domain or ip.
+        """
+        dns_results = client.http_request("GET", F"v1/pdns/{type}/{value}/", params=CREDENTIALS).get('results', None)
+
+        if not dns_results:
+            demisto.results(F"No Passive DNS enrichment data found for {value}")
+            sys.exit()
+
+        dns_results = dns_results[:int(limit)]
+        output = camelize(dns_results, delim='_')
+
+        ec = ({
+            'ThreatStream.PassiveDNS': output
+        })
+        human_readable = tableToMarkdown(F"Passive DNS enrichment data for: {value}", output)
+
+        return_outputs(human_readable, ec, dns_results)
+
+
+    def import_ioc_with_approval(client: Client, import_type, import_value, confidence="50", classification="Private",
+                                 threat_type="exploit", severity="low", ip_mapping=None, domain_mapping=None,
+                                 url_mapping=None, email_mapping=None, md5_mapping=None):
+        """
+            Imports indicators data to ThreatStream.
+            The data can be imported using one of three import_types: data-text (plain-text),
+            file-id of uploaded file to war room or URL.
+        """
+        files = None
+        uploaded_file = None
+        data = assign_params(
+            classification=classification,
+            confidence=int(confidence),
+            ip_mapping=ip_mapping,
+            domain_mapping=domain_mapping,
+            url_mapping=url_mapping,
+            email_mapping=email_mapping,
+            md5_mapping=md5_mapping,
+            threat_type=threat_type,
+            severity=severity,
+        )
+
+        if import_type == 'file-id':
+            try:
+                # import_value will be entry id of uploaded file to war room
+                file_info = demisto.getFilePath(import_value)
+            except Exception:
+                raise DemistoException(f"Entry {import_value} does not contain a file.")
+
+            uploaded_file = open(file_info['path'], 'rb')
+            files = {'file': (file_info['name'], uploaded_file)}
+        elif import_type == 'url':
+            data['url'] = import_value
+        else:
+            data['datatext'] = import_value
+
+        params = build_params()
+        # in case import_type is not file-id, http_requests will receive None as files
+        res = client.http_request("POST", "v1/intelligence/import/", params=params, data=data, files=files)
+        # closing the opened file if exist
+        if uploaded_file:
+            uploaded_file.close()
+        # checking that response contains success key
+        if res.get('success', False):
+            imported_id = res.get('import_session_id', '')
+            ec = {'ThreatStream.Import.ImportID': imported_id}
+            return_outputs(F"The data was imported successfully. The ID of imported job is: {imported_id}", ec, res)
+        else:
+            return_outputs("The data was not imported. Check if valid arguments were passed", None)
+
+
+    def import_ioc_without_approval(client: Client, file_id, classification, confidence=None, allow_unresolved=None,
+                                    source_confidence_weight=None, expiration_ts=None, severity=None,
+                                    tags=None, trustedcircles=None):
+        """
+            Imports indicators data to ThreatStream.
+            file_id of uploaded file to war room or URL. Other fields are
+        """
+        if allow_unresolved:
+            allow_unresolved = allow_unresolved == 'yes'
+        if tags:
+            tags = argToList(tags)
+        if trustedcircles:
+            trustedcircles = argToList(trustedcircles)
+        try:
+            # entry id of uploaded file to war room
+            file_info = demisto.getFilePath(file_id)
+            with open(file_info['path'], 'rb') as uploaded_file:
+                ioc_to_import = json.load(uploaded_file)
+        except json.JSONDecodeError:
+            raise DemistoException(F"Entry {file_id} does not contain a valid json file.")
+        except Exception:
+            raise DemistoException(F"Entry {file_id} does not contain a file.")
+        ioc_to_import.update({'meta': assign_params(
+            classification=classification,
+            confidence=confidence,
+            allow_unresolved=allow_unresolved,
+            source_confidence_weight=source_confidence_weight,
+            expiration_ts=expiration_ts,
+            severity=severity,
+            tags=tags,
+            trustedcircles=trustedcircles
+        )})
+
+        params = build_params()
+        res = client.http_request("PATCH", "v1/intelligence/", params=params, json=ioc_to_import, text_response=True)
+        return_outputs("The data was imported successfully.", {}, res)
+
+
+    def get_model_list(client: Client, model, limit="50"):
+        """
+            Returns list of Threat Model that was specified. By default limit is set to 50 results.
+            Possible values for model are : actor, campaign, incident, signature, ttp, vulnerability, tipreport
+        """
+        # if limit=0 don't put to context
+        params = build_params(limit=limit, skip_intelligence="true", skip_associations="true")
+        model_list = client.http_request("GET", F"v1/{model}/", params=params).get('objects', None)
+
+        if not model_list:
+            demisto.results(F"No Threat Model {model.title()} found.")
+            sys.exit()
+
+        threat_list_context = list(map(lambda m: {THREAT_MODEL_MAPPING[k]: v for (k, v) in m.items() if
+                                                  k in THREAT_MODEL_MAPPING.keys()}, model_list))
+        for m in threat_list_context:
+            m['Type'] = model.title()
+        # in case that no limit was passed, the stage of set to context is skipped
+        ec = {'ThreatStream.List': threat_list_context} if limit != '0' else None
+        human_readable = tableToMarkdown(F"List of {model.title()}s", threat_list_context)
+
+        return_outputs(human_readable, ec, model_list)
+
+
+    def get_model_description(client: Client, model, id):
+        """
+            Returns a description of Threat Model as html file to the war room.
+        """
+        params = build_params(skip_intelligence="true", skip_associations="true")
+        description = client.http_request("GET", F"v1/{model}/{id}", params=params)
+
+        if model == 'signature':
+            description = description.get('notes', None)
+        elif model == 'tipreport':
+            description = description.get('body', None)
+        else:
+            description = description.get('description', None)
+
+        if not description:
+            demisto.results(F"No description found for Threat Model {model.title()} with id {id}")
+            sys.exit()
+
+        demisto.results(fileResult(F"{model}_{id}.html", description.encode(encoding='UTF-8')))
+
+
+    def get_iocs_by_model(client: Client, model, id, limit="20"):
+        """
+            Returns list of indicators associated with specific Threat Model by model id.
+        """
+        params = build_params(limit=limit)
+        iocs_list = client.http_request("GET", F"v1/{model}/{id}/intelligence/", params=params).get('objects', None)
+
+        if not iocs_list:
+            demisto.results(F"No indicators found for Threat Model {model.title()} with id {id}")
+            sys.exit()
+
+        iocs_context = parse_indicators_list(iocs_list)
+
+        ec = {
+            'ThreatStream.Model(val.ModelID == obj.ModelID && val.ModelType == obj.ModelType)': {'ModelType': model.title(),
+                                                                                                 'ModelID': id,
+                                                                                                 'Indicators': iocs_context},
+        }
+        human_readable = tableToMarkdown(F"Indicators list for Threat Model {model.title()} with id {id}", iocs_context)
+
+        return_outputs(human_readable, ec, iocs_list)
+
+
+    def create_model(client: Client, model, name, is_public="false", tlp=None, tags=None, intelligence=None, description=None):
+        """
+            Creates Threat Model with basic parameters.
+        """
+        data = build_model_data(model, name, is_public, tlp, tags, intelligence, description)
+        model_id = client.http_request("POST", F"v1/{model}/", data=json.dumps(data), params=CREDENTIALS).get('id', None)
+
+        if model_id:
+            get_iocs_by_model(client, model, model_id, limit="50")
+        else:
+            demisto.results(F"{model.title()} Threat Model was not created. Check the input parameters")
+
+
+    def update_model(client: Client, model, model_id, name=None, is_public="false", tlp=None, tags=None, intelligence=None,
+                     description=None):
+        """
+            Updates a ThreatStream model with parameters. In case one or more optional parameters are
+            defined, the previous data is overridden.
+        """
+        data = build_model_data(model, name, is_public, tlp, tags, intelligence, description)
+        client.http_request("PATCH", F"v1/{model}/{model_id}/", data=json.dumps(data), params=CREDENTIALS)
+        get_iocs_by_model(client, model, model_id, limit="50")
+
+
+    def supported_platforms(client: Client, sandbox_type="default"):
+        """
+            Returns list of supported platforms for premium sandbox or default sandbox.
+        """
+        platform_data = client.http_request("GET", "v1/submit/parameters/", params=CREDENTIALS)
+        available_platforms = platform_data.get('platform_choices', []) if sandbox_type == 'default' else platform_data.get(
+            'premium_platform_choices',
+            [])
+
+        if available_platforms:
+            supported_output = camelize(available_platforms)
+            context_path = "ThreatStream.DefaultPlatforms" if sandbox_type == 'default' else "ThreatStream.PremiumPlatforms"
+
+            return_outputs(tableToMarkdown(F"Supported platforms for {sandbox_type} sandbox", supported_output),
+                           {context_path: supported_output}, platform_data)
+        else:
+            demisto.results(F"No supported platforms found for {sandbox_type} sandbox")
+
+
+    def get_submission_status(client: Client, report_id, output=True):
+        """
+            Returns the sandbox submission status. If status is not received in report_info
+            then status is set to done. Receives output boolean that prints the result to the war room.
+            By default the output boolean is set to True.
+        """
+        report_info = client.http_request("GET", F"v1/submit/{report_id}/", params=CREDENTIALS, headers=HEADERS)
+
+        if not report_info:
+            demisto.results(F"No report found with id {report_id}")
+            sys.exit()
+
+        status = report_info.get('status', "done")
+        verdict = report_info.get('verdict', '').title()
+        platform = report_info.get('platform', '')
+
+        if output:
+            report_outputs = {'ReportID': report_id, 'Status': status, 'Platform': platform, 'Verdict': verdict}
+            ec = {'ThreatStream.Analysis(val.ReportID == obj.ReportID)': report_outputs}
+            return_outputs(tableToMarkdown(F"The analysis status for id {report_id}", report_outputs), ec, report_info)
+        return status, verdict
+
+
+    def file_name_to_valid_string(file_name):
+        try:
+            # In case the user uses Demisto version < 5.0 and the new docker image will not be automatically changed
+            import emoji
+
+            if emoji.emoji_count(file_name):  # type: ignore
+                return emoji.demojize(file_name)  # type: ignore
+        except Exception:
+            pass
+
+        return file_name
+
+
+    def submit_report(client: Client, submission_type, submission_value, submission_classification="private",
+                      report_platform="WINDOWS7",
+                      premium_sandbox="false", detail=None):
+        """
+            Detonates URL or file that was uploaded to war room to ThreatStream sandbox.
+        """
+        uploaded_file = None
+        files = None
+
+        data = {
+            'report_radio-classification': submission_classification,
+            'report_radio-platform': report_platform,
+            'use_premium_sandbox': premium_sandbox,
+        }
+        if detail:
+            data['detail'] = detail
+
+        if submission_type == 'file':
+            try:
+                # submission_value will be entry id of uploaded file to war room
+                file_info = demisto.getFilePath(submission_value)
+            except Exception:
+                raise Exception(F"{VENDOR_NAME} - Entry {submission_value} does not contain a file.")
+
+            uploaded_file = open(file_info['path'], 'rb')
+            file_name = file_name_to_valid_string(file_info.get('name'))
+            files = {'report_radio-file': (file_name, uploaded_file)}
+        else:
+            data['report_radio-url'] = submission_value
+
+        res = client.http_request("POST", "v1/submit/new/", params=CREDENTIALS, data=data, files=files)
+        # closing the opened file if exist
+        if uploaded_file:
+            uploaded_file.close()
+
+        if str(res.get('success', '')).lower() == 'true':
+            report_info = res['reports'][report_platform]
+            report_id = report_info['id']
+            report_status, _ = get_submission_status(client, report_id, False)
+
+            report_outputs = {'ReportID': report_id, 'Status': report_status, 'Platform': report_platform}
+            ec = {'ThreatStream.Analysis': report_outputs}
+            return_outputs(tableToMarkdown(F"The submission info for {submission_value}", report_outputs), ec, report_info)
+        else:
+            demisto.results(F"The submission of {submission_value} failed")
+
+
+    def get_report(client: Client, report_id):
+        """
+            Returns the report from ThreatStream sandbox by id.
+        """
+        report = client.http_request("GET", F"v1/submit/{report_id}/report", params=CREDENTIALS, headers=HEADERS)
+        if not report:
+            demisto.results(F"No report found with id {report_id}")
+            sys.exit()
+        hm, ec = get_report_outputs(report.get('results', {}), report_id)
+
+        return_outputs(hm, ec, report)
+
+
+    def add_tag_to_model(client: Client, model_id, tags, model="intelligence"):
+        """
+            Adds tag to specific Threat Model. By default is set to intelligence (indicators).
+        """
+        tags = tags if isinstance(tags, list) else tags.split(',')
+
+        data = {
+            'tags': [{'name': t, 'tlp': 'red'} for t in tags]
+        }
+
+        res = client.http_request("POST", F"v1/{model}/{model_id}/tag/", params=CREDENTIALS, data=json.dumps(data))
+
+        if str(res.get('success', '')).lower() == 'true':
+            return_outputs(F"Added successfully tags: {tags} to {model} with {model_id}", None, res)
+        else:
+            return_outputs(F"Failed to add {tags} to {model} with {model_id}", None, res)
+
+
+    def get_indicators(client: Client, **kwargs):
+        """
+            Returns filtered indicators by parameters from ThreatStream.
+            By default the limit of indicators result is set to 20.
+        """
+        limit = kwargs['limit'] = int(kwargs.get('limit', 20))
+        offset = kwargs['offset'] = 0
+        if 'query' in kwargs:
+            kwargs['q'] = kwargs['query']
+            kwargs.pop('query', None)
+        params = build_params(**kwargs)
+        iocs_list = client.http_request("GET", "v2/intelligence/", params=params).get('objects', None)
+        if not iocs_list:
+            demisto.results('No indicators found from ThreatStream')
+            sys.exit()
+        iocs_context = parse_indicators_list(iocs_list)
+
+        # handle the issue that the API does not return more than 1000 indicators.
+        if limit > 1000:
+            while len(iocs_context) < limit:
+                offset += len(iocs_list)
+                kwargs['limit'] = limit
+                kwargs['offset'] = offset
+                params = build_params(**kwargs)
+                iocs_list = client.http_request("GET", "v2/intelligence/", params=params).get('objects', None)
+                if iocs_list:
+                    iocs_context.extend(parse_indicators_list(iocs_list))
+                else:
+                    break
+        ec = {'ThreatStream.Indicators': iocs_context}
+        return_outputs(tableToMarkdown("The indicators results", iocs_context), ec, iocs_list)
+
+
+    def main():
+        """
+        Initiate integration command
+        """
+        command = demisto.command()
+        LOG(f'Command being called is {command}')
+
+        params = demisto.params()
+
+        user_name = params.get('username')
+        api_key = params.get('apikey')
+        server_url = params.get('url', '').strip('/')
+
+        CREDENTIALS['username'] = user_name
+        CREDENTIALS['api_key'] = api_key
+
+        reliability = params.get('integrationReliability')
+        reliability = reliability if reliability else DBotScoreReliability.B
+
+        if DBotScoreReliability.is_valid_type(reliability):
+            reliability = DBotScoreReliability.get_dbot_score_reliability_from_str(reliability)
+        else:
+            Exception("Please provide a valid value for the Source Reliability parameter.")
+
+        try:
+
+            client = Client(
+                base_url=f'{server_url}/api/',
+                use_ssl=not params.get('insecure', False),
+                default_threshold=params.get('default_threshold', 'high'),
+                reliability=reliability
+            )
+
+            handle_proxy()
+            args = prepare_args(demisto.args())
+            if command == 'test-module':
+                test_module(client)
+            elif command == 'ip':
+                ips_reputation_command(client, **args)
+            elif command == 'domain':
+                domains_reputation_command(client, **args)
+            elif command == 'file':
+                files_reputation_command(client, **args)
+            elif command == 'url':
+                urls_reputation_command(client, **args)
+            elif command == 'threatstream-email-reputation':
+                get_email_reputation(client, **args)
+            elif command == 'threatstream-get-passive-dns':
+                get_passive_dns(client, **args)
+            elif command == 'threatstream-import-indicator-with-approval':
+                import_ioc_with_approval(client, **args)
+            elif command == 'threatstream-import-indicator-without-approval':
+                import_ioc_without_approval(client, **args)
+            elif command == 'threatstream-get-model-list':
+                get_model_list(client, **args)
+            elif command == 'threatstream-get-model-description':
+                get_model_description(client, **args)
+            elif command == 'threatstream-get-indicators-by-model':
+                get_iocs_by_model(client, **args)
+            elif command == 'threatstream-create-model':
+                create_model(client, **args)
+            elif command == 'threatstream-update-model':
+                update_model(client, **args)
+            elif command == 'threatstream-submit-to-sandbox':
+                submit_report(client, **args)
+            elif command == 'threatstream-get-analysis-status':
+                get_submission_status(client, **args)
+            elif command == 'threatstream-analysis-report':
+                get_report(client, **args)
+            elif command == 'threatstream-supported-platforms':
+                supported_platforms(client, **args)
+            elif command == 'threatstream-get-indicators':
+                get_indicators(client, **args)
+            elif command == 'threatstream-add-tag-to-model':
+                add_tag_to_model(client, **args)
+
+        except Exception as err:
+            if isinstance(err, MissingSchema):
+                return_error("Not valid server url. Check url format")
+            elif isinstance(err, ConnectionError):
+                return_error("The server is not reachable.")
+            else:
+                return_error(err)
+
+
+    # python2 uses __builtin__ python3 uses builtins
+    if __name__ in ("builtins", "__builtin__", "__main__"):
+        main()
+
+    register_module_line('Anomali ThreatStream v2', 'end', __line__())
+  subtype: python3
+  type: python
+system: true

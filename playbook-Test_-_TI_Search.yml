@@ -6,6 +6,7 @@ contentitemexportablefields:
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 id: 558ed84a-8d3b-4d3c-8c58-43157e3ce889
 inputs:
@@ -195,6 +196,8 @@ tasks:
         simple: This is the test form
       timings:
         completeafterreplies: 1
+        completeaftersla: false
+        completeafterv2: false
         retriescount: 2
         retriesinterval: 360
       to:

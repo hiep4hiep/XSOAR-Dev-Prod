@@ -1,15 +1,20 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": false,
 	"associatedTypes": [
 		"Qradar Generic"
 	],
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": true,
 	"cliName": "descriptionasset",
 	"closeForm": false,
 	"columns": null,
 	"content": true,
 	"defaultRows": null,
+	"definitionId": "",
 	"description": "The description of the asset.",
 	"editForm": true,
 	"fieldCalcScript": "",
@@ -18,11 +23,12 @@
 	"hidden": false,
 	"id": "incident_descriptionasset",
 	"isReadOnly": false,
-	"itemVersion": "1.0.2",
+	"itemVersion": "1.0.3",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Description - Asset",
 	"neverSetAsRequired": false,
+	"openEnded": false,
 	"ownerOnly": false,
 	"packID": "Asset",
 	"packPropagationLabels": [
@@ -39,6 +45,7 @@
 	"sla": 0,
 	"system": false,
 	"systemAssociatedTypes": null,
+	"template": "",
 	"threshold": 72,
 	"toServerVersion": "",
 	"type": "multiSelect",
@@ -47,5 +54,6 @@
 	"useAsKpi": false,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

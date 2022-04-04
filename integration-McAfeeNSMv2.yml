@@ -22,11 +22,13 @@ configuration:
   type: 8
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: Newer version of McAfeeNSM Integration
 display: McAfeeNSMv2

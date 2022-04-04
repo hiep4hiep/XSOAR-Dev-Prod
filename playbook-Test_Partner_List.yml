@@ -1,0 +1,112 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 82796688-c646-410b-84dd-9ea3779e9fc9
+inputs:
+- description: ""
+  key: ""
+  playbookInputQuery:
+    daterange:
+      fromdate: "0001-01-01T00:00:00Z"
+      fromdatelicenseval: "0001-01-01T00:00:00Z"
+      period:
+        by: ""
+        byfrom: ""
+        byto: ""
+        field: ""
+        fromvalue: null
+        tovalue: null
+      todate: "0001-01-01T00:00:00Z"
+    query: type:IP value:8.16.1.2
+    queryEntity: indicators
+    results: null
+    runFromLastJobTime: true
+  required: false
+  value: {}
+name: Test Partner List
+outputs: []
+quiet: true
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 5f274dc7-d4a9-46f0-8468-abdcbe1f1139
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 5f274dc7-d4a9-46f0-8468-abdcbe1f1139
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    note: false
+    quietmode: 0
+    scriptarguments:
+      BusinessPartnersIPListName:
+        simple: DLBusinessPartnersIPList
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: cc530364-c9f4-43b8-89a0-5b151fd8a0ef
+      iscommand: false
+      name: TIM - Process Indicators Against Business Partners IP List
+      playbookId: TIM - Process Indicators Against Business Partners IP List
+      type: playbook
+      version: -1
+    taskid: cc530364-c9f4-43b8-89a0-5b151fd8a0ef
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 230
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 275,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

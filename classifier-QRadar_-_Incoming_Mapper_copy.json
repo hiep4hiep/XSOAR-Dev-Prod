@@ -1,0 +1,71 @@
+{
+	"brands": null,
+	"cacheVersn": 0,
+	"defaultIncidentType": "",
+	"definitionId": "",
+	"description": "Maps QRadar event fields.",
+	"feed": false,
+	"fromServerVersion": "6.0.0",
+	"id": "c1554114-d101-48ae-8fa9-5a2cea41f7be",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "2.1.3",
+	"keyTypeMap": null,
+	"locked": false,
+	"logicalVersion": 0,
+	"mapping": {
+		"Access": {
+			"dontMapEventToLabels": false,
+			"internalMapping": {
+				"Dest NT Domain": {
+					"complex": {
+						"filters": [],
+						"root": "destination_networks",
+						"transformers": [
+							{
+								"args": {
+									"separator": {}
+								},
+								"operator": "join"
+							}
+						]
+					}
+				},
+				"Src NT Domain": {
+					"simple": "source_network"
+				},
+				"Src User": {
+					"simple": "offense_source"
+				},
+				"details": {
+					"simple": "description"
+				},
+				"occurred": {
+					"complex": {
+						"filters": [],
+						"root": "start_time",
+						"transformers": [
+							{
+								"operator": "TimeStampToDate"
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"name": "QRadar - Incoming Mapper_copy",
+	"nameRaw": "QRadar - Incoming Mapper_copy",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "QRadar-mapper",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {},
+	"type": "mapping-incoming",
+	"unclassifiedCases": null,
+	"version": -1
+}

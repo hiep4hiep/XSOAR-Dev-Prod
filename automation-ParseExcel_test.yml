@@ -9,15 +9,18 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 dockerimage: demisto/xlrd-py3:1.0.0.23423
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: ParseExcel_test
 outputs:
 - contextPath: ParseExcel

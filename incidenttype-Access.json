@@ -1,0 +1,40 @@
+{
+	"autorun": false,
+	"cacheVersn": 0,
+	"closureScript": "",
+	"color": "#B287FE",
+	"days": 3,
+	"daysR": 0,
+	"default": false,
+	"definitionId": "",
+	"detached": false,
+	"disabled": false,
+	"extractSettings": {
+		"fieldCliNameToExtractSettings": {},
+		"mode": "All"
+	},
+	"fromServerVersion": "6.0.0",
+	"hours": 0,
+	"hoursR": 0,
+	"id": "Access",
+	"itemVersion": "1.2.2",
+	"layout": "Access",
+	"locked": false,
+	"name": "Access",
+	"onChangeRepAlg": 1,
+	"packID": "AccessInvestigation",
+	"packPropagationLabels": [
+		"all"
+	],
+	"playbookId": "access_investigation_-_generic",
+	"preProcessingScript": "",
+	"propagationLabels": [],
+	"readonly": false,
+	"reputationCalc": 0,
+	"sla": 240,
+	"system": true,
+	"toServerVersion": "",
+	"version": -1,
+	"weeks": 1,
+	"weeksR": 0
+}

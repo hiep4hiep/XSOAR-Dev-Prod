@@ -8,6 +8,7 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
@@ -15,7 +16,9 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 dockerimage: demisto/python3:3.9.7.24076
+enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: CreateIOCList
 outputs:
 - contextPath: Report
@@ -83,5 +86,5 @@ script: |2
 scripttarget: 0
 subtype: python3
 tags:
-- dpc
+- gel
 type: python

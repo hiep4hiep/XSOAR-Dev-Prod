@@ -1,7 +1,11 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": true,
 	"associatedTypes": null,
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": false,
 	"cliName": "dbotmirrortags",
 	"closeForm": false,
@@ -32,7 +36,7 @@
 	"required": false,
 	"runScriptAfterUpdate": false,
 	"script": "",
-	"selectValues": null,
+	"selectValues": [],
 	"sla": 0,
 	"system": true,
 	"systemAssociatedTypes": null,
@@ -45,5 +49,6 @@
 	"useAsKpi": false,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

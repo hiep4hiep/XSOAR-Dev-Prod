@@ -1,0 +1,803 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: e51a0d42-bd62-43de-8382-b68ed3af4b4d
+inputs:
+- description: ""
+  key: adKey
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: ${GenericSQL.GenericSQL.Result.issue_key}
+- description: ""
+  key: adValues
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: |-
+      ||Seq||Change Start Time||Change End Time||Host Name||Account||Src||Purpose||Expected Trigger ID||Additional Info||
+      ||S1eq||Cha22nge Start Ti3me||Cha4nge En4d Time||Ho5st Nam6e||Ac7count||Sr8c||Pu23rpose||Expected321Trigge22r ID||Additional 13||
+name: isoc_AD_CheckValues
+outputs:
+- contextPath: ${Purpose}
+  type: string
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "19"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b4a4666b-307d-4589-81e0-ed518cc6e831
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: b4a4666b-307d-4589-81e0-ed518cc6e831
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 50
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 84fecee5-4eb0-424f-8c04-c0769dbb57f7
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 84fecee5-4eb0-424f-8c04-c0769dbb57f7
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1260
+        }
+      }
+  "13":
+    continueonerror: true
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "26"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: SplitData
+      value:
+        complex:
+          root: inputs.adValues
+          transformers:
+          - args:
+              limit: {}
+              replaceWith: {}
+              toReplace:
+                value:
+                  simple: '||Seq||Change Start Time||Change End Time||Host Name||Account||Src||Purpose||Expected
+                    Trigger ID||Additional Info||'
+            operator: replace
+          - args:
+              delimiter:
+                value:
+                  simple: '| |'
+            operator: splitAndTrim
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 9a83775f-7ce1-4f2a-8a4c-9dc369c54c2c
+      iscommand: false
+      name: Split Data
+      script: Set
+      type: regular
+      version: -1
+    taskid: 9a83775f-7ce1-4f2a-8a4c-9dc369c54c2c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 285,
+          "y": 545
+        }
+      }
+  "16":
+    continueonerror: true
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: Purpose
+      value:
+        complex:
+          root: Data
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: '|'
+            operator: splitAndTrim
+          - args:
+              index:
+                value:
+                  simple: "7"
+            operator: atIndex
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "0"
+            operator: SetIfEmpty
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: abc9f4ed-c407-4551-8097-847d8a9afa03
+      iscommand: false
+      name: Get Purpose
+      script: Set
+      type: regular
+      version: -1
+    taskid: abc9f4ed-c407-4551-8097-847d8a9afa03
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1245
+        }
+      }
+  "17":
+    continueonerror: true
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "25"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: AdditionalInfo
+      value:
+        complex:
+          root: Data
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: '|'
+            operator: splitAndTrim
+          - args:
+              index:
+                value:
+                  simple: "9"
+            operator: atIndex
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "0"
+            operator: SetIfEmpty
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 2d3a918a-8cfe-4259-8c84-f3417f2ce433
+      iscommand: false
+      name: Get AdditionalInfo
+      script: Set
+      type: regular
+      version: -1
+    taskid: 2d3a918a-8cfe-4259-8c84-f3417f2ce433
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1420
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      siemtempfield1:
+        simple: "true"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.set.incident
+      id: 8582c19e-ed72-4d1e-8850-e91d460508d4
+      iscommand: true
+      name: Set Temp
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: 8582c19e-ed72-4d1e-8850-e91d460508d4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1945
+        }
+      }
+  "19":
+    id: "19"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "24"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      all:
+        simple: "yes"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Delete field from context
+      id: 80d5a083-2a53-43b5-877f-2244fb74ee92
+      iscommand: false
+      name: DeleteContext
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: 80d5a083-2a53-43b5-877f-2244fb74ee92
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 195
+        }
+      }
+  "21":
+    id: "21"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 0
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "18"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Comment:
+        simple: '${inputs.adKey} : ${Purpose}\nAdditional Info : ${AdditionalInfo}'
+      IssueId:
+        simple: ${incident.siemeventjiraticketno}
+      upload:
+        simple: ${InfoFile.EntryID}
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f0fa0a6c-e3cc-484f-8190-72085086663f
+      iscommand: false
+      name: isoc_ jira_issue
+      playbookName: isoc_jira_add
+      type: playbook
+      version: -1
+    taskid: f0fa0a6c-e3cc-484f-8190-72085086663f
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1770
+        }
+      }
+  "22":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: siemstartdate
+                root: incident
+                transformers:
+                - args:
+                    variation:
+                      value:
+                        simple: '''in 0  min'''
+                  operator: ModifyDateTime
+                - args:
+                    add_utc_timezone:
+                      value:
+                        simple: "+8"
+                    dayfirst:
+                      value:
+                        simple: "false"
+                    fuzzy: {}
+                    yearfirst:
+                      value:
+                        simple: "true"
+                  operator: DateStringToISOFormat
+                - args:
+                    limit: {}
+                    replaceWith: {}
+                    toReplace:
+                      value:
+                        simple: "+08:00"
+                  operator: replace
+          operator: isAfter
+          right:
+            iscontext: true
+            value:
+              complex:
+                root: Data
+                transformers:
+                - args:
+                    delimiter:
+                      value:
+                        simple: '|'
+                  operator: splitAndTrim
+                - args:
+                    index:
+                      value:
+                        simple: "2"
+                  operator: atIndex
+                - args:
+                    variation:
+                      value:
+                        simple: '''in 0 min'''
+                  operator: ModifyDateTime
+                - args:
+                    add_utc_timezone:
+                      value:
+                        simple: "+8"
+                    dayfirst:
+                      value:
+                        simple: "false"
+                    fuzzy: {}
+                    yearfirst:
+                      value:
+                        simple: "true"
+                  operator: DateStringToISOFormat
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: siemstartdate
+                root: incident
+                transformers:
+                - args:
+                    variation:
+                      value:
+                        simple: '''in 0 min'''
+                  operator: ModifyDateTime
+                - args:
+                    add_utc_timezone:
+                      value:
+                        simple: "+8"
+                    dayfirst:
+                      value:
+                        simple: "false"
+                    fuzzy: {}
+                    yearfirst:
+                      value:
+                        simple: "true"
+                  operator: DateStringToISOFormat
+                - args:
+                    limit: {}
+                    replaceWith: {}
+                    toReplace:
+                      value:
+                        simple: "+08:00"
+                  operator: replace
+          operator: isBefore
+          right:
+            iscontext: true
+            value:
+              complex:
+                root: Data
+                transformers:
+                - args:
+                    delimiter:
+                      value:
+                        simple: '|'
+                  operator: splitAndTrim
+                - args:
+                    index:
+                      value:
+                        simple: "3"
+                  operator: atIndex
+                - args:
+                    variation:
+                      value:
+                        simple: '''in 0 min'''
+                  operator: ModifyDateTime
+                - args:
+                    add_utc_timezone:
+                      value:
+                        simple: "+8"
+                    dayfirst:
+                      value:
+                        simple: "false"
+                    fuzzy: {}
+                    yearfirst:
+                      value:
+                        simple: "true"
+                  operator: DateStringToISOFormat
+      label: "Yes"
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "10"
+      "Yes":
+      - "16"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 813e8cd4-003a-40e6-8a71-b65df06890ae
+      iscommand: false
+      name: Check DataString
+      type: condition
+      version: -1
+    taskid: 813e8cd4-003a-40e6-8a71-b65df06890ae
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1060
+        }
+      }
+  "24":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.adKey
+          operator: isEmpty
+        - left:
+            iscontext: true
+            value:
+              simple: inputs.adValues
+          operator: isEmpty
+        - left:
+            iscontext: true
+            value:
+              simple: incident.siemtempfield1
+          operator: isEqualString
+          right:
+            value:
+              simple: "true"
+      label: Key is null
+    id: "24"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "13"
+      Key is null:
+      - "10"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d0ca92ec-72b3-4354-8962-e3e45150de26
+      iscommand: false
+      name: Check value
+      type: condition
+      version: -1
+    taskid: d0ca92ec-72b3-4354-8962-e3e45150de26
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 490,
+          "y": 370
+        }
+      }
+  "25":
+    id: "25"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "21"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      cc:
+        simple: HLWANGJ@tsmc.com,cjchiug@tsmc.com
+      htmlBody:
+        simple: |-
+          JiraTicket : https://itjirawaf01.tsmc.com.tw/browse/${incident.siemeventjiraticketno} <br><br>
+          ${inputs.adKey} : ${Purpose},<br>
+          Additional Info : ${AdditionalInfo}
+      subject:
+        simple: 'JiraTicket : ${incident.siemeventjiraticketno} 勾稽成功'
+      to:
+        complex:
+          accessor: siemruleid
+          root: incident
+          transformers:
+          - args:
+              condition: {}
+              else:
+                value:
+                  simple: CHENKY@tsmc.com
+              equals:
+                value:
+                  simple: "100208"
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                value:
+                  simple: CHLIANGL@tsmc.com
+            operator: If-Then-Else
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Mail Sender (New)
+      description: Send an email
+      id: 59684c91-c4d0-4996-8825-569b1ec47337
+      iscommand: true
+      name: Send mail
+      script: Mail Sender (New)|||send-mail
+      type: regular
+      version: -1
+    taskid: 59684c91-c4d0-4996-8825-569b1ec47337
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 1595
+        }
+      }
+  "26":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: SplitData
+          operator: isEmpty
+        - left:
+            iscontext: true
+            value:
+              simple: SplitData
+          operator: isEqualString
+          right:
+            value:
+              simple: None
+        - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: SplitData
+                    operator: isNotEmpty
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: SplitData
+                    operator: containsGeneral
+                    right:
+                      iscontext: true
+                      value:
+                        simple: incident.siemhostname
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: SplitData
+                    operator: containsGeneral
+                    right:
+                      iscontext: true
+                      value:
+                        simple: incident.siemsourceuser
+                root: SplitData
+                transformers:
+                - args:
+                    applyIfEmpty: {}
+                    defaultValue:
+                      value:
+                        simple: "0"
+                  operator: SetIfEmpty
+          operator: isEqualString
+          right:
+            value:
+              simple: "0"
+      label: "yes"
+    id: "26"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "29"
+      "yes":
+      - "10"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 907f7d72-8f9f-44dd-8ea7-bd87613962a9
+      iscommand: false
+      name: if empty
+      type: condition
+      version: -1
+    taskid: 907f7d72-8f9f-44dd-8ea7-bd87613962a9
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 285,
+          "y": 720
+        }
+      }
+  "29":
+    id: "29"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: Data
+      value:
+        complex:
+          filters:
+          - - left:
+                iscontext: true
+                value:
+                  simple: SplitData
+              operator: isNotEmpty
+          - - left:
+                iscontext: true
+                value:
+                  simple: SplitData
+              operator: containsGeneral
+              right:
+                iscontext: true
+                value:
+                  simple: incident.siemhostname
+          - - left:
+                iscontext: true
+                value:
+                  simple: SplitData
+              operator: containsGeneral
+              right:
+                iscontext: true
+                value:
+                  simple: incident.siemsourceuser
+          root: SplitData
+          transformers:
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "0"
+            operator: SetIfEmpty
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 0a03cef5-5f09-4443-8784-cef303b28ff0
+      iscommand: false
+      name: Set Data
+      script: Set
+      type: regular
+      version: -1
+    taskid: 0a03cef5-5f09-4443-8784-cef303b28ff0
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "22_10_#default#": 0.35,
+      "26_10_yes": 0.23
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1990,
+        "width": 820,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

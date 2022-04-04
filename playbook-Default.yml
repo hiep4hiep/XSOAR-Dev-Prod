@@ -1,5 +1,6 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 1.0.2
     packID: DefaultPlaybook

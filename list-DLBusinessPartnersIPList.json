@@ -1,0 +1,26 @@
+{
+	"allRead": true,
+	"allReadWrite": true,
+	"cacheVersn": 0,
+	"data": "217.165.79.31",
+	"definitionId": "",
+	"description": "",
+	"fromServerVersion": "",
+	"id": "DLBusinessPartnersIPList",
+	"itemVersion": "",
+	"locked": false,
+	"name": "DLBusinessPartnersIPList",
+	"nameLocked": false,
+	"packID": "",
+	"previousAllRead": true,
+	"previousAllReadWrite": true,
+	"propagationLabels": [
+		"all"
+	],
+	"system": false,
+	"tags": null,
+	"toServerVersion": "",
+	"truncated": false,
+	"type": "plain_text",
+	"version": -1
+}

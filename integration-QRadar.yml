@@ -57,8 +57,9 @@ configuration:
   type: 19
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.1.20
+    itemVersion: 2.1.34
     packID: QRadar
     packPropagationLabels:
     - all
@@ -1222,7 +1223,8 @@ script:
   dockerimage: demisto/python:2.7.18.20958
   isfetch: true
   runonce: false
-  script: |2
+  script: |
+    register_module_line('QRadar', 'start', __line__())
 
 
 
@@ -2482,6 +2484,8 @@ script:
             raise Exception(error)
         else:
             return_error(error)
+
+    register_module_line('QRadar', 'end', __line__())
   subtype: python2
   type: python
 system: true

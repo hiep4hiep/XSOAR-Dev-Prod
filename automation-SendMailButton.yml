@@ -1,0 +1,44 @@
+args:
+- name: to
+  required: true
+- name: subject
+  required: true
+- name: body
+  required: true
+commonfields:
+  id: 6978e8c8-1d6a-495e-8786-dc69dd8d9303
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.27636
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendMailButton
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  to = demisto.args().get('to')
+  body = demisto.args().get('body')
+  subject = demisto.args().get('subject')
+
+  return_results(demisto.executeCommand("send-mail", {
+          "to": to,
+          "subject": subject,
+          "body": body
+          }
+      )
+  )
+scripttarget: 0
+subtype: python3
+tags:
+- button
+type: python

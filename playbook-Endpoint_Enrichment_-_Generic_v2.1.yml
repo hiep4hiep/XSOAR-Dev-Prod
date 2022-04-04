@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.8
+    itemVersion: 2.1.13
     packID: CommonPlaybooks
     packPropagationLabels:
     - all
@@ -339,7 +339,7 @@ tasks:
           transformers:
           - operator: uniq
     separatecontext: false
-    skipunavailable: false
+    skipunavailable: true
     task:
       brand: epo
       description: Gets host information from McAfee ePolicy Orchestrator.
@@ -434,7 +434,7 @@ tasks:
           transformers:
           - operator: uniq
     separatecontext: false
-    skipunavailable: false
+    skipunavailable: true
     task:
       brand: carbonblack-v2
       description: Gets host information from Carbon Black Enterprise Response.
@@ -703,7 +703,7 @@ tasks:
           transformers:
           - operator: uniq
     separatecontext: false
-    skipunavailable: false
+    skipunavailable: true
     task:
       brand: Active Directory Query v2
       description: |-
@@ -821,7 +821,7 @@ tasks:
                   simple: '"'
             operator: concat
     separatecontext: false
-    skipunavailable: false
+    skipunavailable: true
     task:
       brand: ""
       description: Gets the Crowdstrike Falcon Host device ID that corresponds to
@@ -903,7 +903,7 @@ tasks:
           transformers:
           - operator: uniq
     separatecontext: false
-    skipunavailable: false
+    skipunavailable: true
     task:
       brand: ""
       description: Gets details for one or more devices, according to device ID.
@@ -1022,7 +1022,7 @@ tasks:
       name:
         simple: ${inputs.Hostname}
     separatecontext: false
-    skipunavailable: false
+    skipunavailable: true
     task:
       brand: ""
       description: Get host information from ExtraHop Reveal(x).
@@ -1119,7 +1119,7 @@ tasks:
       verbose:
         simple: "false"
     separatecontext: false
-    skipunavailable: false
+    skipunavailable: true
     task:
       brand: McAfee ePO v2
       description: Finds systems in the McAfee ePO system tree.

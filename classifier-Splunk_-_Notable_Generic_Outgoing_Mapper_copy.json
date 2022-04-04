@@ -1,0 +1,71 @@
+{
+	"brands": null,
+	"cacheVersn": 0,
+	"defaultIncidentType": "",
+	"definitionId": "",
+	"description": "Maps Splunk ES outgoing fields.",
+	"feed": false,
+	"fromServerVersion": "6.2.0",
+	"id": "95e5c49d-192f-4b7d-8e1a-eafbb33aac31",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "2.3.5",
+	"keyTypeMap": null,
+	"locked": false,
+	"logicalVersion": 0,
+	"mapping": {
+		"Splunk Notable Generic": {
+			"dontMapEventToLabels": false,
+			"internalMapping": {
+				"urgency": {
+					"simple": "notableurgency"
+				}
+			}
+		},
+		"dbot_classification_incident_type_all": {
+			"dontMapEventToLabels": false,
+			"internalMapping": {
+				"status": {
+					"complex": {
+						"filters": [],
+						"root": "notablestatus",
+						"transformers": [
+							{
+								"args": {
+									"input_values": {
+										"value": {
+											"simple": "New,In Progress,Pending,Resolved,Closed"
+										}
+									},
+									"mapped_values": {
+										"value": {
+											"simple": "1,2,3,4,5"
+										}
+									}
+								},
+								"operator": "MapValuesTransformer"
+							}
+						]
+					}
+				},
+				"urgency": {
+					"simple": "notableurgency"
+				}
+			}
+		}
+	},
+	"name": "Splunk - Notable Generic Outgoing Mapper_copy",
+	"nameRaw": "Splunk - Notable Generic Outgoing Mapper_copy",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "Splunk - Notable Generic Outgoing Mapper",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {},
+	"type": "mapping-outgoing",
+	"unclassifiedCases": null,
+	"version": -1
+}

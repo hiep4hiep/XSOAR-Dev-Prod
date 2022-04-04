@@ -2,12 +2,15 @@ args:
 - description: Entry ID of the attached excel file
   name: entryId
   required: true
+- name: list_name
+  required: true
 comment: Use entry ID to load and parse excel file
 commonfields:
   id: ParseExcelToList
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
@@ -15,7 +18,9 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 dockerimage: demisto/xlrd-py3:1.0.0.23423
+enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: ParseExcelToList
 outputs:
 - contextPath: ParseExcel.Output
@@ -25,7 +30,7 @@ pswd: ""
 runas: DBotWeakRole
 runonce: false
 script: |
-  from Base.Scripts.CommonServerPython.CommonServerPython import return_results
+  #from Base.Scripts.CommonServerPython.CommonServerPython import return_results
 
 
 
@@ -36,7 +41,7 @@ script: |
   import xlrd
 
 
-  def parse_excel(file_entry_id):
+  def parse_excel(file_entry_id, list_name):
 
       res = demisto.getFilePath(file_entry_id)
       file_path = res['path']
@@ -59,13 +64,14 @@ script: |
               data.append(elm)
           sheets.append(data)
           # Send data to XSOAR list
-          demisto.executeCommand("createList", {"listName":"ITSM","listData":data})
+          demisto.executeCommand("createList", {"listName":list_name,"listData":data})
           context["ParseExcel"] = sheets
           return_results("Parsed Successfully")
 
   def main():
       file_entry_id = demisto.args()['entryId']
-      parse_excel(file_entry_id)
+      list_name = demisto.args()['list_name']
+      parse_excel(file_entry_id, list_name)
 
 
   # python2 uses __builtin__ python3 uses builtins

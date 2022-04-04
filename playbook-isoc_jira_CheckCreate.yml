@@ -1,0 +1,923 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 3d80395b-7a92-484c-83f8-6deafd53f735
+inputs:
+- description: ""
+  key: IssueValue
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: ${IssuesJson}
+- description: ""
+  key: IssueType
+  playbookInputQuery: null
+  required: false
+  value: {}
+name: isoc_jira_CheckCreate
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 75db2d3a-2783-4079-8037-5c1e32f91137
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 75db2d3a-2783-4079-8037-5c1e32f91137
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "54"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      all:
+        simple: "yes"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Delete field from context.
+
+        This automation runs using the default Limited User role, unless you explicitly change the permissions.
+        For more information, see the section about permissions here:
+        https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+      id: 5b8177b9-5b9c-48eb-8436-df3014a9f62a
+      iscommand: false
+      name: DeleteContext
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: 5b8177b9-5b9c-48eb-8436-df3014a9f62a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 195
+        }
+      }
+  "2":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.IssueType
+          operator: containsGeneral
+          right:
+            value:
+              simple: DEM
+        - left:
+            iscontext: true
+            value:
+              simple: inputs.IssueType
+          operator: containsGeneral
+          right:
+            value:
+              simple: VSCAN
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.IssueValue
+          operator: isNotEmpty
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                accessor: id
+                root: foundIncidents
+                transformers:
+                - operator: count
+          operator: isEqualNumber
+          right:
+            value:
+              simple: "0"
+      label: DEM
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "6"
+      DEM:
+      - "28"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 3373c5c5-4cca-4888-8a90-2e20dc953fd5
+      iscommand: false
+      name: Check
+      type: condition
+      version: -1
+    taskid: 3373c5c5-4cca-4888-8a90-2e20dc953fd5
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 545
+        }
+      }
+  "6":
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 495b02f4-559c-4eb3-8c39-fc03fc0e6e82
+      iscommand: false
+      name: Done
+      type: title
+      version: -1
+    taskid: 495b02f4-559c-4eb3-8c39-fc03fc0e6e82
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 735
+        }
+      }
+  "28":
+    id: "28"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "53"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: Issuekey
+      value:
+        complex:
+          accessor: key
+          root: inputs.IssueValue
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: '-'
+            operator: splitAndTrim
+          - operator: FirstArrayElement
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: c4b9056c-e02f-43b3-8422-452360b7d924
+      iscommand: false
+      name: Set Key
+      script: Set
+      type: regular
+      version: -1
+    taskid: c4b9056c-e02f-43b3-8422-452360b7d924
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "47":
+    id: "47"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "49"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      siemeventjiraticketno:
+        simple: ${TicketKey}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.set.incident
+      id: f54f2f7c-3f97-405e-818a-4331a1f0a48e
+      iscommand: true
+      name: Set incident
+      script: Builtin|||setIncident
+      type: regular
+      version: -1
+    taskid: f54f2f7c-3f97-405e-818a-4331a1f0a48e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1595
+        }
+      }
+  "49":
+    id: "49"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "57"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      name:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22534.value
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23500
+            operator: If-Then-Else
+          - args:
+              prefix:
+                value:
+                  simple: ' Virus Alert ('
+              suffix:
+                value:
+                  simple: )
+            operator: concat
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.key
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                value:
+                  simple: '[Pirun] '
+              suffix: {}
+            operator: concat
+      siemeventid:
+        simple: ${inputs.IssueValue.key}
+      siemeventjiraticketno:
+        complex:
+          root: TicketKey
+          transformers:
+          - operator: LastArrayElement
+      siemeventtype:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22534.value
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23500
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: None
+            operator: SetIfEmpty
+      siemruleowner:
+        simple: JUHUANG
+      siemseverity:
+        simple: Low
+      type:
+        simple: External Move In
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Create a new incident
+      id: dde32903-fcc4-4ebc-899b-a4ebe8d0764d
+      iscommand: true
+      name: createNewIncident
+      script: Builtin|||createNewIncident
+      type: regular
+      version: -1
+    taskid: dde32903-fcc4-4ebc-899b-a4ebe8d0764d
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1770
+        }
+      }
+  "52":
+    id: "52"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "56"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      CaseNumber:
+        simple: ${inputs.IssueValue.key}
+      CreatedDate:
+        complex:
+          accessor: created
+          root: inputs.IssueValue.fields
+          transformers:
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: 1911-01-01T00:00:00.000+0800
+            operator: SetIfEmpty
+      ITSManager:
+        simple: ${lists.isoc_ExternalMoveIn_List.result.ITS_Manager}
+      Location:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22365.value
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23335
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: N/A
+            operator: SetIfEmpty
+      MACAddress:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22532
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23337
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "00:00:00:00:00:00"
+            operator: SetIfEmpty
+      MMManager:
+        simple: ${lists.isoc_ExternalMoveIn_List.result.MM_Manager}
+      MMSponsor:
+        simple: ${lists.isoc_ExternalMoveIn_List.result.MM_Sponsor}
+      Move-InType:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22534.value
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23500
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: N/A
+            operator: SetIfEmpty
+      NotifiedUsers:
+        simple: ${lists.isoc_ExternalMoveIn_List.result.Notified_User}
+      OTManager:
+        simple: ${lists.isoc_ExternalMoveIn_List.result.OT_Manager}
+      OTSponsor:
+        simple: ${lists.isoc_ExternalMoveIn_List.result.OT_Sponsor}
+      ReceivedImage:
+        simple: "1970-01-01"
+      Subject:
+        complex:
+          accessor: key
+          root: inputs.IssueValue
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: '-'
+            operator: splitAndTrim
+          - operator: FirstArrayElement
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22534.value
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23500
+            operator: If-Then-Else
+          - args:
+              prefix:
+                value:
+                  simple: ' Virus Alert ('
+              suffix:
+                value:
+                  simple: )
+            operator: concat
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: Bring
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.key
+              suffix: {}
+            operator: concat
+          - args:
+              prefix:
+                value:
+                  simple: '[Pirun] '
+              suffix: {}
+            operator: concat
+      TicketNo:
+        simple: N/A
+      ToolID:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22545
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23343
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: N/A
+            operator: SetIfEmpty
+      User:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: GenericSQL.GenericSQL.Result.tw_username
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23358.name
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: juhuang
+            operator: SetIfEmpty
+      VirusFoundDate:
+        complex:
+          root: Issuekey
+          transformers:
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23300
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23311
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: 1911-01-01T00:00:00.000+0800
+            operator: SetIfEmpty
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 85072e28-8511-4caf-84d9-5b2c7429e847
+      iscommand: false
+      name: isoc_ExternalMoveIn
+      playbookName: isoc_ExternalMoveIn
+      type: playbook
+      version: -1
+    taskid: 85072e28-8511-4caf-84d9-5b2c7429e847
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1245
+        }
+      }
+  "53":
+    id: "53"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "55"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      query:
+        simple: select tw_username from [INT_PUB_EMP_TSMC_ACT_V1] emp where emp.name=
+          N'${inputs.IssueValue.fields.customfield_22371}'
+      using:
+        simple: CIRC Platform
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Generic SQL
+      description: Running a sql query
+      id: fac2f4ab-00d4-4025-8be0-f486465c4aee
+      iscommand: true
+      name: sql-command
+      script: Generic SQL|||sql-command
+      type: regular
+      version: -1
+    taskid: fac2f4ab-00d4-4025-8be0-f486465c4aee
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 895
+        }
+      }
+  "54":
+    id: "54"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      query:
+        simple: type:"External Move In" and name:"[Pirun] ${inputs.IssueValue.key}"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Searches Demisto incidents.
+
+        This automation runs using the default Limited User role, unless you explicitly change the permissions.
+        For more information, see the section about permissions here:
+        https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+      id: dc3b7b43-6ad5-44e4-8d15-a9f9ba113602
+      iscommand: false
+      name: SearchIncidentsV2
+      script: SearchIncidentsV2
+      type: regular
+      version: -1
+    taskid: dc3b7b43-6ad5-44e4-8d15-a9f9ba113602
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 370
+        }
+      }
+  "55":
+    id: "55"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "52"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: Bring
+      value:
+        complex:
+          accessor: key
+          root: inputs.IssueValue
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: '-'
+            operator: splitAndTrim
+          - operator: FirstArrayElement
+          - args:
+              condition: {}
+              else:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_22366.value
+              equals:
+                value:
+                  simple: DEM
+              lhs: {}
+              options: {}
+              rhs: {}
+              then:
+                iscontext: true
+                value:
+                  simple: inputs.IssueValue.fields.customfield_23327
+            operator: If-Then-Else
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "Null"
+            operator: SetIfEmpty
+          - args:
+              delimiter:
+                value:
+                  simple: ' '
+            operator: splitAndTrim
+          - operator: LastArrayElement
+          - args:
+              prefix:
+                value:
+                  simple: ' '
+              suffix:
+                value:
+                  simple: ' '
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 5a00e4fd-82e1-4b11-82ad-aaa5d5b514e4
+      iscommand: false
+      name: Set Bring
+      script: Set
+      type: regular
+      version: -1
+    taskid: 5a00e4fd-82e1-4b11-82ad-aaa5d5b514e4
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1070
+        }
+      }
+  "56":
+    id: "56"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 0
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "47"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Comment:
+        complex:
+          accessor: key
+          root: inputs.IssueValue
+          transformers:
+          - args:
+              prefix:
+                iscontext: true
+                value:
+                  simple: lists.isoc_API_Config.DEM
+              suffix: {}
+            operator: concat
+      IssueId:
+        complex:
+          root: TicketKey
+          transformers:
+          - operator: LastArrayElement
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 7222a5bf-2f86-454f-8a7b-f9af30bf235f
+      iscommand: false
+      name: isoc_ jira_add
+      playbookName: isoc_jira_add
+      type: playbook
+      version: -1
+    taskid: 7222a5bf-2f86-454f-8a7b-f9af30bf235f
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1420
+        }
+      }
+  "57":
+    id: "57"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      Send_SMS_Switch:
+        simple: "on"
+      message:
+        simple: Virus found when IT processes the virus scan booking (${inputs.IssueValue.key}).
+          Please check move-in type with IT and user. TicketNo:(${TicketKey})
+      phone:
+        simple: 7056656,7524015
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 54762156-691c-49d7-8a08-1ba5fbc3e35c
+      iscommand: false
+      name: tsmc_noti_sendSMS
+      script: tsmc_noti_sendSMS
+      type: regular
+      version: -1
+    taskid: 54762156-691c-49d7-8a08-1ba5fbc3e35c
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 1945
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "2_6_#default#": 0.25
+    },
+    "paper": {
+      "dimensions": {
+        "height": 1990,
+        "width": 810,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

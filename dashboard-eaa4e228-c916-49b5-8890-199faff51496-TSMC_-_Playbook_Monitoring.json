@@ -1,0 +1,323 @@
+{
+	"cacheVersn": 0,
+	"definitionId": "",
+	"fromDate": "0001-01-01T00:00:00Z",
+	"fromDateLicense": "0001-01-01T00:00:00Z",
+	"fromServerVersion": "",
+	"hidePivot": false,
+	"hideSearch": false,
+	"id": "eaa4e228-c916-49b5-8890-199faff51496",
+	"isCommon": true,
+	"itemVersion": "",
+	"layout": [
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "0eb40bb0-95c1-11ec-a957-3395da8c8a1e",
+			"id": "0eb40bb0-95c1-11ec-a957-3395da8c8a1e",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "e0288fba-fda3-4904-8388-fa95dbcb0f56",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:28:08.546349667Z",
+				"name": "TSMC - Top Playbook Execution Count",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"sum|executionCount"
+					],
+					"showOthers": false,
+					"valuesFormat": "abbreviated"
+				},
+				"prevName": "Top Playbook Execution Count",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:playbook",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 4
+		},
+		{
+			"forceRange": false,
+			"h": 4,
+			"i": "173e60f0-95c6-11ec-a957-3395da8c8a1e",
+			"id": "173e60f0-95c6-11ec-a957-3395da8c8a1e",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "2ce78bcc-3be0-4bd8-8ec3-702f4e3f2f01",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:59:15.44587796Z",
+				"name": "TSMC - Top Incidents Type",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"type"
+					],
+					"valuesFormat": "abbreviated"
+				},
+				"prevName": "TSMC - Top Incidents Type",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 0
+		},
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "4186f6b0-95c6-11ec-a957-3395da8c8a1e",
+			"id": "4186f6b0-95c6-11ec-a957-3395da8c8a1e",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "f1b02cbe-dba0-45ec-87ea-b22b80a2d966",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:34:40.501418627Z",
+				"name": "TSMC - Top Playbook Average Runtime Duration",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"avg|duration"
+					],
+					"valuesFormat": "abbreviated"
+				},
+				"prevName": "TSMC - Top Playbook Average Runtime Duration",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:playbook",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 2,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 9
+		},
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "4843f840-95c6-11ec-a957-3395da8c8a1e",
+			"id": "4843f840-95c6-11ec-a957-3395da8c8a1e",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "e4d825bc-761e-40e1-822d-e3513629f9c6",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T22:32:18.007708314Z",
+				"name": "TSMC - Top Playbooks with Error",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"sum|errorCount"
+					]
+				},
+				"prevName": "TSMC - Top Playbooks with Error",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:playbook",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 2,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 19
+		},
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "d20eeee0-95c6-11ec-a957-3395da8c8a1e",
+			"id": "d20eeee0-95c6-11ec-a957-3395da8c8a1e",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "metrics",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 180,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "cdeca6c1-c500-4dca-86fa-550c278e4830",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-24T23:09:26.383157817Z",
+				"name": "TSMC - Top Playbook Total Runtime Duration",
+				"packID": "",
+				"params": {
+					"groupBy": [
+						"name"
+					],
+					"keys": [
+						"sum|duration"
+					]
+				},
+				"prevName": "TSMC - Top Playbook Total Runtime Duration",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "type:playbook",
+				"shouldCommit": false,
+				"size": 20,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "pie"
+			},
+			"x": 0,
+			"y": 14
+		}
+	],
+	"locked": false,
+	"modulePage": false,
+	"name": "TSMC - Playbook Monitoring",
+	"owner": "",
+	"packID": "",
+	"period": {
+		"by": "",
+		"byFrom": "days",
+		"byTo": "",
+		"field": "",
+		"fromValue": 180,
+		"toValue": null
+	},
+	"propagationLabels": [],
+	"system": false,
+	"toDate": "0001-01-01T00:00:00Z",
+	"toServerVersion": "",
+	"version": -1
+}

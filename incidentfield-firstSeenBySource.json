@@ -1,7 +1,11 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": false,
 	"associatedTypes": null,
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": false,
 	"cliName": "firstseenbysource",
 	"closeForm": false,
@@ -45,5 +49,6 @@
 	"useAsKpi": false,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

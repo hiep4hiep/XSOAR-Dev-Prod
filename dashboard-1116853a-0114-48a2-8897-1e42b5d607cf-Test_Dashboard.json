@@ -1,0 +1,102 @@
+{
+	"cacheVersn": 0,
+	"definitionId": "",
+	"fromDate": "0001-01-01T00:00:00Z",
+	"fromDateLicense": "0001-01-01T00:00:00Z",
+	"fromServerVersion": "",
+	"hidePivot": false,
+	"hideSearch": false,
+	"id": "1116853a-0114-48a2-8897-1e42b5d607cf",
+	"isCommon": true,
+	"itemVersion": "",
+	"layout": [
+		{
+			"forceRange": false,
+			"h": 3,
+			"i": "74d05620-939a-11ec-bf6e-0df3d012b744",
+			"id": "74d05620-939a-11ec-bf6e-0df3d012b744",
+			"reflectDimensions": true,
+			"w": 4,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "scripts",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "",
+						"byTo": "",
+						"field": "",
+						"fromValue": null,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "",
+				"id": "4c9bd530-e6c1-4bf4-8d69-065c8c546d33",
+				"isPredefined": false,
+				"itemVersion": "",
+				"modified": "2022-02-22T04:46:30.653642561Z",
+				"name": "App-01 CPU",
+				"packID": "",
+				"params": {
+					"colors": {
+						"isEnabled": true,
+						"items": {
+							"#00CD33": {
+								"value": 0
+							},
+							"#FF1744": {
+								"value": 50
+							},
+							"#FF9000": {
+								"value": 30
+							}
+						},
+						"type": "above"
+					},
+					"sign": "%",
+					"signAlignment": "right",
+					"text": "",
+					"valuesFormat": "percentage"
+				},
+				"prevName": "TextWidget",
+				"propagationLabels": [
+					"all"
+				],
+				"query": "TextWidget",
+				"shouldCommit": false,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 1,
+				"widgetType": "number"
+			},
+			"x": 0,
+			"y": 0
+		}
+	],
+	"locked": false,
+	"modulePage": false,
+	"name": "Test Dashboard",
+	"owner": "",
+	"packID": "",
+	"period": {
+		"by": "",
+		"byFrom": "days",
+		"byTo": "",
+		"field": "",
+		"fromValue": 7,
+		"toValue": null
+	},
+	"propagationLabels": [],
+	"system": false,
+	"toDate": "0001-01-01T00:00:00Z",
+	"toServerVersion": "",
+	"version": -1
+}

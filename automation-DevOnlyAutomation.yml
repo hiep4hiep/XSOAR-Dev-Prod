@@ -9,6 +9,7 @@ contentitemexportablefields:
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 dockerimage: demisto/python3:3.10.1.25933
 enabled: true

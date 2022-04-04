@@ -6,6 +6,7 @@ contentitemexportablefields:
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 id: 2b6f9bd5-eef2-462a-830c-13acf107155a
 inputs: []
@@ -61,6 +62,8 @@ tasks:
         simple: Please check this
       timings:
         completeafterreplies: 1
+        completeaftersla: false
+        completeafterv2: false
         retriescount: 2
         retriesinterval: 360
       to:

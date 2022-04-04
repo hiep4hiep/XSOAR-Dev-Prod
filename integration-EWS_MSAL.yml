@@ -29,11 +29,13 @@ configuration:
   type: 8
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: The integration uses MSAL lib to authenticate and authorize API access
   to EWS using ROPC flow which requires username, password and client (application)

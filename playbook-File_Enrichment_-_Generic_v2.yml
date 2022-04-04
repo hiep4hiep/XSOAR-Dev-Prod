@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.8
+    itemVersion: 2.1.13
     packID: CommonPlaybooks
     packPropagationLabels:
     - all
@@ -311,7 +311,7 @@ tasks:
       id: e5eae00a-9da2-4d93-8ed2-693e0c6c2c89
       iscommand: false
       name: File Enrichment - Virus Total Private API
-      playbookName: File Enrichment - Virus Total Private API
+      playbookId: file_enrichment_-_virus_total_private_api
       type: playbook
       version: -1
     taskid: e5eae00a-9da2-4d93-8ed2-693e0c6c2c89

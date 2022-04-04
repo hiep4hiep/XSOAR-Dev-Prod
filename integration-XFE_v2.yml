@@ -60,12 +60,14 @@ configuration:
   type: 8
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 1.1.9
     packID: XForceExchange
     packPropagationLabels:
     - all
     propagationLabels: []
+    remote: true
     toServerVersion: ""
 description: IBM X-Force Exchange lets you receive threat intelligence about applications,
   IP addresses, URls and hashes

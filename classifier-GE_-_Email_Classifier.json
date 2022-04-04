@@ -1,0 +1,37 @@
+{
+	"brands": null,
+	"cacheVersn": 0,
+	"defaultIncidentType": "Unclassified",
+	"definitionId": "",
+	"description": "",
+	"feed": false,
+	"fromServerVersion": "",
+	"id": "6d4b6adc-ecd0-479b-828f-42fa1dbab7f8",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "",
+	"keyTypeMap": {
+		"getest@mail.com": "Hunt",
+		"hiep@gmail.com": "Exploit",
+		"hnguyen@paloaltonetworks.com": "Exfiltration"
+	},
+	"locked": false,
+	"logicalVersion": 0,
+	"mapping": null,
+	"name": "GE - Email Classifier",
+	"nameRaw": "GE - Email Classifier",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {
+		"simple": "sender.email_address"
+	},
+	"type": "classification",
+	"unclassifiedCases": null,
+	"version": -1
+}

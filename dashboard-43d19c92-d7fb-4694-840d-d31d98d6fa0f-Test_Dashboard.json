@@ -1,0 +1,89 @@
+{
+	"cacheVersn": 0,
+	"definitionId": "",
+	"fromDate": "0001-01-01T00:00:00Z",
+	"fromDateLicense": "0001-01-01T00:00:00Z",
+	"fromServerVersion": "",
+	"hidePivot": false,
+	"hideSearch": false,
+	"id": "43d19c92-d7fb-4694-840d-d31d98d6fa0f",
+	"isCommon": true,
+	"itemVersion": "",
+	"layout": [
+		{
+			"forceRange": false,
+			"h": 5,
+			"i": "cdb65740-ae3d-11ec-9ffe-c1ab0a35976a",
+			"id": "cdb65740-ae3d-11ec-9ffe-c1ab0a35976a",
+			"reflectDimensions": true,
+			"w": 12,
+			"widget": {
+				"Cache": null,
+				"cacheVersn": 0,
+				"category": "",
+				"commitMessage": "",
+				"dataType": "incidents",
+				"dateRange": {
+					"fromDate": "0001-01-01T00:00:00Z",
+					"fromDateLicense": "0001-01-01T00:00:00Z",
+					"period": {
+						"by": "",
+						"byFrom": "days",
+						"byTo": "",
+						"field": "",
+						"fromValue": 7,
+						"toValue": null
+					},
+					"toDate": "0001-01-01T00:00:00Z"
+				},
+				"definitionId": "",
+				"fromServerVersion": "5.0.0",
+				"id": "",
+				"isPredefined": false,
+				"itemVersion": "1.2.5",
+				"modified": "2022-03-21T22:53:17.606026842Z",
+				"name": "Active Incidents - Line chart",
+				"packID": "CommonWidgets",
+				"packPropagationLabels": [
+					"all"
+				],
+				"params": {
+					"groupBy": [
+						"occurred(d)",
+						"type"
+					],
+					"valuesFormat": "abbreviated"
+				},
+				"prevName": "Active Incidents - Line chart",
+				"propagationLabels": [],
+				"query": "",
+				"shouldCommit": false,
+				"toServerVersion": "",
+				"vcShouldIgnore": false,
+				"vcShouldKeepItemLegacyProdMachine": false,
+				"version": 0,
+				"widgetType": "column"
+			},
+			"x": 0,
+			"y": 0
+		}
+	],
+	"locked": false,
+	"modulePage": false,
+	"name": "Test Dashboard",
+	"owner": "",
+	"packID": "",
+	"period": {
+		"by": "",
+		"byFrom": "days",
+		"byTo": "",
+		"field": "",
+		"fromValue": 7,
+		"toValue": null
+	},
+	"propagationLabels": [],
+	"system": false,
+	"toDate": "0001-01-01T00:00:00Z",
+	"toServerVersion": "",
+	"version": -1
+}

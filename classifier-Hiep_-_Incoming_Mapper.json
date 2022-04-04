@@ -1,0 +1,46 @@
+{
+	"brands": null,
+	"cacheVersn": 0,
+	"defaultIncidentType": "",
+	"definitionId": "",
+	"description": "",
+	"feed": false,
+	"fromServerVersion": "",
+	"id": "fd2a848f-00f8-4064-8f86-194ac724e11f",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "",
+	"keyTypeMap": {},
+	"locked": false,
+	"logicalVersion": 0,
+	"mapping": {
+		"Exploit": {
+			"dontMapEventToLabels": true,
+			"internalMapping": {
+				"Event Type": {
+					"simple": "type"
+				},
+				"details": {
+					"simple": "message"
+				},
+				"name": {
+					"simple": "name"
+				}
+			}
+		}
+	},
+	"name": "Hiep - Incoming Mapper",
+	"nameRaw": "Hiep - Incoming Mapper",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {},
+	"type": "mapping-incoming",
+	"unclassifiedCases": null,
+	"version": -1
+}

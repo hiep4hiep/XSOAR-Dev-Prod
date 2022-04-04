@@ -6,6 +6,7 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
@@ -15,6 +16,7 @@ contentitemexportablefields:
 dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: QRadarConvertTime
 pswd: ""
 runas: DBotWeakRole

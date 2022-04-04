@@ -56,12 +56,14 @@ configuration:
   type: 19
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 1.1.3
     packID: GmailSingleUser
     packPropagationLabels:
     - all
     propagationLabels: []
+    remote: true
     toServerVersion: ""
 defaultclassifier: Gmail Single User
 defaultmapperin: Gmail Single User-mapper

@@ -1,0 +1,134 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 71d24e23-9ccd-4faa-8b6c-812f34f26216
+inputs: []
+name: Test playbook regex
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ee0a8b8d-cd4c-4f3d-87dd-18e9895a116a
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: ee0a8b8d-cd4c-4f3d-87dd-18e9895a116a
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      contextKey:
+        simple: testRegex
+      data:
+        simple: 'Xin chao #Tao la Hiep# cin chao'
+      regex:
+        simple: '#.*#'
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Extracts regex data from the provided text. The script support
+        groups and looping.
+      id: 121c62a6-a07f-4a5f-878b-16d376de0317
+      iscommand: false
+      name: Regex extract
+      script: MatchRegexV2
+      type: regular
+      version: -1
+    taskid: 121c62a6-a07f-4a5f-878b-16d376de0317
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 190
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        complex:
+          accessor: results
+          root: MatchRegex
+          transformers:
+          - args:
+              chars:
+                value:
+                  simple: '#'
+            operator: StripChars
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: aaf447fe-659c-49cc-8d4f-be4326cbcf8b
+      iscommand: false
+      name: Print regex result
+      script: Print
+      type: regular
+      version: -1
+    taskid: aaf447fe-659c-49cc-8d4f-be4326cbcf8b
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 360
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 405,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

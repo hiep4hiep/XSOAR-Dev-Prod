@@ -1,0 +1,166 @@
+{
+	"cacheVersn": 0,
+	"close": null,
+	"definitionId": "",
+	"description": "",
+	"detached": false,
+	"details": null,
+	"detailsV2": {
+		"TypeName": "",
+		"tabs": [
+			{
+				"id": "summary",
+				"name": "Legacy Summary",
+				"type": "summary"
+			},
+			{
+				"hidden": false,
+				"id": "gmsndfvxxj",
+				"name": "Send mail directly",
+				"sections": [
+					{
+						"displayType": "ROW",
+						"h": 1,
+						"hideName": false,
+						"i": "gmsndfvxxj-ydfrysoumz-gmsndfvxxj-caseinfoid-c5d04bc0-a96b-11ec-9e4d-d7653a45ecae",
+						"items": [
+							{
+								"args": {},
+								"buttonClass": "primary",
+								"endCol": 2,
+								"fieldId": "",
+								"height": 44,
+								"id": "f21b0c60-a966-11ec-bf0c-d51de98b419f",
+								"index": 0,
+								"name": "Send Email",
+								"scriptId": "6978e8c8-1d6a-495e-8786-dc69dd8d9303",
+								"sectionItemType": "button",
+								"startCol": 0
+							}
+						],
+						"maxW": 3,
+						"minH": 1,
+						"moved": false,
+						"name": "Send email directly by this button",
+						"static": false,
+						"w": 1,
+						"x": 0,
+						"y": 0
+					}
+				],
+				"type": "custom"
+			},
+			{
+				"hidden": false,
+				"id": "ydfrysoumz",
+				"name": "Send email template",
+				"sections": [
+					{
+						"displayType": "ROW",
+						"h": 3,
+						"hideName": false,
+						"i": "gmsndfvxxj-ydfrysoumz-gmsndfvxxj-caseinfoid-c5d04bc0-a96b-11ec-9e4d-d7653a45ecae",
+						"items": [
+							{
+								"endCol": 4,
+								"fieldId": "emailto",
+								"height": 22,
+								"id": "2094d670-a96c-11ec-9e4d-d7653a45ecae",
+								"index": 0,
+								"sectionItemType": "field",
+								"startCol": 0
+							},
+							{
+								"endCol": 4,
+								"fieldId": "emailsubject",
+								"height": 22,
+								"id": "258c5a40-a96c-11ec-9e4d-d7653a45ecae",
+								"index": 1,
+								"sectionItemType": "field",
+								"startCol": 0
+							},
+							{
+								"endCol": 4,
+								"fieldId": "emailbody",
+								"height": 44,
+								"id": "2b0b5d90-a96c-11ec-9e4d-d7653a45ecae",
+								"index": 2,
+								"sectionItemType": "field",
+								"startCol": 0
+							},
+							{
+								"args": {},
+								"buttonClass": "primary",
+								"endCol": 2,
+								"fieldId": "",
+								"height": 44,
+								"id": "61bcfba0-a96c-11ec-9e4d-d7653a45ecae",
+								"index": 3,
+								"name": "Send Email",
+								"scriptId": "5b254005-8e9c-44b8-8e96-81f2c4bd180a",
+								"sectionItemType": "button",
+								"startCol": 0
+							}
+						],
+						"maxW": 3,
+						"minH": 1,
+						"moved": false,
+						"name": "Send email template",
+						"static": false,
+						"w": 2,
+						"x": 0,
+						"y": 0
+					}
+				],
+				"type": "custom"
+			},
+			{
+				"id": "warRoom",
+				"name": "War Room",
+				"type": "warRoom"
+			},
+			{
+				"id": "workPlan",
+				"name": "Work Plan",
+				"type": "workPlan"
+			},
+			{
+				"hidden": true,
+				"id": "evidenceBoard",
+				"name": "Evidence Board",
+				"type": "evidenceBoard"
+			},
+			{
+				"hidden": true,
+				"id": "relatedIncidents",
+				"name": "Related Incidents",
+				"type": "relatedIncidents"
+			},
+			{
+				"hidden": true,
+				"id": "canvas",
+				"name": "Canvas",
+				"type": "canvas"
+			}
+		]
+	},
+	"edit": null,
+	"fromServerVersion": "",
+	"group": "incident",
+	"id": "59c9c605-e1e3-4dfd-8714-e93d4a6fb8d7",
+	"indicatorsDetails": null,
+	"indicatorsQuickView": null,
+	"itemVersion": "",
+	"locked": false,
+	"mobile": null,
+	"name": "Send Email Layout",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"quickView": null,
+	"quickViewV2": null,
+	"system": false,
+	"toServerVersion": "",
+	"version": -1
+}

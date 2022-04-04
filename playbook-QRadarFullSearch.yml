@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.4
+    itemVersion: 2.1.34
     packID: QRadar
     packPropagationLabels:
     - all
@@ -27,9 +27,7 @@ inputs:
   key: query_expression
   playbookInputQuery: null
   required: true
-  value:
-    simple: SELECT userName, sourceip, UTF8(payload) FROM events WHERE inOffense(150)
-      AND qid = '67500096' LIMIT 5 START '2021-11-25 01:17:07'
+  value: {}
 - description: Range of results to return (e.g. 0-20)
   key: range
   playbookInputQuery: null
@@ -62,18 +60,18 @@ tasks:
     task:
       brand: ""
       description: Start of playbook
-      id: 230a5fa5-ffb2-4d27-857f-647083ec27dc
+      id: ea863b7b-8773-444d-8ee8-0d0ce9fba6b1
       iscommand: false
       name: ""
       version: -1
-    taskid: 230a5fa5-ffb2-4d27-857f-647083ec27dc
+    taskid: ea863b7b-8773-444d-8ee8-0d0ce9fba6b1
     timertriggers: []
     type: start
     view: |-
       {
         "position": {
-          "x": 170,
-          "y": -100
+          "x": 152.5,
+          "y": 50
         }
       }
   "1":
@@ -96,20 +94,20 @@ tasks:
     task:
       brand: ""
       description: Creates a search in QRadar using the search query
-      id: c8436b25-99f9-46ec-8fe6-cc601675c5f3
+      id: c4bad30a-41e8-42dc-893d-b83ef87e28e6
       iscommand: true
       name: Run QRadar search
       script: '|||qradar-searches'
       type: regular
       version: -1
-    taskid: c8436b25-99f9-46ec-8fe6-cc601675c5f3
+    taskid: c4bad30a-41e8-42dc-893d-b83ef87e28e6
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": -37.5,
-          "y": 205
+          "x": 265,
+          "y": 370
         }
       }
   "2":
@@ -132,20 +130,20 @@ tasks:
     task:
       brand: ""
       description: Gets search object to initialize polling playbook
-      id: 4dd0f61d-1391-47c3-8a9d-b5580671f092
+      id: ba498a12-5e29-4d65-8973-4056466f58ed
       iscommand: true
       name: Get QRadar search
       script: '|||qradar-get-search'
       type: regular
       version: -1
-    taskid: 4dd0f61d-1391-47c3-8a9d-b5580671f092
+    taskid: ba498a12-5e29-4d65-8973-4056466f58ed
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": -37.5,
-          "y": 380
+          "x": 265,
+          "y": 545
         }
       }
   "3":
@@ -160,7 +158,7 @@ tasks:
       wait: 1
     nexttasks:
       '#none#':
-      - "4"
+      - "8"
     note: false
     quietmode: 0
     scriptarguments:
@@ -175,26 +173,26 @@ tasks:
       Timeout:
         simple: ${inputs.timeout}
       dt:
-        simple: QRadar.Search(val.Status!=='COMPLETED' ).ID
+        simple: QRadar.Search(val.Status!=='COMPLETED' && val.Status!=='CANCELED').ID
     separatecontext: true
     skipunavailable: false
     task:
       brand: ""
       description: Generic polling of qradar-get-search
-      id: af4d3d48-5707-4522-8fef-a6d3b393eab4
+      id: c5c40bd8-435b-46d1-8e3e-ffb9e72954c2
       iscommand: false
       name: GenericPolling
       playbookId: GenericPolling
       type: playbook
       version: -1
-    taskid: af4d3d48-5707-4522-8fef-a6d3b393eab4
+    taskid: c5c40bd8-435b-46d1-8e3e-ffb9e72954c2
     timertriggers: []
     type: playbook
     view: |-
       {
         "position": {
-          "x": -150,
-          "y": 730
+          "x": -200,
+          "y": 910
         }
       }
   "4":
@@ -219,20 +217,22 @@ tasks:
     task:
       brand: ""
       description: executes qradar-get-search-results to get the search results
-      id: 6eefed42-f1f6-46d7-83b0-ecb2e47575f9
+      id: a8af7d6b-87e5-4f16-847a-038e2b15ac2c
       iscommand: true
       name: Get QRadar search results
       script: '|||qradar-get-search-results'
+      tags:
+      - SIEMResults
       type: regular
       version: -1
-    taskid: 6eefed42-f1f6-46d7-83b0-ecb2e47575f9
+    taskid: a8af7d6b-87e5-4f16-847a-038e2b15ac2c
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": -37.5,
-          "y": 905
+          "x": 300,
+          "y": 1300
         }
       }
   "5":
@@ -247,19 +247,19 @@ tasks:
     task:
       brand: ""
       description: Playbook is done
-      id: 172877e1-d636-4b2a-8b3e-70dddf7ea585
+      id: 7160734d-90ad-4d48-8fa6-d8c7aa68bc61
       iscommand: false
       name: Done
       type: title
       version: -1
-    taskid: 172877e1-d636-4b2a-8b3e-70dddf7ea585
+    taskid: 7160734d-90ad-4d48-8fa6-d8c7aa68bc61
     timertriggers: []
     type: title
     view: |-
       {
         "position": {
-          "x": 170,
-          "y": 1080
+          "x": 152.5,
+          "y": 1570
         }
       }
   "6":
@@ -290,19 +290,19 @@ tasks:
     task:
       brand: ""
       description: Checks whether the search is completed
-      id: 7c323154-9752-4e8d-8e18-7d43fef89edf
+      id: 3f799ca0-9bbb-4d1e-8010-f864a2d0325a
       iscommand: false
       name: Is search completed?
       type: condition
       version: -1
-    taskid: 7c323154-9752-4e8d-8e18-7d43fef89edf
+    taskid: 3f799ca0-9bbb-4d1e-8010-f864a2d0325a
     timertriggers: []
     type: condition
     view: |-
       {
         "position": {
-          "x": -37.5,
-          "y": 555
+          "x": 265,
+          "y": 720
         }
       }
   "7":
@@ -349,31 +349,108 @@ tasks:
       brand: ""
       description: Returns 'yes' if integration brand is available. Otherwise returns
         'no'
-      id: 42a5a20b-6d0e-4019-8ab1-cfe5c796c085
+      id: 58fd7e65-aa1d-4619-86e2-01b38d4974c9
       iscommand: false
       name: Is QRadar enabled?
       type: condition
       version: -1
-    taskid: 42a5a20b-6d0e-4019-8ab1-cfe5c796c085
+    taskid: 58fd7e65-aa1d-4619-86e2-01b38d4974c9
     timertriggers: []
     type: condition
     view: |-
       {
         "position": {
-          "x": 170,
-          "y": 35
+          "x": 152.5,
+          "y": 195
+        }
+      }
+  "8":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: QRadar.Search.Status
+          operator: isEqualString
+          right:
+            value:
+              simple: CANCELED
+      label: "yes"
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "4"
+      "yes":
+      - "9"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Checks whether the search was canceled
+      id: 3719dd6d-f2ad-4744-8845-8b1c210522be
+      iscommand: false
+      name: Is search canceled?
+      type: condition
+      version: -1
+    taskid: 3719dd6d-f2ad-4744-8845-8b1c210522be
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": -200,
+          "y": 1110
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      message:
+        simple: 'Error in QRadar: qradar-get-search command returned with status ''CANCELED''. '
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints an error entry with a given message
+      id: d25ec92e-f69c-46e8-8c75-80c93f0af5b9
+      iscommand: false
+      name: ERROR
+      script: PrintErrorEntry
+      type: regular
+      version: -1
+    taskid: d25ec92e-f69c-46e8-8c75-80c93f0af5b9
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -500,
+          "y": 1300
         }
       }
 version: -1
 view: |-
   {
-    "linkLabelsPosition": {},
+    "linkLabelsPosition": {
+      "7_5_#default#": 0.55,
+      "8_4_#default#": 0.9
+    },
     "paper": {
       "dimensions": {
-        "height": 1245,
-        "width": 700,
-        "x": -150,
-        "y": -100
+        "height": 1585,
+        "width": 1180,
+        "x": -500,
+        "y": 50
       }
     }
   }

@@ -1,7 +1,7 @@
 args:
 - description: Additional text by which to query incidents.
   name: query
-- description: A comma-separatetd list of incident types by which to filter.
+- description: A comma-separated list of incident types by which to filter.
   name: incidentTypes
 - description: 'The start date by which to filter incidents. Date format will be the
     same as in the incidents query page, for example: "3 days ago", ""2019-01-01T00:00:00
@@ -11,8 +11,8 @@ args:
     same as in the incidents query page, for example: "3 days ago", ""2019-01-01T00:00:00
     +0200").'
   name: toDate
-- defaultValue: "3000"
-  description: The maximum number of incidents to fetch. The default value is 3000.
+- defaultValue: "500"
+  description: The maximum number of incidents to fetch.
   name: limit
 - auto: PREDEFINED
   defaultValue: "false"
@@ -43,7 +43,7 @@ args:
   - pickle
 - description: A comma-separated list of fields in the object to poplulate.
   name: populateFields
-- defaultValue: "500"
+- defaultValue: "100"
   description: Incidents query batch size
   name: pageSize
 comment: |-
@@ -52,7 +52,7 @@ comment: |-
 
   This automation runs using the default Limited User role, unless you explicitly change the permissions.
   For more information, see the section about permissions here:
-  https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+  https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-5/cortex-xsoar-admin/playbooks/automations.html
 commonfields:
   id: GetIncidentsByQuery
   version: -1
@@ -60,13 +60,13 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.18.3
+    itemVersion: 1.19.2
     packID: Base
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.9.8.24399
+dockerimage: demisto/python3:3.10.1.26972
 engineinfo: {}
 mainengineinfo: {}
 name: GetIncidentsByQuery
@@ -89,7 +89,7 @@ script: |
   from dateutil import parser
 
   PREFIXES_TO_REMOVE = ['incident.']
-  PAGE_SIZE = int(demisto.args().get('pageSize', 500))
+  PAGE_SIZE = int(demisto.args().get('pageSize', 100))
   PYTHON_MAGIC = "$$##"
 
 
@@ -189,11 +189,11 @@ script: |
       if is_demisto_version_ge('6.2.0') and len(fields_to_populate) > 0:
           args['populateFields'] = get_fields_to_populate_arg(fields_to_populate)
       res = demisto.executeCommand("getIncidents", args)
-      if res[0]['Contents'].get('data') is None:
-          return []
       if is_error(res):
           error_message = get_error(res)
           raise Exception("Failed to get incidents by query args: %s error: %s" % (args, error_message))
+      if res[0]['Contents'].get('data') is None:
+          return []
       incidents = res[0]['Contents'].get('data') or []
 
       parsed_incidents = []
@@ -255,6 +255,7 @@ script: |
 
 
   def get_comma_sep_list(value):
+      value = value.replace('|', ',')
       return map(lambda x: x.strip(), value.split(","))
 
 

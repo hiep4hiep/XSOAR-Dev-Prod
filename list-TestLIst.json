@@ -1,0 +1,22 @@
+{
+	"cacheVersn": 0,
+	"data": "129.12.14.5",
+	"definitionId": "",
+	"description": "",
+	"fromServerVersion": "",
+	"id": "TestLIst",
+	"itemVersion": "",
+	"locked": false,
+	"name": "TestLIst",
+	"nameLocked": false,
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"system": false,
+	"tags": null,
+	"toServerVersion": "",
+	"truncated": false,
+	"type": "plain_text",
+	"version": -1
+}

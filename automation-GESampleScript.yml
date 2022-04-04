@@ -1,0 +1,44 @@
+args:
+- description: This argument is used to collect the greeting from end user (e.g Hello
+    GE Engineer)
+  name: greeting_string
+  required: true
+- description: 1st item in the sum math
+  name: a
+  required: true
+- description: 2nd item in the sum math
+  name: b
+  required: true
+commonfields:
+  id: a0b04a35-1352-4cf4-8b4c-8d7494c4cd71
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.26972
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GESampleScript
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  greeting = demisto.args().get('greeting_string')
+  a = demisto.args().get('a')
+  b = demisto.args().get('b')
+
+  summary = int(a) + int(b)
+
+  print(greeting + "   " + str(summary))
+scripttarget: 0
+subtype: python3
+tags:
+- sample
+type: python

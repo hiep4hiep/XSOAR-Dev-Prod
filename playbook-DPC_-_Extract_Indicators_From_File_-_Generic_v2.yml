@@ -6,6 +6,7 @@ contentitemexportablefields:
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: |-
   Extracts indicators from a file.
@@ -164,7 +165,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Set the input file into local context.
+      description: Sets the input file into local context.
       id: 5ba31bc7-84ab-4d1b-8c1a-501b04cfe9c6
       iscommand: false
       name: Set file to local context
@@ -1104,7 +1105,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Checks whether there is an active instance of the Image OCR integration
+      description: Checks whether there is an active instance of the Image OCR integration.
         enabled.
       id: 92e92794-63db-4875-88c3-89bd5a4ec179
       iscommand: false
@@ -1528,7 +1529,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Get a preview (image) of the PDF files.
+      description: Gets a preview (image) of the PDF files.
       id: 68c81da0-f91d-4ea4-8616-82a0e333eb6f
       iscommand: true
       name: Preview PDF files
@@ -1593,7 +1594,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Check if Rasterize integration is enabled
+      description: Checks if the Rasterize integration is enabled.
       id: d3466327-cfe5-4364-8b19-187f67320432
       iscommand: false
       name: Is Rasterize enabled?

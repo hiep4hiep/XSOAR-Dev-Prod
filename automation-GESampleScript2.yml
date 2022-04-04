@@ -1,0 +1,63 @@
+args:
+- description: This argument is used to collect the greeting from end user (e.g Hello
+    GE Engineer)
+  name: greeting_string
+  required: true
+- description: 1st item in the sum math
+  name: a
+  required: true
+- description: 2nd item in the sum math
+  name: b
+  required: true
+commonfields:
+  id: 8d937cf3-310f-4fb1-8bdd-0a7b82de90b5
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.26972
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: GESampleScript2
+outputs:
+- contextPath: GE.SampleScript.multiply
+  description: Calculation result from GE algorithm
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |
+  greeting = demisto.args().get('greeting_string')
+  a = demisto.args().get('a')
+  b = demisto.args().get('b')
+
+  summary = int(a) * int(b)
+
+  calculation = greeting + "   " + str(summary)
+
+
+  data = {
+      "multiply": calculation
+  }
+
+  # 1. Return the data to War room for the Analyst to read and copy/paste
+  # 2. Write the data to Context for other Playbook tasks to read from
+
+  results = CommandResults(
+          outputs_prefix='GE.SampleScript',
+          outputs=data
+      )
+
+
+  return_error("Sorry this is not supported")
+scripttarget: 0
+subtype: python3
+tags:
+- sample
+type: python

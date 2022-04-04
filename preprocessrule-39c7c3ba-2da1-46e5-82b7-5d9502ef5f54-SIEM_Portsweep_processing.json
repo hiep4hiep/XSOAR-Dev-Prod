@@ -1,0 +1,105 @@
+{
+	"action": "linkAndClose",
+	"cacheVersn": 0,
+	"definitionId": "",
+	"enabled": true,
+	"existingEventsFilters": [
+		[
+			{
+				"left": {
+					"isContext": true,
+					"value": {
+						"simple": "sourceip"
+					}
+				},
+				"operator": "isIdenticalIncident",
+				"right": {
+					"isContext": true,
+					"value": {
+						"simple": "${incident.sourceip}"
+					}
+				},
+				"type": "shortText"
+			}
+		]
+	],
+	"fromServerVersion": "",
+	"id": "39c7c3ba-2da1-46e5-82b7-5d9502ef5f54",
+	"index": 0,
+	"itemVersion": "",
+	"linkTo": "oldest",
+	"locked": false,
+	"name": "SIEM Portsweep processing",
+	"newEventFilters": [
+		[
+			{
+				"left": {
+					"isContext": true,
+					"value": {
+						"simple": "type"
+					}
+				},
+				"operator": "isEqualString",
+				"right": {
+					"value": {
+						"simple": "SIEM Portsweep Event Alert"
+					}
+				},
+				"type": "singleSelect"
+			}
+		]
+	],
+	"packID": "",
+	"period": {
+		"by": "days",
+		"fromValue": 7
+	},
+	"propagationLabels": [
+		"all"
+	],
+	"readyExistingEventsFilters": [
+		[
+			{
+				"left": {
+					"isContext": true,
+					"value": {
+						"simple": "sourceip"
+					}
+				},
+				"operator": "isIdenticalIncident",
+				"right": {
+					"isContext": true,
+					"value": {
+						"simple": "${incident.sourceip}"
+					}
+				},
+				"type": "shortText"
+			}
+		]
+	],
+	"readyNewEventFilters": [
+		[
+			{
+				"left": {
+					"isContext": true,
+					"value": {
+						"simple": "type"
+					}
+				},
+				"operator": "isEqualString",
+				"right": {
+					"value": {
+						"simple": "SIEM Portsweep Event Alert"
+					}
+				},
+				"type": "singleSelect"
+			}
+		]
+	],
+	"scriptID": "",
+	"scriptName": "",
+	"searchClosed": false,
+	"system": false,
+	"toServerVersion": "",
+	"version": -1
+}

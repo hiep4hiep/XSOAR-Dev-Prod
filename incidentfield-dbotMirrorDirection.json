@@ -1,7 +1,11 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": true,
 	"associatedTypes": null,
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": false,
 	"cliName": "dbotmirrordirection",
 	"closeForm": false,
@@ -50,5 +54,6 @@
 	"useAsKpi": false,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

@@ -1,0 +1,68 @@
+{
+	"brands": null,
+	"cacheVersn": 0,
+	"defaultIncidentType": "",
+	"definitionId": "",
+	"description": "",
+	"feed": true,
+	"fromServerVersion": "",
+	"id": "130b7a47-3d62-4ffe-81b8-a9bee00a4c22",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "",
+	"keyTypeMap": {},
+	"locked": false,
+	"logicalVersion": 1,
+	"mapping": {
+		"urlRep": {
+			"dontMapEventToLabels": true,
+			"internalMapping": {
+				"Phish Score": {
+					"simple": "phishscore"
+				},
+				"Related IP": {
+					"simple": "relatedip"
+				},
+				"Updated Date": {
+					"complex": {
+						"filters": [],
+						"root": "date",
+						"transformers": [
+							{
+								"args": {
+									"add_utc_timezone": {},
+									"dayfirst": {
+										"value": {
+											"simple": "false"
+										}
+									},
+									"fuzzy": {},
+									"yearfirst": {
+										"value": {
+											"simple": "true"
+										}
+									}
+								},
+								"operator": "DateStringToISOFormat"
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"name": "PhishScore mapper",
+	"nameRaw": "PhishScore mapper",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {},
+	"type": "mapping-incoming",
+	"unclassifiedCases": null,
+	"version": -1
+}

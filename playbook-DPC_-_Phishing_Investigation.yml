@@ -6,6 +6,7 @@ contentitemexportablefields:
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: |-
   Use this playbook to investigate and remediate a potential phishing incident. The playbook simultaneously engages with the user that triggered the incident, while investigating the incident itself.
@@ -1716,6 +1717,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
+      description: Determines whether Microsoft email headers should be validated.
       id: bf3eb3d0-9df6-4aff-8731-b5a108227b76
       iscommand: false
       name: Check Microsoft's Headers?

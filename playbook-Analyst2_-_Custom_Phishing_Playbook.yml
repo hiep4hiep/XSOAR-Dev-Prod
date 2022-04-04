@@ -1,0 +1,243 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: c2aa26d5-d127-4ef4-869e-d9dcb137e10e
+inputs: []
+name: Analyst2 - Custom Phishing Playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 38711ce2-dc20-4419-8be5-f5e9a47bf89c
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 38711ce2-dc20-4419-8be5-f5e9a47bf89c
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 50
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: File.Extension
+          operator: isEqualString
+          right:
+            value:
+              simple: zip
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 67deb24b-e8fa-45c0-87d1-6ea220cc74aa
+      iscommand: false
+      name: Is there a zip
+      type: condition
+      version: -1
+    taskid: 67deb24b-e8fa-45c0-87d1-6ea220cc74aa
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 195
+        }
+      }
+  "2":
+    continueonerror: true
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryID:
+        simple: ${File.EntryID}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Unzip a file using fileName or entryID to specify a file. Unzipped
+        files will be loaded to the War Room and names will be put into the context.
+      id: dfa315a6-970e-4f83-8d73-f72b5a613b3f
+      iscommand: false
+      name: unzipfile
+      script: UnzipFile
+      type: regular
+      version: -1
+    taskid: dfa315a6-970e-4f83-8d73-f72b5a613b3f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: b3cac9bd-3cdb-4985-81d1-c577ca9fc073
+      iscommand: false
+      name: End Task
+      type: title
+      version: -1
+    taskid: b3cac9bd-3cdb-4985-81d1-c577ca9fc073
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 900
+        }
+      }
+  "4":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ExtractedFiles
+          operator: containsString
+          right:
+            value:
+              simple: .eml
+      label: "yes"
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "3"
+      "yes":
+      - "5"
+    note: false
+    quietmode: 2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 6f304e56-42c6-4acf-88e5-8566dda116c8
+      iscommand: false
+      name: Is there an email file?
+      type: condition
+      version: -1
+    taskid: 6f304e56-42c6-4acf-88e5-8566dda116c8
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 545
+        }
+      }
+  "5":
+    continueonerror: true
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      entryid:
+        simple: ${File.EntryID}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: (Beta) Parse an email from an eml or msg file and populate all
+        relevant context data to investigate the email. Also extracts inner attachments
+        and returns them to the war room. The incident labels themselves are preserved
+        and not modified - only the "Label/x" context items that originated from the
+        labels, and the best practice is to rely on these for the remainder of the
+        playbook. This script is based on the parse-emails XSOAR python package, check
+        the script documentation for more info
+      id: 64791dae-9867-4463-8c02-5d5fdc3a3c21
+      iscommand: false
+      name: Parse Email
+      script: ParseEmailFilesV2
+      type: regular
+      version: -1
+    taskid: 64791dae-9867-4463-8c02-5d5fdc3a3c21
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": -50,
+          "y": 720
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 915,
+        "width": 592.5,
+        "x": -50,
+        "y": 50
+      }
+    }
+  }

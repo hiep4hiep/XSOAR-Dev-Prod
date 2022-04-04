@@ -1,0 +1,121 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 09947cd0-dcb8-4eac-88e9-ec630b66108f
+inputs: []
+name: Test Quiet
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 5b48d16f-9c9f-42a1-8484-bf54ad2eebfd
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 5b48d16f-9c9f-42a1-8484-bf54ad2eebfd
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 40
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 1
+    scriptarguments:
+      ip:
+        simple: 8.8.8.8
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: VirusTotal (API v3)
+      description: Checks the reputation of an IP address.
+      id: 8a7b5eb6-8d2d-4e15-89b8-b8dd97afa231
+      iscommand: true
+      name: Enrich IP
+      script: VirusTotal (API v3)|||ip
+      type: regular
+      version: -1
+    taskid: 8a7b5eb6-8d2d-4e15-89b8-b8dd97afa231
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 170
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${IP.Address} + ${IP.ASN} + ${IP.Malicious.Vendor}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 8d90d757-df8f-4230-8e2e-316617cbaf50
+      iscommand: false
+      name: Print data
+      script: Print
+      type: regular
+      version: -1
+    taskid: 8d90d757-df8f-4230-8e2e-316617cbaf50
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 700,
+          "y": 330
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 385,
+        "width": 380,
+        "x": 700,
+        "y": 40
+      }
+    }
+  }

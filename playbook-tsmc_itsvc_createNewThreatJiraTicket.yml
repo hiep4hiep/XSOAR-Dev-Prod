@@ -1,0 +1,328 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: d3c9e92d-a1ad-48d9-8628-0f82481cc3c4
+inputs:
+- description: ""
+  key: create_Jira_Switch
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: ""
+  key: title
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: ""
+  key: link
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: ""
+  key: pubDate
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: ""
+  key: description
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: ""
+  key: anHourAgoTimeNowUnix
+  playbookInputQuery: null
+  required: false
+  value: {}
+name: tsmc_itsvc_createNewThreatJiraTicket
+outputs:
+- contextPath: Jira.New Threat.result
+  type: boolean
+- contextPath: Jira.New Threat.ticketNo
+  type: string
+- contextPath: Jira.New Threat.ticketUrl
+  type: string
+- contextPath: Jira.New Threat.status
+  type: string
+- contextPath: out.New ThreatjiraErrorMsg
+  type: string
+- contextPath: out.New ThreatjiraStatus
+  type: string
+sourceplaybookid: 1b3885ba-684d-4089-8b69-0b806e17cdee
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a2f4701a-289f-40c3-81dc-17e8b5cddd21
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: a2f4701a-289f-40c3-81dc-17e8b5cddd21
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "15":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.create_Jira_Switch
+          operator: isEqualString
+          right:
+            value:
+              simple: "on"
+      label: "on"
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.create_Jira_Switch
+          operator: isEqualString
+          right:
+            value:
+              simple: "off"
+      label: "off"
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      "off":
+      - "17"
+      "on":
+      - "18"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 830c0e8f-7e33-4513-8f94-36c111fd6d0b
+      iscommand: false
+      name: Check if Create Jira Switch On
+      type: condition
+      version: -1
+    taskid: 830c0e8f-7e33-4513-8f94-36c111fd6d0b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "16":
+    id: "16"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 5
+    nexttasks:
+      '#none#':
+      - "17"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      body:
+        simple: "{\n\t\"site\":\"ITJIRA\",\n\t\"ticketNo\":null,\n\t\"fieldKeyValue\":{\n\t\t\"Subject\":[\"${inputs.title}\"],\n\t\t\"Project\":[\"ETRACK\"],\n\t\t\"Issue
+          Type\":[\"New Threat\"],\n\t\t\"Assignee\":[\"chenky\"],\n\t\t\"Source URL\":[\"${inputs.link}\"],\n\t\t\"Published
+          Date\":[\"${newPubDate}\"],\n\t\t\"New Threat Category\":[\"New Vulnerability\"],\n\t\t\"Threat
+          Source\":[\"Inoreader\"],\n\t\t\"Description\":[\"${inputs.description}\"]\n\t}\n}"
+      issueType:
+        simple: New Threat
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: fcc4ee0e-e9da-4d9a-83ca-ea436fe17892
+      iscommand: false
+      name: Create New Threat Ticket
+      playbookName: tsmc_itsvc_generalCreateJiraTicket
+      type: playbook
+      version: -1
+    taskid: fcc4ee0e-e9da-4d9a-83ca-ea436fe17892
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "17":
+    id: "17"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Delete field from context.
+
+        This automation runs using the default Limited User role, unless you explicitly change the permissions.
+        For more information, see the section about permissions here:
+        https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+      id: adc5f339-5b3a-4996-8c64-55904c680e18
+      iscommand: false
+      name: End
+      type: title
+      version: -1
+    taskid: adc5f339-5b3a-4996-8c64-55904c680e18
+    timertriggers: []
+    type: title
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "18":
+    id: "18"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "22"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: newPubDate
+      value:
+        complex:
+          root: inputs.pubDate
+          transformers:
+          - args:
+              delimiter:
+                value:
+                  simple: ','
+            operator: splitAndTrim
+          - args:
+              index:
+                value:
+                  simple: "1"
+            operator: atIndex
+          - args:
+              add_utc_timezone: {}
+              dayfirst: {}
+              fuzzy: {}
+              yearfirst: {}
+            operator: DateStringToISOFormat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: b2e831a0-2570-45b5-8ffa-792462ce3347
+      iscommand: false
+      name: Convert Pub Date format
+      script: Set
+      type: regular
+      version: -1
+    taskid: b2e831a0-2570-45b5-8ffa-792462ce3347
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 370
+        }
+      }
+  "22":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: inputs.anHourAgoTimeNowUnix
+          operator: lessThanOrEqual
+          right:
+            iscontext: true
+            value:
+              complex:
+                root: newPubDate
+                transformers:
+                - operator: toUnix
+      label: Within An Hour
+    id: "22"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "17"
+      Within An Hour:
+      - "16"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 988d5a6d-14e2-44a4-8a16-a70601fb84ef
+      iscommand: false
+      name: Check If is New Threat
+      type: condition
+      version: -1
+    taskid: 988d5a6d-14e2-44a4-8a16-a70601fb84ef
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 162.5,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {
+      "15_17_off": 0.19
+    },
+    "paper": {
+      "dimensions": {
+        "height": 910,
+        "width": 492.5,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

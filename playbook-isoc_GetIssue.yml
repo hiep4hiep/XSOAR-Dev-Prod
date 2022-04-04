@@ -1,0 +1,715 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: c09c4c2c-d16e-4972-8880-fad7127c2a62
+inputs:
+- description: ""
+  key: JQL
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: DEM, status,JQL
+  key: issuetype
+  playbookInputQuery: null
+  required: false
+  value: {}
+- description: ""
+  key: issueKey
+  playbookInputQuery: null
+  required: false
+  value: {}
+name: isoc_GetIssue
+outputs:
+- contextPath: IssuesJson
+  type: unknown
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: e2cbda59-1290-4d58-839f-f3a12ddc2087
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: e2cbda59-1290-4d58-839f-f3a12ddc2087
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      all:
+        simple: "yes"
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Delete field from context.
+
+        This automation runs using the default Limited User role, unless you explicitly change the permissions.
+        For more information, see the section about permissions here:
+        https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+      id: d8356801-52d2-4672-83dd-039158c84d74
+      iscommand: false
+      name: DeleteContext
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: d8356801-52d2-4672-83dd-039158c84d74
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 195
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: jql
+      value:
+        complex:
+          root: inputs.JQL
+          transformers:
+          - operator: URLEncode
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: e144494f-8915-43de-8e41-89e905f43d3a
+      iscommand: false
+      name: jql URLEncode
+      script: Set
+      type: regular
+      version: -1
+    taskid: e144494f-8915-43de-8e41-89e905f43d3a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "6"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      headers:
+        complex:
+          accessor: Dem_IPSM_AUTH
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: 'X_IPSM_AUTH:'
+              suffix: {}
+            operator: concat
+      method:
+        simple: GET
+      url:
+        complex:
+          accessor: Dem_IPSM_parameters
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: jql
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends http request. Returns the response as json.
+      id: 8b00759a-80ae-48bd-8ae6-243acfae4044
+      iscommand: false
+      name: Get Ticket
+      script: http
+      type: regular
+      version: -1
+    taskid: 8b00759a-80ae-48bd-8ae6-243acfae4044
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "6":
+    continueonerror: true
+    id: "6"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: IssuesJson
+      value:
+        complex:
+          accessor: Body
+          root: HttpRequest.Response
+          transformers:
+          - operator: ParseJSON
+          - args:
+              field:
+                value:
+                  simple: issues
+            operator: getField
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "null"
+            operator: SetIfEmpty
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 7f67b9c0-cd2f-4c3b-8ed1-fbfe418ed28a
+      iscommand: false
+      name: Set Json
+      script: Set
+      type: regular
+      version: -1
+    taskid: 7f67b9c0-cd2f-4c3b-8ed1-fbfe418ed28a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 895
+        }
+      }
+  "7":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.issuetype
+                transformers:
+                - operator: toUpperCase
+          operator: isEqualString
+          right:
+            value:
+              simple: DEM
+      label: DEM
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.issuetype
+                transformers:
+                - operator: toUpperCase
+          operator: isEqualString
+          right:
+            value:
+              simple: STATUS
+      label: Status
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                root: inputs.issuetype
+                transformers:
+                - operator: toUpperCase
+          operator: isEqualString
+          right:
+            value:
+              simple: JQL
+      label: JQL
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "13"
+      DEM:
+      - "2"
+      JQL:
+      - "14"
+      Status:
+      - "11"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 93a36ee6-1d5b-4a55-8e5d-b91213f4588b
+      iscommand: false
+      name: Check issue type
+      type: condition
+      version: -1
+    taskid: 93a36ee6-1d5b-4a55-8e5d-b91213f4588b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 370
+        }
+      }
+  "8":
+    id: "8"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "15"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      headers:
+        complex:
+          accessor: Authorization
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: 'content-type:application/json; charset=utf-8,Authorization:'
+              suffix: {}
+            operator: concat
+      method:
+        simple: GET
+      url:
+        complex:
+          accessor: parameters
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: /
+            operator: concat
+          - args:
+              limit: {}
+              replaceWith:
+                value:
+                  simple: search?jql=
+              toReplace:
+                value:
+                  simple: issue/
+            operator: replace
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: jql
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends http request. Returns the response as json.
+      id: 37190161-739b-47e0-83fb-d3e71430b7db
+      iscommand: false
+      name: jira-get-issue
+      script: http
+      type: regular
+      version: -1
+    taskid: 37190161-739b-47e0-83fb-d3e71430b7db
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 720
+        }
+      }
+  "9":
+    id: "9"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: IssuesJson
+      value:
+        complex:
+          accessor: Body
+          root: HttpRequest.Response
+          transformers:
+          - operator: ParseJSON
+          - args:
+              field:
+                value:
+                  simple: fields
+            operator: getField
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "null"
+            operator: SetIfEmpty
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 733c389f-f0fe-44aa-8f8e-95b51c06064e
+      iscommand: false
+      name: Get Issues
+      script: Set
+      type: regular
+      version: -1
+    taskid: 733c389f-f0fe-44aa-8f8e-95b51c06064e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 720
+        }
+      }
+  "10":
+    id: "10"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: IssuesJson
+      value:
+        complex:
+          accessor: Body
+          root: HttpRequest.Response
+          transformers:
+          - operator: ParseJSON
+          - args:
+              expression:
+                value:
+                  simple: fields.status.name
+            operator: jmespath
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 7a71e5f7-4349-42d2-8e80-4ad0327c13ee
+      iscommand: false
+      name: Get Statsus
+      script: Set
+      type: regular
+      version: -1
+    taskid: 7a71e5f7-4349-42d2-8e80-4ad0327c13ee
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 720
+        }
+      }
+  "11":
+    continueonerror: true
+    id: "11"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "10"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      headers:
+        complex:
+          accessor: Authorization
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: 'content-type:application/json; charset=utf-8,Authorization:'
+              suffix: {}
+            operator: concat
+      method:
+        simple: GET
+      url:
+        complex:
+          accessor: parameters
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: /
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: inputs.issueKey
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: ?fields=status
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends http request. Returns the response as json.
+      id: 243ae5ff-76c3-408b-8b02-8796ed01c9e2
+      iscommand: false
+      name: jira-get-issue
+      script: http
+      type: regular
+      version: -1
+    taskid: 243ae5ff-76c3-408b-8b02-8796ed01c9e2
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 1340,
+          "y": 545
+        }
+      }
+  "13":
+    continueonerror: true
+    id: "13"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "9"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      headers:
+        complex:
+          accessor: Authorization
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix:
+                value:
+                  simple: 'content-type:application/json; charset=utf-8,Authorization:'
+              suffix: {}
+            operator: concat
+      method:
+        simple: GET
+      url:
+        complex:
+          accessor: parameters
+          root: lists.isoc_API_Config.Result
+          transformers:
+          - args:
+              prefix: {}
+              suffix:
+                value:
+                  simple: /
+            operator: concat
+          - args:
+              prefix: {}
+              suffix:
+                iscontext: true
+                value:
+                  simple: inputs.issueKey
+            operator: concat
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Sends http request. Returns the response as json.
+      id: eb07ba16-6dc9-4c80-8cb6-70516f90be50
+      iscommand: false
+      name: jira-get-issue
+      script: http
+      type: regular
+      version: -1
+    taskid: eb07ba16-6dc9-4c80-8cb6-70516f90be50
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 910,
+          "y": 545
+        }
+      }
+  "14":
+    id: "14"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "8"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: jql
+      value:
+        complex:
+          root: inputs.JQL
+          transformers:
+          - operator: URLEncode
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: ab2d4170-ccce-4a00-8b46-fbf1a9d8bda1
+      iscommand: false
+      name: jql URLEncode
+      script: Set
+      type: regular
+      version: -1
+    taskid: ab2d4170-ccce-4a00-8b46-fbf1a9d8bda1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 545
+        }
+      }
+  "15":
+    id: "15"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      key:
+        simple: IssuesJson
+      value:
+        complex:
+          accessor: Body
+          root: HttpRequest.Response
+          transformers:
+          - operator: ParseJSON
+          - args:
+              field:
+                value:
+                  simple: issues
+            operator: getField
+          - args:
+              applyIfEmpty: {}
+              defaultValue:
+                value:
+                  simple: "null"
+            operator: SetIfEmpty
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Set a value in context under the key you entered.
+      id: 19bd525c-d4fc-4ae1-88d1-5009ca535918
+      iscommand: false
+      name: Get Issues
+      script: Set
+      type: regular
+      version: -1
+    taskid: 19bd525c-d4fc-4ae1-88d1-5009ca535918
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 480,
+          "y": 895
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 940,
+        "width": 1670,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

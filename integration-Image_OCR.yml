@@ -10,6 +10,7 @@ configuration:
   type: 0
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 1.1.2
     packID: ImageOCR

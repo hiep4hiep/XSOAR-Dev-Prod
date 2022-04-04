@@ -1,15 +1,20 @@
 {
+	"aliasTo": "",
+	"aliases": null,
 	"associatedToAll": false,
 	"associatedTypes": [
 		"Qradar Generic"
 	],
+	"autoCompleteTags": null,
 	"breachScript": "",
+	"cacheVersn": 0,
 	"caseInsensitive": true,
 	"cliName": "numberofflows",
 	"closeForm": false,
 	"columns": null,
 	"content": true,
 	"defaultRows": null,
+	"definitionId": "",
 	"description": "Offense Number Of Flows.",
 	"editForm": true,
 	"fieldCalcScript": "",
@@ -18,11 +23,12 @@
 	"hidden": false,
 	"id": "incident_numberofflows",
 	"isReadOnly": false,
-	"itemVersion": "2.1.20",
+	"itemVersion": "2.1.34",
 	"locked": false,
 	"mergeStrategy": "",
 	"name": "Number Of Flows",
 	"neverSetAsRequired": false,
+	"openEnded": false,
 	"ownerOnly": false,
 	"packID": "QRadar",
 	"packPropagationLabels": [
@@ -39,6 +45,7 @@
 	"sla": 0,
 	"system": false,
 	"systemAssociatedTypes": null,
+	"template": "",
 	"threshold": 72,
 	"toServerVersion": "",
 	"type": "number",
@@ -47,5 +54,6 @@
 	"useAsKpi": false,
 	"validatedError": "",
 	"validationRegex": "",
-	"version": -1
+	"version": -1,
+	"x2_fields": ""
 }

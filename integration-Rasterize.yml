@@ -30,7 +30,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.0.17
+    itemVersion: 1.0.19
     packID: rasterize
     packPropagationLabels:
     - all
@@ -159,9 +159,10 @@ script:
       name: file_name
     description: Converts a PDF file to an image file.
     name: rasterize-pdf
-  dockerimage: demisto/chromium:1.0.0.25664
+  dockerimage: demisto/chromium:1.0.0.26579
   runonce: false
-  script: |2
+  script: |
+    register_module_line('Rasterize', 'start', __line__())
 
 
 
@@ -594,6 +595,8 @@ script:
 
     if __name__ in ["__builtin__", "builtins", '__main__']:
         main()
+
+    register_module_line('Rasterize', 'end', __line__())
   subtype: python3
   type: python
 system: true

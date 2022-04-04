@@ -74,12 +74,14 @@ configuration:
   type: 19
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 1.1.2
     packID: MicrosoftGraphMail
     packPropagationLabels:
     - all
     propagationLabels: []
+    remote: true
     toServerVersion: ""
 description: Microsoft Graph lets your app get authorized access to a user's Outlook
   mail data in a personal or organization account.

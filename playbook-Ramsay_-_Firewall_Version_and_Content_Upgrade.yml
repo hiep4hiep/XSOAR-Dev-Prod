@@ -6,6 +6,7 @@ contentitemexportablefields:
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: Network operations playbook that updates the version and content of the
   firewall. You must have Superuser permissions to update the PAN-OS version.

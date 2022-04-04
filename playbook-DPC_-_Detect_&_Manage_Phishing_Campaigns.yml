@@ -1,10 +1,12 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 6.0.0
     itemVersion: 3.0.6
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: |-
   This playbook is used to find, create and manage phishing campaigns. When a number of similar phishing incidents exist in the system, the playbook can be used to do the following:

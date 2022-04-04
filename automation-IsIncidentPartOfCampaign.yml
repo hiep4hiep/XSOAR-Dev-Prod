@@ -12,16 +12,19 @@ commonfields:
   version: -1
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.5.0
     itemVersion: 3.1.5
     packID: Campaign
     packPropagationLabels:
     - all
     propagationLabels: []
+    remote: true
     toServerVersion: ""
 dockerimage: demisto/python3:3.9.8.24399
 enabled: true
 engineinfo: {}
+mainengineinfo: {}
 name: IsIncidentPartOfCampaign
 outputs:
 - contextPath: ExistingCampaignID

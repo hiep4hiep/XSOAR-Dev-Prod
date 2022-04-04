@@ -16,6 +16,7 @@ contentitemexportablefields:
     - all
     toServerVersion: ""
 dockerimage: demisto/python3:3.9.7.24076
+enabled: true
 engineinfo: {}
 mainengineinfo: {}
 name: ParseQRadarEvent
@@ -53,12 +54,17 @@ script: |2-
   def parser(payload_list):
     payload_dict = {}
     for data in payload_list:
-      payload_dict[get_key(data).replace(" ","_")] = get_value(data)
+      k = get_key(data)
+      if " " in k:
+          k = k.replace(" ","_")
+      payload_dict[k] = get_value(data)
 
-      return CommandResults(
-          outputs_prefix='QRadar.Event.Payload',
-          outputs_key_field='',
-          outputs=payload_dict,
+    payload_md = tableToMarkdown("Malware Information", payload_dict)
+    payload_dict["md"] = payload_md
+    return CommandResults(
+      outputs_prefix='QRadar.Event.Payload',
+      outputs_key_field='',
+      outputs=payload_dict,
       )
 
   ''' MAIN FUNCTION '''
@@ -67,6 +73,7 @@ script: |2-
       payload = demisto.args().get("payload")
       if "," in payload:
           payload_list = payload.split(",")
+          payload_list.pop(0)
           try:
               # TODO: replace the invoked command function with yours
               return_results(parser(payload_list))

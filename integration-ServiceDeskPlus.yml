@@ -85,8 +85,9 @@ configuration:
   type: 19
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.0.4
+    itemVersion: 2.0.7
     packID: ServiceDeskPlus
     packPropagationLabels:
     - all
@@ -633,10 +634,11 @@ script:
       required: true
     description: Closes the specified request.
     name: service-desk-plus-request-close
-  dockerimage: demisto/python3:3.9.7.24076
+  dockerimage: demisto/python3:3.10.1.25933
   isfetch: true
   runonce: false
-  script: |2
+  script: |
+    register_module_line('ServiceDeskPlus', 'start', __line__())
 
 
 
@@ -1528,6 +1530,8 @@ script:
 
     if __name__ in ('__main__', '__builtin__', 'builtins'):
         main()
+
+    register_module_line('ServiceDeskPlus', 'end', __line__())
   subtype: python3
   type: python
 system: true

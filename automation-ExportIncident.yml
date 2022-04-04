@@ -1,0 +1,29 @@
+commonfields:
+  id: e5e9bf79-c686-44c6-8657-4df531fb78ba
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.27636
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: ExportIncident
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  inc = demisto.incidents()[0]
+  ctx = demisto.context()
+  ctx["incident"] = inc
+  print(ctx)
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

@@ -37,11 +37,13 @@ configuration:
   type: 0
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: Custom integration
 detaileddescription: |-

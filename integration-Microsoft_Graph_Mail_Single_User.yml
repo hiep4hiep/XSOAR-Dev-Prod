@@ -70,12 +70,14 @@ configuration:
   type: 19
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 1.0.19
     packID: MicrosoftGraphListener
     packPropagationLabels:
     - all
     propagationLabels: []
+    remote: true
     toServerVersion: ""
 defaultclassifier: Microsoft Graph Mail Single User
 defaultmapperin: Microsoft Graph Mail Single User-mapper

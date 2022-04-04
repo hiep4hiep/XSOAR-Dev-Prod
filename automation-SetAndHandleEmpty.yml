@@ -43,13 +43,13 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 1.6.23
+    itemVersion: 1.6.48
     packID: CommonScripts
     packPropagationLabels:
     - all
     propagationLabels: []
     toServerVersion: ""
-dockerimage: demisto/python3:3.9.9.25564
+dockerimage: demisto/python3:3.10.1.25933
 enabled: true
 engineinfo: {}
 mainengineinfo: {}
@@ -90,7 +90,7 @@ script: |
           context_entry = {}
 
       if args.get('append') == 'false' and context_entry:
-          demisto.executeCommand('DeleteContext', {'key': key})
+          demisto.executeCommand('DeleteContext', {'key': key, 'subplaybook': 'auto'})
 
       return_results(CommandResults(
           readable_output=human_readable,

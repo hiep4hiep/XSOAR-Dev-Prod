@@ -1,0 +1,98 @@
+args:
+- description: Default is https://phishstats.info
+  name: feed_url
+- description: Default is /phish_score.csv
+  name: url_suffix
+commonfields:
+  id: 3adf793a-ab28-4ccb-85d4-961764e5782f
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.4.27798
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: PhishstatsCSV
+outputs:
+- contextPath: PhishURLs.URL
+  description: List of phishing URL that reported 1 day ago
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  import csv
+  from datetime import datetime,timedelta
+
+  class Client(BaseClient):
+      def get_csv(self,url_suffix):
+          data = self._http_request(
+              method='GET',
+              url_suffix=url_suffix,
+              resp_type='text'
+              )
+          with open("temp.csv","w") as f:
+              f.write(data)
+
+  def parse_csv():
+      '''
+          The CSV file is in below format:
+          ######################################################################################
+          # PhishScore | PhishStats                                                            #
+          # Score ranges: 0-2 likely 2-4 suspicious 4-6 phishing 6-10 omg phishing!            #
+          # Ranges may be adjusted without notice. List updated every 90 minutes. Do not crawl #
+          # too much at the risk of being blocked.                                             #
+          # Many Phishing websites are legitimate websites that have been hacked, so keep that #
+          # in mind before blocking everything. Feed is provided as is, without any warrant.   #
+          # CSV: Date,Score,URL,IP                                                             #
+          ######################################################################################
+          "2022-03-30 16:39:21","2.00","http://walletconnectmetafour.diskstation.eu/authen","213.59.119.17"
+      '''
+      url_list = []
+      with open("temp.csv", newline='') as csvfile:
+          reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+          for row in reader:
+              if "#" not in row[0]:
+                  url_list.append(row[2]) if check_date(row[0]) else False
+      return (url_list)
+
+
+  def check_date(date_str: str): #Check if the provided date time is 1 day from now
+      date_to_check = datetime.strptime(date_str,"%Y-%m-%d %H:%M:%S")
+      current = datetime.now()
+      if current <= date_to_check + timedelta(days=1):
+          return True
+      else:
+          return False
+
+  def main():
+      base_url = demisto.args().get('feed_url','https://phishstats.info')
+      url_suffix = demisto.args().get('url_suffix','/phish_score.csv')
+      client = Client(
+          base_url=base_url,
+          verify=False
+          )
+      # Download the CSV file
+      client.get_csv(url_suffix)
+      # Parse the correct URLs and return to url_list
+      url_list = parse_csv()
+
+      result = CommandResults(
+          outputs_prefix='PhishURLs',
+          outputs={'URL':url_list}
+          )
+      return_results(result)
+
+
+  if __name__ in ('__main__','__builtin__','builtins'):
+      main()
+scripttarget: 0
+subtype: python3
+tags: []
+type: python

@@ -1,0 +1,198 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: f197fe78-5ac7-48c9-8266-443dacbffb2e
+inputs: []
+name: Test Manual Task
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 58d2a329-e053-458d-88a2-8e9f87d19652
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 58d2a329-e053-458d-88a2-8e9f87d19652
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: fa75f9ae-f918-4765-8e1a-9c76abb01cc7
+      iscommand: false
+      name: Manual
+      type: regular
+      version: -1
+    taskid: fa75f9ae-f918-4765-8e1a-9c76abb01cc7
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 170
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "4"
+      "yes":
+      - "3"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: ec22e674-85e6-454d-8fb1-ca8fb330750b
+      iscommand: false
+      name: Untitled Task
+      type: condition
+      version: -1
+    taskid: ec22e674-85e6-454d-8fb1-ca8fb330750b
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 330
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 855336e4-d22e-4ef1-8ed4-65ea6bc48ff1
+      iscommand: false
+      name: Do this
+      type: regular
+      version: -1
+    taskid: 855336e4-d22e-4ef1-8ed4-65ea6bc48ff1
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 670,
+          "y": 520
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: affaae2e-1e3a-48fa-8945-b5d377375803
+      iscommand: false
+      name: Ngu
+      type: regular
+      version: -1
+    taskid: affaae2e-1e3a-48fa-8945-b5d377375803
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 200,
+          "y": 530
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d9df76a0-20b4-4440-8efb-b481e3b510e7
+      iscommand: false
+      name: Access Investigation - Generic
+      playbookId: access_investigation_-_generic
+      type: playbook
+      version: -1
+    taskid: d9df76a0-20b4-4440-8efb-b481e3b510e7
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 200,
+          "y": 710
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 755,
+        "width": 850,
+        "x": 200,
+        "y": 50
+      }
+    }
+  }

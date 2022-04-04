@@ -1,0 +1,166 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: f077fc78-83d6-4fe2-8bbf-928fb133af0c
+inputs:
+- description: ""
+  key: test1
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: ${incident.sourceip}
+name: tsmc_job_checkNetownerTableUpdate
+outputs: []
+sourceplaybookid: 3f0c5852-8b4f-4607-8812-4690e1402de8
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: f7b319fb-db61-49fd-84cb-6b65283de013
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: f7b319fb-db61-49fd-84cb-6b65283de013
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "5"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      all:
+        simple: "yes"
+      keysToKeep:
+        simple: File
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Delete field from context
+      id: 10e1996e-8fa0-4fbd-8037-3af7a1af10ad
+      iscommand: false
+      name: Delete Context
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: 10e1996e-8fa0-4fbd-8037-3af7a1af10ad
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+  "5":
+    id: "5"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "7"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      send_mail_switch:
+        simple: "on"
+      sql_query:
+        simple: SELECT * FROM [CIRC].[circ].[CIRC_NETOWNER] where DATEDIFF(s, UpdateDt,
+          GETDATE()) <= 1800
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 51894a22-d619-46f3-89da-b51de7c48491
+      iscommand: false
+      name: Summary NetOwner table recent update & Send mail
+      script: tsmc_itsvc_netownerUpdateSummary
+      type: regular
+      version: -1
+    taskid: 51894a22-d619-46f3-89da-b51de7c48491
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "7":
+    id: "7"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      closeReason:
+        simple: Resolved
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: ec8a9ee3-d1d5-40ea-8985-1a1a0c03c482
+      iscommand: true
+      name: Close Incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: ec8a9ee3-d1d5-40ea-8985-1a1a0c03c482
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 590,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

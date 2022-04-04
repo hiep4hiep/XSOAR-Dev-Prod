@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 3.0.3
+    itemVersion: 3.1.6
     packID: Phishing
     packPropagationLabels:
     - all
@@ -142,7 +142,7 @@ tasks:
     task:
       brand: ""
       description: |
-        Verifies that there is an active instance of the EWS v2 integration enabled.
+        Verifies an active instance of the EWS v2 integration is enabled.
       id: 03f2c080-1995-42fc-82ce-16d474fb5438
       iscommand: false
       name: Is EWS v2 enabled?
@@ -221,8 +221,8 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Verify that the required input values for retrieving the original
-        email exists.
+      description: Verifies the required input values for retrieving the original
+        email exist.
       id: b2617aaf-5e54-43f5-89fe-82fc78cd099b
       iscommand: false
       name: Verify required inputs
@@ -261,7 +261,7 @@ tasks:
     skipunavailable: false
     task:
       brand: EWS v2
-      description: Retrieve all messages found in the thread of the forwarded email.
+      description: Retrieves all messages found in the forwarded email thread.
       id: f3c1bfda-b3c0-4c7c-8fce-fb180ff6fd07
       iscommand: true
       name: Search for messages by Thread-Topic
@@ -314,8 +314,8 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Verify that an email object with a Message-Id that matches the
-        InReplayTo ID of the forwarded email was found.
+      description: Verifies that an email object with a Message-Id matching the InReplyTo
+        ID of the forwarded email was found.
       id: 25f6439f-778f-45a5-841a-53efe77d590c
       iscommand: false
       name: Was a matching email found?
@@ -353,7 +353,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Set email object to context.
+      description: Sets the email object to context.
       id: c729f95f-bc75-477e-8000-14c99346873d
       iscommand: false
       name: Set context
@@ -403,7 +403,7 @@ tasks:
     skipunavailable: false
     task:
       brand: EWS v2
-      description: Get the original email from the EWS server.
+      description: Gets the original email from the EWS server.
       id: 6f28ff90-80ff-414e-819b-310a51183da4
       iscommand: true
       name: Get original email
@@ -440,7 +440,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Delete the email objects from context.
+      description: Deletes the email object from context.
       id: 8764cbb0-dd56-4095-8df2-e77035713e2e
       iscommand: false
       name: Delete old context
@@ -482,7 +482,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Set the playbook outputs to context.
+      description: Sets the playbook outputs to context.
       id: 91028b3f-61f2-4383-8bfd-eff9dd01af96
       iscommand: false
       name: Set output
@@ -526,7 +526,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Verifies that the original email is in context.
+      description: Verifies the original email is in context.
       id: 75ab61a9-a6cf-4d74-842f-67436507b8f4
       iscommand: false
       name: Was the original email found?
@@ -565,8 +565,8 @@ tasks:
     skipunavailable: false
     task:
       brand: EWS v2
-      description: Retrieve the attachments of the original email from EWS, including
-        file attachments and item attachments (other email, calendar item, etc.).
+      description: Retrieves the attachments of the original email from EWS, including
+        file attachments and item attachments (such as other emails and calendar items).
       id: 427d5e37-2e56-4522-8e69-caabe8fd70d9
       iscommand: true
       name: Get attachments of the original email

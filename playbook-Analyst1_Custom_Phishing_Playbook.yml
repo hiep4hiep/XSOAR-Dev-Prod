@@ -1,0 +1,116 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 047e6ae0-e5d8-44de-851e-3ba7544811b7
+inputs: []
+name: Analyst1_Custom Phishing Playbook
+outputs:
+- contextPath: Test
+  description: Ngu
+  type: unknown
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4aa3fbb9-2f15-40c6-8bce-f02158fc53a3
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 4aa3fbb9-2f15-40c6-8bce-f02158fc53a3
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              complex:
+                filters:
+                - - left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: ZIP
+                  - left:
+                      iscontext: true
+                      value:
+                        simple: File.Extension
+                    operator: isEqualString
+                    right:
+                      value:
+                        simple: zip
+                root: File.Extension
+                transformers:
+                - operator: toUpperCase
+          operator: isEqualString
+          right:
+            value:
+              simple: ZIP
+      label: "yes"
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4e8760ed-2124-4c14-8718-43a9676b2852
+      iscommand: false
+      name: Is there a ZIP file?
+      type: condition
+      version: -1
+    taskid: 4e8760ed-2124-4c14-8718-43a9676b2852
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 540,
+          "y": 290
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 335,
+        "width": 470,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

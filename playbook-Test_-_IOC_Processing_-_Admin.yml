@@ -1,0 +1,162 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 6c582bf8-e4b8-46a0-81e6-447be9098294
+inputs: []
+name: Test - IOC Processing - Admin
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 27622450-f056-4773-84c4-bafb29e84eba
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 27622450-f056-4773-84c4-bafb29e84eba
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 20
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      ip:
+        simple: ${incident.destinationip}
+      using:
+        simple: VirusTotal (API v3)_instance_1_analyst2
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: VirusTotal (API v3)
+      description: Checks the reputation of an IP address.
+      id: f1280f56-b04f-4940-83f9-c3cad888494a
+      iscommand: true
+      name: Check for IP Address reputation on VT
+      script: VirusTotal (API v3)|||ip
+      type: regular
+      version: -1
+    taskid: f1280f56-b04f-4940-83f9-c3cad888494a
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 170
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      body:
+        simple: |-
+          This is the verdict of ${incident.destinationip}:
+          ${VirusTotal.IP.attributes.last_analysis_stats.harmless}
+      subject:
+        simple: Verdict from VT
+      to:
+        simple: hnguyen@paloaltonetworks.com
+      using:
+        simple: EWSO365_instance_1_analyst5
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: EWSO365
+      description: Sends an email.
+      id: 735bd121-8a6d-41d9-8a9b-afdd6b665396
+      iscommand: true
+      name: Send report to admin
+      script: EWSO365|||send-mail
+      type: regular
+      version: -1
+    taskid: 735bd121-8a6d-41d9-8a9b-afdd6b665396
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 360
+        }
+      }
+  "4":
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 6ef5b209-79ec-4b80-839a-ed320887bdaa
+      iscommand: true
+      name: Close incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 6ef5b209-79ec-4b80-839a-ed320887bdaa
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 690,
+          "y": 540
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 615,
+        "width": 380,
+        "x": 690,
+        "y": 20
+      }
+    }
+  }

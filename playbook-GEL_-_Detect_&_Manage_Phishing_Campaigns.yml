@@ -159,11 +159,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 71c0180b-a7d4-45e3-8ee8-e617c3a757f6
+      id: 055e21f8-d7cd-47a4-86ba-5f38a1d6a99c
       iscommand: false
       name: ""
       version: -1
-    taskid: 71c0180b-a7d4-45e3-8ee8-e617c3a757f6
+    taskid: 055e21f8-d7cd-47a4-86ba-5f38a1d6a99c
     timertriggers: []
     type: start
     view: |-
@@ -236,13 +236,13 @@ tasks:
     task:
       brand: ""
       description: Find a campaign of emails based on textual similarity.
-      id: e9f8368f-3e17-4a51-82c4-06c0fdb69590
+      id: 18c4192a-6de8-4a2c-8d39-9298bd7311ca
       iscommand: false
       name: Detect email campaign
       script: FindEmailCampaign
       type: regular
       version: -1
-    taskid: e9f8368f-3e17-4a51-82c4-06c0fdb69590
+    taskid: 18c4192a-6de8-4a2c-8d39-9298bd7311ca
     timertriggers: []
     type: regular
     view: |-
@@ -278,12 +278,12 @@ tasks:
       brand: ""
       description: Checks whether the email was found to be part of a bigger phishing
         campaign.
-      id: 182eac17-f27b-4979-8c58-277fec52442e
+      id: a922ec76-f517-4631-8371-f43b316e08c2
       iscommand: false
       name: Is the email part of a campaign?
       type: condition
       version: -1
-    taskid: 182eac17-f27b-4979-8c58-277fec52442e
+    taskid: a922ec76-f517-4631-8371-f43b316e08c2
     timertriggers: []
     type: condition
     view: |-
@@ -318,13 +318,13 @@ tasks:
       brand: ""
       description: Get the incident campaign's ID for the campaign that is linked
         to at least one of the given incidents.
-      id: b78b6205-9f7a-4e2f-8586-5fc7b9219aea
+      id: 4105ee9f-77c0-4013-8aaf-fb8b5382eeff
       iscommand: false
       name: Search for an existing campaign incident
       script: IsIncidentPartOfCampaign
       type: regular
       version: -1
-    taskid: b78b6205-9f7a-4e2f-8586-5fc7b9219aea
+    taskid: 4105ee9f-77c0-4013-8aaf-fb8b5382eeff
     timertriggers: []
     type: regular
     view: |-
@@ -355,13 +355,13 @@ tasks:
     task:
       brand: Builtin
       description: Create a new incident for the phishing campaign.
-      id: 9134a981-4ba9-42f3-8d48-d4838c0e980a
+      id: d91bc4f2-d52b-45b1-896c-99cd142d6fa3
       iscommand: true
       name: Create a new campaign incident
       script: Builtin|||createNewIncident
       type: regular
       version: -1
-    taskid: 9134a981-4ba9-42f3-8d48-d4838c0e980a
+    taskid: d91bc4f2-d52b-45b1-896c-99cd142d6fa3
     timertriggers: []
     type: regular
     view: |-
@@ -398,12 +398,12 @@ tasks:
       brand: ""
       description: Checks whether any of the similar phishing incidents are currently
         linked to an existing phishing campaign.
-      id: a07d5342-50af-4e84-8809-a9c6e69ce882
+      id: 10ece510-68de-484b-8cb7-7b43ec3436e2
       iscommand: false
       name: Is there an existing campaign incident?
       type: condition
       version: -1
-    taskid: a07d5342-50af-4e84-8809-a9c6e69ce882
+    taskid: 10ece510-68de-484b-8cb7-7b43ec3436e2
     timertriggers: []
     type: condition
     view: |-
@@ -427,12 +427,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 8526d05b-0198-47d9-8ef8-198518a43f71
+      id: f092703a-3d1c-4a7c-8d7a-201e14c6b1d9
       iscommand: false
       name: Not A Campaign
       type: title
       version: -1
-    taskid: 8526d05b-0198-47d9-8ef8-198518a43f71
+    taskid: f092703a-3d1c-4a7c-8d7a-201e14c6b1d9
     timertriggers: []
     type: title
     view: |-
@@ -478,13 +478,13 @@ tasks:
         by specifying 'id' as an argument. This adds the EmailCampaign context to
         the Phishing Campaign incident, so that the dynamic sections in its layout
         can use up-to-date campaign data.
-      id: 5ceaf4be-b151-475d-82da-f93afcd7f57d
+      id: 33c86f7a-b212-41d2-838b-b488d38250a4
       iscommand: false
       name: Update the existing campaign incident with the campaign data
       script: SetByIncidentId
       type: regular
       version: -1
-    taskid: 5ceaf4be-b151-475d-82da-f93afcd7f57d
+    taskid: 33c86f7a-b212-41d2-838b-b488d38250a4
     timertriggers: []
     type: regular
     view: |-
@@ -515,13 +515,13 @@ tasks:
       brand: Builtin
       description: Start investigation of the campaign incident so that the data can
         be changed.
-      id: 7a8ceece-9cdb-408c-89df-33159f32edeb
+      id: 40d857f6-1de1-420c-8353-4573736fb6ec
       iscommand: true
       name: Investigate new campaign incident
       script: Builtin|||investigate
       type: regular
       version: -1
-    taskid: 7a8ceece-9cdb-408c-89df-33159f32edeb
+    taskid: 40d857f6-1de1-420c-8353-4573736fb6ec
     timertriggers: []
     type: regular
     view: |-
@@ -573,13 +573,13 @@ tasks:
       brand: Builtin
       description: Links the phishing incidents that were found in the campaign, to
         the phishing campaign incident.
-      id: 4dcd3711-f256-4756-860a-0a580ba2790c
+      id: 6b2a492f-99de-48c8-8c79-42ff45801e73
       iscommand: true
       name: Link the phishing incidents to the campaign incident
       script: Builtin|||linkIncidents
       type: regular
       version: -1
-    taskid: 4dcd3711-f256-4756-860a-0a580ba2790c
+    taskid: 6b2a492f-99de-48c8-8c79-42ff45801e73
     timertriggers: []
     type: regular
     view: |-
@@ -621,12 +621,12 @@ tasks:
       description: Checks whether the detected Phishing incidents can be linked to
         the Phishing Campaign incident by checking if the AutomaticallyLinkIncidents
         playbook input is set to True.
-      id: 2fe416fb-631c-41ab-8fec-f9071512247a
+      id: 7a243936-b07a-4af6-8a63-ad9125296de7
       iscommand: false
       name: Can the found incidents be linked to the campaign?
       type: condition
       version: -1
-    taskid: 2fe416fb-631c-41ab-8fec-f9071512247a
+    taskid: 7a243936-b07a-4af6-8a63-ad9125296de7
     timertriggers: []
     type: condition
     view: |-
@@ -647,12 +647,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 93a1f988-1047-4d7a-81d1-62de4eaeb17e
+      id: da49cd95-94a0-46ea-8cef-3f513b5169c3
       iscommand: false
       name: Done
       type: title
       version: -1
-    taskid: 93a1f988-1047-4d7a-81d1-62de4eaeb17e
+    taskid: da49cd95-94a0-46ea-8cef-3f513b5169c3
     timertriggers: []
     type: title
     view: |-
@@ -676,12 +676,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 98fbb059-c69b-4f0c-8599-decb7f0cabcb
+      id: e00c1850-f73b-4208-8013-4bf6336acaaf
       iscommand: false
       name: Phishing Campaign Detected
       type: title
       version: -1
-    taskid: 98fbb059-c69b-4f0c-8599-decb7f0cabcb
+    taskid: e00c1850-f73b-4208-8013-4bf6336acaaf
     timertriggers: []
     type: title
     view: |-
@@ -735,13 +735,13 @@ tasks:
       brand: Builtin
       description: Updates the EmailCampaignSummary, EmailCampaignMutualIndicators
         and EmailCampaignCanvas fields in the Phishing Campaign incident.
-      id: 44990df1-aed9-4373-81cf-110eb8876e8c
+      id: 1e4e22a8-339b-4d9d-8a80-364234fabf2e
       iscommand: true
       name: Update the existing campaign with incident data
       script: Builtin|||setIncident
       type: regular
       version: -1
-    taskid: 44990df1-aed9-4373-81cf-110eb8876e8c
+    taskid: 1e4e22a8-339b-4d9d-8a80-364234fabf2e
     timertriggers: []
     type: regular
     view: |-
@@ -789,13 +789,13 @@ tasks:
       brand: Builtin
       description: Updates the EmailCampaignSummary, EmailCampaignMutualIndicators
         and EmailCampaignCanvas fields in the Phishing Campaign incident.
-      id: d8130aea-44d3-4a6d-8e30-8f6cadadc635
+      id: 10146a31-3c2a-4320-88f4-3b29e6aff7c9
       iscommand: true
       name: Update the existing campaign with incident data
       script: Builtin|||setIncident
       type: regular
       version: -1
-    taskid: d8130aea-44d3-4a6d-8e30-8f6cadadc635
+    taskid: 10146a31-3c2a-4320-88f4-3b29e6aff7c9
     timertriggers: []
     type: regular
     view: |-
@@ -837,12 +837,12 @@ tasks:
       description: Checks whether the Phishing incidents that were detected can be
         automatically closed. If the IncludeSelf parameter is set to True, the current
         incident will also be closed.
-      id: a705c222-b75c-4ed3-89d5-2e6047d71ce0
+      id: a85bf351-4d92-4509-8a33-371e494af467
       iscommand: false
       name: Can the found incidents be closed?
       type: condition
       version: -1
-    taskid: a705c222-b75c-4ed3-89d5-2e6047d71ce0
+    taskid: a85bf351-4d92-4509-8a33-371e494af467
     timertriggers: []
     type: condition
     view: |-
@@ -878,13 +878,13 @@ tasks:
       brand: Builtin
       description: Closes all the phishing incidents that were found to be part of
         the campaign.
-      id: d5a6c069-de9f-4129-83ec-3273aa2431e2
+      id: 482b10b4-278f-4f27-80f9-3778b075a753
       iscommand: true
       name: Close all found phishing incidents
       script: Builtin|||closeInvestigation
       type: regular
       version: -1
-    taskid: d5a6c069-de9f-4129-83ec-3273aa2431e2
+    taskid: 482b10b4-278f-4f27-80f9-3778b075a753
     timertriggers: []
     type: regular
     view: |-
@@ -935,13 +935,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.set.incident
-      id: 99b6a61f-0d65-4a7f-898c-5248ea680c56
+      id: b02148ee-768c-4d95-87e1-79fd05a1b90c
       iscommand: true
       name: Mark incidents as part of the campaign
       script: Builtin|||setIncident
       type: regular
       version: -1
-    taskid: 99b6a61f-0d65-4a7f-898c-5248ea680c56
+    taskid: b02148ee-768c-4d95-87e1-79fd05a1b90c
     timertriggers: []
     type: regular
     view: |-
@@ -989,13 +989,13 @@ tasks:
         This automation runs using the default Limited User role, unless you explicitly change the permissions.
         For more information, see the section about permissions here:
         https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
-      id: d7891412-e8d2-4861-8743-6620888ea531
+      id: 2cdcf56d-6bf8-40ba-8962-c59d457f01f8
       iscommand: false
       name: Update the new campaign incident with the campaign data
-      script: 0dba5574-0542-4f34-8f29-5d93a60e460b
+      script: 2f74bfd4-07f1-42f0-8859-725cc94cca96
       type: regular
       version: -1
-    taskid: d7891412-e8d2-4861-8743-6620888ea531
+    taskid: 2cdcf56d-6bf8-40ba-8962-c59d457f01f8
     timertriggers: []
     type: regular
     view: |-

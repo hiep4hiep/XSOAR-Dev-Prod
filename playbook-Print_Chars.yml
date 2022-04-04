@@ -1,0 +1,115 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 8bf9a471-f5e9-4d83-8f1f-df575d1116ce
+inputs:
+- description: ""
+  key: string
+  playbookInputQuery: null
+  required: false
+  value:
+    simple: '[''"C:\\Windows " '']'
+name: Print Chars
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 4f99ddee-2fe9-4c7c-80db-f5a2301d7ee2
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 4f99ddee-2fe9-4c7c-80db-f5a2301d7ee2
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 820,
+          "y": 10
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        complex:
+          root: inputs.string
+          transformers:
+          - args:
+              chars:
+                value:
+                  simple: '['''
+            operator: StripChars
+          - args:
+              chars:
+                value:
+                  simple: ''']'
+            operator: StripChars
+          - args:
+              chars:
+                value:
+                  simple: '"'
+            operator: StripChars
+          - args:
+              chars:
+                value:
+                  simple: '"'
+            operator: StripChars
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 55c16f03-8087-4d05-8cb5-4d87adfe6e9f
+      iscommand: false
+      name: Print
+      script: Print
+      type: regular
+      version: -1
+    taskid: 55c16f03-8087-4d05-8cb5-4d87adfe6e9f
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 820,
+          "y": 130
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 215,
+        "width": 380,
+        "x": 820,
+        "y": 10
+      }
+    }
+  }

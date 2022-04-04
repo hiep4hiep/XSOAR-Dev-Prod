@@ -1,0 +1,549 @@
+category: Messaging
+commonfields:
+  id: Mail Sender (New)
+  version: -1
+configuration:
+- display: Mail server hostname or IP address
+  name: host
+  required: true
+  type: 0
+- defaultvalue: "25"
+  display: SMTP Port
+  name: port
+  required: true
+  type: 0
+- display: Credentials
+  name: credentials
+  required: false
+  type: 9
+- additionalinfo: Sender address can be specified as 'user@host.com' or 'Full Name
+    <user@host.com>'
+  defaultvalue: Cortex XSOAR <noreply@demisto.com>
+  display: Sender address
+  name: from
+  required: true
+  type: 0
+- display: Fully Qualified Domain Name (FQDN) - used in EHLO
+  name: fqdn
+  required: false
+  type: 0
+- additionalinfo: The connection security. The `SSL/TLS` first establishes a secure
+    `SSL/TLS` connection and conducts SMTP over that connection, and STARTTLS starts
+    with unencrypted SMTP and then switches to SSL/TLS to ensure security.
+  defaultvalue: None
+  display: Connection Security
+  name: tls
+  options:
+  - None
+  - STARTTLS
+  - SSL/TLS
+  required: false
+  type: 15
+- defaultvalue: "false"
+  display: Trust any certificate (not secure)
+  name: insecure
+  required: false
+  type: 8
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: 5.0.0
+    itemVersion: 1.0.5
+    packID: MailSenderNew
+    packPropagationLabels:
+    - all
+    propagationLabels: []
+    toServerVersion: ""
+description: Send emails implemented in Python with embedded image support
+detaileddescription: |-
+  ## SMTP Sender
+    Send emails including support for rich emails with HTML and embedded files.
+    - Most fields are optional and we allow empty subject and empty body
+    - If both body and htmlBody are provided, we will create an alternative envelope
+    - Preconfigured template attachments can be supported by using [data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs)
+    - Support for template replacement variables using {var} syntax
+
+    Implemented in Python to support extensions.
+
+
+  ---
+  [View Integration Documentation](https://xsoar.pan.dev/docs/reference/integrations/mail-sender-new)
+display: Mail Sender (New)
+image: data:image/png;base64,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
+name: Mail Sender (New)
+script:
+  commands:
+  - arguments:
+    - default: true
+      description: Email addresses for the 'To' field
+      isArray: true
+      name: to
+    - description: Email addresses for the 'Cc' field
+      isArray: true
+      name: cc
+    - description: Email addresses for the 'Bcc' field
+      isArray: true
+      name: bcc
+    - description: Subject for the email to be sent
+      name: subject
+    - description: The contents (body) of the email to be sent in plain text
+      name: body
+    - description: The contents (body) of the email to be sent in HTML format
+      name: htmlBody
+    - description: Address that should be used to reply to the message
+      name: replyTo
+    - description: A comma-separated list of IDs of war room entries that contain
+        the files that should be attached to the email
+      isArray: true
+      name: attachIDs
+    - description: A comma-separated list to rename file-names of corresponding attachments
+        IDs. (e.g. rename first two files - attachNames=file_name1,file_name2. rename
+        first and third file - attachNames=file_name1,,file_name3)
+      isArray: true
+      name: attachNames
+    - description: A comma-separated list of CIDs to embed attachments inside the
+        email itself
+      isArray: true
+      name: attachCIDs
+    - description: Desired name for attached file. Multiple files are supported as
+        comma-separated list. (e.g. transientFile="t1.txt,temp.txt,t3.txt" transientFileContent="test
+        2,temporary file content,third file content" transientFileCID="t1.txt@xxx.yyy,t2.txt@xxx.zzz")
+      isArray: true
+      name: transientFile
+    - description: Content for attached file. Multiple files are supported as comma-separated
+        list. (e.g. transientFile="t1.txt,temp.txt,t3.txt" transientFileContent="test
+        2,temporary file content,third file content" transientFileCID="t1.txt@xxx.yyy,t2.txt@xxx.zzz")
+      isArray: true
+      name: transientFileContent
+    - description: CID for attached file if we want it inline. Multiple files are
+        supported as comma-separated list. (e.g. transientFile="t1.txt,temp.txt,t3.txt"
+        transientFileContent="test 2,temporary file content,third file content" transientFileCID="t1.txt@xxx.yyy,t2.txt@xxx.zzz")
+      isArray: true
+      name: transientFileCID
+    - description: 'Replace {varname} variables with values from this argument. Expected
+        values are in the form of a JSON document like {"varname": {"value": "some
+        value", "key": "context key"}}. Each var name can either be provided with
+        the value or a context key to retrieve the value from. Note that only context
+        data is accessible for this argument, while incident fields are not.'
+      name: templateParams
+    - description: 'A CSV list of additional headers in the format: headerName=headerValue.
+        For example: "headerName1=headerValue1,headerName2=headerValue2".'
+      isArray: true
+      name: additionalHeader
+    - description: Raw email message to send. If provided, all other arguments, but
+        to, cc and bcc, will be ignored.
+      name: raw_message
+    description: Send an email
+    name: send-mail
+  dockerimage: demisto/python:2.7.18.24398
+  runonce: false
+  script: |
+    register_module_line('Mail Sender (New)', 'start', __line__())
+
+
+    from email.mime.audio import MIMEAudio
+    from email.mime.base import MIMEBase
+    from email.mime.image import MIMEImage
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+    from email.message import Message
+    from email.header import Header
+    from smtplib import SMTP, SMTP_SSL
+    from smtplib import SMTPRecipientsRefused
+    import base64
+    import json
+    import mimetypes
+    from email import encoders
+    import re
+    import random
+    import string
+    import smtplib
+    import traceback
+    import sys
+
+    SERVER = None
+    UTF_8 = 'utf-8'
+
+
+    def randomword(length):
+        """
+        Generate a random string of given length
+        """
+        letters = string.ascii_lowercase
+        return ''.join(random.choice(letters) for i in range(length))
+
+
+    def return_error_mail_sender(data):
+        """
+        Return error as result and exit
+        """
+        if SERVER:
+            try:
+                SERVER.quit()  # quite may throw if the connection was closed already
+            except Exception:
+                pass
+        return_error(data)
+
+
+    def guess_type(filename):
+        """
+        Return the maintype and subtype guessed based on the extension
+        """
+        ctype, encoding = mimetypes.guess_type(filename)
+        if ctype is None or encoding is not None:
+            # No guess could be made, or the file is encoded (compressed), so
+            # use a generic bag-of-bits type.
+            ctype = 'application/octet-stream'
+        return ctype.split('/', 1)
+
+
+    def handle_file(msg, filename, maintype, subtype, cid, data):
+        """
+        Add the attachment to the message and add the relevant header
+        """
+        if maintype == 'text':
+            # UTF-8 is a pretty safe bet
+            att = MIMEText(data, subtype, UTF_8)  # type: MIMEBase
+        elif maintype == 'image':
+            att = MIMEImage(data, subtype)
+        elif maintype == 'audio':
+            att = MIMEAudio(data, subtype)
+        elif maintype == 'message':
+            att = MIMEBase(maintype, subtype)
+            att.set_payload(data)
+        else:
+            att = MIMEBase(maintype, subtype)
+            att.set_payload(data)
+            # Encode the payload using Base64
+            encoders.encode_base64(att)
+        # Set the filename parameter
+        if cid:
+            att.add_header('Content-Disposition', 'inline', filename=filename)
+            att.add_header('Content-ID', '<' + cid + '>')
+        else:
+            att.add_header('Content-Disposition', 'attachment', filename=filename)
+        msg.attach(att)
+
+
+    def handle_html(htmlBody):
+        """
+        Extract all data-url content from within the html and return as separate attachments.
+        Due to security implications, we support only images here
+        We might not have Beautiful Soup so just do regex search
+        """
+        attachments = []
+        cleanBody = ''
+        lastIndex = 0
+        for i, m in enumerate(
+                re.finditer(r'<img.+?src=\"(data:(image\/.+?);base64,([a-zA-Z0-9+/=\r\n]+?))\"', htmlBody, re.I)):
+            maintype, subtype = m.group(2).split('/', 1)
+            att = {
+                'maintype': maintype,
+                'subtype': subtype,
+                'data': base64.b64decode(m.group(3)),
+                'name': 'image%d.%s' % (i, subtype)
+            }
+            att['cid'] = '%s@%s.%s' % (att['name'], randomword(8), randomword(8))
+            attachments.append(att)
+            cleanBody += htmlBody[lastIndex:m.start(1)] + 'cid:' + att['cid']
+            lastIndex = m.end() - 1
+        cleanBody += htmlBody[lastIndex:]
+        return cleanBody, attachments
+
+
+    def collect_manual_attachments():
+        attachments = []
+        for attachment in demisto.getArg('manualAttachObj') or []:
+            res = demisto.getFilePath(os.path.basename(attachment['RealFileName']))
+
+            path = res['path']
+            maintype, subtype = guess_type(attachment['FileName'])
+            if maintype == 'text':
+                with open(path) as fp:
+                    data = fp.read()
+            else:
+                with open(path, 'rb') as fp:
+                    data = fp.read()
+            attachments.append({
+                'name': attachment['FileName'],
+                'maintype': maintype,
+                'subtype': subtype,
+                'data': data,
+                'cid': ''
+            })
+
+        return attachments
+
+
+    def collect_attachments():
+        """
+        Collect all attachments into a list with all data
+        """
+        attachments = []
+        attachIDs = argToList(demisto.getArg('attachIDs'))
+        attachNames = argToList(demisto.getArg('attachNames'))
+        attachCIDs = argToList(demisto.getArg('attachCIDs'))
+        for i, aid in enumerate(attachIDs):
+            try:
+                fileRes = demisto.getFilePath(aid)
+
+                path = fileRes['path']
+                if len(attachNames) > i and attachNames[i]:
+                    filename = attachNames[i]
+                else:
+                    filename = fileRes['name']
+                if len(attachCIDs) > i and attachCIDs[i]:
+                    cid = attachCIDs[i]
+                else:
+                    cid = ''
+                maintype, subtype = guess_type(filename)
+                if maintype == 'text':
+                    with open(path) as fp:
+                        data = fp.read()
+                else:
+                    with open(path, 'rb') as fp:
+                        data = fp.read()
+                attachments.append({
+                    'name': filename,
+                    'maintype': maintype,
+                    'subtype': subtype,
+                    'data': data,
+                    'cid': cid
+                })
+            except Exception as ex:
+                demisto.error("Invalid entry {} with exception: {}".format(aid, ex))
+                return_error_mail_sender('Entry %s is not valid or is not a file entry' % (aid))
+
+        # handle transient files
+        args = demisto.args()
+        f_names = args.get('transientFile', [])
+        f_names = f_names if isinstance(f_names, (list, tuple)) else f_names.split(',')
+        f_contents = args.get('transientFileContent', [])
+        f_contents = f_contents if isinstance(f_contents, (list, tuple)) else f_contents.split(',')
+        f_cids = args.get('transientFileCID', [])
+        f_cids = f_cids if isinstance(f_cids, (list, tuple)) else f_cids.split(',')
+
+        for name, data, cid in map(None, f_names, f_contents, f_cids):
+            if name is None or data is None:
+                break
+            maintype, subtype = guess_type(name)
+            attachments.append({
+                'name': name,
+                'maintype': maintype,
+                'subtype': subtype,
+                'data': data,
+                'cid': cid
+            })
+
+        return attachments
+
+
+    def template_params():
+        """
+        Translate the template params if they exist from the context
+        """
+        actualParams = {}
+        paramsStr = demisto.getArg('templateParams')
+        if paramsStr:
+            try:
+                params = json.loads(paramsStr)
+            except ValueError as e:
+                return_error_mail_sender('Unable to parse templateParams: %s' % (str(e)))
+            # Build a simple key/value
+            for p in params:
+                if params[p].get('value'):
+                    actualParams[p] = params[p]['value']
+                elif params[p].get('key'):
+                    actualParams[p] = demisto.dt(demisto.context(), params[p]['key'])
+        return actualParams
+
+
+    def header(s):
+        if not s:
+            return None
+        s_no_newlines = ' '.join(s.splitlines())
+        return Header(s_no_newlines, UTF_8)
+
+
+    def create_msg():
+        """
+        Will get args from demisto object
+        Return: a string representation of the message, to, cc, bcc
+        """
+        # Collect all parameters
+        to = argToList(demisto.getArg('to'))
+        cc = argToList(demisto.getArg('cc'))
+        bcc = argToList(demisto.getArg('bcc'))
+        additional_header = argToList(demisto.getArg('additionalHeader'))
+        subject = demisto.getArg('subject') or ''
+        body = demisto.getArg('body') or ''
+        htmlBody = demisto.getArg('htmlBody') or ''
+        replyTo = demisto.getArg('replyTo')
+        templateParams = template_params()
+        if templateParams:
+            body = body.format(**templateParams)
+            htmlBody = htmlBody.format(**templateParams)
+
+        # Basic validation - we allow pretty much everything but you have to have at least a recipient
+        # We allow messages without subject and also without body
+        if not to and not cc and not bcc:
+            return_error_mail_sender('You must have at least one recipient')
+
+        attachments = collect_attachments()
+        attachments.extend(collect_manual_attachments())
+
+        # Let's see what type of message we are talking about
+        if not htmlBody:
+            # This is a simple text message - we cannot have CIDs here
+            if len(attachments) > 0:
+                # This is multipart - default is mixed
+                msg = MIMEMultipart()  # type: Message
+                msg.preamble = 'The message is only available on a MIME-aware mail reader.\n'
+                msg.attach(MIMEText(body, 'plain', UTF_8))
+                for att in attachments:
+                    handle_file(msg, att['name'], att['maintype'], att['subtype'], None, att['data'])
+            else:
+                # Just text, how boring
+                msg = MIMEText(body, 'plain', UTF_8)
+        else:
+            htmlBody, htmlAttachments = handle_html(htmlBody)
+            attachments += htmlAttachments
+            if len(attachments) > 0:
+                msg = MIMEMultipart()
+                msg.preamble = 'The message is only available on a MIME-aware mail reader.\n'
+                if body:
+                    alt = MIMEMultipart('alternative')
+                    alt.attach(MIMEText(body, 'plain', UTF_8))
+                    alt.attach(MIMEText(htmlBody, 'html', UTF_8))
+                    msg.attach(alt)
+                else:
+                    msg.attach(MIMEText(htmlBody, 'html', UTF_8))
+                for att in attachments:
+                    handle_file(msg, att['name'], att['maintype'], att['subtype'], att['cid'], att['data'])
+            else:
+                if body:
+                    msg = MIMEMultipart('alternative')
+                    msg.preamble = 'The message is only available on a MIME-aware mail reader.\n'
+                    msg.attach(MIMEText(body, 'plain', UTF_8))
+                    msg.attach(MIMEText(htmlBody, 'html', UTF_8))
+                else:
+                    msg = MIMEText(htmlBody, 'html', UTF_8)
+
+        # Add the relevant headers to the most outer message
+        msg['Subject'] = header(subject)
+        msg['From'] = header(demisto.getParam('from'))
+        if replyTo:
+            msg['Reply-To'] = header(replyTo)
+        if to:
+            msg['To'] = header(','.join(to))
+        if cc:
+            msg['CC'] = header(','.join(cc))
+        if additional_header:
+            for h in additional_header:
+                header_name_and_value = h.split('=', 1)
+                msg[header_name_and_value[0]] = header(header_name_and_value[1])
+        # Notice we should not add BCC header since Python2 does not filter it
+        return msg.as_string(), to, cc, bcc
+
+
+    def get_user_pass():
+        if demisto.getParam('credentials'):
+            return (str(demisto.getParam('credentials').get('identifier', '')),
+                    str(demisto.getParam('credentials').get('password', '')))
+        return (None, None)
+
+
+    def swap_stderr(new_stderr):
+        '''swap value of stderr if given, return old value.
+
+        smtplib uses sys.stderr directly in newer versions, so use that instead
+        '''
+        if hasattr(smtplib, 'stderr'):
+            module = smtplib
+        else:
+            module = sys  # type: ignore
+        old_stderr = getattr(module, 'stderr')
+        if new_stderr:
+            setattr(module, 'stderr', new_stderr)
+        return old_stderr
+
+
+    def main():
+        # Following methods raise exceptions so no need to check for return codes
+        # But we do need to catch them
+        global SERVER
+        FROM = demisto.getParam('from')
+        FQDN = demisto.params().get('fqdn')
+        FQDN = (FQDN and FQDN.strip()) or None
+        TLS = demisto.getParam('tls')
+        stderr_org = None
+        try:
+            if demisto.command() == 'test-module':
+                stderr_org = swap_stderr(LOG)
+                smtplib.SMTP.debuglevel = 1
+
+            # TODO - support for non-valid certs
+            if TLS == 'SSL/TLS':
+                SERVER = SMTP_SSL(demisto.getParam('host'), int(demisto.params().get('port', 0)), local_hostname=FQDN)
+            else:
+                SERVER = SMTP(demisto.getParam('host'),     # type: ignore[assignment]
+                              int(demisto.params().get('port', 0)), local_hostname=FQDN)
+
+            SERVER.ehlo()  # type: ignore
+            # For BC purposes where TLS was a checkbox (no value only true or false) if TLS=True or TLS='STARTTLS' we enter
+            # this condition, otherwise it means TLS is not configured (TLS=False) or is set to 'SSL/TLS' or 'None'.
+            if TLS is True or TLS == 'STARTTLS' or str(TLS).lower() == 'true':
+                SERVER.starttls()  # type: ignore
+            user, password = get_user_pass()
+            if user:
+                SERVER.login(user, password)  # type: ignore[union-attr]
+        except Exception as e:
+            # also reset at the bottom finally
+            swap_stderr(stderr_org)  # type: ignore[union-attr]
+            smtplib.SMTP.debuglevel = 0
+            demisto.error('Failed test: {}\nStack trace: {}'.format(e, traceback.format_exc()))
+            return_error_mail_sender(e)
+            return  # so mypy knows that we don't continue after this
+        # -- COMMANDS --
+        try:
+            if demisto.command() == 'test-module':
+                msg = MIMEText('This is a test mail from Demisto\nRegards\nDBot')  # type: Message
+                msg['Subject'] = 'Test mail from Demisto'
+                msg['From'] = FROM
+                msg['To'] = FROM
+                SERVER.sendmail(FROM, [FROM], msg.as_string())  # type: ignore[union-attr]
+                SERVER.quit()  # type: ignore[union-attr]
+                demisto.results('ok')
+            elif demisto.command() == 'send-mail':
+                raw_message = demisto.getArg('raw_message')
+                if raw_message:
+                    to = argToList(demisto.getArg('to'))
+                    cc = argToList(demisto.getArg('cc'))
+                    bcc = argToList(demisto.getArg('bcc'))
+                    str_msg = raw_message
+                else:
+                    (str_msg, to, cc, bcc) = create_msg()
+
+                SERVER.sendmail(FROM, to + cc + bcc, str_msg)  # type: ignore[union-attr]
+                SERVER.quit()  # type: ignore[union-attr]
+                demisto.results('Mail sent successfully')
+            else:
+                return_error_mail_sender('Command not recognized')
+        except SMTPRecipientsRefused as e:
+            error_msg = ''.join('{}\n'.format(val) for key, val in e.recipients.iteritems())
+            return_error_mail_sender("Encountered error: {}".format(error_msg))
+        except Exception as e:
+            return_error_mail_sender(e)
+        finally:
+            swap_stderr(stderr_org)  # type: ignore[union-attr]
+            smtplib.SMTP.debuglevel = 0
+
+
+    # python2 uses __builtin__ python3 uses builtins
+    if __name__ == "__builtin__" or __name__ == "builtins":
+        main()
+
+    register_module_line('Mail Sender (New)', 'end', __line__())
+  subtype: python2
+  type: python
+system: true

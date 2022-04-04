@@ -1,0 +1,37 @@
+{
+	"brands": null,
+	"cacheVersn": 0,
+	"defaultIncidentType": "Phishing",
+	"definitionId": "",
+	"description": "Classifies EWS phishing email messages.",
+	"feed": false,
+	"fromServerVersion": "6.0.0",
+	"id": "5d3e20cb-ac1a-4f4e-876c-99f969a9aff1",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "1.11.3",
+	"keyTypeMap": {
+		"High": "Phishing",
+		"Low": "Phishing",
+		"Normal": "Phishing"
+	},
+	"locked": false,
+	"logicalVersion": 1,
+	"mapping": null,
+	"name": "GEL - EWS - Classifier",
+	"nameRaw": "GEL - EWS - Classifier",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "EWS v2",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {
+		"simple": "importance"
+	},
+	"type": "classification",
+	"unclassifiedCases": null,
+	"version": -1
+}

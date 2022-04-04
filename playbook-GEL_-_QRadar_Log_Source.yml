@@ -27,11 +27,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: bf1c6728-7074-447a-8149-d30993c333a0
+      id: 1fa43ce4-650e-4a38-8df6-d5160ce205eb
       iscommand: false
       name: ""
       version: -1
-    taskid: bf1c6728-7074-447a-8149-d30993c333a0
+    taskid: 1fa43ce4-650e-4a38-8df6-d5160ce205eb
     timertriggers: []
     type: start
     view: |-
@@ -55,12 +55,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: fdadd6e2-a2c0-4e80-81d2-0feef5a27123
+      id: d614da19-b591-46ec-8d73-a22d3478a1ac
       iscommand: false
       name: Extract and Enrich Log Source indicator
       type: title
       version: -1
-    taskid: fdadd6e2-a2c0-4e80-81d2-0feef5a27123
+    taskid: d614da19-b591-46ec-8d73-a22d3478a1ac
     timertriggers: []
     type: title
     view: |-
@@ -84,12 +84,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 67afe2d1-6bde-4993-86cb-aedb101a06d1
+      id: 889a30f9-fec4-4e9c-8046-8c05ae5d30fb
       iscommand: false
-      name: Pull Server details from HPE Inventory Management
+      name: Check Server details from Inventory Management
       type: title
       version: -1
-    taskid: 67afe2d1-6bde-4993-86cb-aedb101a06d1
+    taskid: 889a30f9-fec4-4e9c-8046-8c05ae5d30fb
     timertriggers: []
     type: title
     view: |-
@@ -122,13 +122,13 @@ tasks:
     task:
       brand: ""
       description: Search for related information of the server using IP address
-      id: 8353a970-296a-4636-8e60-b31fe2cf671f
+      id: 4151c591-4b10-49d6-8c61-ee60805d2fee
       iscommand: false
       name: Get server information by Log Source ID
       script: SearchDataFromList
       type: regular
       version: -1
-    taskid: 8353a970-296a-4636-8e60-b31fe2cf671f
+    taskid: 4151c591-4b10-49d6-8c61-ee60805d2fee
     timertriggers: []
     type: regular
     view: |-
@@ -150,29 +150,33 @@ tasks:
     note: false
     quietmode: 0
     scriptarguments:
+      body:
+        simple: |-
+          Hello,
+          The ${ITSM.Search.IP_Name} has failed to send log for 720 minutes. Please check and fix the issue. If the server is no longer in use, please update soc.
       subject:
-        simple: False alarm
+        simple: '[Test] SOC: Log Sources ${ITSM.Search.IP_Name} error'
       to:
-        simple: someone@domain.com
+        simple: ${ActiveDirectory.Users.mail.[0]}
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
       description: Sends an email using Gmail.
-      id: cc79be5d-ff8d-422b-816a-4264502a7c9d
+      id: 8d0fde8c-df52-41d3-808f-cf162f5990d8
       iscommand: true
       name: Send notification email
       script: '|||send-mail'
       type: regular
       version: -1
-    taskid: cc79be5d-ff8d-422b-816a-4264502a7c9d
+    taskid: 8d0fde8c-df52-41d3-808f-cf162f5990d8
     timertriggers: []
     type: regular
     view: |-
       {
         "position": {
-          "x": 695,
-          "y": 2555
+          "x": 50,
+          "y": 2730
         }
       }
   "20":
@@ -202,12 +206,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 8fea564b-159c-460c-87fa-0b0b91ccfc48
+      id: 53c3f6c4-b916-431e-882d-1c021c881265
       iscommand: false
       name: Check offense type
       type: condition
       version: -1
-    taskid: 8fea564b-159c-460c-87fa-0b0b91ccfc48
+    taskid: 53c3f6c4-b916-431e-882d-1c021c881265
     timertriggers: []
     type: condition
     view: |-
@@ -222,6 +226,9 @@ tasks:
     ignoreworker: false
     isautoswitchedtoquietmode: false
     isoversize: false
+    nexttasks:
+      '#none#':
+      - "36"
     note: false
     quietmode: 0
     separatecontext: false
@@ -229,20 +236,19 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.close.inv
-      id: 8bcf988e-deef-4376-8b5c-0e16cdd998a3
-      iscommand: true
+      id: 89e58723-1c11-4389-81f2-f6e862771df0
+      iscommand: false
       name: End
-      script: Builtin|||closeInvestigation
-      type: regular
+      type: title
       version: -1
-    taskid: 8bcf988e-deef-4376-8b5c-0e16cdd998a3
+    taskid: 89e58723-1c11-4389-81f2-f6e862771df0
     timertriggers: []
-    type: regular
+    type: title
     view: |-
       {
         "position": {
-          "x": 255,
-          "y": 2730
+          "x": 265,
+          "y": 2905
         }
       }
   "22":
@@ -261,18 +267,20 @@ tasks:
         simple: ${incident.labels.offense_source}
       list_name:
         simple: ITSM_Endpoint
+      search_by:
+        simple: IP Address
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
       description: Search for related information of the server using IP address
-      id: 59e51a46-b85e-44e2-862d-d52328155395
+      id: ec1b11cf-1fed-4630-8c3f-ee2749268e96
       iscommand: false
       name: Get endpoint information
       script: SearchDataFromList
       type: regular
       version: -1
-    taskid: 59e51a46-b85e-44e2-862d-d52328155395
+    taskid: ec1b11cf-1fed-4630-8c3f-ee2749268e96
     timertriggers: []
     type: regular
     view: |-
@@ -289,24 +297,26 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "18"
+      - "35"
     note: false
     quietmode: 0
     scriptarguments:
-      value:
-        simple: ${ITSM.Search}
+      name:
+        simple: ${ITSM.Search.User}
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      description: Prints text to war room (Markdown supported)
-      id: c444adcd-a584-4350-8bf7-c384221e8887
-      iscommand: false
+      description: Retrieves detailed information about a user account. The user can
+        be specified by name, email address, or as an Active Directory Distinguished
+        Name (DN). If no filter is specified, all users are returned.
+      id: f6250a77-31f0-4116-86b8-1d8ff03561fd
+      iscommand: true
       name: Query AD for Owner's Email address
-      script: Print
+      script: '|||ad-get-user'
       type: regular
       version: -1
-    taskid: c444adcd-a584-4350-8bf7-c384221e8887
+    taskid: f6250a77-31f0-4116-86b8-1d8ff03561fd
     timertriggers: []
     type: regular
     view: |-
@@ -340,12 +350,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: b49539b9-80f5-4209-8ac0-0da6b2700198
+      id: 46d66c1f-0677-4e0a-868c-706abcb997a7
       iscommand: false
       name: Continue Searching
       type: condition
       version: -1
-    taskid: b49539b9-80f5-4209-8ac0-0da6b2700198
+    taskid: 46d66c1f-0677-4e0a-868c-706abcb997a7
     timertriggers: []
     type: condition
     view: |-
@@ -379,12 +389,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 1788c2c1-59af-452d-88c9-76784f191179
+      id: 7e81ee73-a694-47f9-8f43-86992624456e
       iscommand: false
       name: Continue Searching
       type: condition
       version: -1
-    taskid: 1788c2c1-59af-452d-88c9-76784f191179
+    taskid: 7e81ee73-a694-47f9-8f43-86992624456e
     timertriggers: []
     type: condition
     view: |-
@@ -417,13 +427,13 @@ tasks:
     task:
       brand: ""
       description: Search for related information of the server using IP address
-      id: 2e069f42-c8c9-4933-8ec8-35b46ba7a762
+      id: b1bdfe2c-9b9f-41bb-87a3-17c282e7aeaf
       iscommand: false
       name: Get server information by IP Address
       script: SearchDataFromList
       type: regular
       version: -1
-    taskid: 2e069f42-c8c9-4933-8ec8-35b46ba7a762
+    taskid: b1bdfe2c-9b9f-41bb-87a3-17c282e7aeaf
     timertriggers: []
     type: regular
     view: |-
@@ -447,12 +457,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 983f85c6-2ca8-44bc-8139-4045d5aed9d6
+      id: a216fca5-bcd0-42e3-8184-622ff6022cc3
       iscommand: false
       name: Notify user and create ticket
       type: title
       version: -1
-    taskid: 983f85c6-2ca8-44bc-8139-4045d5aed9d6
+    taskid: a216fca5-bcd0-42e3-8184-622ff6022cc3
     timertriggers: []
     type: title
     view: |-
@@ -474,7 +484,7 @@ tasks:
     quietmode: 0
     scriptarguments:
       category:
-        simple: Others
+        simple: Services
       description:
         simple: |-
           Hello,
@@ -484,7 +494,7 @@ tasks:
       impact:
         simple: '{"id": "2", "name": "Low < 5 users"}'
       item:
-        simple: Others
+        simple: Service Request
       level:
         simple: Third Level Support
       request_type:
@@ -494,7 +504,7 @@ tasks:
       site:
         simple: Menara Great Eastern
       subcategory:
-        simple: Others
+        simple: Infrastructure
       subject:
         simple: '[Test] SOC: Log Sources ${ITSM.Search.IP_Name} error'
       udf_fields:
@@ -506,13 +516,13 @@ tasks:
     task:
       brand: ""
       description: Creates new requests.
-      id: 5f86dfe3-2b34-4dbc-8d50-4d685714d017
+      id: 34cfad23-77e5-4398-8528-d0064d5e59d5
       iscommand: true
       name: Create SDP Ticket
       script: '|||service-desk-plus-request-create'
       type: regular
       version: -1
-    taskid: 5f86dfe3-2b34-4dbc-8d50-4d685714d017
+    taskid: 34cfad23-77e5-4398-8528-d0064d5e59d5
     timertriggers: []
     type: regular
     view: |-
@@ -583,12 +593,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: dc05c328-f5da-4d52-8d90-f8f83b34ebf2
+      id: 1e811730-0f27-4d0b-8888-3ee11ba0abe6
       iscommand: false
       name: Check for log source's platform
       type: condition
       version: -1
-    taskid: dc05c328-f5da-4d52-8d90-f8f83b34ebf2
+    taskid: 1e811730-0f27-4d0b-8888-3ee11ba0abe6
     timertriggers: []
     type: condition
     view: |-
@@ -618,13 +628,13 @@ tasks:
     task:
       brand: ""
       description: Set a value in context under the key you entered.
-      id: e9476ac8-4f00-4380-8d4b-028c1a6e142e
+      id: c9002ac6-0509-4fe2-89cc-0491af48814f
       iscommand: false
       name: Set group to unix support (e2p)
       script: Set
       type: regular
       version: -1
-    taskid: e9476ac8-4f00-4380-8d4b-028c1a6e142e
+    taskid: c9002ac6-0509-4fe2-89cc-0491af48814f
     timertriggers: []
     type: regular
     view: |-
@@ -654,13 +664,13 @@ tasks:
     task:
       brand: ""
       description: Set a value in context under the key you entered.
-      id: 65e9f4a9-8603-4c3e-83dc-9da7311d24dc
+      id: 5595b093-9768-47f5-82dc-229a5515c799
       iscommand: false
       name: Set group to network support (e2p)
       script: Set
       type: regular
       version: -1
-    taskid: 65e9f4a9-8603-4c3e-83dc-9da7311d24dc
+    taskid: 5595b093-9768-47f5-82dc-229a5515c799
     timertriggers: []
     type: regular
     view: |-
@@ -690,13 +700,13 @@ tasks:
     task:
       brand: ""
       description: Set a value in context under the key you entered.
-      id: c1b08df5-b591-41e5-89d9-4b7bd6bd71e4
+      id: eff4bcb0-e105-4a4b-8b50-d4385c3193c7
       iscommand: false
       name: Set group to wintel support (e2p)
       script: Set
       type: regular
       version: -1
-    taskid: c1b08df5-b591-41e5-89d9-4b7bd6bd71e4
+    taskid: eff4bcb0-e105-4a4b-8b50-d4385c3193c7
     timertriggers: []
     type: regular
     view: |-
@@ -726,13 +736,13 @@ tasks:
     task:
       brand: ""
       description: Set a value in context under the key you entered.
-      id: 1320ec62-62d3-4524-81c9-6ef3fb01a90c
+      id: d671ae1d-bf35-47e6-8951-7e113e45dc5e
       iscommand: false
       name: Set group to AS400 support
       script: Set
       type: regular
       version: -1
-    taskid: 1320ec62-62d3-4524-81c9-6ef3fb01a90c
+    taskid: d671ae1d-bf35-47e6-8951-7e113e45dc5e
     timertriggers: []
     type: regular
     view: |-
@@ -768,13 +778,13 @@ tasks:
     task:
       brand: Builtin
       description: commands.local.cmd.set.incident
-      id: e4defb3c-1241-41ec-8704-9bbe20afa918
+      id: c023d4aa-82d5-4fa9-8a49-78ae3ae40806
       iscommand: true
       name: Add SDP Ticket info to layout
       script: Builtin|||setIncident
       type: regular
       version: -1
-    taskid: e4defb3c-1241-41ec-8704-9bbe20afa918
+    taskid: c023d4aa-82d5-4fa9-8a49-78ae3ae40806
     timertriggers: []
     type: regular
     view: |-
@@ -784,13 +794,116 @@ tasks:
           "y": 2205
         }
       }
+  "35":
+    conditions:
+    - condition:
+      - - left:
+            iscontext: true
+            value:
+              simple: ActiveDirectory.Users.mail.[0]
+          operator: isNotEmpty
+      label: "yes"
+    id: "35"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#default#':
+      - "21"
+      "yes":
+      - "18"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 07847b9d-8dae-46d3-83f2-0033e5bd9c88
+      iscommand: false
+      name: Check if can get owner's email
+      type: condition
+      version: -1
+    taskid: 07847b9d-8dae-46d3-83f2-0033e5bd9c88
+    timertriggers: []
+    type: condition
+    view: |-
+      {
+        "position": {
+          "x": 695,
+          "y": 2555
+        }
+      }
+  "36":
+    id: "36"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "37"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      offense_id:
+        simple: ${incident.labels.id}
+      status:
+        simple: CLOSED
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Updates an offense.
+      id: fc46ac4b-6a39-4830-8ba1-b9dd826a5b28
+      iscommand: true
+      name: Close QRadar Offense
+      script: '|||qradar-offense-update'
+      type: regular
+      version: -1
+    taskid: fc46ac4b-6a39-4830-8ba1-b9dd826a5b28
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 265,
+          "y": 3030
+        }
+      }
+  "37":
+    id: "37"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: commands.local.cmd.close.inv
+      id: 52ab72e2-c061-4ffc-8e71-a992b1ced8e8
+      iscommand: true
+      name: Close XSOAR Incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 52ab72e2-c061-4ffc-8e71-a992b1ced8e8
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 270,
+          "y": 3170
+        }
+      }
 version: -1
 view: |-
   {
     "linkLabelsPosition": {},
     "paper": {
       "dimensions": {
-        "height": 2775,
+        "height": 3215,
         "width": 1670,
         "x": 50,
         "y": 50

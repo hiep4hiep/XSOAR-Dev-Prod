@@ -1,7 +1,8 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.5.0
-    itemVersion: 2.1.4
+    itemVersion: 2.1.9
     packID: VirusTotal
     packPropagationLabels:
     - all
@@ -13,7 +14,7 @@ inputs:
 - description: Entry ID of the file to detonate
   key: File
   playbookInputQuery: null
-  required: false
+  required: true
   value:
     complex:
       root: File
@@ -68,7 +69,7 @@ tasks:
     isoversize: false
     nexttasks:
       '#none#':
-      - "1"
+      - "8"
     note: false
     quietmode: 0
     separatecontext: false
@@ -261,14 +262,6 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: |-
-        Use this playbook as a sub-playbook to block execution of the master playbook until a remote action is complete.
-        This playbook implements polling by continuously running the command in Step \#2 until the operation completes.
-        The remote action should have the following structure:
-
-        1. Initiate the operation.
-        2. Poll to check if the operation completed.
-        3. (optional) Get the results of the operation.
       id: d78e7bf7-9f19-417f-8e7a-6e89df877d67
       iscommand: false
       name: GenericPolling

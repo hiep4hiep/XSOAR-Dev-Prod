@@ -1,0 +1,23 @@
+commonfields:
+  id: 2e5701d1-c43b-492c-8aff-92836eaeff23
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.26972
+engineinfo: {}
+mainengineinfo: {}
+name: ReportHeaderTextWidget
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: ""
+scripttarget: 0
+tags: []
+type: python

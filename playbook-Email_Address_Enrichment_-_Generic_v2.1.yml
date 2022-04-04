@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 5.0.0
-    itemVersion: 2.1.8
+    itemVersion: 2.1.13
     packID: CommonPlaybooks
     packPropagationLabels:
     - all
@@ -84,11 +84,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 10b003be-68f2-4e57-8f11-d0475f1aac42
+      id: 22a55a7c-c942-4d12-84fb-76bce3695b83
       iscommand: false
       name: ""
       version: -1
-    taskid: 10b003be-68f2-4e57-8f11-d0475f1aac42
+    taskid: 22a55a7c-c942-4d12-84fb-76bce3695b83
     timertriggers: []
     type: start
     view: |-
@@ -112,12 +112,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 01ab9a35-e60e-4331-826d-48194fb5a771
+      id: 8970ccc7-3ca4-4f5a-879e-f9d0c07c3e5b
       iscommand: false
       name: Done
       type: title
       version: -1
-    taskid: 01ab9a35-e60e-4331-826d-48194fb5a771
+    taskid: 8970ccc7-3ca4-4f5a-879e-f9d0c07c3e5b
     timertriggers: []
     type: title
     view: |-
@@ -159,12 +159,12 @@ tasks:
       brand: ""
       description: Determines whether the playbook's input contains at least one email
         address.
-      id: 43ea7e61-2e1e-4d4c-835c-623055112691
+      id: ad5dcc8d-aedc-4f17-8e45-cdf57fc8eb8c
       iscommand: false
       name: Are there email addresses to check?
       type: condition
       version: -1
-    taskid: 43ea7e61-2e1e-4d4c-835c-623055112691
+    taskid: ad5dcc8d-aedc-4f17-8e45-cdf57fc8eb8c
     timertriggers: []
     type: condition
     view: |-
@@ -211,13 +211,13 @@ tasks:
         attribute determines whether the email address is an internal or external
         email address, according to the domains that were passed as arguments to this
         playbook.
-      id: 7aa90f8f-bdf1-4d72-88ae-f0d7d2d0142f
+      id: 9c9335fc-12d0-45eb-887e-41f83a6cfae9
       iscommand: false
       name: Classify email addresses as internal or external
       script: IsEmailAddressInternal
       type: regular
       version: -1
-    taskid: 7aa90f8f-bdf1-4d72-88ae-f0d7d2d0142f
+    taskid: 9c9335fc-12d0-45eb-887e-41f83a6cfae9
     timertriggers: []
     type: regular
     view: |-
@@ -241,12 +241,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: e82515ea-9f9a-4273-8182-e6a84b24e4d6
+      id: 1a9686bb-e22f-46a7-8f5e-adf7acffdf3b
       iscommand: false
       name: Internal
       type: title
       version: -1
-    taskid: e82515ea-9f9a-4273-8182-e6a84b24e4d6
+    taskid: 1a9686bb-e22f-46a7-8f5e-adf7acffdf3b
     timertriggers: []
     type: title
     view: |-
@@ -270,12 +270,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: d501d6f3-d086-40fa-8c28-052fc32787fb
+      id: 7874c1a7-0bae-43cc-8f13-9234c337f491
       iscommand: false
       name: External
       type: title
       version: -1
-    taskid: d501d6f3-d086-40fa-8c28-052fc32787fb
+    taskid: 7874c1a7-0bae-43cc-8f13-9234c337f491
     timertriggers: []
     type: title
     view: |-
@@ -299,23 +299,19 @@ tasks:
     scriptarguments:
       email:
         complex:
-          accessor: Email
-          root: Account
-          transformers:
-          - args:
-              equalTo:
+          accessor: Address
+          filters:
+          - - ignorecase: true
+              left:
+                iscontext: true
+                value:
+                  simple: Account.Email.NetworkType
+              operator: isEqualString
+              right:
                 value:
                   simple: Internal
-              field:
-                value:
-                  simple: NetworkType
-              getField:
-                value:
-                  simple: Address
-              stringify:
-                value:
-                  simple: "true"
-            operator: WhereFieldEquals
+          root: Account.Email
+          transformers:
           - operator: uniq
     separatecontext: false
     skipunavailable: false
@@ -323,13 +319,13 @@ tasks:
       brand: ""
       description: Uses Active Directory to get user information for internal email
         addresses.
-      id: 266c8054-586a-4b62-811b-d13147f12e54
+      id: e3b298d5-cb30-4440-803e-596597adcc10
       iscommand: true
       name: Get email address info from Active Directory
       script: '|||ad-get-user'
       type: regular
       version: -1
-    taskid: 266c8054-586a-4b62-811b-d13147f12e54
+    taskid: e3b298d5-cb30-4440-803e-596597adcc10
     timertriggers: []
     type: regular
     view: |-
@@ -374,13 +370,13 @@ tasks:
       brand: ""
       description: Checks whether there are email addresses with a NetworkType attribute
         value of "External".
-      id: 2d740d11-a326-4913-83f1-8df803c0a3eb
+      id: 4dbbbdb8-0102-445f-8fc3-d3ed70c32aa3
       iscommand: false
       name: Are there any external email addresses?
       script: Exists
       type: condition
       version: -1
-    taskid: 2d740d11-a326-4913-83f1-8df803c0a3eb
+    taskid: 4dbbbdb8-0102-445f-8fc3-d3ed70c32aa3
     timertriggers: []
     type: condition
     view: |-
@@ -425,13 +421,13 @@ tasks:
       brand: ""
       description: Checks whether there are email addresses with a NetworkType attribute
         value of "Internal".
-      id: e521733d-b152-4a1f-8050-e7658405a187
+      id: 88f0cd9d-90b3-4fdd-8822-1ff788168d00
       iscommand: false
       name: Are there any internal email addresses?
       script: Exists
       type: condition
       version: -1
-    taskid: e521733d-b152-4a1f-8050-e7658405a187
+    taskid: 88f0cd9d-90b3-4fdd-8822-1ff788168d00
     timertriggers: []
     type: condition
     view: |-
@@ -485,6 +481,9 @@ tasks:
               getField:
                 value:
                   simple: Address
+              stringify:
+                value:
+                  simple: "false"
             operator: WhereFieldEquals
           - operator: uniq
     separatecontext: false
@@ -493,13 +492,13 @@ tasks:
       brand: ""
       description: Checks if an email address's domain is trying to squat other domains
         using Levenshtein distance algorithm.
-      id: 7d4c6562-651c-487d-834e-f3921527c76e
+      id: 9b9a97f6-c855-4d4e-8047-f0306f006a5f
       iscommand: false
       name: Check email addresses for domain-squatting
       script: EmailDomainSquattingReputation
       type: regular
       version: -1
-    taskid: 7d4c6562-651c-487d-834e-f3921527c76e
+    taskid: 9b9a97f6-c855-4d4e-8047-f0306f006a5f
     timertriggers: []
     type: regular
     view: |-
@@ -551,13 +550,13 @@ tasks:
       brand: ""
       description: Checks if there's an active instance of the Active Directory Query
         v2 integration enabled.
-      id: 71e0fb34-e1c8-4606-8462-1f83a0a2cb56
+      id: df11530c-169c-4a9c-8e37-e9ce934a0c8a
       iscommand: false
       name: Is Active Directory Query v2 enabled?
       script: Exists
       type: condition
       version: -1
-    taskid: 71e0fb34-e1c8-4606-8462-1f83a0a2cb56
+    taskid: df11530c-169c-4a9c-8e37-e9ce934a0c8a
     timertriggers: []
     type: condition
     view: |-
@@ -596,13 +595,13 @@ tasks:
     task:
       brand: ""
       description: Checks if there is at least one domain to check for domain-squatting.
-      id: 1f1a6cd8-5aaa-4b0a-8147-e91dc6beec49
+      id: 82034885-dcb2-4c4a-8fa7-1c1514c27e46
       iscommand: false
       name: Is there a domain list input?
       script: Exists
       type: condition
       version: -1
-    taskid: 1f1a6cd8-5aaa-4b0a-8147-e91dc6beec49
+    taskid: 82034885-dcb2-4c4a-8fa7-1c1514c27e46
     timertriggers: []
     type: condition
     view: |-
@@ -626,12 +625,12 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: 3ecf1917-78f6-4350-84bb-704fdaa1bf05
+      id: 358de9fa-efe5-47c2-801f-7c85db0d408b
       iscommand: false
       name: No Email Addresses
       type: title
       version: -1
-    taskid: 3ecf1917-78f6-4350-84bb-704fdaa1bf05
+    taskid: 358de9fa-efe5-47c2-801f-7c85db0d408b
     timertriggers: []
     type: title
     view: |-

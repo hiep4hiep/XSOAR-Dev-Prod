@@ -1,0 +1,89 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: f0d06297-300b-4784-8c89-202a241ab120
+inputs: []
+name: Test - Slack message
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 0f5196ce-f969-48f6-81c6-fb374c0891ad
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 0f5196ce-f969-48f6-81c6-fb374c0891ad
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      channel:
+        simple: xsoar
+      message:
+        simple: This is a message from XSOAR playbook
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: SlackV3
+      description: Sends a message to a user, group, or channel.
+      id: 5788e4bf-e40d-4980-89ed-ceb624a63076
+      iscommand: true
+      name: Send message to Slack channel
+      script: SlackV3|||send-notification
+      type: regular
+      version: -1
+    taskid: 5788e4bf-e40d-4980-89ed-ceb624a63076
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 450,
+          "y": 210
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 255,
+        "width": 380,
+        "x": 450,
+        "y": 50
+      }
+    }
+  }

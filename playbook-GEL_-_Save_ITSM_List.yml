@@ -1,5 +1,6 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: ""
     itemVersion: ""
     packID: ""
@@ -26,11 +27,11 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      id: a9b673ad-a1ee-4432-801a-d1d0d72223d5
+      id: c6d3147d-8c7b-473b-8031-bd2626e55aea
       iscommand: false
       name: ""
       version: -1
-    taskid: a9b673ad-a1ee-4432-801a-d1d0d72223d5
+    taskid: c6d3147d-8c7b-473b-8031-bd2626e55aea
     timertriggers: []
     type: start
     view: |-
@@ -50,19 +51,20 @@ tasks:
     scriptarguments:
       entryId:
         simple: 3@${incident.id}
+      list_name:
+        simple: ITSM_Endpoint
     separatecontext: false
     skipunavailable: false
     task:
       brand: ""
-      description: The automation takes Excel file (entryID) as an input and parses
-        its content to the war room and context
-      id: 6c5d635a-47ab-4ea2-8e92-afd1031e7976
+      description: Use entry ID to load and parse excel file
+      id: 15c581c7-a819-426d-84a1-2f857bbfca53
       iscommand: false
       name: ParseExcel and Save to list
-      script: 8be2bac3-dbaf-4409-86ee-c501f8d9590d
+      script: ParseExcelToList
       type: regular
       version: -1
-    taskid: 6c5d635a-47ab-4ea2-8e92-afd1031e7976
+    taskid: 15c581c7-a819-426d-84a1-2f857bbfca53
     timertriggers: []
     type: regular
     view: |-

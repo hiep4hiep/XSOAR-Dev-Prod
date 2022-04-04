@@ -1,10 +1,12 @@
 contentitemexportablefields:
   contentitemfields:
+    definitionid: ""
     fromServerVersion: 5.0.0
     itemVersion: 2.1.4
     packID: ""
     propagationLabels:
     - all
+    remote: true
     toServerVersion: ""
 description: |-
   Run on a QRadar offense to get more information:

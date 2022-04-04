@@ -2,7 +2,7 @@ contentitemexportablefields:
   contentitemfields:
     definitionid: ""
     fromServerVersion: 6.0.0
-    itemVersion: 3.0.3
+    itemVersion: 3.1.6
     packID: Phishing
     packPropagationLabels:
     - all
@@ -204,7 +204,7 @@ tasks:
     skipunavailable: false
     task:
       brand: Builtin
-      description: commands.local.cmd.set.incident
+      description: Sets the value of the "phishingpclscore" incident field.
       id: 455f7bbe-da60-444d-854b-93ea59d1f921
       iscommand: true
       name: Set PCL score
@@ -240,7 +240,7 @@ tasks:
     skipunavailable: false
     task:
       brand: Builtin
-      description: Sets the Microsoft Headers BCL-PC severity in context.
+      description: Sets the Microsoft Headers BCL-PCL severity in context.
       id: e3df5fa2-ce9b-4e7f-8200-1f2c8b41e7a1
       iscommand: false
       name: Set MicrosoftHeadersSeverityCheck (Medium)
@@ -276,7 +276,7 @@ tasks:
     skipunavailable: false
     task:
       brand: Builtin
-      description: commands.local.cmd.set.incident
+      description: Sets the "emailclassification" incident field value to "Spam".
       id: 21500b48-153f-433b-82e8-7328125a8ace
       iscommand: true
       name: Set Email Classification to "Spam"
@@ -601,7 +601,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Sets the spam confidence level (SCL) value in the context after
+      description: Sets the Spam Confidence Level (SCL) value in the context after
         extraction.
       id: a18f7a54-ee16-4951-8376-5b9494b542d0
       iscommand: false
@@ -671,7 +671,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Set the SCL (spam) value in context after extraction.
+      description: Sets the Spam Confidence Level (SCL) value in context after extraction.
       id: 81a87f1b-7d8e-489e-88a0-e77ca32c0a6d
       iscommand: false
       name: Set SCL-Forefront score
@@ -785,7 +785,7 @@ tasks:
     skipunavailable: false
     task:
       brand: Builtin
-      description: commands.local.cmd.set.incident
+      description: Sets the value of the "phishingsclscore" incident field.
       id: 13d15274-9037-49d9-89d8-231c8acf4296
       iscommand: true
       name: Set SCL score
@@ -819,7 +819,7 @@ tasks:
     skipunavailable: false
     task:
       brand: Builtin
-      description: commands.local.cmd.set.incident
+      description: Sets the value of the "phishingsclscore" incident field.
       id: b174d8b2-6573-4774-8198-c02bda8a5222
       iscommand: true
       name: Set SCL score
@@ -1067,7 +1067,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Sets the PCL (phishing) severity in context.
+      description: Sets the Phishing Confidence Level (PCL) severity in context.
       id: be2701ca-09a6-4c67-84a3-f463fa5507ea
       iscommand: false
       name: Set PCL Severity
@@ -1103,7 +1103,7 @@ tasks:
     skipunavailable: false
     task:
       brand: ""
-      description: Sets the BCL (bulk) severity in context.
+      description: Sets the Bulk Complaint Level (BCL) severity in context.
       id: 930c7725-5436-4f12-8eb2-aeb4ad5a9a19
       iscommand: false
       name: Set BCL Severity
@@ -1272,14 +1272,14 @@ tasks:
               period_matches_newline: {}
               regex:
                 value:
-                  simple: '[5-9]'
+                  simple: '[4-9]'
             operator: RegexExtractAll
           - operator: uniq
     separatecontext: false
     skipunavailable: false
     task:
       brand: Builtin
-      description: commands.local.cmd.set.incident
+      description: Sets the value of the "phishingbclscore" incident field.
       id: 6987092a-727c-4df0-8d23-e1dbdc33a4e3
       iscommand: true
       name: Set BCL score

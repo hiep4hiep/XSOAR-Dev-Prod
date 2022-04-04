@@ -1,0 +1,52 @@
+{
+	"brands": null,
+	"cacheVersn": 0,
+	"defaultIncidentType": "",
+	"definitionId": "",
+	"description": "",
+	"feed": false,
+	"fromServerVersion": "",
+	"id": "66063390-1032-4dc3-8a80-3a6997cb6bc9",
+	"incidentSamples": null,
+	"indicatorSamples": null,
+	"instanceIds": null,
+	"itemVersion": "",
+	"keyTypeMap": {},
+	"locked": false,
+	"logicalVersion": 0,
+	"mapping": {
+		"Phishing": {
+			"dontMapEventToLabels": true,
+			"internalMapping": {
+				"Email Body": {
+					"simple": "text_body"
+				},
+				"Email Body HTML": {
+					"simple": "body"
+				},
+				"Email From": {
+					"simple": "sender.email_address"
+				},
+				"Email Subject": {
+					"simple": "subject"
+				},
+				"Email To": {
+					"simple": "to_recipients.[0].email_address"
+				}
+			}
+		}
+	},
+	"name": "GE - Email mapper",
+	"nameRaw": "GE - Email mapper",
+	"packID": "",
+	"propagationLabels": [
+		"all"
+	],
+	"sourceClassifierId": "",
+	"system": false,
+	"toServerVersion": "",
+	"transformer": {},
+	"type": "mapping-incoming",
+	"unclassifiedCases": null,
+	"version": -1
+}

@@ -1,0 +1,198 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: 4be6c288-c5f9-4be3-85d2-c44ab949b913
+inputs: []
+name: Main Processing playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "4"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 800d4374-ba5b-4f60-84c0-c6d89e48ae1b
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: 800d4374-ba5b-4f60-84c0-c6d89e48ae1b
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 50
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    loop:
+      exitCondition: ""
+      iscommand: false
+      max: 100
+      wait: 1
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: fdd36d84-a909-4fd3-86ac-3017ad6913a8
+      iscommand: false
+      name: Analyst2 - Custom Phishing Playbook
+      playbookId: c2aa26d5-d127-4ef4-869e-d9dcb137e10e
+      type: playbook
+      version: -1
+    taskid: fdd36d84-a909-4fd3-86ac-3017ad6913a8
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 370
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "3"
+    note: false
+    quietmode: 0
+    separatecontext: true
+    skipunavailable: false
+    task:
+      brand: ""
+      id: a5c52219-c6a8-4be6-89d9-b0a412dcc3e5
+      iscommand: false
+      name: Test - Slack message
+      playbookId: f0d06297-300b-4784-8c89-202a241ab120
+      type: playbook
+      version: -1
+    taskid: a5c52219-c6a8-4be6-89d9-b0a412dcc3e5
+    timertriggers: []
+    type: playbook
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 545
+        }
+      }
+  "3":
+    id: "3"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: Builtin
+      description: Close the current incident
+      id: 1a77ad4e-1c94-479f-8613-c8e2bfe47134
+      iscommand: true
+      name: Close incident
+      script: Builtin|||closeInvestigation
+      type: regular
+      version: -1
+    taskid: 1a77ad4e-1c94-479f-8613-c8e2bfe47134
+    timertriggers:
+    - action: stop
+      fieldname: detectionsla
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 720
+        }
+      }
+  "4":
+    fieldMapping:
+    - incidentfield: Email To
+      output:
+        simple: ${Email.To}
+    id: "4"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 1
+    scriptarguments:
+      all:
+        simple: "yes"
+      keysToKeep:
+        simple: File
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: |-
+        Delete field from context.
+
+        This automation runs using the default Limited User role, unless you explicitly change the permissions.
+        For more information, see the section about permissions here:
+        https://docs.paloaltonetworks.com/cortex/cortex-xsoar/6-2/cortex-xsoar-admin/playbooks/automations.html
+      id: b0996a08-7751-48d8-8c30-ecc14c1c47bc
+      iscommand: false
+      name: Delete Context
+      script: DeleteContext
+      type: regular
+      version: -1
+    taskid: b0996a08-7751-48d8-8c30-ecc14c1c47bc
+    timertriggers:
+    - action: start
+      fieldname: detectionsla
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 50,
+          "y": 195
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 765,
+        "width": 380,
+        "x": 50,
+        "y": 50
+      }
+    }
+  }

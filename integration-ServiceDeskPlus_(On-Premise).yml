@@ -67,6 +67,7 @@ contentitemexportablefields:
     packPropagationLabels:
     - all
     propagationLabels: []
+    remote: true
     toServerVersion: ""
 description: Deprecated. Use the Service Desk Plus instead.
 detaileddescription: |-

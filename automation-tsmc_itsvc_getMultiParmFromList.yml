@@ -1,0 +1,51 @@
+args:
+- description: accept multi-input, seperate by comma
+  name: parmName
+  required: true
+commonfields:
+  id: e920a750-fafd-43ae-8247-f240df575be8
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: tsmc_itsvc_getMultiParmFromList
+outputs:
+- contextPath: parmList
+  description: parm List
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  var parmList = {};
+  var parmName_list = args.parmName.split(',')
+  for(i=0; i<parmName_list.length; i++){
+      var res = executeCommand('tsmc_itsvc_queryList', {
+          'listName': 'paramList',
+          'target_key': 'parmName',
+          'target_key_value': parmName_list[i].trim(),
+          'fuzzy': 'NO'
+      })
+      parmList[res[0].Contents[0].parmName] = res[0].Contents[0].parmValue;
+  }
+  var context = {'parmList': parmList};
+
+  return {
+      Type : entryTypes.note,
+      Contents : parmList,
+      ContentsFormat : formats.json,
+      EntryContext : context
+  };
+scripttarget: 0
+tags:
+- tsmc
+- itsvc
+type: javascript

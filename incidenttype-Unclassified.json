@@ -1,10 +1,12 @@
 {
 	"autorun": true,
+	"cacheVersn": 0,
 	"closureScript": "",
 	"color": "#03B0FF",
 	"days": 3,
 	"daysR": 0,
 	"default": true,
+	"definitionId": "",
 	"detached": false,
 	"disabled": false,
 	"extractSettings": {

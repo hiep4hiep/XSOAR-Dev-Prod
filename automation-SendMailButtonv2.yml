@@ -1,0 +1,42 @@
+commonfields:
+  id: 5b254005-8e9c-44b8-8e96-81f2c4bd180a
+  version: -1
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+dockerimage: demisto/python3:3.10.1.27636
+enabled: true
+engineinfo: {}
+mainengineinfo: {}
+name: SendMailButtonv2
+pswd: ""
+runas: DBotWeakRole
+runonce: false
+script: |-
+  inc = demisto.incidents()[0]['CustomFields']
+
+  to = inc.get('emailto')
+  body = inc.get('emailbody')
+  subject = inc.get('emailsubject')
+
+  if to and body and subject:
+      return_results(demisto.executeCommand("send-mail", {
+              "to": to,
+              "subject": subject,
+              "body": body
+              }
+          )
+      )
+  else:
+      return_results("Please fill in all to, subject and body fields to send email")
+scripttarget: 0
+subtype: python3
+tags:
+- button
+type: python

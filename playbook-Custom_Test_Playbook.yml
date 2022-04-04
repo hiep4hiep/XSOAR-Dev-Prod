@@ -1,0 +1,124 @@
+contentitemexportablefields:
+  contentitemfields:
+    definitionid: ""
+    fromServerVersion: ""
+    itemVersion: ""
+    packID: ""
+    propagationLabels:
+    - all
+    toServerVersion: ""
+id: f3ce1435-6709-49ff-84cc-9a467426786e
+inputs: []
+name: Custom Test Playbook
+outputs: []
+starttaskid: "0"
+tasks:
+  "0":
+    id: "0"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "1"
+    note: false
+    quietmode: 0
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: d629c68f-71ae-40b8-8d2e-58e02e739019
+      iscommand: false
+      name: ""
+      version: -1
+    taskid: d629c68f-71ae-40b8-8d2e-58e02e739019
+    timertriggers: []
+    type: start
+    view: |-
+      {
+        "position": {
+          "x": 620,
+          "y": 30
+        }
+      }
+  "1":
+    id: "1"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    nexttasks:
+      '#none#':
+      - "2"
+    note: false
+    quietmode: 0
+    scriptarguments:
+      a:
+        simple: "5"
+      b:
+        simple: "8"
+      greeting_string:
+        simple: Hello
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      id: 407d1d44-c48e-40c7-86f2-edc4c6bb001e
+      iscommand: false
+      name: GE Calculation
+      script: 8d937cf3-310f-4fb1-8bdd-0a7b82de90b5
+      type: regular
+      version: -1
+    taskid: 407d1d44-c48e-40c7-86f2-edc4c6bb001e
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 620,
+          "y": 210
+        }
+      }
+  "2":
+    id: "2"
+    ignoreworker: false
+    isautoswitchedtoquietmode: false
+    isoversize: false
+    note: false
+    quietmode: 0
+    scriptarguments:
+      value:
+        simple: ${GE.SampleScript.multiply}
+    separatecontext: false
+    skipunavailable: false
+    task:
+      brand: ""
+      description: Prints text to war room (Markdown supported)
+      id: 7efacec7-a0f2-426a-8f74-6e1b213fd8aa
+      iscommand: false
+      name: Print the GE Calculation data
+      script: Print
+      type: regular
+      version: -1
+    taskid: 7efacec7-a0f2-426a-8f74-6e1b213fd8aa
+    timertriggers: []
+    type: regular
+    view: |-
+      {
+        "position": {
+          "x": 620,
+          "y": 380
+        }
+      }
+version: -1
+view: |-
+  {
+    "linkLabelsPosition": {},
+    "paper": {
+      "dimensions": {
+        "height": 445,
+        "width": 380,
+        "x": 620,
+        "y": 30
+      }
+    }
+  }
